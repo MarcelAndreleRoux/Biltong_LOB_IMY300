@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dhwkr3ocxx0ju"]
+
+[node name="Wire" type="StaticBody2D"]
