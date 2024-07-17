@@ -1,3 +1,50 @@
-[gd_scene format=3 uid="uid://vlik5vxjmqh4"]
+[gd_scene load_steps=7 format=3 uid="uid://vlik5vxjmqh4"]
 
-[node name="Enemy" type="CharacterBody2D"]
+[ext_resource type="Script" path="res://scenes/entities/enemies/enemy.gd" id="1_1fxvc"]
+[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_gmdpj"]
+[ext_resource type="PackedScene" uid="uid://dcwfimqxg27wv" path="res://scenes/entities/enemies/wander.tscn" id="2_gm0cl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ho7t5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gmdpj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6luy"]
+size = Vector2(49, 48)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yiybb"]
+radius = 39.0128
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("wander_direction")]
+script = ExtResource("1_1fxvc")
+wander_direction = NodePath("Wander")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.382813, 0.382813)
+sprite_frames = SubResource("SpriteFrames_ho7t5")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_m6luy")
+
+[node name="Wander" parent="." instance=ExtResource("2_gm0cl")]
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DetectionArea"]
+position = Vector2(2, -127)
+build_mode = 1
+polygon = PackedVector2Array(-95, -113, -2, -139, 88, -112, 145, -36, 132, 80, 81, 139, -1, 127, -82, 141, -130, 80, -149, -37)
+disabled = true
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_yiybb")

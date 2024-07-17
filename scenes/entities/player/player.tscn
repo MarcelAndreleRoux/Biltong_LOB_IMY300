@@ -19,24 +19,23 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_atsr3"]
-size = Vector2(96, 96)
+size = Vector2(36, 36)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1xmtr"]
-radius = 126.0
+radius = 28.0179
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3avnw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(3.8147e-06, 3.8147e-06)
-scale = Vector2(0.757813, 0.757813)
+scale = Vector2(0.285156, 0.285156)
 sprite_frames = SubResource("SpriteFrames_bdncw")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_atsr3")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("CircleShape2D_1xmtr")

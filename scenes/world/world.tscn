@@ -1,8 +1,45 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=4 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
+[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/enemy.tscn" id="2_t02x3"]
+[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="3_4y4xx"]
 
 [node name="World" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_qoat8")]
 position = Vector2(243, 172)
+
+[node name="Enemy" parent="." instance=ExtResource("2_t02x3")]
+position = Vector2(731, 186)
+
+[node name="Marker2D" type="Marker2D" parent="." groups=["FirstEnemy"]]
+position = Vector2(1013, 105)
+
+[node name="Sprite2D" type="Sprite2D" parent="Marker2D"]
+position = Vector2(-2.86102e-06, -1.04904e-05)
+scale = Vector2(0.179687, 0.176479)
+texture = ExtResource("3_4y4xx")
+
+[node name="Marker2D2" type="Marker2D" parent="." groups=["FirstEnemy"]]
+position = Vector2(1030, 544)
+
+[node name="Sprite2D" type="Sprite2D" parent="Marker2D2"]
+position = Vector2(-2.86102e-06, -1.04904e-05)
+scale = Vector2(0.179687, 0.176479)
+texture = ExtResource("3_4y4xx")
+
+[node name="Marker2D3" type="Marker2D" parent="." groups=["FirstEnemy"]]
+position = Vector2(443, 105)
+
+[node name="Sprite2D" type="Sprite2D" parent="Marker2D3"]
+position = Vector2(-2.86102e-06, -1.04904e-05)
+scale = Vector2(0.179687, 0.176479)
+texture = ExtResource("3_4y4xx")
+
+[node name="Marker2D4" type="Marker2D" parent="." groups=["FirstEnemy"]]
+position = Vector2(794, 260)
+
+[node name="Sprite2D" type="Sprite2D" parent="Marker2D4"]
+position = Vector2(-2.86102e-06, -1.04904e-05)
+scale = Vector2(0.179687, 0.176479)
+texture = ExtResource("3_4y4xx")
