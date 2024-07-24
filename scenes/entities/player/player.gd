@@ -3,6 +3,8 @@ extends CharacterBody2D
 signal update_health(health: int, position: Vector2)
 signal update_inventory(item: String)
 
+@onready var anim_tree = $AnimationTree
+
 var currentVelocity: Vector2
 var speed: int = 150
 var _health: int = 100
@@ -38,8 +40,8 @@ func _physics_process(delta: float):
 
 	#if Input.is_action_just_pressed("pickup") and _itemToPickUp != null:
 		#SharedSignals.pickup_item.emit(_itemToPickUp.name)
-
 	velocity = currentVelocity
+	
 	move_and_slide()
 
 func _throw_item():
