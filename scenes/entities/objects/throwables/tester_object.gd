@@ -44,10 +44,10 @@ func _physics_process(delta: float):
 		if global_position.distance_to(target) < 1.0:
 			_currentPointIndex += 1
 
-func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
-	_spawnPosition = position
+func initialize(pos: Vector2, direction: Vector2, rot: float, end_position: Vector2):
+	_spawnPosition = pos
 	_direction = direction
-	_spawnRotation = rotation
+	_spawnRotation = rot
 	_trajectoryPoints = calculate_trajectory(end_position)
 	_currentPointIndex = 0
 	time = 0.0  # Reset time when initializing
@@ -69,7 +69,7 @@ func calculate_trajectory(_End: Vector2):
 
 	var points = []
 	for point in range(num_of_points):
-		var time = total_time * (float(point) / float(num_of_points))
+		time = total_time * (float(point) / float(num_of_points))
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
 		points.append(_spawnPosition + Vector2(dx, dy))

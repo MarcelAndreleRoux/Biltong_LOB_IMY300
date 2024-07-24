@@ -10,7 +10,7 @@ var _end: Vector2
 var _projectileScene: PackedScene
 var points: Array = []
 
-var _canThrowItem: bool = true
+#var _canThrowItem: bool = true
 var _isAiming: bool = false
 
 var num_of_points: int = 50
@@ -20,7 +20,7 @@ func _ready():
 	_main = get_tree().root.get_node("World")
 	_projectileScene = preload("res://scenes/entities/objects/throwables/tester_object.tscn")
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	_end = get_global_mouse_position()
 	
 	if Input.is_action_just_pressed("aim"):

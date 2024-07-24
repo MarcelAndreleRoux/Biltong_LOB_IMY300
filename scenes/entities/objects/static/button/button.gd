@@ -6,11 +6,11 @@ extends StaticBody2D
 func _ready():
 	animated_sprite_2d.play("idle")
 
-func _on_click_area_area_entered(area):
+func _on_click_area_area_entered(_area):
 	animated_sprite_2d.play("click")
 	SharedSignals.doorState.emit(true)
 
-func _on_click_area_area_exited(area):
+func _on_click_area_area_exited(_area):
 	animated_sprite_2d.play_backwards("click")
 	
 	SharedSignals.doorState.emit(false)
