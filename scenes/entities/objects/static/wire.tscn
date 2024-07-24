@@ -1,3 +1,67 @@
-[gd_scene format=3 uid="uid://dhwkr3ocxx0ju"]
+[gd_scene load_steps=8 format=3 uid="uid://dhwkr3ocxx0ju"]
+
+[ext_resource type="Texture2D" uid="uid://dhjrs6u1jrxlc" path="res://assets/sprites/objects/static/wire/Wires-Tileset.png" id="1_1f1io"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_db1ew"]
+atlas = ExtResource("1_1f1io")
+region = Rect2(240, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4p5x"]
+atlas = ExtResource("1_1f1io")
+region = Rect2(336, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7toa"]
+atlas = ExtResource("1_1f1io")
+region = Rect2(256, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nefq5"]
+atlas = ExtResource("1_1f1io")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5q3lu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_db1ew")
+}],
+"loop": true,
+"name": &"horizontal_single_off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4p5x")
+}],
+"loop": true,
+"name": &"horizontal_single_on",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7toa")
+}],
+"loop": true,
+"name": &"vertical_single_off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nefq5")
+}],
+"loop": true,
+"name": &"vertical_single_on",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a2uec"]
+size = Vector2(2, 2)
 
 [node name="Wire" type="StaticBody2D"]
+collision_layer = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5q3lu")
+animation = &"horizontal_single_on"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_a2uec")

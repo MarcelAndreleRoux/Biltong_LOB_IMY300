@@ -27,9 +27,11 @@ project/assembly_name="LOB_IMY300"
 
 folder_colors={
 "res://assets/sprites/": "yellow",
+"res://assets/sprites/UI/": "green",
 "res://assets/sprites/enemies/": "pink",
 "res://assets/sprites/objects/": "purple",
 "res://assets/sprites/player/": "teal",
+"res://assets/sprites/world/": "red",
 "res://scenes/Shared/": "blue",
 "res://scenes/UI/": "green",
 "res://scenes/entities/": "orange",
@@ -84,4 +86,5 @@ DEBUG={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"

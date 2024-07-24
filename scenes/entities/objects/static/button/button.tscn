@@ -1,35 +1,35 @@
 [gd_scene load_steps=10 format=3 uid="uid://gocvqvrsvfso"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/button/button.gd" id="1_hwqma"]
-[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_ocge4"]
+[ext_resource type="Texture2D" uid="uid://cy0waipdsut21" path="res://assets/sprites/objects/static/pressure_plate/Presure-Plate.png" id="2_2oktm"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3172r"]
-atlas = ExtResource("1_ocge4")
-region = Rect2(0, 42, 42, 42)
+[sub_resource type="AtlasTexture" id="AtlasTexture_bt5y0"]
+atlas = ExtResource("2_2oktm")
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4hglm"]
-atlas = ExtResource("1_ocge4")
-region = Rect2(42, 42, 42, 42)
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvhtk"]
+atlas = ExtResource("2_2oktm")
+region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uyvam"]
-atlas = ExtResource("1_ocge4")
-region = Rect2(84, 42, 42, 42)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkij8"]
+atlas = ExtResource("2_2oktm")
+region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wtf5v"]
-atlas = ExtResource("1_ocge4")
-region = Rect2(42, 42, 42, 42)
+[sub_resource type="AtlasTexture" id="AtlasTexture_iik3u"]
+atlas = ExtResource("2_2oktm")
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_1wmcw"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_x55i4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3172r")
+"texture": SubResource("AtlasTexture_bt5y0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4hglm")
+"texture": SubResource("AtlasTexture_qvhtk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uyvam")
+"texture": SubResource("AtlasTexture_kkij8")
 }],
 "loop": false,
 "name": &"click",
@@ -37,36 +37,38 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wtf5v")
+"texture": SubResource("AtlasTexture_iik3u")
 }],
 "loop": false,
 "name": &"idle",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rsae8"]
-size = Vector2(22, 22)
+[sub_resource type="CircleShape2D" id="CircleShape2D_7arkk"]
+radius = 8.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gxa5n"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_howdr"]
+radius = 5.0
+height = 12.0
 
 [node name="Button" type="StaticBody2D"]
 collision_layer = 0
 script = ExtResource("1_hwqma")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1.90735e-06, -1.90735e-06)
-scale = Vector2(0.547619, 0.547619)
-sprite_frames = SubResource("SpriteFrames_1wmcw")
-animation = &"click"
+sprite_frames = SubResource("SpriteFrames_x55i4")
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_rsae8")
+visible = false
+shape = SubResource("CircleShape2D_7arkk")
 
 [node name="ClickArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
-shape = SubResource("CircleShape2D_gxa5n")
+position = Vector2(0, -1)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_howdr")
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="ClickArea" to="." method="_on_click_area_area_entered"]
 [connection signal="area_exited" from="ClickArea" to="." method="_on_click_area_area_exited"]

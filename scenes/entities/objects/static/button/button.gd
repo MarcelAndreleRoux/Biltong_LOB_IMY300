@@ -11,6 +11,6 @@ func _on_click_area_area_entered(area):
 	SharedSignals.doorState.emit(true)
 
 func _on_click_area_area_exited(area):
-	animated_sprite_2d.play("idle")
+	animated_sprite_2d.play_backwards("click")
 	
 	SharedSignals.doorState.emit(false)
