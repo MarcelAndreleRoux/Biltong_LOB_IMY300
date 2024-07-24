@@ -15,6 +15,10 @@ run/main_scene="res://scenes/world/world.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SharedSignals="*res://scenes/Shared/SharedSignals.gd"
+
 [dotnet]
 
 project/assembly_name="LOB_IMY300"
@@ -26,6 +30,7 @@ folder_colors={
 "res://assets/sprites/enemies/": "pink",
 "res://assets/sprites/objects/": "purple",
 "res://assets/sprites/player/": "teal",
+"res://scenes/Shared/": "blue",
 "res://scenes/UI/": "green",
 "res://scenes/entities/": "orange",
 "res://scenes/entities/enemies/": "pink",
@@ -69,6 +74,11 @@ pickup={
 aim={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+DEBUG={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":76,"physical_keycode":0,"key_label":0,"unicode":108,"echo":false,"script":null)
 ]
 }
 

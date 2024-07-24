@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://uomcq2fwyh8o"]
+
+[node name="MushroomFloor" type="StaticBody2D"]

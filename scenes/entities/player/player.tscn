@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://wdw24tbqrqxv"]
+[gd_scene load_steps=8 format=3 uid="uid://wdw24tbqrqxv"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_3avnw"]
 [ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_qa2su"]
+[ext_resource type="PackedScene" uid="uid://cawwygpn7f3vw" path="res://scenes/entities/player/arrow.tscn" id="4_ycm23"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jaxcd"]
 atlas = ExtResource("1_qa2su")
@@ -25,6 +26,7 @@ size = Vector2(36, 36)
 radius = 28.0179
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 2
 script = ExtResource("1_3avnw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -39,3 +41,7 @@ shape = SubResource("RectangleShape2D_atsr3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("CircleShape2D_1xmtr")
+
+[node name="Arrow" parent="." instance=ExtResource("4_ycm23")]
+
+[connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]

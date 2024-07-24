@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://gocvqvrsvfso"]
+
+[ext_resource type="Script" path="res://scenes/entities/objects/static/button/button.gd" id="1_hwqma"]
+[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_ocge4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3172r"]
+atlas = ExtResource("1_ocge4")
+region = Rect2(0, 42, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hglm"]
+atlas = ExtResource("1_ocge4")
+region = Rect2(42, 42, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyvam"]
+atlas = ExtResource("1_ocge4")
+region = Rect2(84, 42, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtf5v"]
+atlas = ExtResource("1_ocge4")
+region = Rect2(42, 42, 42, 42)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1wmcw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3172r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hglm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uyvam")
+}],
+"loop": false,
+"name": &"click",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtf5v")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rsae8"]
+size = Vector2(22, 22)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gxa5n"]
+
+[node name="Button" type="StaticBody2D"]
+collision_layer = 0
+script = ExtResource("1_hwqma")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1.90735e-06, -1.90735e-06)
+scale = Vector2(0.547619, 0.547619)
+sprite_frames = SubResource("SpriteFrames_1wmcw")
+animation = &"click"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rsae8")
+
+[node name="ClickArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+shape = SubResource("CircleShape2D_gxa5n")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="ClickArea" to="." method="_on_click_area_area_entered"]
+[connection signal="area_exited" from="ClickArea" to="." method="_on_click_area_area_exited"]

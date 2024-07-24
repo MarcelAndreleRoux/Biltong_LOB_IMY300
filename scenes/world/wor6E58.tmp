@@ -1,30 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=5 format=3 uid="uid://b4ywwlrgg4dso"]
 
-[ext_resource type="Script" path="res://scenes/world/world.gd" id="1_o3fq4"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
 [ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/enemy.tscn" id="2_t02x3"]
 [ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="3_4y4xx"]
-[ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="5_w5hph"]
-[ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="6_q0hj8"]
+[ext_resource type="PackedScene" uid="uid://bw1aqq02mnil0" path="res://scenes/entities/objects/throwables/throwable_test.tscn" id="4_kbrcv"]
 
 [node name="World" type="Node2D"]
-script = ExtResource("1_o3fq4")
 
 [node name="Player" parent="." instance=ExtResource("1_qoat8")]
 position = Vector2(243, 172)
 
-[node name="TrajectoryLine" type="Line2D" parent="."]
-width = 2.0
-default_color = Color(1, 1, 1, 0.0705882)
-
 [node name="Enemy" parent="." instance=ExtResource("2_t02x3")]
 position = Vector2(731, 186)
-
-[node name="Shadow" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(-4.76837e-07, -4.76837e-07)
-scale = Vector2(0.0546875, 0.0546875)
-texture = ExtResource("3_4y4xx")
 
 [node name="Marker2D" type="Marker2D" parent="." groups=["FirstEnemy"]]
 position = Vector2(922, 368)
@@ -66,9 +53,5 @@ position = Vector2(-2.86102e-06, -1.04904e-05)
 scale = Vector2(0.179687, 0.176479)
 texture = ExtResource("3_4y4xx")
 
-[node name="Door" parent="." instance=ExtResource("5_w5hph")]
-position = Vector2(178, 444)
-door_side = "front"
-
-[node name="Button" parent="." instance=ExtResource("6_q0hj8")]
-position = Vector2(169, 333)
+[node name="Throwable_test" parent="." instance=ExtResource("4_kbrcv")]
+position = Vector2(172, 525)
