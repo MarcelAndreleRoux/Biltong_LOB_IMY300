@@ -75,3 +75,7 @@ func calculate_trajectory(_End: Vector2):
 		points.append(_spawnPosition + Vector2(dx, dy))
 
 	return points
+
+func _on_eating_area_body_entered(body):
+	if body.name == "Enemy":
+		print("Eat me")

@@ -29,8 +29,6 @@ func _ready():
 func _physics_process(_delta):
 	_end = get_global_mouse_position()
 	
-	SharedSignals.shadow_done.connect(_on_shadow_done)
-	
 	if Input.is_action_just_pressed("aim"):
 		# Toggle aiming
 		_isAiming = not _isAiming
@@ -72,6 +70,7 @@ func _throw_item():
 
 	# Connect the shadow update signal
 	SharedSignals.shadow_update.connect(_on_update_shadow)
+	SharedSignals.shadow_done.connect(_on_shadow_done)
 	
 	shadow = shadow_sprite
 
