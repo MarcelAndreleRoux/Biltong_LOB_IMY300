@@ -4,7 +4,10 @@ extends Node
 signal item_pickup
 signal pickup_item
 signal item_throw
+
+# Object
 signal shadow_update
+signal shadow_done
 
 # Door Signals
 signal doorState

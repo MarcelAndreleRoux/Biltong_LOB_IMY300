@@ -8,7 +8,8 @@ signal update_inventory(item: String)
 var currentVelocity: Vector2
 var speed: int = 150
 
-var is_aiming: bool
+var is_aiming: bool = false
+var has_throw: bool = false
 var direction: Vector2 = Vector2.ZERO
 
 #var _itemToPickUp: Node2D
@@ -47,60 +48,96 @@ func _throw_item():
 
 func _handle_input():
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
+	direction = currentVelocity.normalized()
 	currentVelocity *= speed
 
 func _update_animation_parameters():
-	# Movement
-	if velocity == Vector2.ZERO:
-		animation_tree["parameters/conditions/idle"] = true
-		animation_tree["parameters/conditions/is_run"] = false
-		animation_tree["parameters/conditions/is_idle_throw"] = false
-		animation_tree["parameters/conditions/is_run_throw"] = false
-		animation_tree["parameters/conditions/is_idle_aim"] = false
-		animation_tree["parameters/conditions/is_run_aim"] = false
-	else:
-		animation_tree["parameters/conditions/is_run"] = true
-		animation_tree["parameters/conditions/idle"] = false
-		animation_tree["parameters/conditions/is_idle_throw"] = false
-		animation_tree["parameters/conditions/is_run_throw"] = false
-		animation_tree["parameters/conditions/is_idle_aim"] = false
-		animation_tree["parameters/conditions/is_run_aim"] = false
-
-	# Aim
+	# Handle aim toggling
 	if Input.is_action_just_pressed("aim"):
 		is_aiming = not is_aiming
-		
+	
+	# Handle throwing action
+	if Input.is_action_just_pressed("throw") and is_aiming:
+		has_throw = true
+		_play_throw_animation()
+	else:
+		has_throw = false
+		_play_movement_animation()
+
+	# Update blend positions for animations
+	if direction != Vector2.ZERO:
+		animation_tree["parameters/idle/blend_position"] = direction
+		animation_tree["parameters/idle_aim/blend_position"] = direction
+		animation_tree["parameters/idle_throw/blend_position"] = direction
+		animation_tree["parameters/run/blend_position"] = direction
+		animation_tree["parameters/run_aim/blend_position"] = direction
+		animation_tree["parameters/run_throw/blend_position"] = direction
+
+func _play_movement_animation():
+	# Movement
+	if velocity == Vector2.ZERO:
+		if is_aiming:
+			animation_tree["parameters/conditions/is_idle_aim"] = true
+			animation_tree["parameters/conditions/is_run_aim"] = false
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run"] = false
+		else:
+			animation_tree["parameters/conditions/idle"] = true
+			animation_tree["parameters/conditions/is_run"] = false
+			animation_tree["parameters/conditions/is_idle_aim"] = false
+	else:
+		if is_aiming:
+			animation_tree["parameters/conditions/is_run_aim"] = true
+			animation_tree["parameters/conditions/is_idle_aim"] = false
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run"] = false
+		else:
+			animation_tree["parameters/conditions/is_run"] = true
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run_aim"] = false
+
+func _play_throw_animation():
+	# Throw animation logic
+	if velocity == Vector2.ZERO:
+		animation_tree["parameters/conditions/is_idle_throw"] = true
+		animation_tree["parameters/conditions/is_run_throw"] = false
+	else:
+		animation_tree["parameters/conditions/is_run_throw"] = true
+		animation_tree["parameters/conditions/is_idle_throw"] = false
+
+	# Resetting throw state after playing the animation
+	_start_throw_reset_timer()
+
+func _start_throw_reset_timer():
+	# Create a Timer node
+	var timer = Timer.new()
+	timer.wait_time = 0.6  # 1 second
+	timer.one_shot = true
+	timer.timeout.connect(_on_throw_reset_timeout)
+	add_child(timer)
+	timer.start()
+
+func _on_throw_reset_timeout():
+	# Reset throw conditions
+	animation_tree["parameters/conditions/is_idle_throw"] = false
+	animation_tree["parameters/conditions/is_run_throw"] = false
+
+	# Return to aiming state if still aiming
+	if is_aiming:
 		if velocity == Vector2.ZERO:
 			animation_tree["parameters/conditions/is_idle_aim"] = true
-			animation_tree["parameters/conditions/idle"] = false
-			animation_tree["parameters/conditions/is_run"] = false
-			animation_tree["parameters/conditions/is_run_aim"] = false
 		else:
-			animation_tree["parameters/conditions/is_idle_aim"] = false
-			animation_tree["parameters/conditions/idle"] = false
-			animation_tree["parameters/conditions/is_run"] = false
 			animation_tree["parameters/conditions/is_run_aim"] = true
-	
-	# Throw while aiming
-	if Input.is_action_just_pressed("throw") and is_aiming:
+	else:
 		if velocity == Vector2.ZERO:
-			animation_tree["parameters/conditions/is_idle_throw"] = true
-			animation_tree["parameters/conditions/is_run_throw"] = false
-			animation_tree["parameters/conditions/is_idle_aim"] = false
-			animation_tree["parameters/conditions/is_run_aim"] = false
+			animation_tree["parameters/conditions/idle"] = true
 		else:
-			animation_tree["parameters/conditions/is_run_throw"] = true
-			animation_tree["parameters/conditions/is_idle_throw"] = false
-			animation_tree["parameters/conditions/is_idle_aim"] = false
-			animation_tree["parameters/conditions/is_run_aim"] = false
-	
-	animation_tree["parameters/idle/blend_position"] = direction
-	animation_tree["parameters/idle_aim/blend_position"] = direction
-	animation_tree["parameters/idle_throw/blend_position"] = direction
-	animation_tree["parameters/run/blend_position"] = direction
-	animation_tree["parameters/run_aim/blend_position"] = direction
-	animation_tree["parameters/run_throw/blend_position"] = direction
+			animation_tree["parameters/conditions/is_run"] = true
+
+	# Clean up the timer
+	var timer = $Timer
+	if timer != null:
+		timer.queue_free()
 
 func _on_pickup_area_body_entered(_item: Node2D):
 	pass

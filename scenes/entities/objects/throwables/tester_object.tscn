@@ -1,20 +1,86 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcrd5kpbngnaq"]
+[gd_scene load_steps=12 format=3 uid="uid://dcrd5kpbngnaq"]
 
-[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_ds0pr"]
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/tester_object.gd" id="1_eqfmm"]
+[ext_resource type="Texture2D" uid="uid://b8d65qfp0mw60" path="res://assets/sprites/objects/throwables/food/Mushroom-Throwable.png" id="2_kweje"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5x0bb"]
+atlas = ExtResource("2_kweje")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8hx2"]
+atlas = ExtResource("2_kweje")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqrnx"]
+atlas = ExtResource("2_kweje")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tud37"]
+atlas = ExtResource("2_kweje")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xh01q"]
+atlas = ExtResource("2_kweje")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_81s6r"]
+atlas = ExtResource("2_kweje")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdxry"]
+atlas = ExtResource("2_kweje")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7w3v6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5x0bb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8hx2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqrnx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tud37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xh01q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_81s6r")
+}],
+"loop": true,
+"name": &"eat",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdxry")
+}],
+"loop": true,
+"name": &"throw",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_72ge8"]
-radius = 6.08276
+radius = 2.0
 
-[node name="TesterObject" type="CharacterBody2D"]
+[node name="MushroomThrow" type="CharacterBody2D"]
 z_index = -5
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_eqfmm")
 
-[node name="Projectile" type="Sprite2D" parent="."]
-scale = Vector2(0.09375, 0.09375)
-texture = ExtResource("1_ds0pr")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7w3v6")
+animation = &"eat"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_72ge8")
+
+[node name="EatingArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EatingArea"]

@@ -888,23 +888,23 @@ advance_condition = &"is_run_aim"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_xipt5"]
 states/Death/node = SubResource("AnimationNodeBlendSpace2D_50uqu")
-states/Death/position = Vector2(-99, 295)
-states/End/position = Vector2(817, 221)
+states/Death/position = Vector2(633, 210)
+states/End/position = Vector2(852, 210)
 states/Start/position = Vector2(-22, 126)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_hyt8p")
 states/idle/position = Vector2(141, 126)
 states/idle_aim/node = SubResource("AnimationNodeBlendSpace2D_coke2")
 states/idle_aim/position = Vector2(390, 16)
 states/idle_throw/node = SubResource("AnimationNodeBlendSpace2D_a202j")
-states/idle_throw/position = Vector2(633, 126)
+states/idle_throw/position = Vector2(633, 16)
 states/run/node = SubResource("AnimationNodeBlendSpace2D_wy8me")
 states/run/position = Vector2(141, 262)
 states/run_aim/node = SubResource("AnimationNodeBlendSpace2D_2fcp8")
 states/run_aim/position = Vector2(390, 388)
 states/run_throw/node = SubResource("AnimationNodeBlendSpace2D_6s7m0")
-states/run_throw/position = Vector2(633, 262)
+states/run_throw/position = Vector2(633, 388)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pcgw8"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_7obb7"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8e435"), "idle_aim", "run_aim", SubResource("AnimationNodeStateMachineTransition_b8nng"), "run_aim", "idle_aim", SubResource("AnimationNodeStateMachineTransition_0w5i3"), "idle", "idle_aim", SubResource("AnimationNodeStateMachineTransition_6r02k"), "idle_aim", "idle", SubResource("AnimationNodeStateMachineTransition_fvqkp"), "run", "run_aim", SubResource("AnimationNodeStateMachineTransition_e7g8d"), "run_aim", "run", SubResource("AnimationNodeStateMachineTransition_4vojj"), "idle_aim", "idle_throw", SubResource("AnimationNodeStateMachineTransition_t3xt5"), "run_aim", "run_throw", SubResource("AnimationNodeStateMachineTransition_uccsp"), "run_throw", "run", SubResource("AnimationNodeStateMachineTransition_f6q61"), "run_throw", "idle", SubResource("AnimationNodeStateMachineTransition_4ibk3"), "idle_throw", "idle", SubResource("AnimationNodeStateMachineTransition_fgh4t"), "idle_throw", "run", SubResource("AnimationNodeStateMachineTransition_0f6b7"), "idle_throw", "idle_aim", SubResource("AnimationNodeStateMachineTransition_84utv"), "run_throw", "run_aim", SubResource("AnimationNodeStateMachineTransition_fvmwh")]
-graph_offset = Vector2(-190.034, -21.4715)
+graph_offset = Vector2(-131.034, -27.4715)
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 2

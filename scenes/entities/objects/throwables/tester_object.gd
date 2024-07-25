@@ -2,6 +2,9 @@ extends CharacterBody2D
 
 @export var speed: float = 700.0  # Base Projectile speed
 @export var speed_scale: float = 10.0  # Speed scaling factor
+@export var gravity: float = -9.8  # Gravity should be negative for downwards acceleration
+@export var num_of_points: int = 50
+@export var ground_level: float = 0.0  # Define what y-coordinate is considered the ground
 
 var _direction: Vector2
 var _spawnPosition: Vector2
@@ -9,15 +12,8 @@ var _spawnRotation: float
 var _trajectoryPoints: Array
 var _currentPointIndex: int = 0
 
-var gravity: float = -9.8  # Gravity should be negative for downwards acceleration
-var num_of_points: int = 50
-
 var time: float = 0.0
 var time_mult: float = 6.0
-
-@onready var projectile = $Projectile
-
-signal update_shadow(direction: Vector2, distance: float)
 
 func _ready():
 	# Initialize position and rotation
@@ -43,11 +39,15 @@ func _physics_process(delta: float):
 		# Check if the projectile has reached the target point
 		if global_position.distance_to(target) < 1.0:
 			_currentPointIndex += 1
+		
+		# Check if the projectile has hit the floor (ground level)
+		if _currentPointIndex >= _trajectoryPoints.size():
+			SharedSignals.shadow_done.emit()
 
-func initialize(pos: Vector2, direction: Vector2, rot: float, end_position: Vector2):
-	_spawnPosition = pos
+func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
+	_spawnPosition = position
 	_direction = direction
-	_spawnRotation = rot
+	_spawnRotation = rotation
 	_trajectoryPoints = calculate_trajectory(end_position)
 	_currentPointIndex = 0
 	time = 0.0  # Reset time when initializing
@@ -69,7 +69,7 @@ func calculate_trajectory(_End: Vector2):
 
 	var points = []
 	for point in range(num_of_points):
-		time = total_time * (float(point) / float(num_of_points))
+		var time = total_time * (float(point) / float(num_of_points))
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
 		points.append(_spawnPosition + Vector2(dx, dy))

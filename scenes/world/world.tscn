@@ -23,12 +23,6 @@ default_color = Color(1, 1, 1, 0.0705882)
 [node name="Enemy" parent="." instance=ExtResource("2_t02x3")]
 position = Vector2(731, 186)
 
-[node name="Shadow" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(-4.76837e-07, -4.76837e-07)
-scale = Vector2(0.0546875, 0.0546875)
-texture = ExtResource("3_4y4xx")
-
 [node name="Marker2D" type="Marker2D" parent="." groups=["FirstEnemy"]]
 position = Vector2(922, 368)
 

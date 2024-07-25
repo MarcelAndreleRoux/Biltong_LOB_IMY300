@@ -18,6 +18,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 SharedSignals="*res://scenes/Shared/SharedSignals.gd"
+GlobalValues="*res://scenes/Shared/GlobalValues.gd"
+
+[display]
+
+window/size/mode=4
 
 [dotnet]
 
