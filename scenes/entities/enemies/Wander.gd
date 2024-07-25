@@ -7,7 +7,6 @@ var temp_positions: Array
 var current_position: Marker2D
 
 var direction: Vector2 = Vector2.ZERO
-var waiting: bool = false
 
 const STOPPING_DISTANCE = 10
 
@@ -17,13 +16,16 @@ func _ready():
 	_get_next_position()
 
 func _physics_process(delta):
-	if waiting:
-		return
+	check_update_positions_with_new_marker_signal()
 
-	if global_position.distance_to(current_position.global_position) < STOPPING_DISTANCE:
-		_stop_and_wait()
+	if global_position.distance_to(current_position.global_position) <= STOPPING_DISTANCE:
+		global_position = current_position.global_position
+		_get_next_position()
 	else:
 		move_towards_position(delta)
+
+func check_update_positions_with_new_marker_signal():
+	SharedSignals.new_marker.connect(update_positions_with_new_marker)
 
 func _get_positions():
 	temp_positions = positions.duplicate()
@@ -34,34 +36,32 @@ func _get_next_position():
 	current_position = temp_positions.pop_front()
 	_update_direction()
 
-func _stop_and_wait():
-	waiting = true
-	_create_timer()
-
-func _create_timer():
-	var timer = Timer.new()
-	timer.wait_time = 3.0
-	timer.one_shot = true
-	timer.timeout.connect(_on_wander_at_place_time_timeout)
-	add_child(timer)
-	timer.start()
-
 func move_towards_position(delta):
-	_update_direction()
-	var move_amount = direction * delta
-	if global_position.distance_to(current_position.global_position) <= move_amount.length():
-		global_position = current_position.global_position
-		_stop_and_wait()
-	else:
-		global_position += move_amount
+	var target_position = current_position.global_position
+	var move_amount = direction * delta  # Scale movement by a speed factor
+	global_position += move_amount
+
+	if global_position.distance_to(target_position) <= STOPPING_DISTANCE:
+		global_position = target_position
+		_get_next_position()
 
 func _update_direction():
 	var target_direction = (current_position.global_position - global_position).normalized()
-	direction = direction.move_toward(target_direction, 0.1)
+	direction = direction.move_toward(target_direction, 1.0)  # Ensure full direction change
 
-func _on_wander_at_place_time_timeout():
-	waiting = false
-	_get_next_position()
-	for child in get_children():
-		if child is Timer:
-			child.queue_free()
+func _sort_positions():
+	var spawnable_markers = []
+	var regular_markers = []
+
+	for marker in positions:
+		if marker.name.begins_with("spawnable"):
+			spawnable_markers.append(marker)
+		else:
+			regular_markers.append(marker)
+	
+	positions = spawnable_markers + regular_markers
+
+func update_positions_with_new_marker(new_marker: Marker2D):
+	positions.append(new_marker)
+	_sort_positions()
+	_get_positions()

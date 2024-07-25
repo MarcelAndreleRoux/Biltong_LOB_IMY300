@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://bl0bp0c4ogc4t"]
+
+[ext_resource type="Script" path="res://scenes/UI/main_menu.gd" id="1_7pkux"]
+[ext_resource type="Texture2D" uid="uid://umcdv70tufwu" path="res://assets/sprites/UI/Title/Title.png" id="1_kbidf"]
+[ext_resource type="Texture2D" uid="uid://cxy0vop66obh" path="res://assets/sprites/UI/Buttons/Buttons-Tutorial.png" id="1_q30l1"]
+[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="2_c3bhp"]
+[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="5_baxkv"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7pkux")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kbidf")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 306.0
+offset_top = -286.0
+offset_right = -350.0
+grow_horizontal = 2
+grow_vertical = 0
+columns = 2
+
+[node name="Start" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+focus_neighbor_left = NodePath("../Exit")
+focus_neighbor_right = NodePath(".")
+icon = ExtResource("1_q30l1")
+flat = true
+icon_alignment = 1
+
+[node name="Exit" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("2_c3bhp")
+flat = true
+icon_alignment = 1
+
+[node name="Node" type="Node" parent="."]
+
+[node name="click" type="AudioStreamPlayer" parent="Node"]
+stream = ExtResource("5_baxkv")
+
+[connection signal="pressed" from="GridContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="GridContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="finished" from="Node/click" to="." method="_on_click_finished"]

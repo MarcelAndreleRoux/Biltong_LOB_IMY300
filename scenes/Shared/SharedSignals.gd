@@ -14,3 +14,6 @@ signal doorState
 
 # Enemy Signals
 signal start_eating
+signal new_marker
+signal can_move_again
+signal marker_spotted

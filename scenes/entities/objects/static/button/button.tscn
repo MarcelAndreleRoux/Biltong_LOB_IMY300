@@ -33,7 +33,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"click",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -57,7 +57,9 @@ script = ExtResource("1_hwqma")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x55i4")
-animation = &"idle"
+animation = &"click"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

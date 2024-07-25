@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf4g5tr3tvnya"
-path="res://.godot/imported/Mouse-Icons.png-b65ac3e57b4510fb6d1c31ddc2f5858a.ctex"
+uid="uid://bubb36t4lpk4y"
+path="res://.godot/imported/Hotbar-Base.png-484c829af5bf6f9eb183ce01df235a2f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/UI/Mouse-Icons.png"
-dest_files=["res://.godot/imported/Mouse-Icons.png-b65ac3e57b4510fb6d1c31ddc2f5858a.ctex"]
+source_file="res://assets/sprites/UI/Hotbar/Hotbar-Base.png"
+dest_files=["res://.godot/imported/Hotbar-Base.png-484c829af5bf6f9eb183ce01df235a2f.ctex"]
 
 [params]
 

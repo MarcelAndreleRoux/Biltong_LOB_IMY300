@@ -1,10 +1,9 @@
 extends CharacterBody2D
 
-@export var speed: float = 700.0  # Base Projectile speed
-@export var speed_scale: float = 10.0  # Speed scaling factor
-@export var gravity: float = -9.8  # Gravity should be negative for downwards acceleration
+@export var speed: float = 700.0
+@export var speed_scale: float = 10.0
+@export var gravity: float = -9.8
 @export var num_of_points: int = 50
-@export var ground_level: float = 0.0  # Define what y-coordinate is considered the ground
 
 var _direction: Vector2
 var _spawnPosition: Vector2
@@ -16,7 +15,6 @@ var time: float = 0.0
 var time_mult: float = 6.0
 
 func _ready():
-	# Initialize position and rotation
 	global_position = _spawnPosition
 	global_rotation = _spawnRotation
 	print("Projectile initialized at position: ", global_position)
@@ -29,20 +27,17 @@ func _physics_process(delta: float):
 		var adjusted_speed = speed * speed_scale
 		velocity = direction * adjusted_speed * delta
 
-		# Move the projectile towards the target point
 		move_and_slide()
 
-		# Emit the shadow update signal
 		var distance_travelled = (global_position - _spawnPosition).length()
 		SharedSignals.shadow_update.emit(_direction, distance_travelled)
 
-		# Check if the projectile has reached the target point
 		if global_position.distance_to(target) < 1.0:
 			_currentPointIndex += 1
 		
-		# Check if the projectile has hit the floor (ground level)
 		if _currentPointIndex >= _trajectoryPoints.size():
 			SharedSignals.shadow_done.emit()
+			_start_eating_sequence()
 
 func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
 	_spawnPosition = position
@@ -50,7 +45,7 @@ func initialize(position: Vector2, direction: Vector2, rotation: float, end_posi
 	_spawnRotation = rotation
 	_trajectoryPoints = calculate_trajectory(end_position)
 	_currentPointIndex = 0
-	time = 0.0  # Reset time when initializing
+	time = 0.0
 
 func calculate_trajectory(_End: Vector2):
 	var DOT = Vector2(1.0, 0.0).dot((_End - _spawnPosition).normalized())
@@ -76,6 +71,18 @@ func calculate_trajectory(_End: Vector2):
 
 	return points
 
-func _on_eating_area_body_entered(body):
-	if body.name == "Enemy":
-		print("Eat me")
+func _start_eating_sequence():
+	SharedSignals.start_eating.emit()
+	_create_timer()
+
+func _create_timer():
+	var timer = Timer.new()
+	timer.wait_time = 5.0  # Duration of eating time
+	timer.one_shot = true
+	timer.timeout.connect(_can_move_again)
+	add_child(timer)
+	timer.start()
+
+func _can_move_again():
+	SharedSignals.can_move_again.emit()
+	queue_free()

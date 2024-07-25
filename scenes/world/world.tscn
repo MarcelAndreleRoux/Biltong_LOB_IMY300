@@ -21,46 +21,22 @@ width = 2.0
 default_color = Color(1, 1, 1, 0.0705882)
 
 [node name="Enemy" parent="." instance=ExtResource("2_t02x3")]
-position = Vector2(731, 186)
+position = Vector2(796, 115)
 
 [node name="Marker2D" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(922, 368)
+position = Vector2(1034, 113)
 
 [node name="Sprite2D" type="Sprite2D" parent="Marker2D"]
-position = Vector2(-2.86102e-06, -1.04904e-05)
-scale = Vector2(0.179687, 0.176479)
+position = Vector2(-3.8147e-06, 2.38419e-07)
+scale = Vector2(0.109375, 0.109375)
 texture = ExtResource("3_4y4xx")
 
 [node name="Marker2D2" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(654, 621)
+position = Vector2(501, 113)
 
 [node name="Sprite2D" type="Sprite2D" parent="Marker2D2"]
-position = Vector2(-2.86102e-06, -1.04904e-05)
-scale = Vector2(0.179687, 0.176479)
-texture = ExtResource("3_4y4xx")
-
-[node name="Marker2D3" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(343, 386)
-
-[node name="Sprite2D" type="Sprite2D" parent="Marker2D3"]
-position = Vector2(-2.86102e-06, -1.04904e-05)
-scale = Vector2(0.179687, 0.176479)
-texture = ExtResource("3_4y4xx")
-
-[node name="Marker2D4" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(617, 359)
-
-[node name="Sprite2D" type="Sprite2D" parent="Marker2D4"]
-position = Vector2(-2.86102e-06, -1.04904e-05)
-scale = Vector2(0.179687, 0.176479)
-texture = ExtResource("3_4y4xx")
-
-[node name="Marker2D5" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(624, 113)
-
-[node name="Sprite2D" type="Sprite2D" parent="Marker2D5"]
-position = Vector2(-2.86102e-06, -1.04904e-05)
-scale = Vector2(0.179687, 0.176479)
+position = Vector2(-3.8147e-06, 2.38419e-07)
+scale = Vector2(0.109375, 0.109375)
 texture = ExtResource("3_4y4xx")
 
 [node name="Door" parent="." instance=ExtResource("5_w5hph")]

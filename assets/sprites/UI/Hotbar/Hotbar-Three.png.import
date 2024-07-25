@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g10h8834v7pu"
-path="res://.godot/imported/Keycap-Icons.png-6692bf917d2f2dc0a21ffd1b448c2d67.ctex"
+uid="uid://b7o21rum8afij"
+path="res://.godot/imported/Hotbar-Three.png-8131937c260212be47e086c8979fd0ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/UI/Keycap-Icons.png"
-dest_files=["res://.godot/imported/Keycap-Icons.png-6692bf917d2f2dc0a21ffd1b448c2d67.ctex"]
+source_file="res://assets/sprites/UI/Hotbar/Hotbar-Three.png"
+dest_files=["res://.godot/imported/Hotbar-Three.png-8131937c260212be47e086c8979fd0ec.ctex"]
 
 [params]
 

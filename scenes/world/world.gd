@@ -12,6 +12,7 @@ var shadow: Sprite2D
 var points: Array = []
 
 var _isAiming: bool = false
+var g_distance
 
 @export var max_throw_distance: float = 500.0  # Maximum throw distance
 @export var min_throw_distance: float = 50.0   # Minimum throw distance
@@ -28,6 +29,9 @@ func _ready():
 
 func _physics_process(_delta):
 	_end = get_global_mouse_position()
+	
+	if Input.is_action_just_pressed("exit"):
+		get_tree().quit()
 	
 	if Input.is_action_just_pressed("aim"):
 		# Toggle aiming
@@ -73,6 +77,9 @@ func _throw_item():
 	SharedSignals.shadow_done.connect(_on_shadow_done)
 	
 	shadow = shadow_sprite
+	
+	var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())
+	place_marker_at_landing(landing_position)
 
 func calculate_trajectory():
 	# Getting dot product of the target (end position) - start (player position) to see if it is positive or negative
@@ -102,8 +109,32 @@ func calculate_trajectory():
 
 func _on_update_shadow(direction: Vector2, distance: float):
 	# this should be redone
+	g_distance = distance
+	
 	shadow.global_position = throw_start_position + direction * distance
 
 func _on_shadow_done():
-	# should be freed later
+	# Hide the shadow
 	shadow.hide()
+
+func calculate_landing_position(start_position: Vector2, direction: Vector2, target_position: Vector2) -> Vector2:
+	var distance = start_position.distance_to(target_position)
+	var gravity = -9.8
+	var angle = direction.angle()
+	var speed = sqrt((distance * -gravity) / sin(2 * angle))
+	var x_component = cos(angle) * speed
+	var y_component = sin(angle) * speed
+
+	var total_time = distance / x_component
+	var landing_position = start_position + direction * (x_component * total_time)
+	return landing_position
+
+func place_marker_at_landing(landing_position: Vector2):
+	var new_marker = Marker2D.new()
+	new_marker.name = "spawnable"
+	new_marker.global_position = landing_position
+	new_marker.add_to_group("FirstEnemy")
+
+	_main.add_child(new_marker)
+	
+	SharedSignals.new_marker.emit(new_marker)
