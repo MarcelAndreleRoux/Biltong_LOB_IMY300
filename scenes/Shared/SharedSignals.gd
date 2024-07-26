@@ -11,6 +11,10 @@ signal shadow_done
 
 # Door Signals
 signal doorState
+signal check_link
+signal found_link
+signal full_link
+signal full_link2
 
 # Enemy Signals
 signal start_eating

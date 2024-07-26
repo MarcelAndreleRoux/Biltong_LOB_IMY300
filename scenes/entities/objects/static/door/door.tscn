@@ -281,13 +281,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6hknn"]
 size = Vector2(32, 32)
 
-[node name="Door" type="StaticBody2D"]
+[node name="Door" type="StaticBody2D" node_paths=PackedStringArray("door_link")]
 script = ExtResource("1_c253f")
+door_side = "front"
+door_link = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7q40k")
-animation = &"bottom_open"
-frame = 6
+animation = &"front_open"
+frame = 7
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -296,3 +298,5 @@ shape = SubResource("RectangleShape2D_6hknn")
 [node name="open" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_wi7hy")
 volume_db = -11.267
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

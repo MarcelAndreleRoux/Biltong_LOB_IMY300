@@ -24,12 +24,12 @@ func _physics_process(delta):
 		return  # If eating, do not move
 
 	var distance_to_target = global_position.distance_to(current_position.global_position)
-	print("Distance to target: ", distance_to_target)
-	print("Enemy global_position: ", global_position)
-	print("Target global_position: ", current_position.global_position)
+	#print("Distance to target: ", distance_to_target)
+	#print("Enemy global_position: ", global_position)
+	#print("Target global_position: ", current_position.global_position)
 
 	if distance_to_target <= STOPPING_DISTANCE:
-		print("Reached target: ", current_position.name)
+		#print("Reached target: ", current_position.name)
 		global_position = current_position.global_position
 		_handle_reached_marker()
 	else:
@@ -52,11 +52,11 @@ func move_towards_position(delta):
 	var move_amount = direction * delta * speed  # Use speed for consistent movement
 	global_position += move_amount
 
-	print("Moving towards: ", current_position.name, " Position: ", global_position)
+	#print("Moving towards: ", current_position.name, " Position: ", global_position)
 
 	var distance_to_target = global_position.distance_to(current_position.global_position)
 	if distance_to_target <= STOPPING_DISTANCE:
-		print("Stopping at target: ", current_position.name)
+		#print("Stopping at target: ", current_position.name)
 		global_position = current_position.global_position
 		_handle_reached_marker()
 
@@ -64,7 +64,7 @@ func _update_direction():
 	# Only update direction if not eating
 	if not is_eating:
 		direction = (current_position.global_position - global_position).normalized()
-		print("Updating direction towards: ", current_position.global_position)
+		#print("Updating direction towards: ", current_position.global_position)
 
 func _handle_reached_marker():
 	direction = Vector2.ZERO
@@ -72,12 +72,12 @@ func _handle_reached_marker():
 	if current_position.name.begins_with("spawnable"):
 		var distance_to_food = global_position.distance_to(current_position.global_position)
 		if distance_to_food <= eating_distance:
-			print("Starting to eat at marker:", current_position.name)
+			#print("Starting to eat at marker:", current_position.name)
 			is_eating = true
 			SharedSignals.start_eating.emit()
 			_create_eating_timer()
 		else:
-			print("Too far to eat. Distance:", distance_to_food)
+			#print("Too far to eat. Distance:", distance_to_food)
 			_get_next_position()
 	else:
 		_get_next_position()

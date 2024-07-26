@@ -134,10 +134,10 @@ func _on_throw_reset_timeout():
 		else:
 			animation_tree["parameters/conditions/is_run"] = true
 
-	# Clean up the timer
-	var timer = $Timer
-	if timer != null:
-		timer.queue_free()
+	## Clean up the timer
+	#var timer = $Timer
+	#if timer != null:
+		#timer.queue_free()
 
 func _on_pickup_area_body_entered(_item: Node2D):
 	pass
