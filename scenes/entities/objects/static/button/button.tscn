@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://gocvqvrsvfso"]
+[gd_scene load_steps=11 format=3 uid="uid://gocvqvrsvfso"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/button/button.gd" id="1_hwqma"]
 [ext_resource type="Texture2D" uid="uid://cy0waipdsut21" path="res://assets/sprites/objects/static/pressure_plate/Presure-Plate.png" id="2_2oktm"]
+[ext_resource type="AudioStream" uid="uid://v0lsvvnheulk" path="res://assets/soundeffects/Button.wav" id="3_tuskx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bt5y0"]
 atlas = ExtResource("2_2oktm")
@@ -72,5 +73,9 @@ position = Vector2(0, -1)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_howdr")
 
-[connection signal="area_entered" from="ClickArea" to="." method="_on_click_area_area_entered"]
-[connection signal="area_exited" from="ClickArea" to="." method="_on_click_area_area_exited"]
+[node name="click" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_tuskx")
+volume_db = -19.066
+
+[connection signal="body_entered" from="ClickArea" to="." method="_on_click_area_body_entered"]
+[connection signal="body_exited" from="ClickArea" to="." method="_on_click_area_body_exited"]

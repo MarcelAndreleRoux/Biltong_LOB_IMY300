@@ -1,7 +1,8 @@
-[gd_scene load_steps=38 format=3 uid="uid://mgvermvy0d8e"]
+[gd_scene load_steps=39 format=3 uid="uid://mgvermvy0d8e"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/door/door.gd" id="1_c253f"]
 [ext_resource type="Texture2D" uid="uid://bptsjgrtlhoar" path="res://assets/sprites/objects/static/door/Door.png" id="2_nmxmq"]
+[ext_resource type="AudioStream" uid="uid://bmsi8kt7jdva3" path="res://assets/soundeffects/Door.wav" id="3_wi7hy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y8hpe"]
 atlas = ExtResource("2_nmxmq")
@@ -291,3 +292,7 @@ frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_6hknn")
+
+[node name="open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_wi7hy")
+volume_db = -11.267

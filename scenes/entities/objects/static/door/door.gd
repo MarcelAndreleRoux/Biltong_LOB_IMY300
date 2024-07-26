@@ -4,6 +4,7 @@ extends StaticBody2D
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var open = $open
 
 # False = closed | True = open
 var doorState: bool = false
@@ -28,10 +29,12 @@ func _on_door_stateChange(state: bool):
 	if state:
 		doorState = true
 		closed_check = false
+		open.play()
 		animated_sprite_2d.play(openString)
 		print("door should be open")
 	else: 
 		doorState = false
+		open.play()
 		animated_sprite_2d.play_backwards(openString)
 		
 		collision_shape_2d.visible = true

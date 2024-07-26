@@ -20,13 +20,13 @@ func _ready():
 	_get_next_position()
 
 func _physics_process(delta):
-	check_update_positions_with_new_marker_signal()
-
 	if is_eating:
 		return  # If eating, do not move
 
 	var distance_to_target = global_position.distance_to(current_position.global_position)
 	print("Distance to target: ", distance_to_target)
+	print("Enemy global_position: ", global_position)
+	print("Target global_position: ", current_position.global_position)
 
 	if distance_to_target <= STOPPING_DISTANCE:
 		print("Reached target: ", current_position.name)
@@ -61,26 +61,38 @@ func move_towards_position(delta):
 		_handle_reached_marker()
 
 func _update_direction():
-	# Set the direction directly to the target direction
-	direction = (current_position.global_position - global_position).normalized()
-	print("Updating direction towards: ", current_position.global_position)
+	# Only update direction if not eating
+	if not is_eating:
+		direction = (current_position.global_position - global_position).normalized()
+		print("Updating direction towards: ", current_position.global_position)
 
 func _handle_reached_marker():
+	direction = Vector2.ZERO
+
 	if current_position.name.begins_with("spawnable"):
 		var distance_to_food = global_position.distance_to(current_position.global_position)
 		if distance_to_food <= eating_distance:
+			print("Starting to eat at marker:", current_position.name)
 			is_eating = true
 			SharedSignals.start_eating.emit()
 			_create_eating_timer()
 		else:
-			print("Too far to eat. Distance: ", distance_to_food)
+			print("Too far to eat. Distance:", distance_to_food)
+			_get_next_position()
 	else:
 		_get_next_position()
 
 func _create_eating_timer():
-	# Start eating and set a timer to finish eating
+	var timer = Timer.new()
+	timer.wait_time = 5.0  # Duration of eating time
+	timer.one_shot = true
+	timer.timeout.connect(_can_move_again)
+	add_child(timer)
+	timer.start()
+
+func _can_move_again():
 	is_eating = false
-	_remove_current_marker()
+	SharedSignals.can_move_again.emit()
 	_get_next_position()
 
 func _remove_current_marker():

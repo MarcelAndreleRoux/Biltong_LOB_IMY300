@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=15 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_o3fq4"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="10_p7nds"]
 [ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="11_enco6"]
 [ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="13_55pb2"]
+[ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="14_wgi7m"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_o3fq4")
@@ -46,7 +47,7 @@ scale = Vector2(0.109375, 0.109375)
 texture = ExtResource("3_4y4xx")
 
 [node name="Marker2D2" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(501, 113)
+position = Vector2(541, 116)
 
 [node name="Sprite2D" type="Sprite2D" parent="Marker2D2"]
 position = Vector2(-3.8147e-06, 2.38419e-07)
@@ -151,6 +152,15 @@ flat = true
 [node name="Keycaps" type="CanvasLayer" parent="."]
 
 [node name="Mouse" type="CanvasLayer" parent="."]
+
+[node name="Escape" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Escape"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("14_wgi7m")
 
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
