@@ -9,8 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://dvoksyj3lo4a5" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Right.png" id="5_d25tc"]
 [ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="7_lrg10"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6luy"]
-size = Vector2(49, 48)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_38uif"]
+radius = 10.5
+height = 36.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n44n2"]
 radius = 134.093
@@ -529,8 +530,9 @@ texture = ExtResource("2_a700b")
 hframes = 21
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 0)
-shape = SubResource("RectangleShape2D_m6luy")
+position = Vector2(3, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_38uif")
 
 [node name="Wander" parent="." instance=ExtResource("2_gm0cl")]
 

@@ -44,7 +44,27 @@ func _start_eating():
 		should_eat = true
 		play_moving = false
 		SharedSignals.start_eating.emit()
-		# Optionally remove the marker here if needed
+		_create_eating_timer()
+
+		# Queue free the marker (projectile) once eating starts
+		target_marker.queue_free()
+		target_marker = null
+
+func _create_eating_timer():
+	var timer = Timer.new()
+	timer.wait_time = 5.0  # Duration of eating time
+	timer.one_shot = true
+	timer.timeout.connect(_can_move_again)
+	add_child(timer)
+	timer.start()
+
+func _can_move_again():
+	play_moving = true
+	should_eat = false
+	SharedSignals.can_move_again.emit()
+
+	# Optionally, remove the target_marker reference if still present
+	if target_marker:
 		target_marker.queue_free()
 		target_marker = null
 

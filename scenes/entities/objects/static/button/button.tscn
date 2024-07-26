@@ -52,10 +52,9 @@ radius = 8.0
 radius = 6.0
 height = 16.0
 
-[node name="Button" type="StaticBody2D" node_paths=PackedStringArray("door_link")]
+[node name="Button" type="StaticBody2D"]
 collision_layer = 0
 script = ExtResource("1_hwqma")
-door_link = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x55i4")

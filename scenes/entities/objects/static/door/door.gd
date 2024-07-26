@@ -1,14 +1,13 @@
 extends StaticBody2D
 
 @export var door_side: String
-@export var door_link: Node2D
+@export var door_link_id: String
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var open = $open
 
 var doorState: bool = false
-var button_link: Node2D
 
 var openString: String
 var closeString: String
@@ -25,25 +24,26 @@ func make_string():
 	closeString = str(door_side, "_closed")
 	animated_sprite_2d.play(closeString)
 
-func _on_door_stateChange(state: bool):
-	if state and door_link != null:
-		doorState = true
-		closed_check = false
-		open.play()
-		animated_sprite_2d.play(openString)
-		print("door should be open")
-	elif not state and door_link != null:
-		doorState = false
-		open.play()
-		animated_sprite_2d.play_backwards(openString)
-		print("door should be closed")
+func _on_door_stateChange(door_id: String, state: bool):
+	if door_id == door_link_id:
+		if state:
+			doorState = true
+			closed_check = false
+			open.play()
+			animated_sprite_2d.play(openString)
+		else:
+			doorState = false
+			open.play()
+			animated_sprite_2d.play_backwards(openString)
+	else:
+		print("Invalid link for this door. Expected:", door_link_id, "Got:", door_id)
 
-func _check_link(button: StaticBody2D, button_link: Node2D):
-	if door_link != null:
-		SharedSignals.found_link.emit(door_link, button_link)
+func _check_link(button: StaticBody2D, button_id: String):
+	if door_link_id == button_id:
+		SharedSignals.full_link.emit(button_id, door_link_id)
 
 func _on_animated_sprite_2d_animation_finished():
-	if doorState and door_link != null:
+	if doorState:
 		collision_shape_2d.disabled = true
 	else:
 		collision_shape_2d.disabled = false

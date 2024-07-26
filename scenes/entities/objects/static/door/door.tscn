@@ -281,10 +281,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6hknn"]
 size = Vector2(32, 32)
 
-[node name="Door" type="StaticBody2D" node_paths=PackedStringArray("door_link")]
+[node name="Door" type="StaticBody2D"]
 script = ExtResource("1_c253f")
 door_side = "front"
-door_link = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7q40k")
