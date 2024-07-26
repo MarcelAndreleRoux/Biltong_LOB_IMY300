@@ -148,6 +148,10 @@ size_flags_vertical = 6
 icon = ExtResource("13_55pb2")
 flat = true
 
+[node name="Keycaps" type="CanvasLayer" parent="."]
+
+[node name="Mouse" type="CanvasLayer" parent="."]
+
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
