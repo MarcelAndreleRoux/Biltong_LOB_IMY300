@@ -3,6 +3,8 @@ extends Node2D
 @onready var player = $Player
 @onready var trajectory_line = $TrajectoryLine
 @onready var game_pause = $GamePause
+@onready var keycaps = $Keycaps
+@onready var mouse = $Mouse
 
 var _main: Node2D
 var _end: Vector2
@@ -21,12 +23,17 @@ var g_distance
 var num_of_points: int = 50
 var gravity: float = -9.8
 
+var cantThrow: bool = false
 var throw_start_position: Vector2 = Vector2.ZERO
 
 func _ready():
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().root.get_node("World")
 	_projectileScene = preload("res://scenes/entities/objects/throwables/tester_object.tscn")
+	SharedSignals.cooldown_start.connect(_on_cooldown)
+	SharedSignals.new_marker.connect(_on_new_marker)
+	SharedSignals.item_removed.connect(_dislpay_mouse)
+	_display_keycaps_start()
 
 func _physics_process(_delta):
 	_end = get_global_mouse_position()
@@ -41,15 +48,31 @@ func _physics_process(_delta):
 		if _isAiming:
 			calculate_trajectory()
 		
-	if Input.is_action_just_pressed("throw") and _isAiming:
+	if Input.is_action_just_pressed("throw") and _isAiming and not cantThrow:
 		_throw_item()
 
 	if _isAiming:
 		calculate_trajectory()
 
-func _throw_item():
-	var instance = _projectileScene.instantiate()
+func _on_cooldown():
+	cantThrow = true
+	var cooldown_timer = Timer.new()
+	cooldown_timer.wait_time = 12.0  # 10-second cooldown
+	cooldown_timer.one_shot = true
+	cooldown_timer.timeout.connect(_end_cooldown)
+	add_child(cooldown_timer)
+	cooldown_timer.start()
+	SharedSignals.cooldown_start_other.emit()
 
+func _end_cooldown():
+	cantThrow = false
+	SharedSignals.cooldown_end_other.emit()
+
+func _throw_item():
+	if cantThrow:
+		return  # Prevent throwing if cooldown is active
+
+	var instance = _projectileScene.instantiate()
 	throw_start_position = player.global_position
 
 	var playerPosition = throw_start_position
@@ -57,7 +80,6 @@ func _throw_item():
 	var direction = (mousePosition - playerPosition).normalized()
 
 	instance.initialize(playerPosition, direction, 0, mousePosition)
-
 	_main.add_child(instance)
 	
 	var shadow_sprite = Sprite2D.new()
@@ -68,9 +90,12 @@ func _throw_item():
 
 	SharedSignals.shadow_update.connect(_on_update_shadow)
 	SharedSignals.shadow_done.connect(_on_shadow_done)
-	
 	shadow = shadow_sprite
-	
+
+	# Trigger the cooldown
+	SharedSignals.cooldown_start.emit()
+
+	# Calculate and place the marker at the landing position
 	var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())
 	place_marker_at_landing(landing_position)
 
@@ -118,7 +143,7 @@ func calculate_landing_position(start_position: Vector2, direction: Vector2, tar
 
 func place_marker_at_landing(landing_position: Vector2):
 	var new_marker = Marker2D.new()
-	new_marker.name = "spawnable"
+	new_marker.name = "Projectilespawnable"
 	new_marker.global_position = landing_position
 	new_marker.add_to_group("FirstEnemy")
 
@@ -126,3 +151,31 @@ func place_marker_at_landing(landing_position: Vector2):
 	
 	SharedSignals.new_marker.emit(new_marker)
 	print("New marker placed at: ", landing_position)
+
+func _on_new_marker(marker: Marker2D):
+	# Handle new marker placement logic if needed
+	print("Marker registered: ", marker.global_position)
+
+func _display_keycaps_start():
+	keycaps.visible = true
+	var timer = Timer.new()
+	timer.wait_time = 5.0  # 10-second cooldown
+	timer.one_shot = true
+	timer.timeout.connect(_end_timer)
+	add_child(timer)
+	timer.start()
+
+func _end_timer():
+	keycaps.visible = false
+
+func _dislpay_mouse():
+	mouse.visible = true
+	var timer = Timer.new()
+	timer.wait_time = 5.0  # 10-second cooldown
+	timer.one_shot = true
+	timer.timeout.connect(_end_timer_mouse)
+	add_child(timer)
+	timer.start()
+
+func _end_timer_mouse():
+	mouse.visible = false

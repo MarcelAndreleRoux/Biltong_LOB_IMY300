@@ -101,4 +101,4 @@ func _create_timer():
 
 func _can_move_again():
 	SharedSignals.can_move_again.emit()
-	self.queue_free()
+	queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://wdw24tbqrqxv"]
+[gd_scene load_steps=70 format=3 uid="uid://wdw24tbqrqxv"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_3avnw"]
 [ext_resource type="Texture2D" uid="uid://cr80tfvpf61v2" path="res://assets/sprites/player/idle/normal/idle_left.png" id="2_a82sk"]
@@ -16,8 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://bojgtgonqt78v" path="res://assets/sprites/player/run/throw/run_throw_left.png" id="13_r0074"]
 [ext_resource type="AudioStream" uid="uid://oj8lrlmic0u1" path="res://assets/soundeffects/Player-Run.wav" id="15_yxcqh"]
 [ext_resource type="AudioStream" uid="uid://b87li477jh1w4" path="res://assets/soundeffects/Throw.mp3" id="16_b2h5t"]
-[ext_resource type="AudioStream" uid="uid://boju7o3jsivhy" path="res://assets/soundeffects/Item-Pickup.wav" id="16_twola"]
-[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="16_yo23e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_atsr3"]
 size = Vector2(5, 4)
@@ -1178,6 +1176,7 @@ position = Vector2(-0.5, -2)
 shape = SubResource("RectangleShape2D_atsr3")
 
 [node name="PickupArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 position = Vector2(0, -0.5)
@@ -1215,16 +1214,21 @@ stream = ExtResource("15_yxcqh")
 volume_db = -18.2
 
 [node name="pickup" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("16_twola")
-
-[node name="error" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("16_yo23e")
-volume_db = -17.333
 
 [node name="throw" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_b2h5t")
 volume_db = -15.0
 
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -12.0
+offset_top = 5.0
+offset_right = 12.0
+offset_bottom = 9.0
+value = 100.0
+fill_mode = 1
+show_percentage = false
+
+[node name="ResetTimer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
-[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
-[connection signal="finished" from="pickup" to="." method="_on_pickup_finished"]

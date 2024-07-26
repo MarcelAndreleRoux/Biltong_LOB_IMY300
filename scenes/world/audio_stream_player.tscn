@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctbl3sokmebn3"]
+
+[ext_resource type="AudioStream" uid="uid://bxo10ssf6ujxe" path="res://assets/music/Fez - Original Game Soundtrack - Puzzle [HD].mp3" id="1_de8uj"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_de8uj")
+volume_db = -30.0
+autoplay = true

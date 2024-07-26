@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=18 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_o3fq4"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="5_w5hph"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="6_q0hj8"]
 [ext_resource type="Texture2D" uid="uid://jjql7fm0fvxk" path="res://assets/sprites/UI/Hotbar/single_has_mushroom_hotbar.png" id="7_7sdmm"]
-[ext_resource type="Script" path="res://scenes/world/Inventory.gd" id="7_q034l"]
 [ext_resource type="Texture2D" uid="uid://bnircidswo03v" path="res://assets/sprites/UI/Hotbar/single_selected_mushroom_hotbar.png" id="8_wall4"]
 [ext_resource type="Texture2D" uid="uid://d4fceoimr8dg5" path="res://assets/sprites/UI/Hotbar/single_hotbar.png" id="9_p3btm"]
 [ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="10_60gu4"]
@@ -17,13 +16,6 @@
 [ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="14_374d5"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="14_wgi7m"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="15_r4v23"]
-[ext_resource type="Texture2D" uid="uid://b1dlss2bmb2l3" path="res://assets/sprites/UI/Keycaps/Keycaps-W.png" id="16_6n2dx"]
-[ext_resource type="PackedScene" uid="uid://b0p00babbt0tb" path="res://scenes/entities/objects/throwables/food.tscn" id="17_hob8t"]
-[ext_resource type="Texture2D" uid="uid://dw3p3ognw52kx" path="res://assets/sprites/UI/Keycaps/Keycaps_A.png" id="17_y3teg"]
-[ext_resource type="Texture2D" uid="uid://d07mo5cvixahe" path="res://assets/sprites/UI/Keycaps/Keycaps-S.png" id="18_ary2y"]
-[ext_resource type="Texture2D" uid="uid://bocxbuatv3htb" path="res://assets/sprites/UI/Keycaps/Keycaps-D.png" id="19_qqsdr"]
-[ext_resource type="Texture2D" uid="uid://cb21ls7xc0kej" path="res://assets/sprites/UI/Mouse/Aim.png" id="20_diipk"]
-[ext_resource type="Texture2D" uid="uid://dej73xmk4mfeg" path="res://assets/sprites/UI/Mouse/Throw.png" id="21_u5gpb"]
 
 [sub_resource type="TileSet" id="TileSet_06m28"]
 physics_layer_0/collision_layer = 1
@@ -86,7 +78,6 @@ collision_mask = 59
 door_link_id = "123"
 
 [node name="Inventory" type="CanvasLayer" parent="."]
-script = ExtResource("7_q034l")
 
 [node name="GridContainer" type="GridContainer" parent="Inventory"]
 anchors_preset = 7
@@ -107,9 +98,8 @@ columns = 3
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 6
-toggle_mode = true
-texture_normal = ExtResource("9_p3btm")
-texture_pressed = ExtResource("7_7sdmm")
+texture_normal = ExtResource("7_7sdmm")
+texture_pressed = ExtResource("8_wall4")
 texture_disabled = ExtResource("9_p3btm")
 texture_focused = ExtResource("8_wall4")
 
@@ -117,14 +107,12 @@ texture_focused = ExtResource("8_wall4")
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-toggle_mode = true
 texture_normal = ExtResource("9_p3btm")
 
 [node name="TextureButton3" type="TextureButton" parent="Inventory/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 6
-toggle_mode = true
 texture_normal = ExtResource("9_p3btm")
 
 [node name="GamePause" type="CanvasLayer" parent="."]
@@ -185,58 +173,8 @@ flat = true
 stream = ExtResource("14_374d5")
 
 [node name="Keycaps" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="W" type="TextureRect" parent="Keycaps"]
-offset_left = 236.0
-offset_top = 138.0
-offset_right = 252.0
-offset_bottom = 154.0
-texture = ExtResource("16_6n2dx")
-stretch_mode = 2
-
-[node name="A" type="TextureRect" parent="Keycaps"]
-offset_left = 215.0
-offset_top = 159.0
-offset_right = 231.0
-offset_bottom = 175.0
-texture = ExtResource("17_y3teg")
-stretch_mode = 2
-
-[node name="S" type="TextureRect" parent="Keycaps"]
-offset_left = 257.0
-offset_top = 159.0
-offset_right = 273.0
-offset_bottom = 175.0
-texture = ExtResource("18_ary2y")
-stretch_mode = 2
-
-[node name="D" type="TextureRect" parent="Keycaps"]
-offset_left = 236.0
-offset_top = 179.0
-offset_right = 252.0
-offset_bottom = 195.0
-texture = ExtResource("19_qqsdr")
-stretch_mode = 2
 
 [node name="Mouse" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="Aim" type="TextureRect" parent="Mouse"]
-offset_left = 263.0
-offset_top = 136.0
-offset_right = 279.0
-offset_bottom = 168.0
-texture = ExtResource("20_diipk")
-stretch_mode = 2
-
-[node name="Throw" type="TextureRect" parent="Mouse"]
-offset_left = 202.0
-offset_top = 137.0
-offset_right = 234.0
-offset_bottom = 169.0
-texture = ExtResource("21_u5gpb")
-stretch_mode = 2
 
 [node name="Escape" type="CanvasLayer" parent="."]
 
@@ -246,7 +184,6 @@ offset_top = 8.0
 offset_right = 24.0
 offset_bottom = 24.0
 texture = ExtResource("14_wgi7m")
-stretch_mode = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(243, 172)
@@ -254,9 +191,6 @@ position = Vector2(243, 172)
 [node name="Box" parent="." instance=ExtResource("15_r4v23")]
 position = Vector2(342, 207)
 collision_layer = 36
-
-[node name="Food" parent="." instance=ExtResource("17_hob8t")]
-position = Vector2(255, 252)
 
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]

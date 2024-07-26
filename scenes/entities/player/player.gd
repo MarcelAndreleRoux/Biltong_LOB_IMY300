@@ -4,6 +4,8 @@ signal update_health(health: int, position: Vector2)
 signal update_inventory(item: String)
 
 @onready var animation_tree = $AnimationTree
+@onready var error = $error
+@onready var pickup = $pickup
 
 var currentVelocity: Vector2
 var speed: int = 150
@@ -11,6 +13,7 @@ var speed: int = 150
 var is_aiming: bool = false
 var has_throw: bool = false
 var direction: Vector2 = Vector2.ZERO
+var cantThrow: bool = false
 
 #var _itemToPickUp: Node2D
 # Used to know what item is selected to be thrown
@@ -21,6 +24,8 @@ var direction: Vector2 = Vector2.ZERO
 
 func _ready():
 	animation_tree.active = true
+	SharedSignals.cooldown_start_other.connect(_start_throw_cooldown)
+	SharedSignals.cooldown_end_other.connect(_end_throw_cooldown)
 
 func _handle_damage_player(_damage_amount: int):
 	pass
@@ -51,18 +56,29 @@ func _handle_input():
 	direction = currentVelocity.normalized()
 	currentVelocity *= speed
 
+func _start_throw_cooldown():
+	cantThrow = true
+
+func _end_throw_cooldown():
+	cantThrow = false
+
 func _update_animation_parameters():
 	# Handle aim toggling
 	if Input.is_action_just_pressed("aim"):
 		is_aiming = not is_aiming
 	
 	# Handle throwing action
-	if Input.is_action_just_pressed("throw") and is_aiming:
-		has_throw = true
-		_play_throw_animation()
-	else:
-		has_throw = false
-		_play_movement_animation()
+	if not cantThrow:
+		if Input.is_action_just_pressed("throw") and is_aiming:
+			_play_throw_animation()
+		else:
+			has_throw = false
+			_play_movement_animation()
+	elif cantThrow and has_throw:
+		if Input.is_action_just_pressed("throw") and is_aiming  and has_throw:
+			error.play()
+		elif Input.is_action_just_pressed("throw") and has_throw:
+			error.play()
 
 	# Update blend positions for animations
 	if direction != Vector2.ZERO:
@@ -75,6 +91,7 @@ func _update_animation_parameters():
 
 func _play_movement_animation():
 	# Movement
+	has_throw = true
 	if velocity == Vector2.ZERO:
 		if is_aiming:
 			animation_tree["parameters/conditions/is_idle_aim"] = true
@@ -139,9 +156,13 @@ func _on_throw_reset_timeout():
 	#if timer != null:
 		#timer.queue_free()
 
-func _on_pickup_area_body_entered(_item: Node2D):
-	pass
-	#if item:
-		#_itemToPickUp = item
-		#_selectedItem = item
+func _on_pickup_area_body_entered(body):
+	if body.name == "Food":
+		pickup.play()
 
+func _on_pickup_finished():
+	SharedSignals.pickedup_item.emit()
+
+func _on_pickup_area_area_entered(area):
+	if area.name == "Food":
+		pickup.play()

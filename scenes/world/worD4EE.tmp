@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=24 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_o3fq4"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
@@ -22,8 +22,6 @@
 [ext_resource type="Texture2D" uid="uid://dw3p3ognw52kx" path="res://assets/sprites/UI/Keycaps/Keycaps_A.png" id="17_y3teg"]
 [ext_resource type="Texture2D" uid="uid://d07mo5cvixahe" path="res://assets/sprites/UI/Keycaps/Keycaps-S.png" id="18_ary2y"]
 [ext_resource type="Texture2D" uid="uid://bocxbuatv3htb" path="res://assets/sprites/UI/Keycaps/Keycaps-D.png" id="19_qqsdr"]
-[ext_resource type="Texture2D" uid="uid://cb21ls7xc0kej" path="res://assets/sprites/UI/Mouse/Aim.png" id="20_diipk"]
-[ext_resource type="Texture2D" uid="uid://dej73xmk4mfeg" path="res://assets/sprites/UI/Mouse/Throw.png" id="21_u5gpb"]
 
 [sub_resource type="TileSet" id="TileSet_06m28"]
 physics_layer_0/collision_layer = 1
@@ -220,23 +218,6 @@ texture = ExtResource("19_qqsdr")
 stretch_mode = 2
 
 [node name="Mouse" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="Aim" type="TextureRect" parent="Mouse"]
-offset_left = 263.0
-offset_top = 136.0
-offset_right = 279.0
-offset_bottom = 168.0
-texture = ExtResource("20_diipk")
-stretch_mode = 2
-
-[node name="Throw" type="TextureRect" parent="Mouse"]
-offset_left = 202.0
-offset_top = 137.0
-offset_right = 234.0
-offset_bottom = 169.0
-texture = ExtResource("21_u5gpb")
-stretch_mode = 2
 
 [node name="Escape" type="CanvasLayer" parent="."]
 

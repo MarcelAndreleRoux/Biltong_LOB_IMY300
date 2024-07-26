@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://3ybd1h5hqi4"]
+
+[ext_resource type="Texture2D" uid="uid://bgmachaejnlbs" path="res://assets/sprites/objects/static/box/Box.png" id="1_r7u5v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6ogj"]
+atlas = ExtResource("1_r7u5v")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igt80"]
+atlas = ExtResource("1_r7u5v")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qbh86"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6ogj")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igt80")
+}],
+"loop": false,
+"name": &"near_box",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kwl1v"]
+size = Vector2(12, 12)
+
+[node name="Box" type="RigidBody2D" groups=["object"]]
+collision_layer = 4
+collision_mask = 31
+gravity_scale = 0.0
+linear_damp = 50.0
+angular_damp = 50.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qbh86")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kwl1v")
