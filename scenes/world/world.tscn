@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=14 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_o3fq4"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
@@ -6,6 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="3_4y4xx"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="5_w5hph"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="6_q0hj8"]
+[ext_resource type="Texture2D" uid="uid://jjql7fm0fvxk" path="res://assets/sprites/UI/Hotbar/single_has_mushroom_hotbar.png" id="7_7sdmm"]
+[ext_resource type="Texture2D" uid="uid://bnircidswo03v" path="res://assets/sprites/UI/Hotbar/single_selected_mushroom_hotbar.png" id="8_wall4"]
+[ext_resource type="Texture2D" uid="uid://d4fceoimr8dg5" path="res://assets/sprites/UI/Hotbar/single_hotbar.png" id="9_p3btm"]
+[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="10_60gu4"]
+[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="10_p7nds"]
+[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="11_enco6"]
+[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="13_55pb2"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_o3fq4")
@@ -13,8 +20,15 @@ script = ExtResource("1_o3fq4")
 [node name="TileMap" type="TileMap" parent="."]
 format = 2
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(243, 172)
+zoom = Vector2(2.5, 2.5)
+
 [node name="Player" parent="." instance=ExtResource("1_qoat8")]
 position = Vector2(243, 172)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
 width = 2.0
@@ -45,3 +59,95 @@ door_side = "front"
 
 [node name="Button" parent="." instance=ExtResource("6_q0hj8")]
 position = Vector2(169, 333)
+
+[node name="Inventory" type="CanvasLayer" parent="."]
+
+[node name="GridContainer" type="GridContainer" parent="Inventory"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 88.0
+grow_vertical = 0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+columns = 3
+
+[node name="TextureButton" type="TextureButton" parent="Inventory/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 6
+texture_normal = ExtResource("7_7sdmm")
+texture_pressed = ExtResource("8_wall4")
+texture_disabled = ExtResource("9_p3btm")
+texture_focused = ExtResource("8_wall4")
+
+[node name="TextureButton2" type="TextureButton" parent="Inventory/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture_normal = ExtResource("9_p3btm")
+
+[node name="TextureButton3" type="TextureButton" parent="Inventory/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 6
+texture_normal = ExtResource("9_p3btm")
+
+[node name="GamePause" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("10_60gu4")
+
+[node name="Panel" type="Panel" parent="GamePause"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer3" type="GridContainer" parent="GamePause/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -20.0
+offset_right = 74.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
+layout_mode = 2
+columns = 2
+
+[node name="resume" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("10_p7nds")
+flat = true
+
+[node name="restart" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("11_enco6")
+flat = true
+
+[node name="GridContainer2" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
+layout_mode = 2
+
+[node name="exit" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("13_55pb2")
+flat = true
+
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]

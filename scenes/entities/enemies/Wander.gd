@@ -12,13 +12,18 @@ const STOPPING_DISTANCE = 10
 
 func _ready():
 	positions = get_tree().get_nodes_in_group(group_name)
+	_sort_positions()
 	_get_positions()
 	_get_next_position()
 
 func _physics_process(delta):
 	check_update_positions_with_new_marker_signal()
 
-	if global_position.distance_to(current_position.global_position) <= STOPPING_DISTANCE:
+	var distance_to_target = global_position.distance_to(current_position.global_position)
+	#print("Distance to target: ", distance_to_target)
+
+	if distance_to_target <= STOPPING_DISTANCE:
+		#print("Reached target: ", current_position.name)
 		global_position = current_position.global_position
 		_get_next_position()
 	else:
@@ -37,17 +42,22 @@ func _get_next_position():
 	_update_direction()
 
 func move_towards_position(delta):
-	var target_position = current_position.global_position
-	var move_amount = direction * delta  # Scale movement by a speed factor
+	_update_direction()
+	var move_amount = direction * delta * 50  # Scale movement by a speed factor
 	global_position += move_amount
 
-	if global_position.distance_to(target_position) <= STOPPING_DISTANCE:
-		global_position = target_position
+	#print("Moving towards: ", current_position.name, " Position: ", global_position)
+
+	var distance_to_target = global_position.distance_to(current_position.global_position)
+	if distance_to_target <= STOPPING_DISTANCE:
+		#print("Stopping at target: ", current_position.name)
+		global_position = current_position.global_position
 		_get_next_position()
 
 func _update_direction():
 	var target_direction = (current_position.global_position - global_position).normalized()
-	direction = direction.move_toward(target_direction, 1.0)  # Ensure full direction change
+	#print("Updating direction towards: ", current_position.global_position)
+	direction = target_direction
 
 func _sort_positions():
 	var spawnable_markers = []
@@ -55,6 +65,7 @@ func _sort_positions():
 
 	for marker in positions:
 		if marker.name.begins_with("spawnable"):
+			print("yes")
 			spawnable_markers.append(marker)
 		else:
 			regular_markers.append(marker)

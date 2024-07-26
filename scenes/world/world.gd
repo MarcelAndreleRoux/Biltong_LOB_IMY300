@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var player = $Player
 @onready var trajectory_line = $TrajectoryLine
+@onready var game_pause = $GamePause
 
 var _main: Node2D
 var _end: Vector2
@@ -31,7 +32,7 @@ func _physics_process(_delta):
 	_end = get_global_mouse_position()
 	
 	if Input.is_action_just_pressed("exit"):
-		get_tree().quit()
+		game_pause.game_over()
 	
 	if Input.is_action_just_pressed("aim"):
 		# Toggle aiming
@@ -130,8 +131,11 @@ func calculate_landing_position(start_position: Vector2, direction: Vector2, tar
 	return landing_position
 
 func place_marker_at_landing(landing_position: Vector2):
+	print("marker placed")
+	
 	var new_marker = Marker2D.new()
 	new_marker.name = "spawnable"
+	var new_sprite = Sprite2D.new()
 	new_marker.global_position = landing_position
 	new_marker.add_to_group("FirstEnemy")
 

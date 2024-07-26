@@ -906,7 +906,7 @@ states/run_throw/position = Vector2(633, 388)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pcgw8"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_7obb7"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8e435"), "idle_aim", "run_aim", SubResource("AnimationNodeStateMachineTransition_b8nng"), "run_aim", "idle_aim", SubResource("AnimationNodeStateMachineTransition_0w5i3"), "idle", "idle_aim", SubResource("AnimationNodeStateMachineTransition_6r02k"), "idle_aim", "idle", SubResource("AnimationNodeStateMachineTransition_fvqkp"), "run", "run_aim", SubResource("AnimationNodeStateMachineTransition_e7g8d"), "run_aim", "run", SubResource("AnimationNodeStateMachineTransition_4vojj"), "idle_aim", "idle_throw", SubResource("AnimationNodeStateMachineTransition_t3xt5"), "run_aim", "run_throw", SubResource("AnimationNodeStateMachineTransition_uccsp"), "run_throw", "run", SubResource("AnimationNodeStateMachineTransition_f6q61"), "run_throw", "idle", SubResource("AnimationNodeStateMachineTransition_4ibk3"), "idle_throw", "idle", SubResource("AnimationNodeStateMachineTransition_fgh4t"), "idle_throw", "run", SubResource("AnimationNodeStateMachineTransition_0f6b7"), "idle_throw", "idle_aim", SubResource("AnimationNodeStateMachineTransition_84utv"), "run_throw", "run_aim", SubResource("AnimationNodeStateMachineTransition_fvmwh")]
 graph_offset = Vector2(-131.034, -27.4715)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 z_index = 2
 script = ExtResource("1_3avnw")
 

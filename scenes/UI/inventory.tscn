@@ -1,0 +1,90 @@
+[gd_scene load_steps=12 format=3 uid="uid://bp7ivp7c0j0tp"]
+
+[ext_resource type="Texture2D" uid="uid://bubb36t4lpk4y" path="res://assets/sprites/UI/Hotbar/Hotbar-Base.png" id="1_85g6n"]
+[ext_resource type="Texture2D" uid="uid://b7o21rum8afij" path="res://assets/sprites/UI/Hotbar/Hotbar-Three.png" id="2_18pq8"]
+[ext_resource type="Texture2D" uid="uid://b18ps7evp5j4c" path="res://assets/sprites/UI/Hotbar/Hotbar-One.png" id="2_tmhmx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ydjx"]
+atlas = ExtResource("2_tmhmx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxp8d"]
+atlas = ExtResource("2_18pq8")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1e1xk"]
+atlas = ExtResource("1_85g6n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xsmjo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ydjx")
+}],
+"loop": false,
+"name": &"mushroom",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxp8d")
+}],
+"loop": false,
+"name": &"mushroom_selected",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1e1xk")
+}],
+"loop": false,
+"name": &"no_item",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5yht"]
+atlas = ExtResource("1_85g6n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bsxm4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5yht")
+}],
+"loop": false,
+"name": &"no_item",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74y0g"]
+atlas = ExtResource("1_85g6n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wdmj0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74y0g")
+}],
+"loop": false,
+"name": &"no_item",
+"speed": 5.0
+}]
+
+[node name="Inventory" type="Node2D"]
+
+[node name="ItemOne" type="AnimatedSprite2D" parent="."]
+position = Vector2(-16, 0)
+sprite_frames = SubResource("SpriteFrames_xsmjo")
+animation = &"mushroom"
+
+[node name="ItemTwo" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bsxm4")
+animation = &"no_item"
+
+[node name="ItemThree" type="AnimatedSprite2D" parent="."]
+position = Vector2(16, 0)
+sprite_frames = SubResource("SpriteFrames_wdmj0")
+animation = &"no_item"

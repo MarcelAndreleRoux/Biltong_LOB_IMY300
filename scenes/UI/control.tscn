@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://cflxkbaa0k0kc"]
+
+[ext_resource type="Script" path="res://Control.gd" id="1_8d3qe"]
+[ext_resource type="Texture2D" uid="uid://d4fceoimr8dg5" path="res://assets/sprites/UI/Hotbar/single_hotbar.png" id="2_qcrhy"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8d3qe")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -66.0
+offset_right = 139.0
+grow_vertical = 0
+columns = 3
+
+[node name="Food" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 6
+icon = ExtResource("2_qcrhy")
+flat = true
+
+[node name="Fire" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("2_qcrhy")
+flat = true
+
+[node name="Water" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 6
+icon = ExtResource("2_qcrhy")
+flat = true

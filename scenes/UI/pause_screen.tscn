@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://bymr0sr6yv2a7"]
+
+[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="1_ti6ds"]
+[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="2_368ap"]
+
+[node name="PauseScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="Button" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("1_ti6ds")
+flat = true
+
+[node name="Button2" type="Button" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("2_368ap")
+flat = true

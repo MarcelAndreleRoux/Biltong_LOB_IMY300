@@ -17,7 +17,7 @@ var time_mult: float = 6.0
 func _ready():
 	global_position = _spawnPosition
 	global_rotation = _spawnRotation
-	print("Projectile initialized at position: ", global_position)
+	#print("Projectile initialized at position: ", global_position)
 
 func _physics_process(delta: float):
 	if _trajectoryPoints != null and _currentPointIndex < _trajectoryPoints.size():
@@ -85,4 +85,4 @@ func _create_timer():
 
 func _can_move_again():
 	SharedSignals.can_move_again.emit()
-	queue_free()
+	self.queue_free()
