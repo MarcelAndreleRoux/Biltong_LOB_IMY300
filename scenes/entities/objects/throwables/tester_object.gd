@@ -72,8 +72,8 @@ func calculate_trajectory(_End: Vector2):
 	return points
 
 func _start_eating_sequence():
-	SharedSignals.start_eating.emit()
 	_create_timer()
+	SharedSignals.start_eating.emit()
 
 func _create_timer():
 	var timer = Timer.new()
