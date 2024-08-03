@@ -84,6 +84,7 @@ func _create_eating_timer():
 
 func _can_be_eaten():
 	can_be_eaten = true
+	_start_eating_sequence()
 
 func _start_eating_sequence():
 	# Ensure this function only proceeds if the item can be eaten

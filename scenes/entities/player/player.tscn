@@ -1,9 +1,8 @@
-[gd_scene load_steps=72 format=3 uid="uid://wdw24tbqrqxv"]
+[gd_scene load_steps=71 format=3 uid="uid://wdw24tbqrqxv"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_3avnw"]
 [ext_resource type="Texture2D" uid="uid://cr80tfvpf61v2" path="res://assets/sprites/player/idle/normal/idle_left.png" id="2_a82sk"]
 [ext_resource type="Texture2D" uid="uid://27xp53nfu7p8" path="res://assets/sprites/player/idle/normal/idle_right.png" id="2_cvxxc"]
-[ext_resource type="PackedScene" uid="uid://cawwygpn7f3vw" path="res://scenes/entities/player/arrow.tscn" id="4_ycm23"]
 [ext_resource type="Texture2D" uid="uid://uurgovmb7rws" path="res://assets/sprites/player/idle/aim/idle_aim_left.png" id="5_otdpo"]
 [ext_resource type="Texture2D" uid="uid://d2ng55aw8ovg5" path="res://assets/sprites/player/idle/aim/idle_aim_right.png" id="6_b8jwo"]
 [ext_resource type="Texture2D" uid="uid://dbys2vwc2iidr" path="res://assets/sprites/player/idle/throw/idle_throw_left.png" id="7_b88ma"]
@@ -1173,6 +1172,8 @@ texture = ExtResource("2_a82sk")
 offset = Vector2(0, -5)
 hframes = 6
 
+[node name="Line2D" type="Line2D" parent="."]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -2)
 shape = SubResource("RectangleShape2D_atsr3")
@@ -1182,8 +1183,6 @@ shape = SubResource("RectangleShape2D_atsr3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_fmtvb")
-
-[node name="Arrow" parent="." instance=ExtResource("4_ycm23")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

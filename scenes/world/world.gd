@@ -13,9 +13,10 @@ var _projectileScene: PackedScene
 var shadow_texture: Texture
 var shadow: Sprite2D
 var points: Array = []
+var throw_start_position: Vector2
 
 var _isAiming: bool = false
-var g_distance
+var is_on_cooldown: bool = false
 
 @export var max_throw_distance: float = 500.0
 @export var min_throw_distance: float = 50.0
@@ -23,16 +24,11 @@ var g_distance
 var num_of_points: int = 50
 var gravity: float = -9.8
 
-var cantThrow: bool = false
-var throw_start_position: Vector2 = Vector2.ZERO
-
 func _ready():
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().root.get_node("World")
 	_projectileScene = preload("res://scenes/entities/objects/throwables/tester_object.tscn")
-	SharedSignals.cooldown_start.connect(_on_cooldown)
 	SharedSignals.new_marker.connect(_on_new_marker)
-	SharedSignals.item_removed.connect(_dislpay_mouse)
 	_display_keycaps_start()
 
 func _physics_process(_delta):
@@ -41,37 +37,23 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
 		game_pause.game_over()
 	
-	if Input.is_action_just_pressed("aim"):
-		_isAiming = not _isAiming
-		trajectory_line.visible = _isAiming
-
-		if _isAiming:
-			calculate_trajectory()
-		
-	if Input.is_action_just_pressed("throw") and _isAiming and not cantThrow:
-		_throw_item()
+	if Input.is_action_pressed("aim") and not is_on_cooldown:
+		_isAiming = true
+	elif Input.is_action_just_released("aim"):
+		_isAiming = false
+	
+	trajectory_line.visible = _isAiming
 
 	if _isAiming:
 		calculate_trajectory()
-
-func _on_cooldown():
-	cantThrow = true
-	var cooldown_timer = Timer.new()
-	cooldown_timer.wait_time = 12.0  # 10-second cooldown
-	cooldown_timer.one_shot = true
-	cooldown_timer.timeout.connect(_end_cooldown)
-	add_child(cooldown_timer)
-	cooldown_timer.start()
-	SharedSignals.cooldown_start_other.emit()
-
-func _end_cooldown():
-	cantThrow = false
-	SharedSignals.cooldown_end_other.emit()
+		
+	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
+		_isAiming = false
+		trajectory_line.visible = false
+		_throw_item()
+		_start_cooldown_timer()
 
 func _throw_item():
-	if cantThrow:
-		return  # Prevent throwing if cooldown is active
-
 	var instance = _projectileScene.instantiate()
 	throw_start_position = player.global_position
 
@@ -92,12 +74,21 @@ func _throw_item():
 	SharedSignals.shadow_done.connect(_on_shadow_done)
 	shadow = shadow_sprite
 
-	# Trigger the cooldown
-	SharedSignals.cooldown_start.emit()
-
 	# Calculate and place the marker at the landing position
 	var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())
 	place_marker_at_landing(landing_position)
+
+func _start_cooldown_timer():
+	is_on_cooldown = true
+	var cooldown_timer = Timer.new()
+	cooldown_timer.wait_time = 5.0
+	cooldown_timer.one_shot = true
+	cooldown_timer.timeout.connect(_end_cooldown)
+	add_child(cooldown_timer)
+	cooldown_timer.start()
+
+func _end_cooldown():
+	is_on_cooldown = false
 
 func calculate_trajectory():
 	var DOT = Vector2(1.0, 0.0).dot((_end - player.position).normalized())
@@ -123,7 +114,6 @@ func calculate_trajectory():
 	trajectory_line.points = points
 
 func _on_update_shadow(direction: Vector2, distance: float):
-	g_distance = distance
 	shadow.global_position = throw_start_position + direction * distance
 
 func _on_shadow_done():
@@ -131,11 +121,10 @@ func _on_shadow_done():
 
 func calculate_landing_position(start_position: Vector2, direction: Vector2, target_position: Vector2) -> Vector2:
 	var distance = start_position.distance_to(target_position)
-	var gravity = -9.8
+	var gravity = 9.8
 	var angle = direction.angle()
-	var speed = sqrt((distance * -gravity) / sin(2 * angle))
+	var speed = sqrt((distance * gravity) / sin(2 * angle))
 	var x_component = cos(angle) * speed
-	var y_component = sin(angle) * speed
 
 	var total_time = distance / x_component
 	var landing_position = start_position + direction * (x_component * total_time)
@@ -159,7 +148,7 @@ func _on_new_marker(marker: Marker2D):
 func _display_keycaps_start():
 	keycaps.visible = true
 	var timer = Timer.new()
-	timer.wait_time = 5.0  # 10-second cooldown
+	timer.wait_time = 5.0
 	timer.one_shot = true
 	timer.timeout.connect(_end_timer)
 	add_child(timer)
@@ -167,15 +156,3 @@ func _display_keycaps_start():
 
 func _end_timer():
 	keycaps.visible = false
-
-func _dislpay_mouse():
-	mouse.visible = true
-	var timer = Timer.new()
-	timer.wait_time = 5.0  # 10-second cooldown
-	timer.one_shot = true
-	timer.timeout.connect(_end_timer_mouse)
-	add_child(timer)
-	timer.start()
-
-func _end_timer_mouse():
-	mouse.visible = false

@@ -69,7 +69,7 @@ func _finish_eating():
 
 func _create_turn_timer():
 	var timer = Timer.new()
-	timer.wait_time = 1.0  # Pause duration before moving to the next marker
+	timer.wait_time = 0.2  # Pause duration before moving to the next marker
 	timer.one_shot = true
 	timer.timeout.connect(_can_move_again)
 	add_child(timer)

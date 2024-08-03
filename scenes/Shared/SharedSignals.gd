@@ -8,6 +8,8 @@ signal cooldown_start
 signal cooldown_start_other
 signal cooldown_end
 signal cooldown_end_other
+signal calculate_landing_position
+signal request_spawn_projectile
 
 # Object Signals
 signal shadow_update

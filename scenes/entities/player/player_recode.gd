@@ -11,64 +11,68 @@ var currentVelocity: Vector2
 var speed: int = 150
 
 var is_aiming: bool = false
+var has_throw: bool = false
 var direction: Vector2 = Vector2.ZERO
-var throw_clicked: bool = false
-var is_on_cooldown: bool = false
+var cantThrow: bool = false
 
 var points: Array = []
 
 func _ready():
 	animation_tree.active = true
 
+func _handle_damage_player(_damage_amount: int):
+	pass
+	#_health -= damage_amount
+	#emit_signal("update_health", _health, position)
+
 func _handle_item_pickup(_item: String):
 	pass 
-	# emit_signal("update_inventory", item)
+	#emit_signal("update_inventory", item)
 
 func _physics_process(_delta):
-	_handle_action_input()
-	_handle_movement_input()
-	_play_movement_animation()
 	_update_animation_parameters()
+	_handle_input()
 
+	#if Input.is_action_just_pressed("pickup") and _itemToPickUp != null:
+		#SharedSignals.pickup_item.emit(_itemToPickUp.name)
 	velocity = currentVelocity
-
+	
 	move_and_slide()
 
-func _handle_movement_input():
+func _throw_item():
+	pass
+	#if _itemToPickUp != null:
+		#SharedSignals.item_throw.emit()
+
+func _handle_input():
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	direction = currentVelocity.normalized()
 	currentVelocity *= speed
 
-func _handle_action_input():
-	# Handle aim toggling
-	if Input.is_action_just_pressed("aim"):
-		is_aiming = true
-	elif Input.is_action_just_released("aim"):
-		is_aiming = false
-	
-	# Handle throwing action
-	if is_aiming and not is_on_cooldown:
-		if Input.is_action_just_pressed("throw") and not throw_clicked:
-			throw_clicked = true
-			is_on_cooldown = true  # Start cooldown
-			_play_throw_animation()
-			_start_cooldown_timer()
-	else:
-		if Input.is_action_just_pressed("throw"):
-			error.play()
+func _start_throw_cooldown():
+	cantThrow = true
 
-func _start_cooldown_timer():
-	var cooldown_timer = Timer.new()
-	cooldown_timer.wait_time = 5.0
-	cooldown_timer.one_shot = true
-	cooldown_timer.timeout.connect(_end_cooldown)
-	add_child(cooldown_timer)
-	cooldown_timer.start()
-
-func _end_cooldown():
-	is_on_cooldown = false
+func _end_throw_cooldown():
+	cantThrow = false
 
 func _update_animation_parameters():
+	# Handle aim toggling
+	if Input.is_action_just_pressed("aim"):
+		is_aiming = not is_aiming
+	
+	# Handle throwing action
+	if not cantThrow:
+		if Input.is_action_just_pressed("throw") and is_aiming:
+			_play_throw_animation()
+		else:
+			has_throw = false
+			_play_movement_animation()
+	elif cantThrow and has_throw:
+		if Input.is_action_just_pressed("throw") and is_aiming  and has_throw:
+			error.play()
+		elif Input.is_action_just_pressed("throw") and has_throw:
+			error.play()
+
 	# Update blend positions for animations
 	if direction != Vector2.ZERO:
 		animation_tree["parameters/idle/blend_position"] = direction
@@ -80,8 +84,9 @@ func _update_animation_parameters():
 
 func _play_movement_animation():
 	# Movement
-	if currentVelocity == Vector2.ZERO:
-		if is_aiming and not is_on_cooldown:
+	has_throw = true
+	if velocity == Vector2.ZERO:
+		if is_aiming:
 			animation_tree["parameters/conditions/is_idle_aim"] = true
 			animation_tree["parameters/conditions/is_run_aim"] = false
 			animation_tree["parameters/conditions/idle"] = false
@@ -91,7 +96,7 @@ func _play_movement_animation():
 			animation_tree["parameters/conditions/is_run"] = false
 			animation_tree["parameters/conditions/is_idle_aim"] = false
 	else:
-		if is_aiming and not is_on_cooldown:
+		if is_aiming:
 			animation_tree["parameters/conditions/is_run_aim"] = true
 			animation_tree["parameters/conditions/is_idle_aim"] = false
 			animation_tree["parameters/conditions/idle"] = false
@@ -103,12 +108,46 @@ func _play_movement_animation():
 
 func _play_throw_animation():
 	# Throw animation logic
-	if throw_clicked:
-		animation_tree["parameters/conditions/is_idle_throw"] = currentVelocity == Vector2.ZERO
-		animation_tree["parameters/conditions/is_run_throw"] = currentVelocity != Vector2.ZERO
-		animation_tree["parameters/conditions/is_idle_throw"] = false
+	if velocity == Vector2.ZERO:
+		animation_tree["parameters/conditions/is_idle_throw"] = true
 		animation_tree["parameters/conditions/is_run_throw"] = false
-		throw_clicked = false
+	else:
+		animation_tree["parameters/conditions/is_run_throw"] = true
+		animation_tree["parameters/conditions/is_idle_throw"] = false
+
+	# Resetting throw state after playing the animation
+	_start_throw_reset_timer()
+
+func _start_throw_reset_timer():
+	# Create a Timer node
+	var timer = Timer.new()
+	timer.wait_time = 0.6  # 1 second
+	timer.one_shot = true
+	timer.timeout.connect(_on_throw_reset_timeout)
+	add_child(timer)
+	timer.start()
+
+func _on_throw_reset_timeout():
+	# Reset throw conditions
+	animation_tree["parameters/conditions/is_idle_throw"] = false
+	animation_tree["parameters/conditions/is_run_throw"] = false
+
+	# Return to aiming state if still aiming
+	if is_aiming:
+		if velocity == Vector2.ZERO:
+			animation_tree["parameters/conditions/is_idle_aim"] = true
+		else:
+			animation_tree["parameters/conditions/is_run_aim"] = true
+	else:
+		if velocity == Vector2.ZERO:
+			animation_tree["parameters/conditions/idle"] = true
+		else:
+			animation_tree["parameters/conditions/is_run"] = true
+
+	## Clean up the timer
+	#var timer = $Timer
+	#if timer != null:
+		#timer.queue_free()
 
 func _on_pickup_area_body_entered(body):
 	if body.name == "Food":
@@ -120,14 +159,3 @@ func _on_pickup_finished():
 func _on_pickup_area_area_entered(area):
 	if area.name == "Food":
 		pickup.play()
-
-func _dislpay_mouse():
-	var timer = Timer.new()
-	timer.wait_time = 5.0  # 10-second cooldown
-	timer.one_shot = true
-	timer.timeout.connect(_end_timer_mouse)
-	add_child(timer)
-	timer.start()
-
-func _end_timer_mouse():
-	pass
