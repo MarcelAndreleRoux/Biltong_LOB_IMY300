@@ -6,6 +6,7 @@ signal update_inventory(item: String)
 @onready var animation_tree = $AnimationTree
 @onready var error = $error
 @onready var pickup = $pickup
+@onready var throw = $throw
 
 var currentVelocity: Vector2
 var speed: int = 150
@@ -104,6 +105,7 @@ func _play_movement_animation():
 func _play_throw_animation():
 	# Throw animation logic
 	if throw_clicked:
+		throw.play()
 		animation_tree["parameters/conditions/is_idle_throw"] = currentVelocity == Vector2.ZERO
 		animation_tree["parameters/conditions/is_run_throw"] = currentVelocity != Vector2.ZERO
 		animation_tree["parameters/conditions/is_idle_throw"] = false
