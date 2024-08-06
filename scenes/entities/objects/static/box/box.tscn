@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://3ybd1h5hqi4"]
+[gd_scene load_steps=10 format=3 uid="uid://3ybd1h5hqi4"]
 
+[ext_resource type="Script" path="res://scenes/entities/objects/static/box/box.gd" id="1_fdijp"]
 [ext_resource type="Texture2D" uid="uid://bgmachaejnlbs" path="res://assets/sprites/objects/static/box/Box.png" id="1_r7u5v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j6ogj"]
@@ -9,6 +10,10 @@ region = Rect2(0, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_igt80"]
 atlas = ExtResource("1_r7u5v")
 region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nytyf"]
+atlas = ExtResource("1_r7u5v")
+region = Rect2(0, 10, 16, 5)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qbh86"]
 animations = [{
@@ -27,21 +32,53 @@ animations = [{
 "loop": false,
 "name": &"near_box",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nytyf")
+}],
+"loop": true,
+"name": &"squash_box",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kwl1v"]
 size = Vector2(12, 12)
 
-[node name="Box" type="RigidBody2D" groups=["object"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_vmih4"]
+radius = 9.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpty4"]
+size = Vector2(14, 14)
+
+[node name="Box" type="RigidBody2D" groups=["activation", "object"]]
 collision_layer = 4
 collision_mask = 31
 gravity_scale = 0.0
+lock_rotation = true
 linear_damp = 50.0
 angular_damp = 50.0
+script = ExtResource("1_fdijp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(4.17233e-07, 1.19209e-07)
+scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_qbh86")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kwl1v")
+
+[node name="MoveArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveArea"]
+shape = SubResource("CircleShape2D_vmih4")
+
+[node name="ButtonArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea"]
+shape = SubResource("RectangleShape2D_bpty4")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="MoveArea" to="." method="_on_move_area_body_entered"]
+[connection signal="body_exited" from="MoveArea" to="." method="_on_move_area_body_exited"]

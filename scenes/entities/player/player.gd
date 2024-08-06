@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name player_class
+
 signal update_health(health: int, position: Vector2)
 signal update_inventory(item: String)
 
@@ -9,7 +11,7 @@ signal update_inventory(item: String)
 @onready var throw = $throw
 
 var currentVelocity: Vector2
-var speed: int = 150
+var speed: int = 100
 
 var is_aiming: bool = false
 var direction: Vector2 = Vector2.ZERO
@@ -20,6 +22,14 @@ var points: Array = []
 
 func _ready():
 	animation_tree.active = true
+	SharedSignals.player_move.connect(_change_speed)
+	SharedSignals.player_exit.connect(_change_speed_back)
+
+func _change_speed():
+	speed = 50
+
+func _change_speed_back():
+	speed = 100
 
 func _handle_item_pickup(_item: String):
 	pass 
@@ -114,14 +124,16 @@ func _play_throw_animation():
 
 func _on_pickup_area_body_entered(body):
 	if body.name == "Food":
-		pickup.play()
+		if Input.is_action_just_pressed("pickup"):
+			pickup.play()
 
 func _on_pickup_finished():
 	SharedSignals.pickedup_item.emit()
 
 func _on_pickup_area_area_entered(area):
 	if area.name == "Food":
-		pickup.play()
+		if Input.is_action_just_pressed("pickup"):
+			pickup.play()
 
 func _dislpay_mouse():
 	var timer = Timer.new()

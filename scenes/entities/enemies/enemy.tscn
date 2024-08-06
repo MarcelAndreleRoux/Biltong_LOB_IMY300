@@ -521,7 +521,10 @@ states/walk/position = Vector2(640, -33)
 transitions = ["walk", "eat", SubResource("AnimationNodeStateMachineTransition_lquxg"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_5conj"), "Start", "pause", SubResource("AnimationNodeStateMachineTransition_5xryc"), "pause", "walk", SubResource("AnimationNodeStateMachineTransition_5m4ew")]
 graph_offset = Vector2(-31, -83)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("wander_direction")]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("wander_direction") groups=["activation", "enemy"]]
+z_index = 5
+collision_layer = 17
+collision_mask = 27
 script = ExtResource("1_1fxvc")
 wander_direction = NodePath("Wander")
 

@@ -17,7 +17,7 @@ func _ready():
 
 	_get_next_marker()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if play_moving and not should_eat:
 		_update_direction()
 		move_and_slide()

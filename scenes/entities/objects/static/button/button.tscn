@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://gocvqvrsvfso"]
+[gd_scene load_steps=12 format=3 uid="uid://gocvqvrsvfso"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/button/button.gd" id="1_hwqma"]
 [ext_resource type="Texture2D" uid="uid://cy0waipdsut21" path="res://assets/sprites/objects/static/pressure_plate/Presure-Plate.png" id="2_2oktm"]
@@ -52,9 +52,13 @@ radius = 8.0
 radius = 6.0
 height = 16.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g13ac"]
+radius = 7.0
+height = 14.0
+
 [node name="Button" type="StaticBody2D"]
 collision_layer = 32
-collision_mask = 27
+collision_mask = 31
 script = ExtResource("1_hwqma")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -75,5 +79,12 @@ shape = SubResource("CapsuleShape2D_howdr")
 stream = ExtResource("3_tuskx")
 volume_db = -19.066
 
+[node name="DetectBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectBox"]
+shape = SubResource("CapsuleShape2D_g13ac")
+
 [connection signal="body_entered" from="ClickArea" to="." method="_on_click_area_body_entered"]
 [connection signal="body_exited" from="ClickArea" to="." method="_on_click_area_body_exited"]
+[connection signal="area_entered" from="DetectBox" to="." method="_on_detect_box_area_entered"]
+[connection signal="area_exited" from="DetectBox" to="." method="_on_detect_box_area_exited"]

@@ -33,3 +33,8 @@ signal invertory_update
 # Item Pickup
 signal pickedup_item
 signal item_removed
+
+# Box
+signal player_move
+signal player_exit
+signal box_hit_wall

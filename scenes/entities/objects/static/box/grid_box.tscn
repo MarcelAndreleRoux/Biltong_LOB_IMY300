@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cojmuay6cbyhr"]
+
+[ext_resource type="Script" path="res://scenes/entities/objects/static/box/grid_box.gd" id="1_1033l"]
+[ext_resource type="Texture2D" uid="uid://bgmachaejnlbs" path="res://assets/sprites/objects/static/box/Box.png" id="1_rwydf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqqd2"]
+size = Vector2(12, 12)
+
+[node name="GridBox" type="CharacterBody2D"]
+script = ExtResource("1_1033l")
+sliding_time = null
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rwydf")
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tqqd2")

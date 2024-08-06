@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://wdw24tbqrqxv"]
+[gd_scene load_steps=72 format=3 uid="uid://wdw24tbqrqxv"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_3avnw"]
 [ext_resource type="Texture2D" uid="uid://cr80tfvpf61v2" path="res://assets/sprites/player/idle/normal/idle_left.png" id="2_a82sk"]
@@ -23,6 +23,9 @@ size = Vector2(5, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fmtvb"]
 size = Vector2(12, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni5kc"]
+size = Vector2(10, 12)
 
 [sub_resource type="Animation" id="Animation_1we70"]
 length = 0.001
@@ -1161,7 +1164,7 @@ states/run_throw/position = Vector2(633, 388)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pcgw8"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_7obb7"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8e435"), "idle_aim", "run_aim", SubResource("AnimationNodeStateMachineTransition_b8nng"), "run_aim", "idle_aim", SubResource("AnimationNodeStateMachineTransition_0w5i3"), "idle", "idle_aim", SubResource("AnimationNodeStateMachineTransition_6r02k"), "idle_aim", "idle", SubResource("AnimationNodeStateMachineTransition_fvqkp"), "run", "run_aim", SubResource("AnimationNodeStateMachineTransition_e7g8d"), "run_aim", "run", SubResource("AnimationNodeStateMachineTransition_4vojj"), "idle_aim", "idle_throw", SubResource("AnimationNodeStateMachineTransition_t3xt5"), "run_aim", "run_throw", SubResource("AnimationNodeStateMachineTransition_uccsp"), "run_throw", "run", SubResource("AnimationNodeStateMachineTransition_f6q61"), "run_throw", "idle", SubResource("AnimationNodeStateMachineTransition_4ibk3"), "idle_throw", "idle", SubResource("AnimationNodeStateMachineTransition_fgh4t"), "idle_throw", "run", SubResource("AnimationNodeStateMachineTransition_0f6b7"), "idle_throw", "idle_aim", SubResource("AnimationNodeStateMachineTransition_84utv"), "run_throw", "run_aim", SubResource("AnimationNodeStateMachineTransition_fvmwh")]
 graph_offset = Vector2(-118.034, -24.4715)
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["activation", "player"]]
 z_index = 2
 collision_layer = 8
 collision_mask = 23
@@ -1183,6 +1186,12 @@ shape = SubResource("RectangleShape2D_atsr3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_fmtvb")
+
+[node name="PushPullArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PushPullArea"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_ni5kc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1226,4 +1235,6 @@ volume_db = -15.0
 
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="area_entered" from="PushPullArea" to="." method="_on_push_pull_area_area_entered"]
+[connection signal="area_exited" from="PushPullArea" to="." method="_on_push_pull_area_area_exited"]
 [connection signal="finished" from="pickup" to="." method="_on_pickup_finished"]
