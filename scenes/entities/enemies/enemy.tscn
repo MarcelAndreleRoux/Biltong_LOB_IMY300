@@ -1,12 +1,16 @@
-[gd_scene load_steps=34 format=3 uid="uid://vlik5vxjmqh4"]
+[gd_scene load_steps=47 format=3 uid="uid://vlik5vxjmqh4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/enemy.gd" id="1_1fxvc"]
 [ext_resource type="Texture2D" uid="uid://pmrgbxp12km" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Left.png" id="2_a700b"]
 [ext_resource type="PackedScene" uid="uid://dcwfimqxg27wv" path="res://scenes/entities/enemies/wander.tscn" id="2_gm0cl"]
 [ext_resource type="Texture2D" uid="uid://cvaqb8p2gm87o" path="res://assets/sprites/enemies/turtel/walk/Turtle-Walk-Left.png" id="4_3blme"]
 [ext_resource type="AudioStream" uid="uid://dki5tcy6h2mla" path="res://assets/soundeffects/Eat.wav" id="4_y46p0"]
+[ext_resource type="Texture2D" uid="uid://d3dotr4af58er" path="res://assets/sprites/enemies/turtel/idle/Turtle-Idle-Left.png" id="5_1rg4p"]
 [ext_resource type="Texture2D" uid="uid://dfc301jnxt40y" path="res://assets/sprites/enemies/turtel/walk/Turtle-Walk-Right.png" id="5_byc20"]
 [ext_resource type="Texture2D" uid="uid://dvoksyj3lo4a5" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Right.png" id="5_d25tc"]
+[ext_resource type="Texture2D" uid="uid://0eoeod5navyj" path="res://assets/sprites/enemies/turtel/hungry/Turtle-!-Left.png" id="5_otx3w"]
+[ext_resource type="Texture2D" uid="uid://du7e6y00krgh3" path="res://assets/sprites/enemies/turtel/hungry/Turtle-!-Right.png" id="6_7ntam"]
+[ext_resource type="Texture2D" uid="uid://i2mxmvd1fik7" path="res://assets/sprites/enemies/turtel/idle/Turtle-Idle-Right.png" id="6_amnmw"]
 [ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="7_lrg10"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_38uif"]
@@ -233,11 +237,218 @@ tracks/4/keys = {
 "values": [true, true, true]
 }
 
+[sub_resource type="Animation" id="Animation_kjr12"]
+resource_name = "hungry_left"
+length = 0.6
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_otx3w")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_cyreq"]
+resource_name = "hungry_right"
+length = 0.6
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_7ntam")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
 [sub_resource type="Animation" id="Animation_o1cyj"]
 resource_name = "idle_left"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_1rg4p")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 0]
+}
 
 [sub_resource type="Animation" id="Animation_g2q3j"]
 resource_name = "idle_right"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_amnmw")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 0]
+}
 
 [sub_resource type="Animation" id="Animation_rttp1"]
 resource_name = "pause"
@@ -451,6 +662,8 @@ _data = {
 "RESET": SubResource("Animation_7dtl7"),
 "eat_left": SubResource("Animation_q205k"),
 "eat_right": SubResource("Animation_t5p3k"),
+"hungry_left": SubResource("Animation_kjr12"),
+"hungry_right": SubResource("Animation_cyreq"),
 "idle_left": SubResource("Animation_o1cyj"),
 "idle_right": SubResource("Animation_g2q3j"),
 "pause": SubResource("Animation_rttp1"),
@@ -471,17 +684,31 @@ blend_point_1/node = SubResource("AnimationNodeAnimation_1goig")
 blend_point_1/pos = Vector2(1, 0)
 blend_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dws04"]
-animation = &"pause"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qdp1p"]
+animation = &"hungry_left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4oobr"]
-animation = &"pause"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hna72"]
+animation = &"hungry_right"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_uguex"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_dws04")
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_jdyg1"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_qdp1p")
 blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_4oobr")
+blend_point_1/node = SubResource("AnimationNodeAnimation_hna72")
 blend_point_1/pos = Vector2(1, 0)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_67j6k"]
+animation = &"idle_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bmun0"]
+animation = &"idle_right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_amcfy"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_67j6k")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_bmun0")
+blend_point_1/pos = Vector2(1, 0)
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_r6sfm"]
 animation = &"walk_left"
@@ -496,29 +723,47 @@ blend_point_1/node = SubResource("AnimationNodeAnimation_m82n5")
 blend_point_1/pos = Vector2(1, 0)
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lquxg"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_njxco"]
+advance_mode = 2
+advance_condition = &"is_hungry"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_avrna"]
 advance_mode = 2
 advance_condition = &"is_eating"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5conj"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d6xjh"]
 advance_mode = 2
 advance_condition = &"is_walking"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5xryc"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5m4ew"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sv086"]
 advance_mode = 2
 advance_condition = &"is_walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kr72v"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uxo76"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8vgqf"]
+advance_mode = 2
+advance_condition = &"is_hungry"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oosjv"]
+advance_mode = 2
+advance_condition = &"is_eating"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_d8c0n"]
 states/eat/node = SubResource("AnimationNodeBlendSpace2D_ixxb7")
-states/eat/position = Vector2(640, 100)
-states/pause/node = SubResource("AnimationNodeBlendSpace2D_uguex")
-states/pause/position = Vector2(403, 100)
+states/eat/position = Vector2(807, -42)
+states/hungry/node = SubResource("AnimationNodeBlendSpace2D_jdyg1")
+states/hungry/position = Vector2(605, 26)
+states/idle/node = SubResource("AnimationNodeBlendSpace2D_amcfy")
+states/idle/position = Vector2(396, 100)
 states/walk/node = SubResource("AnimationNodeBlendSpace2D_737rd")
-states/walk/position = Vector2(640, -33)
-transitions = ["walk", "eat", SubResource("AnimationNodeStateMachineTransition_lquxg"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_5conj"), "Start", "pause", SubResource("AnimationNodeStateMachineTransition_5xryc"), "pause", "walk", SubResource("AnimationNodeStateMachineTransition_5m4ew")]
+states/walk/position = Vector2(396, -42)
+transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransition_njxco"), "hungry", "eat", SubResource("AnimationNodeStateMachineTransition_avrna"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_d6xjh"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_sv086"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kr72v"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_uxo76"), "idle", "hungry", SubResource("AnimationNodeStateMachineTransition_8vgqf"), "walk", "eat", SubResource("AnimationNodeStateMachineTransition_oosjv")]
 graph_offset = Vector2(-31, -83)
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("wander_direction") groups=["activation", "enemy"]]
@@ -529,6 +774,7 @@ script = ExtResource("1_1fxvc")
 wander_direction = NodePath("Wander")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(5, 0)
 texture = ExtResource("2_a700b")
 hframes = 21
 
@@ -540,6 +786,7 @@ shape = SubResource("CapsuleShape2D_38uif")
 [node name="Wander" parent="." instance=ExtResource("2_gm0cl")]
 
 [node name="DetectionArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_n44n2")
@@ -556,9 +803,12 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_d8c0n")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/is_eating = false
+parameters/conditions/is_hungry = false
+parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
 parameters/eat/blend_position = Vector2(0.00643086, 0)
-parameters/pause/blend_position = Vector2(0, 0)
+parameters/hungry/blend_position = Vector2(0.0226601, 0.00529099)
+parameters/idle/blend_position = Vector2(0.0147784, -0.00529099)
 parameters/walk/blend_position = Vector2(0.0112541, 0.00581396)
 
 [node name="eat" type="AudioStreamPlayer2D" parent="."]
