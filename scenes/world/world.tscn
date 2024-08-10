@@ -133,19 +133,19 @@ texture = ExtResource("3_jsvtj")
 19:0/0 = 0
 19:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 19:0/0/physics_layer_0/angular_velocity = 0.0
-19:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+19:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.375, -8, -2.375)
 20:0/0 = 0
 20:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 20:0/0/physics_layer_0/angular_velocity = 0.0
-20:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+20:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.375, -8, -2.375)
 21:0/0 = 0
 21:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 21:0/0/physics_layer_0/angular_velocity = 0.0
-21:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+21:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.375, -8, -2.375)
 22:0/0 = 0
 22:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 22:0/0/physics_layer_0/angular_velocity = 0.0
-22:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+22:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.375, -8, -2.375)
 23:0/0 = 0
 23:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 23:0/0/physics_layer_0/angular_velocity = 0.0
@@ -153,11 +153,11 @@ texture = ExtResource("3_jsvtj")
 24:0/0 = 0
 24:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 24:0/0/physics_layer_0/angular_velocity = 0.0
-24:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+24:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.375, -8, -2.375)
 25:0/0 = 0
 25:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 25:0/0/physics_layer_0/angular_velocity = 0.0
-25:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+25:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -2.375, -8, -2.375)
 26:0/0 = 0
 26:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 26:0/0/physics_layer_0/angular_velocity = 0.0
@@ -246,6 +246,7 @@ texture = ExtResource("4_hdatk")
 
 [sub_resource type="TileSet" id="TileSet_06m28"]
 physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_s31qj")
 sources/1 = SubResource("TileSetAtlasSource_svv0e")
 sources/2 = SubResource("TileSetAtlasSource_1tmx2")
@@ -261,12 +262,14 @@ layer_0/tile_data = PackedInt32Array(0, 458752, 0, 1, 458752, 0, 2, 0, 0, 3, 0, 
 layer_1/name = "Walls"
 layer_1/tile_data = PackedInt32Array(29, 1, 0, 28, 589825, 0, 27, 589825, 0, 26, 589825, 0, 25, 589825, 0, 24, 983041, 0, 23, 655361, 0, 22, 983041, 0, 21, 589825, 0, 20, 655361, 0, 19, 589825, 0, 18, 983041, 0, 17, 983041, 0, 16, 589825, 0, 15, 983041, 0, 14, 589825, 0, 13, 655361, 0, 12, 589825, 0, 11, 983041, 0, 10, 589825, 0, 9, 589825, 0, 8, 589825, 0, 7, 655361, 0, 6, 983041, 0, 5, 589825, 0, 4, 589825, 0, 3, 655361, 0, 2, 655361, 0, 1, 983041, 0, 0, 131073, 0, 65536, 720897, 0, 131072, 1114113, 0, 196608, 1114113, 0, 262144, 1114113, 0, 327680, 1114113, 0, 393216, 1114113, 0, 458752, 1114113, 0, 524288, 1114113, 0, 589824, 1114113, 0, 655360, 1114113, 0, 720896, 1114113, 0, 786432, 1114113, 0, 851968, 1114113, 0, 917504, 1114113, 0, 983040, 1245185, 0, 983041, 1310721, 0, 983042, 1310721, 0, 983043, 1310721, 0, 983044, 1310721, 0, 983045, 1310721, 0, 983046, 1310721, 0, 983049, 1310721, 0, 983050, 1310721, 0, 983051, 1310721, 0, 983052, 1310721, 0, 983053, 1310721, 0, 983054, 1310721, 0, 983055, 1310721, 0, 983056, 1638401, 0, 983057, 1310721, 0, 983058, 1310721, 0, 983059, 1310721, 0, 983060, 1310721, 0, 983061, 1310721, 0, 983062, 1310721, 0, 983063, 1310721, 0, 983064, 1310721, 0, 983065, 1310721, 0, 983066, 1310721, 0, 983067, 1310721, 0, 983068, 1310721, 0, 983069, 1441793, 0, 917533, 1048577, 0, 851997, 1048577, 0, 786461, 1048577, 0, 720925, 1048577, 0, 655389, 1048577, 0, 589853, 917505, 0, 524317, 524289, 0, 458781, 1048577, 0, 393245, 1048577, 0, 327709, 1048577, 0, 262173, 1048577, 0, 196637, 1048577, 0, 131101, 1048577, 0, 65565, 917505, 0, 65564, 1507329, 0, 65563, 1507329, 0, 65562, 786433, 0, 65561, 1507329, 0, 65560, 786433, 0, 65559, 1507329, 0, 65558, 786433, 0, 65557, 786433, 0, 65556, 786433, 0, 65555, 786433, 0, 65554, 786433, 0, 65553, 786433, 0, 65552, 1507329, 0, 65551, 786433, 0, 65550, 1507329, 0, 65549, 1507329, 0, 65548, 786433, 0, 65547, 786433, 0, 65546, 786433, 0, 65545, 1507329, 0, 65544, 786433, 0, 65543, 1507329, 0, 65542, 1507329, 0, 65541, 786433, 0, 65540, 1507329, 0, 65539, 786433, 0, 65538, 786433, 0, 65537, 1507329, 0, 917520, 1114113, 0, 851984, 1114113, 0, 786448, 1114113, 0, 720912, 1114113, 0, 655376, 1114113, 0, 589840, 720897, 0, 524304, 131073, 0, 524305, 983041, 0, 524306, 655361, 0, 524307, 655361, 0, 524308, 983041, 0, 524309, 589825, 0, 524312, 655361, 0, 524313, 983041, 0, 524314, 589825, 0, 524315, 983041, 0, 524316, 655361, 0, 589852, 786433, 0, 589851, 1507329, 0, 589850, 786433, 0, 589849, 786433, 0, 589848, 1507329, 0, 589845, 1507329, 0, 589844, 786433, 0, 589843, 786433, 0, 589842, 1507329, 0, 589841, 1507329, 0, 1048583, 458752, 0, 1048584, 458752, 0)
 layer_2/name = "Wires"
-layer_2/tile_data = PackedInt32Array(589826, 1048578, 0, 655362, 1048578, 0, 720898, 1048578, 0, 786434, 1048578, 0, 851970, 1048578, 0, 917506, 786434, 0, 917507, 983042, 0, 917508, 983042, 0, 917509, 983042, 0, 917510, 524290, 0, 196629, 1048578, 0, 262165, 1048578, 0, 327701, 1048578, 0, 393237, 1048578, 0, 458773, 1048578, 0, 655384, 786434, 0, 655385, 983042, 0, 655386, 983042, 0, 655387, 983042, 0, 655388, 524290, 0, 720924, 1048578, 0, 786460, 1048578, 0, 851996, 1048578, 0, 589848, 1703937, 0)
+layer_2/tile_data = PackedInt32Array(589826, 1048578, 0, 655362, 1048578, 0, 720898, 1048578, 0, 786434, 1048578, 0, 851970, 1048578, 0, 917506, 786434, 0, 917507, 983042, 0, 917508, 983042, 0, 917509, 983042, 0, 917510, 524290, 0, 655384, 786434, 0, 655385, 983042, 0, 655386, 983042, 0, 655387, 983042, 0, 655388, 524290, 0, 720924, 1048578, 0, 786460, 1048578, 0, 851996, 1048578, 0, 589848, 1703937, 0)
 
 [node name="Player" parent="." instance=ExtResource("1_qoat8")]
 position = Vector2(299, 203)
 collision_layer = 13
 collision_mask = 27
+
+[node name="RayCast2D" type="RayCast2D" parent="Player"]
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
 width = 2.0
@@ -368,39 +371,23 @@ flat = true
 [node name="select" type="AudioStreamPlayer2D" parent="GamePause"]
 stream = ExtResource("14_374d5")
 
-[node name="Keycaps" type="CanvasLayer" parent="."]
+[node name="Keycaps" type="Node2D" parent="."]
 
-[node name="W" type="TextureRect" parent="Keycaps"]
-offset_left = 291.0
-offset_top = 173.0
-offset_right = 307.0
-offset_bottom = 189.0
+[node name="W" type="Sprite2D" parent="Keycaps"]
+position = Vector2(299, 181)
 texture = ExtResource("16_6n2dx")
-stretch_mode = 2
 
-[node name="A" type="TextureRect" parent="Keycaps"]
-offset_left = 272.0
-offset_top = 192.0
-offset_right = 288.0
-offset_bottom = 208.0
+[node name="A" type="Sprite2D" parent="Keycaps"]
+position = Vector2(279, 200)
 texture = ExtResource("17_y3teg")
-stretch_mode = 2
 
-[node name="S" type="TextureRect" parent="Keycaps"]
-offset_left = 291.0
-offset_top = 211.0
-offset_right = 307.0
-offset_bottom = 227.0
+[node name="S" type="Sprite2D" parent="Keycaps"]
+position = Vector2(320, 199)
 texture = ExtResource("18_ary2y")
-stretch_mode = 2
 
-[node name="D" type="TextureRect" parent="Keycaps"]
-offset_left = 311.0
-offset_top = 192.0
-offset_right = 327.0
-offset_bottom = 208.0
+[node name="D" type="Sprite2D" parent="Keycaps"]
+position = Vector2(300, 221)
 texture = ExtResource("19_qqsdr")
-stretch_mode = 2
 
 [node name="Escape" type="CanvasLayer" parent="."]
 

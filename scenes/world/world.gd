@@ -5,6 +5,7 @@ extends Node2D
 @onready var game_pause = $GamePause
 @onready var keycaps = $Keycaps
 @onready var mouse = $Mouse
+@onready var ray_cast_2d = $Player/RayCast2D
 
 var _main: Node2D
 var _end: Vector2
@@ -30,8 +31,17 @@ func _ready():
 	_projectileScene = preload("res://scenes/entities/objects/throwables/tester_object.tscn")
 	SharedSignals.new_marker.connect(_on_new_marker)
 	_display_keycaps_start()
+	ray_cast_2d.enabled = true
 
 func _physics_process(_delta):
+	# Update RayCast2D's position and target
+	ray_cast_2d.global_position = player.global_position
+	var mouse_position = get_global_mouse_position()
+	var relative_mouse_position = mouse_position - ray_cast_2d.global_position
+	
+	# Set the raycast's target position to the relative mouse position
+	ray_cast_2d.target_position = relative_mouse_position
+	
 	_end = get_global_mouse_position()
 	
 	if Input.is_action_just_pressed("exit"):
@@ -47,11 +57,16 @@ func _physics_process(_delta):
 	if _isAiming:
 		calculate_trajectory()
 		
+	# Check if the raycast is not colliding before allowing a throw
 	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
-		_isAiming = false
-		trajectory_line.visible = false
-		_throw_item()
-		_start_cooldown_timer()
+		if not ray_cast_2d.is_colliding():
+			SharedSignals.can_throw_projectile.emit()
+			_isAiming = false
+			trajectory_line.visible = false
+			_throw_item()
+			_start_cooldown_timer()
+		else:
+			print("Cannot throw, something is in the way!")
 
 func _throw_item():
 	var instance = _projectileScene.instantiate()

@@ -69,26 +69,28 @@ func _update_direction():
 func _handle_reached_marker():
 	direction = Vector2.ZERO
 
-	if current_position.name.begins_with("spawnable"):
+	if current_position.name.begins_with("Projectile"):
 		var distance_to_food = global_position.distance_to(current_position.global_position)
 		if distance_to_food <= eating_distance:
+			print("can eat")
 			#print("Starting to eat at marker:", current_position.name)
 			is_eating = true
 			SharedSignals.start_eating.emit()
-			_create_eating_timer()
+			#_create_eating_timer()
 		else:
 			#print("Too far to eat. Distance:", distance_to_food)
 			_get_next_position()
 	else:
 		_get_next_position()
 
-func _create_eating_timer():
-	var timer = Timer.new()
-	timer.wait_time = 5.0  # Duration of eating time
-	timer.one_shot = true
-	timer.timeout.connect(_can_move_again)
-	add_child(timer)
-	timer.start()
+#func _create_eating_timer():
+	#print("created eating timer")
+	#var timer = Timer.new()
+	#timer.wait_time = 5.0  # Duration of eating time
+	#timer.one_shot = true
+	#timer.timeout.connect(_can_move_again)
+	#add_child(timer)
+	#timer.start()
 
 func _can_move_again():
 	is_eating = false
@@ -106,7 +108,7 @@ func _sort_positions():
 	var regular_markers = []
 
 	for marker in positions:
-		if marker.name.begins_with("spawnable"):
+		if marker.name.begins_with("Projectile"):
 			spawnable_markers.append(marker)
 		else:
 			regular_markers.append(marker)

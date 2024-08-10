@@ -17,6 +17,7 @@ var is_aiming: bool = false
 var direction: Vector2 = Vector2.ZERO
 var throw_clicked: bool = false
 var is_on_cooldown: bool = false
+var can_throw_proj: bool = false
 
 var points: Array = []
 
@@ -24,6 +25,10 @@ func _ready():
 	animation_tree.active = true
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
+	SharedSignals.can_throw_projectile.connect(_on_can_throw)
+
+func _on_can_throw():
+	can_throw_proj = true
 
 func _change_speed():
 	speed = 50
@@ -58,10 +63,10 @@ func _handle_action_input():
 		is_aiming = false
 	
 	# Handle throwing action
-	if is_aiming and not is_on_cooldown:
+	if is_aiming and not is_on_cooldown and can_throw_proj:
 		if Input.is_action_just_pressed("throw") and not throw_clicked:
 			throw_clicked = true
-			is_on_cooldown = true  # Start cooldown
+			is_on_cooldown = true
 			_play_throw_animation()
 			_start_cooldown_timer()
 	else:

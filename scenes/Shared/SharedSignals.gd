@@ -4,6 +4,7 @@ extends Node
 signal item_pickup
 signal pickup_item
 signal item_throw
+signal can_throw_projectile
 signal cooldown_start
 signal cooldown_start_other
 signal cooldown_end
