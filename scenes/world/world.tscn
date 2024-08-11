@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=27 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_o3fq4"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
@@ -251,6 +251,9 @@ sources/0 = SubResource("TileSetAtlasSource_s31qj")
 sources/1 = SubResource("TileSetAtlasSource_svv0e")
 sources/2 = SubResource("TileSetAtlasSource_1tmx2")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v3b0s"]
+size = Vector2(106, 52)
+
 [node name="World" type="Node2D"]
 script = ExtResource("1_o3fq4")
 
@@ -301,7 +304,7 @@ position = Vector2(368, 144)
 door_link_id = "156"
 
 [node name="Button2" parent="." instance=ExtResource("6_q0hj8")]
-position = Vector2(451, 222)
+position = Vector2(455, 222)
 door_link_id = "156"
 
 [node name="Door" parent="." instance=ExtResource("5_w5hph")]
@@ -408,6 +411,12 @@ position = Vector2(366, 101)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(241, 135)
+
+[node name="GameFinish" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameFinish"]
+position = Vector2(129, 302)
+shape = SubResource("RectangleShape2D_v3b0s")
 
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
