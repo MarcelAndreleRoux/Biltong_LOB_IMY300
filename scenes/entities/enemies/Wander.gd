@@ -19,24 +19,20 @@ func _ready():
 	_get_positions()
 	_get_next_position()
 
+	# Listen for the projectile_gone signal to remove the corresponding marker
+	SharedSignals.projectile_gone.connect(_remove_marker)
+
 func _physics_process(delta):
 	if is_eating:
 		return  # If eating, do not move
 
 	var distance_to_target = global_position.distance_to(current_position.global_position)
-	#print("Distance to target: ", distance_to_target)
-	#print("Enemy global_position: ", global_position)
-	#print("Target global_position: ", current_position.global_position)
 
 	if distance_to_target <= STOPPING_DISTANCE:
-		#print("Reached target: ", current_position.name)
 		global_position = current_position.global_position
 		_handle_reached_marker()
 	else:
 		move_towards_position(delta)
-
-func check_update_positions_with_new_marker_signal():
-	SharedSignals.new_marker.connect(update_positions_with_new_marker)
 
 func _get_positions():
 	temp_positions = positions.duplicate()
@@ -52,11 +48,8 @@ func move_towards_position(delta):
 	var move_amount = direction * delta * speed  # Use speed for consistent movement
 	global_position += move_amount
 
-	#print("Moving towards: ", current_position.name, " Position: ", global_position)
-
 	var distance_to_target = global_position.distance_to(current_position.global_position)
 	if distance_to_target <= STOPPING_DISTANCE:
-		#print("Stopping at target: ", current_position.name)
 		global_position = current_position.global_position
 		_handle_reached_marker()
 
@@ -64,7 +57,6 @@ func _update_direction():
 	# Only update direction if not eating
 	if not is_eating:
 		direction = (current_position.global_position - global_position).normalized()
-		#print("Updating direction towards: ", current_position.global_position)
 
 func _handle_reached_marker():
 	direction = Vector2.ZERO
@@ -73,35 +65,30 @@ func _handle_reached_marker():
 		var distance_to_food = global_position.distance_to(current_position.global_position)
 		if distance_to_food <= eating_distance:
 			print("can eat")
-			#print("Starting to eat at marker:", current_position.name)
 			is_eating = true
 			SharedSignals.start_eating.emit()
-			#_create_eating_timer()
+			_remove_current_marker()
+			is_eating = false  # Assume eating is instantaneous for this version
+			_get_next_position()
 		else:
-			#print("Too far to eat. Distance:", distance_to_food)
 			_get_next_position()
 	else:
 		_get_next_position()
-
-#func _create_eating_timer():
-	#print("created eating timer")
-	#var timer = Timer.new()
-	#timer.wait_time = 5.0  # Duration of eating time
-	#timer.one_shot = true
-	#timer.timeout.connect(_can_move_again)
-	#add_child(timer)
-	#timer.start()
-
-func _can_move_again():
-	is_eating = false
-	SharedSignals.can_move_again.emit()
-	_get_next_position()
 
 func _remove_current_marker():
 	if current_position:
 		positions.erase(current_position)
 		current_position.queue_free()
 		current_position = null
+
+func _remove_marker(projectile):
+	for marker in positions:
+		if marker.name == "Projectilespawnable" and marker.global_position == projectile.global_position:
+			positions.erase(marker)
+			marker.queue_free()
+			if marker == current_position:
+				_get_next_position()
+			break
 
 func _sort_positions():
 	var spawnable_markers = []

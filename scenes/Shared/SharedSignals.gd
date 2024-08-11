@@ -12,6 +12,9 @@ signal cooldown_end_other
 signal calculate_landing_position
 signal request_spawn_projectile
 
+# Projectile Signals
+signal projectile_gone
+
 # Object Signals
 signal shadow_update
 signal shadow_done
@@ -39,3 +42,4 @@ signal item_removed
 signal player_move
 signal player_exit
 signal box_hit_wall
+signal move_box

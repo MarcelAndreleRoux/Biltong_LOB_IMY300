@@ -5,20 +5,28 @@ class_name player_class
 signal update_health(health: int, position: Vector2)
 signal update_inventory(item: String)
 
+# Nodes
 @onready var animation_tree = $AnimationTree
 @onready var error = $error
 @onready var pickup = $pickup
 @onready var throw = $throw
 
+# Movement
 var currentVelocity: Vector2
 var speed: int = 100
 
+# Aim and Throw
 var is_aiming: bool = false
 var direction: Vector2 = Vector2.ZERO
 var throw_clicked: bool = false
 var is_on_cooldown: bool = false
 var can_throw_proj: bool = false
 
+# Box
+var is_dragging: bool = false
+var player_in_box_area: bool = false
+
+# Trajectory Line
 var points: Array = []
 
 func _ready():
@@ -31,9 +39,11 @@ func _on_can_throw():
 	can_throw_proj = true
 
 func _change_speed():
-	speed = 50
+	player_in_box_area = true
+	speed = 40
 
 func _change_speed_back():
+	player_in_box_area = false
 	speed = 100
 
 func _handle_item_pickup(_item: String):
@@ -55,13 +65,23 @@ func _handle_movement_input():
 	direction = currentVelocity.normalized()
 	currentVelocity *= speed
 
+	if is_dragging and player_in_box_area:
+		# If dragging, emit a signal to move the box in the desired direction
+		SharedSignals.move_box.emit(direction)
+
 func _handle_action_input():
 	# Handle aim toggling
 	if Input.is_action_just_pressed("aim"):
 		is_aiming = true
 	elif Input.is_action_just_released("aim"):
 		is_aiming = false
-	
+
+	# Handle dragging action only if the player is in the move area
+	if Input.is_action_pressed("interact") and player_in_box_area:
+		is_dragging = true
+	else:
+		is_dragging = false
+
 	# Handle throwing action
 	if is_aiming and not is_on_cooldown and can_throw_proj:
 		if Input.is_action_just_pressed("throw") and not throw_clicked:

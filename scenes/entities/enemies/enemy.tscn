@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://vlik5vxjmqh4"]
+[gd_scene load_steps=49 format=3 uid="uid://vlik5vxjmqh4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/enemy.gd" id="1_1fxvc"]
 [ext_resource type="Texture2D" uid="uid://pmrgbxp12km" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Left.png" id="2_a700b"]
@@ -750,28 +750,35 @@ advance_mode = 2
 advance_mode = 2
 advance_condition = &"is_hungry"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oosjv"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p0ajb"]
 advance_mode = 2
 advance_condition = &"is_eating"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bai71"]
+advance_mode = 2
+advance_condition = &"is_walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k02vk"]
+advance_mode = 2
+advance_condition = &"is_idle"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_d8c0n"]
 states/eat/node = SubResource("AnimationNodeBlendSpace2D_ixxb7")
 states/eat/position = Vector2(807, -42)
 states/hungry/node = SubResource("AnimationNodeBlendSpace2D_jdyg1")
-states/hungry/position = Vector2(605, 26)
+states/hungry/position = Vector2(596, 34)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_amcfy")
 states/idle/position = Vector2(396, 100)
 states/walk/node = SubResource("AnimationNodeBlendSpace2D_737rd")
 states/walk/position = Vector2(396, -42)
-transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransition_njxco"), "hungry", "eat", SubResource("AnimationNodeStateMachineTransition_avrna"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_d6xjh"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_sv086"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kr72v"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_uxo76"), "idle", "hungry", SubResource("AnimationNodeStateMachineTransition_8vgqf"), "walk", "eat", SubResource("AnimationNodeStateMachineTransition_oosjv")]
+transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransition_njxco"), "hungry", "eat", SubResource("AnimationNodeStateMachineTransition_avrna"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_d6xjh"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_sv086"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kr72v"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_uxo76"), "idle", "hungry", SubResource("AnimationNodeStateMachineTransition_8vgqf"), "walk", "eat", SubResource("AnimationNodeStateMachineTransition_p0ajb"), "hungry", "walk", SubResource("AnimationNodeStateMachineTransition_bai71"), "hungry", "idle", SubResource("AnimationNodeStateMachineTransition_k02vk")]
 graph_offset = Vector2(-31, -83)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("wander_direction") groups=["activation", "enemy"]]
+[node name="Enemy" type="CharacterBody2D" groups=["activation", "enemy"]]
 z_index = 5
 collision_layer = 17
 collision_mask = 27
 script = ExtResource("1_1fxvc")
-wander_direction = NodePath("Wander")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(5, 0)

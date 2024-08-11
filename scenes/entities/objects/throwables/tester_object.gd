@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var speed_scale: float = 10.0
 @export var gravity: float = -9.8
 @export var num_of_points: int = 50
-@export var eating_distance: float = 15.0  # Distance to start eating
+@export var despawn_time: float = 10.0
 
 var _direction: Vector2
 var _spawnPosition: Vector2
@@ -40,7 +40,7 @@ func _physics_process(delta: float):
 			SharedSignals.shadow_done.emit()
 			can_be_eaten = true
 			print("Projectile landed, can be eaten:", can_be_eaten)
-			_create_eating_timer()
+			_start_despawn_timer()
 
 func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
 	_spawnPosition = position
@@ -73,33 +73,14 @@ func calculate_trajectory(_End: Vector2):
 
 	return points
 
-func _create_eating_timer():
-	# Create a timer to allow eating after a short delay
+func _start_despawn_timer():
 	var timer = Timer.new()
-	timer.wait_time = 5.0  # Duration before the item can be eaten
+	timer.wait_time = despawn_time
 	timer.one_shot = true
-	timer.timeout.connect(_can_be_eaten)
+	timer.timeout.connect(_despawn_time)
 	add_child(timer)
 	timer.start()
 
-func _can_be_eaten():
-	can_be_eaten = true
-	_start_eating_sequence()
-
-func _start_eating_sequence():
-	# Ensure this function only proceeds if the item can be eaten
-	if can_be_eaten:
-		SharedSignals.start_eating.emit()
-		_create_timer()
-
-func _create_timer():
-	var timer = Timer.new()
-	timer.wait_time = 5.0  # Duration of eating time
-	timer.one_shot = true
-	timer.timeout.connect(_can_move_again)
-	add_child(timer)
-	timer.start()
-
-func _can_move_again():
-	SharedSignals.can_move_again.emit()
+func _despawn_time():
+	SharedSignals.projectile_gone.emit(self)  # Pass a reference to this projectile
 	queue_free()

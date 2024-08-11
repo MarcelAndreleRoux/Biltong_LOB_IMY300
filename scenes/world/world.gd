@@ -18,6 +18,7 @@ var throw_start_position: Vector2
 
 var _isAiming: bool = false
 var is_on_cooldown: bool = false
+var active_marker: Marker2D = null
 
 @export var max_throw_distance: float = 500.0
 @export var min_throw_distance: float = 50.0
@@ -32,6 +33,7 @@ func _ready():
 	SharedSignals.new_marker.connect(_on_new_marker)
 	_display_keycaps_start()
 	ray_cast_2d.enabled = true
+	SharedSignals.projectile_gone.connect(_remove_marker)
 
 func _physics_process(_delta):
 	# Update RayCast2D's position and target
@@ -146,19 +148,27 @@ func calculate_landing_position(start_position: Vector2, direction: Vector2, tar
 	return landing_position
 
 func place_marker_at_landing(landing_position: Vector2):
+	if active_marker != null:
+		active_marker.queue_free()
 	var new_marker = Marker2D.new()
 	new_marker.name = "Projectilespawnable"
 	new_marker.global_position = landing_position
 	new_marker.add_to_group("FirstEnemy")
 
 	_main.add_child(new_marker)
+	active_marker = new_marker
 	
 	SharedSignals.new_marker.emit(new_marker)
 	print("New marker placed at: ", landing_position)
 
 func _on_new_marker(marker: Marker2D):
-	# Handle new marker placement logic if needed
 	print("Marker registered: ", marker.global_position)
+
+func _remove_marker():
+	if active_marker != null:
+		active_marker.queue_free()
+		print("Marker removed")
+		active_marker = null
 
 func _display_keycaps_start():
 	keycaps.visible = true
