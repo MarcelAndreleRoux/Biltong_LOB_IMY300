@@ -11,16 +11,20 @@ var shown_once: bool = false
 func _ready():
 	move_action.visible = false
 	animatedSprite.play("idle")
-	SharedSignals.move_box.connect(move_in_direction)
+	#SharedSignals.move_box.connect(move_in_direction)
+	SharedSignals.drag_box.connect(_follow_player)
 
 func _integrate_forces(_state):
 	rotation = 0
 	angular_velocity = 0
 
-func move_in_direction(direction: Vector2):
+func _follow_player(position: Vector2, direction: Vector2):
 	if player_in_area:
-		var force = direction * 200  # Adjust the force value as needed
-		apply_central_impulse(force)
+		# Calculate the target position based on the player's position and direction
+		var target_position = position + direction * 20  # Adjust the multiplier as needed
+
+		# Smoothly interpolate the box's position towards the target position
+		global_position = global_position.lerp(target_position, 0.1)  # Adjust the interpolation speed as needed
 
 func _some_waiting_timer():
 	var grow_timer = Timer.new()
@@ -33,7 +37,6 @@ func _some_waiting_timer():
 
 func _show_timeout():
 	$show_timer.queue_free()
-	
 	move_action.visible = false
 
 func _on_move_area_body_entered(body: Node2D):
@@ -46,7 +49,7 @@ func _on_move_area_body_entered(body: Node2D):
 		SharedSignals.player_move.emit()
 		animatedSprite.play("near_box")
 		shown_once = true
-	
+
 func _on_move_area_body_exited(_body: Node2D):
 	if player_in_area:
 		player_in_area = false

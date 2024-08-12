@@ -4,6 +4,7 @@ class_name player_class
 
 signal update_health(health: int, position: Vector2)
 signal update_inventory(item: String)
+signal drag_box(position: Vector2, direction: Vector2)
 
 # Nodes
 @onready var animation_tree = $AnimationTree
@@ -51,10 +52,6 @@ func _change_speed_back():
 	player_in_box_area = false
 	speed = 100
 
-func _handle_item_pickup(_item: String):
-	pass 
-	# emit_signal("update_inventory", item)
-
 func _physics_process(_delta):
 	_handle_action_input()
 	_handle_movement_input()
@@ -62,19 +59,24 @@ func _physics_process(_delta):
 	_update_animation_parameters()
 
 	velocity = currentVelocity
-
 	move_and_slide()
+
+	# Emit the player's position and direction to the box while dragging
+	if is_dragging and player_in_box_area:
+		SharedSignals.drag_box.emit(global_position, direction)
 
 func _handle_movement_input():
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	direction = currentVelocity.normalized()
 	currentVelocity *= speed
 
-	if is_dragging and player_in_box_area:
-		# If dragging, emit a signal to move the box in the desired direction
-		SharedSignals.move_box.emit(direction)
-
 func _handle_action_input():
+	# Handle dragging action only if the player is in the move area
+	if Input.is_action_pressed("interact") and player_in_box_area:
+		is_dragging = true
+	else:
+		is_dragging = false
+
 	if can_aim_throw:
 		# Handle aim toggling
 		if Input.is_action_just_pressed("aim"):
@@ -92,12 +94,6 @@ func _handle_action_input():
 		else:
 			if Input.is_action_just_pressed("throw"):
 				error.play()
-	
-	# Handle dragging action only if the player is in the move area
-	if Input.is_action_pressed("interact") and player_in_box_area:
-		is_dragging = true
-	else:
-		is_dragging = false
 
 func _start_cooldown_timer():
 	var cooldown_timer = Timer.new()
