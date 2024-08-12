@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://vlik5vxjmqh4"]
+[gd_scene load_steps=48 format=3 uid="uid://vlik5vxjmqh4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/enemy.gd" id="1_1fxvc"]
 [ext_resource type="Texture2D" uid="uid://pmrgbxp12km" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Left.png" id="2_a700b"]
@@ -16,9 +16,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_38uif"]
 radius = 10.5
 height = 36.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_n44n2"]
-radius = 134.093
 
 [sub_resource type="Animation" id="Animation_7dtl7"]
 length = 0.001
@@ -791,12 +788,6 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_38uif")
 
 [node name="Wander" parent="." instance=ExtResource("2_gm0cl")]
-
-[node name="DetectionArea" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-shape = SubResource("CircleShape2D_n44n2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

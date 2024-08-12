@@ -6,6 +6,7 @@ extends Node2D
 @onready var keycaps = $Keycaps
 @onready var mouse = $Mouse
 @onready var ray_cast_2d = $Player/RayCast2D
+@onready var win_state = $WinState
 
 var _main: Node2D
 var _end: Vector2
@@ -19,6 +20,7 @@ var throw_start_position: Vector2
 var _isAiming: bool = false
 var is_on_cooldown: bool = false
 var active_marker: Marker2D = null
+var can_throw: bool = false
 
 @export var max_throw_distance: float = 500.0
 @export var min_throw_distance: float = 50.0
@@ -34,6 +36,7 @@ func _ready():
 	_display_keycaps_start()
 	ray_cast_2d.enabled = true
 	SharedSignals.projectile_gone.connect(_remove_marker)
+	SharedSignals.item_pickup.connect(_on_item_pickup)
 
 func _physics_process(_delta):
 	# Update RayCast2D's position and target
@@ -49,26 +52,31 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
 		game_pause.game_over()
 	
-	if Input.is_action_pressed("aim") and not is_on_cooldown:
-		_isAiming = true
-	elif Input.is_action_just_released("aim"):
-		_isAiming = false
-	
-	trajectory_line.visible = _isAiming
-
-	if _isAiming:
-		calculate_trajectory()
-		
-	# Check if the raycast is not colliding before allowing a throw
-	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
-		if not ray_cast_2d.is_colliding():
-			SharedSignals.can_throw_projectile.emit()
+	if can_throw:
+		if Input.is_action_pressed("aim") and not is_on_cooldown:
+			_isAiming = true
+		elif Input.is_action_just_released("aim"):
 			_isAiming = false
-			trajectory_line.visible = false
-			_throw_item()
-			_start_cooldown_timer()
-		else:
-			print("Cannot throw, something is in the way!")
+		
+		trajectory_line.visible = _isAiming
+
+		if _isAiming:
+			SharedSignals.show_throw.emit()
+			calculate_trajectory()
+			
+		# Check if the raycast is not colliding before allowing a throw
+		if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
+			if not ray_cast_2d.is_colliding():
+				SharedSignals.can_throw_projectile.emit()
+				_isAiming = false
+				trajectory_line.visible = false
+				_throw_item()
+				_start_cooldown_timer()
+			else:
+				print("Cannot throw, something is in the way!")
+
+func _on_item_pickup():
+	can_throw = true
 
 func _throw_item():
 	var instance = _projectileScene.instantiate()
@@ -96,6 +104,7 @@ func _throw_item():
 	place_marker_at_landing(landing_position)
 
 func _start_cooldown_timer():
+	SharedSignals.inventory_freez.emit()
 	is_on_cooldown = true
 	var cooldown_timer = Timer.new()
 	cooldown_timer.wait_time = 5.0
@@ -105,6 +114,7 @@ func _start_cooldown_timer():
 	cooldown_timer.start()
 
 func _end_cooldown():
+	SharedSignals.invertory_update.emit()
 	is_on_cooldown = false
 
 func calculate_trajectory():
@@ -140,10 +150,24 @@ func calculate_landing_position(start_position: Vector2, direction: Vector2, tar
 	var distance = start_position.distance_to(target_position)
 	var gravity = 9.8
 	var angle = direction.angle()
-	var speed = sqrt((distance * gravity) / sin(2 * angle))
+	
+	# Ensure the angle is not too close to 0 or 180 degrees
+	if abs(sin(2 * angle)) < 0.0001:
+		angle += deg_to_rad(1)  # Slightly adjust the angle to avoid zero sin value
+	
+	var speed = sqrt((distance * gravity) / max(abs(sin(2 * angle)), 0.0001))  # Prevent division by zero
+	
+	# Ensure the speed is a valid number
+	if speed != speed:
+		speed = 100.0  # Set a default safe value or some appropriate fallback
+	
 	var x_component = cos(angle) * speed
-
-	var total_time = distance / x_component
+	
+	# Avoid division by zero in total_time calculation
+	var total_time = 0.0
+	if x_component != 0:
+		total_time = distance / x_component
+	
 	var landing_position = start_position + direction * (x_component * total_time)
 	return landing_position
 
@@ -167,12 +191,12 @@ func _on_new_marker(marker: Marker2D):
 func _remove_marker():
 	if active_marker != null:
 		active_marker.queue_free()
-		print("Marker removed")
 		active_marker = null
 
 func _display_keycaps_start():
 	keycaps.visible = true
 	var timer = Timer.new()
+	timer.name = "display_keycaps_timer"
 	timer.wait_time = 5.0
 	timer.one_shot = true
 	timer.timeout.connect(_end_timer)
@@ -180,4 +204,20 @@ func _display_keycaps_start():
 	timer.start()
 
 func _end_timer():
+	$display_keycaps_timer.queue_free()
+	
 	keycaps.visible = false
+
+func _on_game_finish_area_entered(area):
+	var timer = Timer.new()
+	timer.name = "win_timer"
+	timer.wait_time = 1.0
+	timer.one_shot = true
+	timer.timeout.connect(_end_win_timer)
+	add_child(timer)
+	timer.start()
+
+func _end_win_timer():
+	$win_timer.queue_free()
+	
+	win_state.game_win()

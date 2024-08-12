@@ -33,10 +33,18 @@ signal marker_spotted
 
 # Inventory Signals
 signal invertory_update
+signal inventory_freez
+
+# Mouse UI signals
+signal show_aim
+signal show_throw
 
 # Item Pickup
 signal pickedup_item
 signal item_removed
+
+# Food
+signal eaten_ground_food
 
 # Box
 signal player_move

@@ -21,6 +21,7 @@ var direction: Vector2 = Vector2.ZERO
 var throw_clicked: bool = false
 var is_on_cooldown: bool = false
 var can_throw_proj: bool = false
+var can_aim_throw: bool = false
 
 # Box
 var is_dragging: bool = false
@@ -34,6 +35,10 @@ func _ready():
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
 	SharedSignals.can_throw_projectile.connect(_on_can_throw)
+	SharedSignals.item_pickup.connect(_on_item_pickup)
+
+func _on_item_pickup():
+	can_aim_throw = true
 
 func _on_can_throw():
 	can_throw_proj = true
@@ -70,28 +75,29 @@ func _handle_movement_input():
 		SharedSignals.move_box.emit(direction)
 
 func _handle_action_input():
-	# Handle aim toggling
-	if Input.is_action_just_pressed("aim"):
-		is_aiming = true
-	elif Input.is_action_just_released("aim"):
-		is_aiming = false
+	if can_aim_throw:
+		# Handle aim toggling
+		if Input.is_action_just_pressed("aim"):
+			is_aiming = true
+		elif Input.is_action_just_released("aim"):
+			is_aiming = false
 
+		# Handle throwing action
+		if is_aiming and not is_on_cooldown and can_throw_proj:
+			if Input.is_action_just_pressed("throw") and not throw_clicked:
+				throw_clicked = true
+				is_on_cooldown = true
+				_play_throw_animation()
+				_start_cooldown_timer()
+		else:
+			if Input.is_action_just_pressed("throw"):
+				error.play()
+	
 	# Handle dragging action only if the player is in the move area
 	if Input.is_action_pressed("interact") and player_in_box_area:
 		is_dragging = true
 	else:
 		is_dragging = false
-
-	# Handle throwing action
-	if is_aiming and not is_on_cooldown and can_throw_proj:
-		if Input.is_action_just_pressed("throw") and not throw_clicked:
-			throw_clicked = true
-			is_on_cooldown = true
-			_play_throw_animation()
-			_start_cooldown_timer()
-	else:
-		if Input.is_action_just_pressed("throw"):
-			error.play()
 
 func _start_cooldown_timer():
 	var cooldown_timer = Timer.new()
@@ -159,14 +165,3 @@ func _on_pickup_area_area_entered(area):
 	if area.name == "Food":
 		if Input.is_action_just_pressed("pickup"):
 			pickup.play()
-
-func _dislpay_mouse():
-	var timer = Timer.new()
-	timer.wait_time = 5.0  # 10-second cooldown
-	timer.one_shot = true
-	timer.timeout.connect(_end_timer_mouse)
-	add_child(timer)
-	timer.start()
-
-func _end_timer_mouse():
-	pass

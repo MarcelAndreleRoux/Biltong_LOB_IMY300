@@ -1,15 +1,14 @@
 extends Node2D
 
-@onready var food = $ItemOne
-@onready var fire = $ItemTwo
-@onready var water = $ItemThree
+@onready var inventory = $AnimatedSprite2D
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	inventory.play("no_item")
+	SharedSignals.invertory_update.connect(_on_inv_update)
+	SharedSignals.inventory_freez.connect(_on_inv_freez)
 
+func _on_inv_update():
+	inventory.play("selected_food")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _on_inv_freez():
+	inventory.play("no_item")
