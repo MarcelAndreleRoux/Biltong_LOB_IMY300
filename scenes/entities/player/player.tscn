@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://wdw24tbqrqxv"]
+[gd_scene load_steps=73 format=3 uid="uid://wdw24tbqrqxv"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_3avnw"]
 [ext_resource type="Texture2D" uid="uid://cr80tfvpf61v2" path="res://assets/sprites/player/idle/normal/idle_left.png" id="2_a82sk"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://b87li477jh1w4" path="res://assets/soundeffects/Throw.mp3" id="16_b2h5t"]
 [ext_resource type="AudioStream" uid="uid://boju7o3jsivhy" path="res://assets/soundeffects/Item-Pickup.wav" id="16_twola"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="16_yo23e"]
+[ext_resource type="AudioStream" uid="uid://c5irlygn28uyp" path="res://assets/soundeffects/box_drop.wav" id="18_a7ia4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_atsr3"]
 size = Vector2(5, 4)
@@ -1232,6 +1233,9 @@ volume_db = -17.333
 [node name="throw" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_b2h5t")
 volume_db = -15.0
+
+[node name="box_drop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_a7ia4")
 
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=39 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_o3fq4"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="6_q0hj8"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="10_35y6m"]
 [ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="10_60gu4"]
-[ext_resource type="Script" path="res://scenes/world/WinState.gd" id="10_jwusd"]
 [ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="10_p7nds"]
 [ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="11_enco6"]
 [ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="13_55pb2"]
@@ -22,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://d07mo5cvixahe" path="res://assets/sprites/UI/Keycaps/Keycaps-S.png" id="18_ary2y"]
 [ext_resource type="Texture2D" uid="uid://bocxbuatv3htb" path="res://assets/sprites/UI/Keycaps/Keycaps-D.png" id="19_qqsdr"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="22_kde7e"]
-[ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="24_x7tii"]
 [ext_resource type="Script" path="res://scenes/world/Mouse.gd" id="25_ovqkw"]
 [ext_resource type="Texture2D" uid="uid://cb21ls7xc0kej" path="res://assets/sprites/UI/Mouse/Aim.png" id="26_vdvpd"]
 [ext_resource type="Texture2D" uid="uid://dej73xmk4mfeg" path="res://assets/sprites/UI/Mouse/Throw.png" id="27_rs6p5"]
@@ -352,8 +350,8 @@ sources/1 = SubResource("TileSetAtlasSource_svv0e")
 sources/2 = SubResource("TileSetAtlasSource_1tmx2")
 sources/5 = SubResource("TileSetAtlasSource_c3q73")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v3b0s"]
-size = Vector2(185, 103)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1t8op"]
+size = Vector2(87, 43)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_o3fq4")
@@ -421,62 +419,6 @@ door_link_id = "123"
 [node name="Button" parent="." instance=ExtResource("6_q0hj8")]
 position = Vector2(40, 145)
 door_link_id = "123"
-
-[node name="WinState" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("10_jwusd")
-
-[node name="Confetti" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("24_x7tii")
-
-[node name="Panel" type="Panel" parent="WinState"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="WinState/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 53.0
-offset_right = 74.0
-offset_bottom = 77.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 2
-
-[node name="exit" type="Button" parent="WinState/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("13_55pb2")
-flat = true
-
-[node name="restart" type="Button" parent="WinState/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_enco6")
-flat = true
-
-[node name="TextureRect" type="TextureRect" parent="WinState/Panel"]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 33.0
-offset_right = 405.0
-offset_bottom = 175.0
-
-[node name="select" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("14_374d5")
 
 [node name="GamePause" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -573,17 +515,14 @@ position = Vector2(245, 258)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(241, 135)
 
-[node name="GameFinish" type="Area2D" parent="."]
+[node name="Transition" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameFinish"]
-position = Vector2(129, 323)
-shape = SubResource("RectangleShape2D_v3b0s")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
+position = Vector2(129, 292)
+shape = SubResource("RectangleShape2D_1t8op")
 
-[connection signal="pressed" from="WinState/Panel/GridContainer/exit" to="WinState" method="_on_exit_pressed"]
-[connection signal="pressed" from="WinState/Panel/GridContainer/restart" to="WinState" method="_on_restart_pressed"]
-[connection signal="finished" from="WinState/select" to="WinState" method="_on_select_finished"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
 [connection signal="finished" from="GamePause/select" to="GamePause" method="_on_select_finished"]
-[connection signal="area_entered" from="GameFinish" to="." method="_on_game_finish_area_entered"]
+[connection signal="body_entered" from="Transition" to="." method="_on_transition_body_entered"]

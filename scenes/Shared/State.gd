@@ -1,0 +1,22 @@
+extends Node
+
+# player sates
+enum PLAYER_STATE { IDLE, MOVE, AIM, THROW, DEATH, PICKUP }
+
+# enemy states
+enum TURTLE_STATE { IDLE, MOVE, INTERESTED, EAT, HIDE }
+enum LIZARD_STATE { IDLE, IDLE_FUNNY, MOVE, LOADED, EMPTY }
+enum HEDGEOHG_STATE { IDLE, ANGRY, SHOOTING }
+
+# object states
+enum FOOD { THROWN, ON_GROUND }
+enum FIRE { THROWN, ON_GROUND }
+enum WATER { THROWN, ON_GROUND }
+
+# box states
+enum CBOX { IDLE, NEAR, MOVING }
+enum EBOX { IDLE, NEAR, MOVING, LOADED, EMPTY }
+
+# other
+enum GRASS { IDLE, BURN, GROW }
+enum DOOR { IDLE, ACTIVE, NOT_ACTIVE, STUCK }

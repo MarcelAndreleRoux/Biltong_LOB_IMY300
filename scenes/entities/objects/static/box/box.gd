@@ -21,7 +21,7 @@ func _integrate_forces(_state):
 func _follow_player(position: Vector2, direction: Vector2):
 	if player_in_area:
 		# Calculate the target position based on the player's position and direction
-		var target_position = position + direction * 20  # Adjust the multiplier as needed
+		var target_position = position + direction * 15  # Adjust the multiplier as needed
 
 		# Smoothly interpolate the box's position towards the target position
 		global_position = global_position.lerp(target_position, 0.1)  # Adjust the interpolation speed as needed

@@ -1,0 +1,169 @@
+[gd_scene load_steps=13 format=3 uid="uid://lturyigbf6db"]
+
+[ext_resource type="Script" path="res://scenes/world/level_2.gd" id="1_ln5oq"]
+[ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_toagp"]
+[ext_resource type="Script" path="res://scenes/world/WinState.gd" id="3_aa8vu"]
+[ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="4_n527h"]
+[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="5_6qyis"]
+[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="6_longa"]
+[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="7_f2hvx"]
+[ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="8_c0dgp"]
+[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="9_iv1yk"]
+[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="10_px7m0"]
+[ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="11_5jp0x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pjkfh"]
+size = Vector2(92.5, 67.5)
+
+[node name="Level2" type="Node2D"]
+script = ExtResource("1_ln5oq")
+
+[node name="Player" parent="." instance=ExtResource("1_toagp")]
+position = Vector2(147, 12)
+
+[node name="RayCast2D" type="RayCast2D" parent="Player"]
+
+[node name="Inventory" parent="." instance=ExtResource("11_5jp0x")]
+position = Vector2(245, 258)
+
+[node name="TrajectoryLine" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(1, 1, 1, 0.447059)
+
+[node name="GameFinish" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameFinish"]
+position = Vector2(429, 228)
+shape = SubResource("RectangleShape2D_pjkfh")
+
+[node name="WinState" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("3_aa8vu")
+
+[node name="Confetti" type="AudioStreamPlayer2D" parent="WinState"]
+stream = ExtResource("4_n527h")
+
+[node name="Panel" type="Panel" parent="WinState"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="WinState/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = 53.0
+offset_right = 74.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 2
+
+[node name="exit" type="Button" parent="WinState/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("5_6qyis")
+flat = true
+
+[node name="restart" type="Button" parent="WinState/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("6_longa")
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="WinState/Panel"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 33.0
+offset_right = 405.0
+offset_bottom = 175.0
+
+[node name="select" type="AudioStreamPlayer2D" parent="WinState"]
+stream = ExtResource("7_f2hvx")
+
+[node name="Escape" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Escape"]
+offset_left = 12.0
+offset_top = 13.0
+offset_right = 28.0
+offset_bottom = 29.0
+texture = ExtResource("8_c0dgp")
+stretch_mode = 2
+
+[node name="GamePause" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("9_iv1yk")
+
+[node name="Panel" type="Panel" parent="GamePause"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer3" type="GridContainer" parent="GamePause/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -20.0
+offset_right = 74.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
+layout_mode = 2
+columns = 2
+
+[node name="resume" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("10_px7m0")
+flat = true
+
+[node name="restart" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("6_longa")
+flat = true
+
+[node name="GridContainer2" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
+layout_mode = 2
+
+[node name="exit" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("5_6qyis")
+flat = true
+
+[node name="select" type="AudioStreamPlayer2D" parent="GamePause"]
+stream = ExtResource("7_f2hvx")
+
+[connection signal="body_entered" from="GameFinish" to="." method="_on_game_finish_body_entered"]
+[connection signal="pressed" from="WinState/Panel/GridContainer/exit" to="WinState" method="_on_exit_pressed"]
+[connection signal="pressed" from="WinState/Panel/GridContainer/restart" to="WinState" method="_on_restart_pressed"]
+[connection signal="finished" from="WinState/select" to="WinState" method="_on_select_finished"]
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
+[connection signal="finished" from="GamePause/select" to="GamePause" method="_on_select_finished"]

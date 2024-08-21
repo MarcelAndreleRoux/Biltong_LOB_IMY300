@@ -8,9 +8,12 @@ signal drag_box(position: Vector2, direction: Vector2)
 
 # Nodes
 @onready var animation_tree = $AnimationTree
+
+# Sounds
 @onready var error = $error
 @onready var pickup = $pickup
 @onready var throw = $throw
+@onready var box_drop = $box_drop
 
 # Movement
 var currentVelocity: Vector2
@@ -27,6 +30,7 @@ var can_aim_throw: bool = false
 # Box
 var is_dragging: bool = false
 var player_in_box_area: bool = false
+var play_box_pickup_once: bool = false
 
 # Trajectory Line
 var points: Array = []
@@ -73,8 +77,13 @@ func _handle_movement_input():
 func _handle_action_input():
 	# Handle dragging action only if the player is in the move area
 	if Input.is_action_pressed("interact") and player_in_box_area:
+		if not play_box_pickup_once:
+			box_drop.play()
+			play_box_pickup_once = true
+		
 		is_dragging = true
 	else:
+		play_box_pickup_once = false
 		is_dragging = false
 
 	if can_aim_throw:
