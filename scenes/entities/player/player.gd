@@ -37,6 +37,8 @@ var points: Array = []
 
 func _ready():
 	animation_tree.active = true
+	can_throw_proj = GlobalValues.can_throw
+	can_aim_throw = GlobalValues.can_throw
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
 	SharedSignals.can_throw_projectile.connect(_on_can_throw)

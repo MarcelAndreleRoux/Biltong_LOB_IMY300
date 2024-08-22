@@ -1,0 +1,123 @@
+[gd_scene load_steps=18 format=3 uid="uid://umnauojref6t"]
+
+[ext_resource type="Texture2D" uid="uid://dhv7t7cuweh5l" path="res://assets/sprites/objects/throwables/fire/Fire-Mango-Throwable-Sheet.png" id="1_0cdmn"]
+[ext_resource type="Texture2D" uid="uid://bv0gim0eo5bye" path="res://assets/sprites/objects/throwables/fire/Mango.png" id="2_xumqc"]
+[ext_resource type="Texture2D" uid="uid://b1t233x8g3awa" path="res://assets/sprites/objects/throwables/fire/FireMangoRingBurn.png" id="3_qsw80"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1y4gr"]
+atlas = ExtResource("1_0cdmn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfcu7"]
+atlas = ExtResource("1_0cdmn")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5h7kr"]
+atlas = ExtResource("1_0cdmn")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urj7x"]
+atlas = ExtResource("1_0cdmn")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7rc2"]
+atlas = ExtResource("1_0cdmn")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfllw"]
+atlas = ExtResource("1_0cdmn")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wh3n4"]
+atlas = ExtResource("1_0cdmn")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bc2ey"]
+atlas = ExtResource("1_0cdmn")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccp6p"]
+atlas = ExtResource("3_qsw80")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2lym"]
+atlas = ExtResource("3_qsw80")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sdgp"]
+atlas = ExtResource("3_qsw80")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r7cee"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1y4gr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfcu7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5h7kr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urj7x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7rc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lfllw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wh3n4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bc2ey")
+}],
+"loop": false,
+"name": &"death",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_xumqc")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccp6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2lym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sdgp")
+}],
+"loop": true,
+"name": &"land",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mul82"]
+radius = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d70w1"]
+radius = 16.0
+
+[node name="Fire" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_r7cee")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_mul82")
+
+[node name="FireArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FireArea"]
+shape = SubResource("CircleShape2D_d70w1")

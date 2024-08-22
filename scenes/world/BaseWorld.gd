@@ -29,7 +29,7 @@ func _ready():
 	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
-	_projectileScene = preload("res://scenes/entities/objects/throwables/tester_object.tscn")
+	_projectileScene = preload("res://scenes/entities/objects/throwables/mushroom/mushroom.tscn")
 	SharedSignals.new_marker.connect(_on_new_marker)
 	ray_cast_2d.enabled = true
 	SharedSignals.projectile_gone.connect(_remove_marker)

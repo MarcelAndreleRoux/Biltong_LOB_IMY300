@@ -25,11 +25,14 @@ signal check_link
 signal found_link
 signal full_link
 
-# Enemy Signals
+# Trutle Enemy Signals
 signal start_eating
 signal new_marker
 signal can_move_again
 signal marker_spotted
+
+# Hedgehog Enemy Signals
+signal player_spotted
 
 # Inventory Signals
 signal invertory_update

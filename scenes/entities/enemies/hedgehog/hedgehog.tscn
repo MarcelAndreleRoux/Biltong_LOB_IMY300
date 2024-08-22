@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh6flmufkyjat"]
+
+[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_1idsj"]
+[ext_resource type="Script" path="res://scenes/entities/enemies/hedgehog/hedgehog.gd" id="1_h4pte"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_577rj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dxkb0"]
+size = Vector2(36, 36)
+
+[node name="Hedgehog" type="StaticBody2D" groups=["enemy"]]
+script = ExtResource("1_h4pte")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.28125, 0.28125)
+texture = ExtResource("1_1idsj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_577rj")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dxkb0")

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnatwvomoe1nd"]
+
+[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_7efvt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhwea"]
+atlas = ExtResource("1_7efvt")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u8irq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhwea")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3tn7"]
+size = Vector2(2, 4)
+
+[node name="Water" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.0625, 0.125)
+sprite_frames = SubResource("SpriteFrames_u8irq")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_k3tn7")

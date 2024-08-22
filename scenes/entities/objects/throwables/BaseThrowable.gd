@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name BaseThrowable
+
 @export var speed: float = 700.0
 @export var speed_scale: float = 10.0
 @export var gravity: float = -9.8
@@ -39,8 +41,12 @@ func _physics_process(delta: float):
 		if _currentPointIndex >= _trajectoryPoints.size():
 			SharedSignals.shadow_done.emit()
 			can_be_eaten = true
-			print("Projectile landed, can be eaten:", can_be_eaten)
 			_start_despawn_timer()
+	else:
+		if _trajectoryPoints == null:
+			print("Error: Trajectory points are null")
+		else:
+			print("Current point index is out of range:", _currentPointIndex, "/", _trajectoryPoints.size())
 
 func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
 	_spawnPosition = position
@@ -50,7 +56,7 @@ func initialize(position: Vector2, direction: Vector2, rotation: float, end_posi
 	_currentPointIndex = 0
 	time = 0.0
 
-func calculate_trajectory(_End: Vector2):
+func calculate_trajectory(_End: Vector2) -> Array:
 	var DOT = Vector2(1.0, 0.0).dot((_End - _spawnPosition).normalized())
 	var angle = 90 - 45 * DOT
 	
@@ -70,7 +76,7 @@ func calculate_trajectory(_End: Vector2):
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
 		points.append(_spawnPosition + Vector2(dx, dy))
-
+		
 	return points
 
 func _start_despawn_timer():
@@ -82,5 +88,5 @@ func _start_despawn_timer():
 	timer.start()
 
 func _despawn_time():
-	SharedSignals.projectile_gone.emit(self)  # Pass a reference to this projectile
+	SharedSignals.projectile_gone.emit(self)
 	queue_free()

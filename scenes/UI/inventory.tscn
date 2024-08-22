@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bp7ivp7c0j0tp"]
+[gd_scene load_steps=18 format=3 uid="uid://bp7ivp7c0j0tp"]
 
 [ext_resource type="Texture2D" uid="uid://bubb36t4lpk4y" path="res://assets/sprites/UI/Hotbar/Hotbar-Base.png" id="1_85g6n"]
 [ext_resource type="Script" path="res://scenes/UI/inventory.gd" id="1_85urg"]
 [ext_resource type="Texture2D" uid="uid://b18ps7evp5j4c" path="res://assets/sprites/UI/Hotbar/Hotbar-One.png" id="2_tmhmx"]
+[ext_resource type="Texture2D" uid="uid://d10vr5wfrpoj0" path="res://assets/sprites/UI/Hotbar/Hotbar-Two.png" id="3_rrbjr"]
+[ext_resource type="Texture2D" uid="uid://b7o21rum8afij" path="res://assets/sprites/UI/Hotbar/Hotbar-Three.png" id="5_s14cw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1kmiq"]
 atlas = ExtResource("1_85g6n")
@@ -31,10 +33,108 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wyfm"]
+atlas = ExtResource("1_85g6n")
+region = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glgg6"]
+atlas = ExtResource("3_rrbjr")
+region = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nsf4"]
+atlas = ExtResource("3_rrbjr")
+region = Rect2(48, 0, 48, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4tiig"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wyfm")
+}],
+"loop": true,
+"name": &"no_item",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glgg6")
+}],
+"loop": true,
+"name": &"selected_fire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nsf4")
+}],
+"loop": true,
+"name": &"selected_food",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7qsn"]
+atlas = ExtResource("1_85g6n")
+region = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujk8i"]
+atlas = ExtResource("5_s14cw")
+region = Rect2(48, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqrlm"]
+atlas = ExtResource("5_s14cw")
+region = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0kig"]
+atlas = ExtResource("5_s14cw")
+region = Rect2(96, 0, 48, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wcaii"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7qsn")
+}],
+"loop": true,
+"name": &"no_item",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujk8i")
+}],
+"loop": true,
+"name": &"selected_fire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqrlm")
+}],
+"loop": true,
+"name": &"selected_food",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0kig")
+}],
+"loop": true,
+"name": &"selected_water",
+"speed": 5.0
+}]
+
 [node name="Inventory" type="Node2D"]
 script = ExtResource("1_85urg")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Food" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1.90735e-06, 0)
 sprite_frames = SubResource("SpriteFrames_xsmjo")
+animation = &"selected_food"
+
+[node name="FoodFire" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4tiig")
+animation = &"no_item"
+
+[node name="FoodFireWater" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wcaii")
 animation = &"no_item"
