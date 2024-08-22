@@ -6,21 +6,37 @@ extends Node2D
 @export var cone_angle_offset: float = 10.0  # Angle offset for side darts
 
 var _is_shooting: bool = false
+var _attack_timer: Timer
 
 func _ready():
-	# Connect to the global signal that the player is spotted
+	# Connect to the global signals for player spotted and lost
 	SharedSignals.player_spotted.connect(_on_player_spotted)
+	SharedSignals.player_lost.connect(_on_player_lost)
 	dart_scene = preload("res://scenes/entities/objects/shoot/dart.tscn")
+	
+	_attack_timer = Timer.new()
+	_attack_timer.one_shot = true
+	_attack_timer.timeout.connect(_shoot_dart)
+	add_child(_attack_timer)
 
 func _on_player_spotted():
 	if not _is_shooting:
 		_is_shooting = true
 		_start_firing()
 
+func _on_player_lost():
+	_is_shooting = false
+
 func _start_firing():
+	if not _is_shooting:
+		return
+	
 	_shoot_dart()
 
 func _shoot_dart():
+	if not _is_shooting:
+		return
+	
 	if randi() % 2 == 0:
 		# Regular single dart attack
 		_spawn_dart(global_position, GlobalValues.player_position)
@@ -52,15 +68,9 @@ func _shoot_cone_attack():
 	_spawn_dart(global_position, global_position + right_direction)
 
 func _start_timer():
-	# Randomly choose between single dart and cone attack
-	var attack_timer = Timer.new()
-	attack_timer.wait_time = fire_rate  # Fire rate for each dart shot
-	attack_timer.one_shot = true
-	attack_timer.timeout.connect(_shoot_dart)
-	add_child(attack_timer)
-	attack_timer.start()
+	_attack_timer.wait_time = fire_rate  # Fire rate for each dart shot
+	_attack_timer.start()
 
 func stop_firing():
-	# Stop firing and clear any active timers
 	_is_shooting = false
-	# You can optionally implement logic here to stop all timers if needed
+	_attack_timer.stop()

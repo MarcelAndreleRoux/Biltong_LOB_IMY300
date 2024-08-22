@@ -33,6 +33,7 @@ signal marker_spotted
 
 # Hedgehog Enemy Signals
 signal player_spotted
+signal player_lost
 
 # Inventory Signals
 signal invertory_update
