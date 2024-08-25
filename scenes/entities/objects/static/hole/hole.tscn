@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://5m3wn3c0e7es"]
+
+[ext_resource type="Texture2D" uid="uid://ctv1786iogwxl" path="res://assets/sprites/objects/static/hole/hole.png" id="1_e2p0y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tuuys"]
+size = Vector2(48, 34)
+
+[node name="Hole" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_e2p0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_tuuys")

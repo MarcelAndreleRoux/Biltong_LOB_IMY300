@@ -14,6 +14,7 @@ signal drag_box(position: Vector2, direction: Vector2)
 @onready var pickup = $pickup
 @onready var throw = $throw
 @onready var box_drop = $box_drop
+@onready var death_sound = $death_sound
 
 # Movement
 var currentVelocity: Vector2
@@ -39,10 +40,12 @@ func _ready():
 	animation_tree.active = true
 	can_throw_proj = GlobalValues.can_throw
 	can_aim_throw = GlobalValues.can_throw
+	print("Player ready. Can throw:", GlobalValues.can_throw)
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
 	SharedSignals.can_throw_projectile.connect(_on_can_throw)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
+	SharedSignals.player_killed.connect(_on_player_killed)
 
 func _on_item_pickup():
 	can_aim_throw = true
@@ -75,6 +78,31 @@ func _handle_movement_input():
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	direction = currentVelocity.normalized()
 	currentVelocity *= speed
+
+func _on_player_killed():
+	# Disable player input and actions
+	set_physics_process(false)
+	
+	# Play the death animation
+	animation_tree["parameters/conditions/is_dead"] = true
+	
+	# Optionally, play a death sound or other effects
+	death_sound.play()
+	
+	# Disable further input or actions after death
+	is_on_cooldown = true
+	can_aim_throw = false
+	can_throw_proj = false
+
+	var cooldown_timer = Timer.new()
+	cooldown_timer.wait_time = 0.9
+	cooldown_timer.one_shot = true
+	cooldown_timer.timeout.connect(_death_finished)
+	add_child(cooldown_timer)
+	cooldown_timer.start()
+
+func _death_finished():
+	SharedSignals.death_finished.emit()
 
 func _handle_action_input():
 	# Handle dragging action only if the player is in the move area
@@ -161,7 +189,8 @@ func _play_throw_animation():
 		throw_clicked = false
 
 func _on_pickup_area_body_entered(body):
-	if body.name == "Food":
+	if body.is_in_group("pickable"):
+		print(body)
 		if Input.is_action_just_pressed("pickup"):
 			pickup.play()
 
@@ -169,6 +198,7 @@ func _on_pickup_finished():
 	SharedSignals.pickedup_item.emit()
 
 func _on_pickup_area_area_entered(area):
-	if area.name == "Food":
+	if area.name == "ActionArea":
+		print(area)
 		if Input.is_action_just_pressed("pickup"):
 			pickup.play()

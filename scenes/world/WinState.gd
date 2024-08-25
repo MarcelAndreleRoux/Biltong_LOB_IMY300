@@ -27,7 +27,7 @@ func _on_select_finished():
 		get_tree().reload_current_scene()
 		reset = false
 
-func game_win():
+func death_lose():
 	get_tree().paused = true
 	self.show()
 	confetti.play()

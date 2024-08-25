@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://bp7ivp7c0j0tp"]
+[gd_scene load_steps=19 format=3 uid="uid://bp7ivp7c0j0tp"]
 
 [ext_resource type="Texture2D" uid="uid://bubb36t4lpk4y" path="res://assets/sprites/UI/Hotbar/Hotbar-Base.png" id="1_85g6n"]
 [ext_resource type="Script" path="res://scenes/UI/inventory.gd" id="1_85urg"]
 [ext_resource type="Texture2D" uid="uid://b18ps7evp5j4c" path="res://assets/sprites/UI/Hotbar/Hotbar-One.png" id="2_tmhmx"]
 [ext_resource type="Texture2D" uid="uid://d10vr5wfrpoj0" path="res://assets/sprites/UI/Hotbar/Hotbar-Two.png" id="3_rrbjr"]
 [ext_resource type="Texture2D" uid="uid://b7o21rum8afij" path="res://assets/sprites/UI/Hotbar/Hotbar-Three.png" id="5_s14cw"]
+[ext_resource type="AudioStream" uid="uid://bfmdlsog7n2t3" path="res://assets/soundeffects/Item-Select.wav" id="6_njw7w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1kmiq"]
 atlas = ExtResource("1_85g6n")
@@ -132,9 +133,14 @@ sprite_frames = SubResource("SpriteFrames_xsmjo")
 animation = &"selected_food"
 
 [node name="FoodFire" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_4tiig")
 animation = &"no_item"
 
 [node name="FoodFireWater" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_wcaii")
 animation = &"no_item"
+
+[node name="Select" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_njw7w")

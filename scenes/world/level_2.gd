@@ -26,15 +26,12 @@ func _update_enemy_raycast():
 		enemy_raycast.target_position = (player.global_position - enemy_raycast.global_position)
 
 		if enemy_raycast.is_colliding():
-			print("RayCast2D hit something. Stopping firing.")
 			SharedSignals.player_lost.emit()  # Stop shooting if something is in the way
 		else:
-			print("RayCast2D did not hit anything. Start firing.")
 			SharedSignals.player_spotted.emit()  # Start shooting if the path is clear
 
 		# Reset RayCast2D position to its original position for the next frame
 		enemy_raycast.global_position -= direction_to_player * offset_distance
 
-
-
-
+func _on_game_finish_body_entered(body):
+	win_state.death_lose()

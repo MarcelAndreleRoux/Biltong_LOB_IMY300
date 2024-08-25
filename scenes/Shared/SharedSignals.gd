@@ -11,6 +11,8 @@ signal cooldown_end
 signal cooldown_end_other
 signal calculate_landing_position
 signal request_spawn_projectile
+signal player_killed
+signal death_finished
 
 # Projectile Signals
 signal projectile_gone
@@ -37,6 +39,7 @@ signal player_lost
 
 # Inventory Signals
 signal invertory_update
+signal inventory_changed
 signal inventory_freez
 
 # Mouse UI signals
@@ -49,6 +52,10 @@ signal item_removed
 
 # Food
 signal eaten_ground_food
+
+# Fire Mango
+
+signal fire_mango_land
 
 # Box
 signal player_move

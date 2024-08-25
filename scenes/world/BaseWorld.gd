@@ -8,6 +8,9 @@ class_name BaseWorld
 @onready var trajectory_line = $TrajectoryLine
 @onready var game_pause = $GamePause
 @onready var ray_cast_2d = $Player/RayCast2D
+@onready var error = $Error
+@onready var inventory = $Inventory
+@onready var death = $Death
 
 # Common Variables
 var _main: Node2D
@@ -17,6 +20,8 @@ var shadow_texture: Texture
 var shadow: Sprite2D
 var points: Array = []
 var throw_start_position: Vector2
+
+var original_inv_position: Vector2
 
 var _isAiming: bool = false
 var is_on_cooldown: bool = false
@@ -29,18 +34,22 @@ func _ready():
 	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
-	_projectileScene = preload("res://scenes/entities/objects/throwables/mushroom/mushroom.tscn")
+	original_inv_position = inventory.position
+	_projectileScene = preload("res://scenes/entities/objects/throwables/fire/fire.tscn")
 	SharedSignals.new_marker.connect(_on_new_marker)
 	ray_cast_2d.enabled = true
 	SharedSignals.projectile_gone.connect(_remove_marker)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
+	SharedSignals.death_finished.connect(_on_death_finsish)
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
 		game_pause.game_over()
 	
+	_check_inventory_swap()
 	_update_raycast_position()
 	change_scene()
+	
 	if GlobalValues.can_throw:
 		_handle_aiming_and_throwing()
 
@@ -78,6 +87,16 @@ func _on_item_pickup():
 	GlobalValues.can_throw = true
 
 func _throw_item():
+	# Determine which projectile to throw based on the current inventory selection
+	match GlobalValues.inventory_select:
+		GlobalValues.INVENTORY_SELECT.FOOD:
+			_projectileScene = preload("res://scenes/entities/objects/throwables/mushroom/mushroom.tscn")
+		GlobalValues.INVENTORY_SELECT.FIRE:
+			_projectileScene = preload("res://scenes/entities/objects/throwables/fire/fire.tscn")
+		GlobalValues.INVENTORY_SELECT.WATER:
+			_projectileScene = preload("res://scenes/entities/objects/throwables/water/water.tscn")
+
+	# Instantiate and throw the selected projectile
 	var instance = _projectileScene.instantiate()
 	throw_start_position = player.global_position
 	var playerPosition = throw_start_position
@@ -102,7 +121,7 @@ func _throw_item():
 	place_marker_at_landing(landing_position)
 
 func _start_cooldown_timer():
-	SharedSignals.inventory_freez.emit()
+	GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.NONE)
 	is_on_cooldown = true
 	var cooldown_timer = Timer.new()
 	cooldown_timer.wait_time = 5.0
@@ -112,8 +131,67 @@ func _start_cooldown_timer():
 	cooldown_timer.start()
 
 func _end_cooldown():
-	SharedSignals.invertory_update.emit()
+	GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
 	is_on_cooldown = false
+
+func _check_inventory_swap():
+	# Handle pressing '1' for food
+	if Input.is_action_just_pressed("one"):
+		if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
+			# Food is already selected
+			return
+		if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD or GlobalValues.can_throw:
+			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
+		else:
+			error.play()
+			_shake_inventory()
+
+	# Handle pressing '2' for fire
+	elif Input.is_action_just_pressed("two"):
+		if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FIRE:
+			# Fire is already selected
+			return
+		
+		if GlobalValues.can_swap_fire:
+			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FIRE)
+		else:
+			error.play()
+			_shake_inventory()
+
+	# Handle pressing '3' for water
+	elif Input.is_action_just_pressed("three"):
+		if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.WATER:
+			# Water is already selected
+			return
+		
+		if GlobalValues.can_swap_water:
+			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.WATER)
+		else:
+			error.play()
+			_shake_inventory()
+
+func _shake_inventory():
+	inventory.position = original_inv_position
+	
+	var shake_offset = 5  # How far the inventory shakes
+	var shake_time = 0.05  # Time between shakes
+
+	inventory.position.x -= shake_offset
+
+	var timer = Timer.new()
+	timer.wait_time = shake_time
+	timer.one_shot = true
+	add_child(timer)
+	timer.start()
+	
+	await timer.timeout
+	inventory.position.x += shake_offset * 2
+	timer.start()
+	
+	await timer.timeout
+	inventory.position = original_inv_position
+	timer.queue_free()
+
 
 func calculate_trajectory():
 	var DOT = Vector2(1.0, 0.0).dot((_end - player.position).normalized())
@@ -181,7 +259,6 @@ func place_marker_at_landing(landing_position: Vector2):
 	active_marker = new_marker
 	
 	SharedSignals.new_marker.emit(new_marker)
-	print("New marker placed at: ", landing_position)
 
 func _on_new_marker(marker: Marker2D):
 	print("Marker registered: ", marker.global_position)
@@ -200,3 +277,6 @@ func change_scene():
 		if GlobalValues.current_scene == "World":
 			get_tree().change_scene_to_file("res://scenes/world/level_2.tscn")
 			GlobalValues.finish_changingscene()
+
+func _on_death_finsish():
+	death.death_lose()

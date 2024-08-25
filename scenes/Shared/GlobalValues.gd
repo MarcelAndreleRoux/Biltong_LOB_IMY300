@@ -3,6 +3,15 @@ extends Node
 var current_scene = "World"
 var transition_scene = false
 var can_throw: bool = false
+var inventory_update = false
+
+enum INVENTORY_SELECT { NONE, FOOD, FIRE, WATER }
+var inventory_select = INVENTORY_SELECT.NONE
+
+var can_swap_fire: bool = false
+var can_swap_water: bool = false
+var left_swap: bool = false
+var right_swap: bool = false
 
 var player_position: Vector2
 
@@ -19,6 +28,14 @@ func finish_changingscene():
 				current_scene = "level3"
 		# Ensure can_throw is preserved across scenes
 		can_throw = true
+		
+		SharedSignals.inventory_changed.emit(GlobalValues.inventory_select)
+
+func set_inventory_select(value: int):
+	if inventory_select != value:
+		inventory_select = value
+		SharedSignals.inventory_changed.emit(value)
+
 
 func change_scene():
 	if transition_scene:

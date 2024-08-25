@@ -1,31 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnatwvomoe1nd"]
+[gd_scene load_steps=7 format=3 uid="uid://bnatwvomoe1nd"]
 
-[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_7efvt"]
+[ext_resource type="Script" path="res://scenes/entities/objects/throwables/water/water.gd" id="1_qjoxv"]
+[ext_resource type="Texture2D" uid="uid://dl0ddxs5kfdqh" path="res://assets/sprites/objects/throwables/water/Water-Throwable.png" id="2_tsf8l"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uhwea"]
-atlas = ExtResource("1_7efvt")
-region = Rect2(32, 32, 32, 32)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3tn7"]
+size = Vector2(2, 4)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_u8irq"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_odru2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3bah"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l8dmx"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uhwea")
+"texture": SubResource("AtlasTexture_d3bah")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3tn7"]
-size = Vector2(2, 4)
-
 [node name="Water" type="CharacterBody2D"]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.0625, 0.125)
-sprite_frames = SubResource("SpriteFrames_u8irq")
-animation = &"idle"
+collision_layer = 512
+collision_mask = 512
+script = ExtResource("1_qjoxv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_k3tn7")
+
+[node name="GrowArea" type="Area2D" parent="." groups=["grow"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrowArea"]
+shape = SubResource("RectangleShape2D_odru2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_l8dmx")
+animation = &"idle"

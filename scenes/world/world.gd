@@ -4,6 +4,7 @@ extends BaseWorld
 
 func _ready():
 	super()
+	print("Entered world. Current scene:", GlobalValues.current_scene)
 	_display_keycaps_start()
 
 func _physics_process(_delta):

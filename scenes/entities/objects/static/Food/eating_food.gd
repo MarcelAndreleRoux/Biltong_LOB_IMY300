@@ -3,6 +3,7 @@ extends StaticBody2D
 @onready var action_button = $ActionButton
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var pickup = $AudioStreamPlayer2D
 
 var eating: bool = false
 var playing_grow: bool = false
@@ -41,13 +42,13 @@ func _wait_before_grow_timer():
 
 func _process(delta):
 	if player_in_area and Input.is_action_just_pressed("pickup") and not eating and not already_picked:
-		print("was here")
 		already_picked = true
 		SharedSignals.item_pickup.emit()
-		SharedSignals.invertory_update.emit()
+		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
 		SharedSignals.show_aim.emit()
 		action_button.visible = false
-		animated_sprite_2d.play("idle")  # Optionally, change the animation or do other actions here.
+		animated_sprite_2d.play("idle")
+		pickup.play()
 
 func _play_grow_animation():
 	$regrow_timer.queue_free()

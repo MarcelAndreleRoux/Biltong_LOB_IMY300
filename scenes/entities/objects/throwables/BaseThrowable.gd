@@ -45,8 +45,7 @@ func _physics_process(delta: float):
 	else:
 		if _trajectoryPoints == null:
 			print("Error: Trajectory points are null")
-		else:
-			print("Current point index is out of range:", _currentPointIndex, "/", _trajectoryPoints.size())
+		
 
 func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
 	_spawnPosition = position
@@ -86,6 +85,7 @@ func _start_despawn_timer():
 	timer.timeout.connect(_despawn_time)
 	add_child(timer)
 	timer.start()
+	SharedSignals.fire_mango_land.emit()
 
 func _despawn_time():
 	SharedSignals.projectile_gone.emit(self)

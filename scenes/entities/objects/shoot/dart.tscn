@@ -1,17 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cm3vb8x5ang4d"]
+[gd_scene load_steps=6 format=3 uid="uid://cm3vb8x5ang4d"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/shoot/dart.gd" id="1_d1qit"]
-[ext_resource type="Texture2D" uid="uid://cefbvbo6xot2a" path="res://icon.svg" id="1_tthkr"]
+[ext_resource type="Texture2D" uid="uid://cjp1f8ros7tgw" path="res://assets/sprites/objects/throwables/dart/Dart.png" id="2_ni70x"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u3lri"]
-atlas = ExtResource("1_tthkr")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_8c3fy"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_e2qfk"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u3lri")
+"texture": ExtResource("2_ni70x")
 }],
 "loop": true,
 "name": &"default",
@@ -19,10 +15,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5abna"]
-size = Vector2(6, 2)
+size = Vector2(3, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ohwk"]
-size = Vector2(8, 4)
+size = Vector2(8, 14)
 
 [node name="dart" type="CharacterBody2D"]
 collision_layer = 64
@@ -30,16 +26,18 @@ collision_mask = 15
 script = ExtResource("1_d1qit")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 2.38419e-07)
-scale = Vector2(0.0505012, 0.0174812)
-sprite_frames = SubResource("SpriteFrames_8c3fy")
+sprite_frames = SubResource("SpriteFrames_e2qfk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -2.5)
 shape = SubResource("RectangleShape2D_5abna")
 
 [node name="DetectionArea" type="Area2D" parent="."]
 position = Vector2(21, 2)
+collision_mask = 255
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(-21, -2)
+position = Vector2(-21, -4)
 shape = SubResource("RectangleShape2D_3ohwk")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

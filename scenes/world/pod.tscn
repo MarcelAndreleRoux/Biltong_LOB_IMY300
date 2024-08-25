@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cswcb0d1r6f1d"]
+
+[ext_resource type="Texture2D" uid="uid://b1me7cckem3qq" path="res://assets/sprites/world/Decorations/pod-Sheet.png" id="1_2q2g2"]
+[ext_resource type="Script" path="res://scenes/world/pod.gd" id="1_qyox6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1dlsm"]
+size = Vector2(32, 16)
+
+[node name="pod" type="StaticBody2D"]
+script = ExtResource("1_qyox6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_2q2g2")
+offset = Vector2(0, -8)
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = -5
+shape = SubResource("RectangleShape2D_1dlsm")

@@ -34,11 +34,6 @@ func _update_direction():
 		var target_position = target_marker.global_position
 		direction_to_target = (target_position - global_position).normalized()
 
-		# Debugging output
-		print("Target position: ", target_position)
-		print("Global position: ", global_position)
-		print("Direction to target: ", direction_to_target)
-
 		velocity = direction_to_target * 45  # Set speed as needed
 
 		if global_position.distance_to(target_position) <= 10:
@@ -49,7 +44,6 @@ func _update_direction():
 		_get_next_marker()
 
 func _set_new_target(new_marker: Marker2D):
-	print("New target set:", new_marker.name)
 	target_marker = new_marker
 	direction_to_target = Vector2.ZERO  # Reset direction
 
@@ -76,7 +70,6 @@ func _start_moving_after_delay():
 	play_moving = true  # Resume movement after the delay
 
 func _reach_marker():
-	print("Reached marker:", target_marker.name)
 	velocity = Vector2.ZERO
 	play_moving = false
 
