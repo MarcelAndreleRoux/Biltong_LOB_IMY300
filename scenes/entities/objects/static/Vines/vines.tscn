@@ -155,7 +155,12 @@ animations = [{
 "texture": SubResource("AtlasTexture_feypa")
 }],
 "loop": false,
-"name": &"idle",
+"name": &"large_plant_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"small_plant_idle",
 "speed": 5.0
 }]
 
@@ -170,7 +175,7 @@ script = ExtResource("1_epfxr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nkc6s")
-animation = &"idle"
+animation = &"large_plant_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ssynb")
@@ -187,4 +192,5 @@ stream = ExtResource("3_l3wio")
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_n5tjw")
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

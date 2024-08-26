@@ -42,6 +42,10 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.death_finished.connect(_on_death_finsish)
 
+	# Add all vines to the player's raycast exceptions
+	for vine in get_tree().get_nodes_in_group("vines"):
+		ray_cast_2d.add_exception(vine)
+
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
 		game_pause.game_over()
