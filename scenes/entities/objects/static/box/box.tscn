@@ -46,13 +46,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kwl1v"]
 size = Vector2(12, 12)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkepa"]
-size = Vector2(22, 22)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bpty4"]
-size = Vector2(14, 14)
+size = Vector2(12, 12)
 
-[node name="Box" type="RigidBody2D" groups=["activation", "object"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y2tsi"]
+size = Vector2(32, 32)
+
+[node name="Box" type="RigidBody2D" groups=["activation", "object", "special_object"]]
 collision_layer = 4
 collision_mask = 31
 gravity_scale = 0.0
@@ -69,15 +69,15 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kwl1v")
 
-[node name="MoveArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveArea"]
-shape = SubResource("RectangleShape2D_gkepa")
-
-[node name="ButtonArea" type="Area2D" parent="."]
+[node name="ButtonArea" type="Area2D" parent="." groups=["box_pickup_area"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea"]
 shape = SubResource("RectangleShape2D_bpty4")
+
+[node name="MoveArea" type="Area2D" parent="." groups=["speed_area"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveArea"]
+shape = SubResource("RectangleShape2D_y2tsi")
 
 [node name="MoveAction" type="Sprite2D" parent="."]
 visible = false

@@ -482,18 +482,18 @@ advance_condition = &"is_idle"
 advance_mode = 2
 advance_condition = &"is_shooting"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dibom"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ihpgw"]
 advance_mode = 2
-advance_condition = &"id_idle"
+advance_condition = &"is_idle"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_t8iil"]
 states/angry/node = SubResource("AnimationNodeBlendSpace2D_g7qn6")
-states/angry/position = Vector2(572, 108)
+states/angry/position = Vector2(554, 108)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_2ecld")
-states/idle/position = Vector2(378, 104)
+states/idle/position = Vector2(379, 108)
 states/shoot/node = SubResource("AnimationNodeBlendSpace2D_gbg24")
-states/shoot/position = Vector2(475, 9)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_hfpl3"), "idle", "angry", SubResource("AnimationNodeStateMachineTransition_g5qah"), "angry", "idle", SubResource("AnimationNodeStateMachineTransition_73idu"), "angry", "shoot", SubResource("AnimationNodeStateMachineTransition_nmyif"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_dibom")]
+states/shoot/position = Vector2(463, 4)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_hfpl3"), "idle", "angry", SubResource("AnimationNodeStateMachineTransition_g5qah"), "angry", "idle", SubResource("AnimationNodeStateMachineTransition_73idu"), "angry", "shoot", SubResource("AnimationNodeStateMachineTransition_nmyif"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_ihpgw")]
 
 [node name="Hedgehog" type="StaticBody2D" groups=["enemy"]]
 script = ExtResource("1_h4pte")
@@ -516,7 +516,6 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeStateMachine_t8iil")
 anim_player = NodePath("../AnimationPlayer")
-parameters/conditions/id_idle = false
 parameters/conditions/is_angry = false
 parameters/conditions/is_idle = false
 parameters/conditions/is_shooting = false

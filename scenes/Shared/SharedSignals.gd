@@ -54,7 +54,6 @@ signal item_removed
 signal eaten_ground_food
 
 # Fire Mango
-
 signal fire_mango_land
 
 # Box

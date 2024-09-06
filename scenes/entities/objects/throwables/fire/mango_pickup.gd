@@ -30,6 +30,7 @@ func _on_action_area_body_entered(body):
 	if body.is_in_group("player") and not picked_up_once:
 		player_in_area = true
 		animated_sprite_2d.play("close")
+		collision_shape_2d.disabled = false
 
 func _on_action_area_body_exited(body):
 	if body.is_in_group("player") and not picked_up_once:

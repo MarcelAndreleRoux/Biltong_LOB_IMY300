@@ -5,66 +5,69 @@ extends Node2D
 @onready var food_fire_water = $FoodFireWater
 
 func _ready():
-	# Make sure food is visible and playing "no_item" at the start
+	# Initialize with no item visible and the "no_item" animation
 	food.visible = true
 	food.play("no_item")
-	
-	# Hide the other items initially
 	food_fire.visible = false
 	food_fire_water.visible = false
-	
-	# Connect the signal
+
+	# Connect the signal for inventory changes
 	SharedSignals.inventory_changed.connect(_on_inventory_changed)
 	_set_visibility(GlobalValues.inventory_select)
-	
-	# Do not call _set_visibility here, because it will override the "no_item" state
-	# _set_visibility(GlobalValues.INVENTORY_SELECT.FOOD) 
 
 func _on_inventory_changed(new_selection: int):
 	print("Inventory changed to: ", new_selection)  # Debug: Check if signal is received
 	_set_visibility(new_selection)
 
 func _set_visibility(selected: int):
-	# Hide all animation players by default
+	# Hide all items initially
 	food.visible = false
 	food_fire.visible = false
 	food_fire_water.visible = false
 
-	# Determine the correct animation based on the current selection and collected items
+	# Handle inventory selection and collected items
 	match selected:
 		GlobalValues.INVENTORY_SELECT.FOOD:
-			# If water is collected, show the full `food_fire_water` animation
+			# Display the appropriate inventory based on collected items
 			if GlobalValues.can_swap_water:
 				food_fire_water.visible = true
 				food_fire_water.play("selected_food")
-			# If only fire is collected, show the `food_fire` animation
 			elif GlobalValues.can_swap_fire:
 				food_fire.visible = true
 				food_fire.play("selected_food")
-			# If only food is collected, show the `food` animation
 			else:
 				food.visible = true
 				food.play("selected_food")
-				
+
 		GlobalValues.INVENTORY_SELECT.FIRE:
-			# If water is collected, show the full `food_fire_water` animation
+			# Display fire animations if fire is collected
 			if GlobalValues.can_swap_water:
 				food_fire_water.visible = true
 				food_fire_water.play("selected_fire")
-			# Otherwise, show the `food_fire` animation
-			else:
+			elif GlobalValues.can_swap_fire:
 				food_fire.visible = true
 				food_fire.play("selected_fire")
-				
+			else:
+				# Play error if fire is not collected
+				food.visible = true
+				food.play("error")
+
 		GlobalValues.INVENTORY_SELECT.WATER:
-			# Always show the full `food_fire_water` animation when water is selected
-			food_fire_water.visible = true
-			food_fire_water.play("selected_water")
-				
+			# Display water animations if water is collected
+			if GlobalValues.can_swap_water:
+				food_fire_water.visible = true
+				food_fire_water.play("selected_water")
+			else:
+				# Play error if water is not collected
+				food_fire.visible = true
+				food_fire.play("error")
+
 		GlobalValues.INVENTORY_SELECT.NONE:
+			# Default state when nothing is selected
 			food.visible = true
 			food.play("no_item")
 
+# Function to reset the inventory to the "no_item" state
 func _on_inv_freez():
 	_set_visibility(GlobalValues.INVENTORY_SELECT.NONE)
 	food.play("no_item")

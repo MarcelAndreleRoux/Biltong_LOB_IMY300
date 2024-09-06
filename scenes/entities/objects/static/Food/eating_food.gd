@@ -47,6 +47,7 @@ func _process(delta):
 		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
 		SharedSignals.show_aim.emit()
 		action_button.visible = false
+		GlobalValues.can_swap_food = true
 		animated_sprite_2d.play("idle")
 		pickup.play()
 

@@ -30,6 +30,9 @@ var active_marker: Marker2D = null
 var num_of_points: int = 50
 var gravity: float = -9.8
 
+# Inventory
+var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
+
 func _ready():
 	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
@@ -125,6 +128,7 @@ func _throw_item():
 	place_marker_at_landing(landing_position)
 
 func _start_cooldown_timer():
+	previous_inventory = GlobalValues.inventory_select
 	GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.NONE)
 	is_on_cooldown = true
 	var cooldown_timer = Timer.new()
@@ -135,44 +139,36 @@ func _start_cooldown_timer():
 	cooldown_timer.start()
 
 func _end_cooldown():
-	GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
+	GlobalValues.set_inventory_select(previous_inventory)
 	is_on_cooldown = false
 
 func _check_inventory_swap():
 	# Handle pressing '1' for food
 	if Input.is_action_just_pressed("one"):
-		if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
-			# Food is already selected
-			return
-		if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD or GlobalValues.can_throw:
-			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
-		else:
+		# If player hasn't picked up food yet, play error
+		if not GlobalValues.can_swap_food:
 			error.play()
 			_shake_inventory()
+		else:
+			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
 
 	# Handle pressing '2' for fire
-	elif Input.is_action_just_pressed("two"):
-		if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FIRE:
-			# Fire is already selected
-			return
-		
-		if GlobalValues.can_swap_fire:
-			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FIRE)
-		else:
+	if Input.is_action_just_pressed("two"):
+		# If player hasn't picked up fire yet, play error
+		if not GlobalValues.can_swap_fire:
 			error.play()
 			_shake_inventory()
+		else:
+			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FIRE)
 
 	# Handle pressing '3' for water
-	elif Input.is_action_just_pressed("three"):
-		if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.WATER:
-			# Water is already selected
-			return
-		
-		if GlobalValues.can_swap_water:
-			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.WATER)
-		else:
+	if Input.is_action_just_pressed("three"):
+		# If player hasn't picked up water yet, play error
+		if not GlobalValues.can_swap_water:
 			error.play()
 			_shake_inventory()
+		else:
+			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.WATER)
 
 func _shake_inventory():
 	inventory.position = original_inv_position

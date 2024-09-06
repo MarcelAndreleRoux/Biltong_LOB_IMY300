@@ -8,6 +8,7 @@ var inventory_update = false
 enum INVENTORY_SELECT { NONE, FOOD, FIRE, WATER }
 var inventory_select = INVENTORY_SELECT.NONE
 
+var can_swap_food: bool = false
 var can_swap_fire: bool = false
 var can_swap_water: bool = false
 var left_swap: bool = false
@@ -35,7 +36,6 @@ func set_inventory_select(value: int):
 	if inventory_select != value:
 		inventory_select = value
 		SharedSignals.inventory_changed.emit(value)
-
 
 func change_scene():
 	if transition_scene:

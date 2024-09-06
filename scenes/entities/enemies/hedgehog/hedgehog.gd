@@ -55,19 +55,20 @@ func _set_state(new_state: HedgehogState):
 
 	match current_state:
 		HedgehogState.IDLE:
-			shoot = false  # Disable shooting when in idle state
-			_stop_all_timers()
+			shoot = false  # Ensure shooting is disabled
+			_stop_all_timers()  # Stop all timers when in idle state
 			_update_animation_parameters()
 		HedgehogState.ANGRY:
 			shoot = false  # Disable shooting until ready
-			_stop_all_timers()
-			angry_timer.start()
+			_stop_all_timers()  # Stop timers until ready
+			angry_timer.start()  # Start the angry timer
 			_update_animation_parameters()
 		HedgehogState.SHOOTING:
 			if player_visible:  # Only start shooting if the player is visible
 				shoot = true  # Enable shooting
 				shoot_timer.start()
 				_update_animation_parameters()
+
 
 # Update animation parameters based on current direction and state
 func _update_animation_parameters():
