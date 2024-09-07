@@ -11,8 +11,6 @@ var inventory_select = INVENTORY_SELECT.NONE
 var can_swap_food: bool = false
 var can_swap_fire: bool = false
 var can_swap_water: bool = false
-var left_swap: bool = false
-var right_swap: bool = false
 
 var player_position: Vector2
 
@@ -30,7 +28,8 @@ func finish_changingscene():
 		# Ensure can_throw is preserved across scenes
 		can_throw = true
 		
-		SharedSignals.inventory_changed.emit(GlobalValues.inventory_select)
+		# Emit the inventory_changed signal to update the inventory UI after scene transitions
+		SharedSignals.inventory_changed.emit(inventory_select)
 
 func set_inventory_select(value: int):
 	if inventory_select != value:

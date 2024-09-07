@@ -28,7 +28,6 @@ func _set_visibility(selected: int):
 	# Handle inventory selection and collected items
 	match selected:
 		GlobalValues.INVENTORY_SELECT.FOOD:
-			# Display the appropriate inventory based on collected items
 			if GlobalValues.can_swap_water:
 				food_fire_water.visible = true
 				food_fire_water.play("selected_food")
@@ -40,7 +39,6 @@ func _set_visibility(selected: int):
 				food.play("selected_food")
 
 		GlobalValues.INVENTORY_SELECT.FIRE:
-			# Display fire animations if fire is collected
 			if GlobalValues.can_swap_water:
 				food_fire_water.visible = true
 				food_fire_water.play("selected_fire")
@@ -48,17 +46,16 @@ func _set_visibility(selected: int):
 				food_fire.visible = true
 				food_fire.play("selected_fire")
 			else:
-				# Play error if fire is not collected
+				# Play special error for trying to select uncollected fire
 				food.visible = true
 				food.play("error")
 
 		GlobalValues.INVENTORY_SELECT.WATER:
-			# Display water animations if water is collected
 			if GlobalValues.can_swap_water:
 				food_fire_water.visible = true
 				food_fire_water.play("selected_water")
 			else:
-				# Play error if water is not collected
+				# Play special error for trying to select uncollected water
 				food_fire.visible = true
 				food_fire.play("error")
 
@@ -66,10 +63,3 @@ func _set_visibility(selected: int):
 			# Default state when nothing is selected
 			food.visible = true
 			food.play("no_item")
-
-# Function to reset the inventory to the "no_item" state
-func _on_inv_freez():
-	_set_visibility(GlobalValues.INVENTORY_SELECT.NONE)
-	food.play("no_item")
-	food_fire.play("no_item")
-	food_fire_water.play("no_item")

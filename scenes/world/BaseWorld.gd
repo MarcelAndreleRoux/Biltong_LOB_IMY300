@@ -102,7 +102,7 @@ func _throw_item():
 			_projectileScene = preload("res://scenes/entities/objects/throwables/fire/fire.tscn")
 		GlobalValues.INVENTORY_SELECT.WATER:
 			_projectileScene = preload("res://scenes/entities/objects/throwables/water/water.tscn")
-
+	
 	# Instantiate and throw the selected projectile
 	var instance = _projectileScene.instantiate()
 	throw_start_position = player.global_position
