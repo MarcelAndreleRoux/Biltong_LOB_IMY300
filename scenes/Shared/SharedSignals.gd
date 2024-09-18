@@ -62,3 +62,4 @@ signal player_exit
 signal box_hit_wall
 signal move_box
 signal drag_box
+signal wall_detected

@@ -21,10 +21,9 @@ func _integrate_forces(_state):
 func _follow_player(position: Vector2, direction: Vector2):
 	if player_in_area:
 		# Calculate the target position based on the player's position and direction
-		var target_position = position + direction * 15  # Adjust the multiplier as needed
-
+		var target_position = position + direction * 15
 		# Smoothly interpolate the box's position towards the target position
-		global_position = global_position.lerp(target_position, 0.1)  # Adjust the interpolation speed as needed
+		global_position = global_position.lerp(target_position, 0.1)
 
 func _some_waiting_timer():
 	var grow_timer = Timer.new()
@@ -55,3 +54,23 @@ func _on_move_area_body_exited(_body: Node2D):
 		player_in_area = false
 		SharedSignals.player_exit.emit()
 		animatedSprite.play("idle")
+
+func _bounce_box(bounce_vector: Vector2):
+	global_position += bounce_vector
+
+# Restrict Movement
+func _on_wall_detection_left_body_entered(body):
+	if body.is_in_group("walls"):
+		SharedSignals.wall_detected.emit(Vector2(-1, 0))
+
+func _on_wall_detection_right_body_entered(body):
+	if body.is_in_group("walls"):
+		SharedSignals.wall_detected.emit(Vector2(1, 0))
+
+func _on_wall_detection_up_body_entered(body):
+	if body.is_in_group("walls"):
+		SharedSignals.wall_detected.emit(Vector2(0, -1))
+
+func _on_wall_detection_down_body_entered(body):
+	if body.is_in_group("walls"):
+		SharedSignals.wall_detected.emit(Vector2(0, 1))

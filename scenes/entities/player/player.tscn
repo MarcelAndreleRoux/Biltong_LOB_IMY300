@@ -22,7 +22,7 @@
 [ext_resource type="AudioStream" uid="uid://dd0edimolfc37" path="res://assets/soundeffects/hitHurt (1).wav" id="20_qr2kr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_atsr3"]
-size = Vector2(5, 4)
+size = Vector2(7, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fmtvb"]
 size = Vector2(18, 24.5)
@@ -1328,7 +1328,7 @@ hframes = 6
 [node name="Line2D" type="Line2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -2)
+position = Vector2(-0.5, -2.5)
 shape = SubResource("RectangleShape2D_atsr3")
 
 [node name="PickupArea" type="Area2D" parent="."]
@@ -1356,7 +1356,7 @@ parameters/conditions/is_idle_throw = false
 parameters/conditions/is_run = false
 parameters/conditions/is_run_aim = false
 parameters/conditions/is_run_throw = false
-parameters/Death/blend_position = Vector2(0, 0)
+parameters/Death/blend_position = Vector2(0.012026, 0.00529099)
 parameters/idle/blend_position = Vector2(0.0194534, -0.0158731)
 parameters/idle_aim/blend_position = Vector2(0.0112541, 0.015873)
 parameters/idle_throw/blend_position = Vector2(0.0176849, 0.00529099)

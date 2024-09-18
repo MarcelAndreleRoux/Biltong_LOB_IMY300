@@ -29,6 +29,7 @@ var active_marker: Marker2D = null
 
 var num_of_points: int = 50
 var gravity: float = -9.8
+var marker_count: int = 0
 
 # Inventory
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
@@ -113,6 +114,7 @@ func _throw_item():
 	instance.initialize(playerPosition, direction, 0, mousePosition)
 	_main.add_child(instance)
 	
+	# Add shadow for all projectiles
 	var shadow_sprite = Sprite2D.new()
 	shadow_sprite.texture = shadow_texture
 	shadow_sprite.global_position = throw_start_position
@@ -123,9 +125,9 @@ func _throw_item():
 	SharedSignals.shadow_done.connect(_on_shadow_done)
 	shadow = shadow_sprite
 
-	# Calculate and place the marker at the landing position
-	var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())
-	place_marker_at_landing(landing_position)
+	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
+		var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())
+		place_marker_at_landing(landing_position)
 
 func _start_cooldown_timer():
 	previous_inventory = GlobalValues.inventory_select
@@ -250,8 +252,10 @@ func calculate_landing_position(start_position: Vector2, direction: Vector2, tar
 func place_marker_at_landing(landing_position: Vector2):
 	if active_marker != null:
 		active_marker.queue_free()
+
+	marker_count += 1 
 	var new_marker = Marker2D.new()
-	new_marker.name = "Projectilespawnable"
+	new_marker.name = "Projectilespawnable_" + str(marker_count)
 	new_marker.global_position = landing_position
 	new_marker.add_to_group("FirstEnemy")
 
@@ -259,12 +263,22 @@ func place_marker_at_landing(landing_position: Vector2):
 	active_marker = new_marker
 	
 	SharedSignals.new_marker.emit(new_marker)
+	_start_marker_removal_timer()
+
+func _start_marker_removal_timer():
+	var marker_removal_timer = Timer.new()
+	marker_removal_timer.wait_time = 9.0
+	marker_removal_timer.one_shot = true
+	marker_removal_timer.timeout.connect(_remove_marker)
+	add_child(marker_removal_timer)
+	marker_removal_timer.start()
 
 func _on_new_marker(marker: Marker2D):
 	print("Marker registered: ", marker.global_position)
 
 func _remove_marker():
 	if active_marker != null:
+		print("Marker removed after timer")
 		active_marker.queue_free()
 		active_marker = null
 

@@ -19,6 +19,8 @@ signal drag_box(position: Vector2, direction: Vector2)
 # Movement
 var currentVelocity: Vector2
 var speed: int = 100
+var bounce_back_strength: int = 50
+var bounce_direction: Vector2 = Vector2.ZERO
 
 # Aim and Throw
 var is_aiming: bool = false
@@ -32,6 +34,7 @@ var can_aim_throw: bool = false
 var is_dragging: bool = false
 var player_in_box_area: bool = false
 var play_box_pickup_once: bool = false
+var is_bouncing_back: bool = false
 
 # Trajectory Line
 var points: Array = []
@@ -62,10 +65,11 @@ func _change_speed_back():
 	speed = 100
 
 func _physics_process(_delta):
-	_handle_action_input()
-	_handle_movement_input()
-	_play_movement_animation()
-	_update_animation_parameters()
+	if not is_bouncing_back:
+		_handle_action_input()
+		_handle_movement_input()
+		_play_movement_animation()
+		_update_animation_parameters()
 
 	velocity = currentVelocity
 	move_and_slide()
@@ -154,6 +158,7 @@ func _update_animation_parameters():
 		animation_tree["parameters/run/blend_position"] = direction
 		animation_tree["parameters/run_aim/blend_position"] = direction
 		animation_tree["parameters/run_throw/blend_position"] = direction
+		animation_tree["parameters/Death/blend_position"] = direction
 
 func _play_movement_animation():
 	# Movement
