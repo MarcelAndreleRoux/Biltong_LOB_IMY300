@@ -1,6 +1,6 @@
 [gd_scene load_steps=62 format=3 uid="uid://vlik5vxjmqh4"]
 
-[ext_resource type="Script" path="res://scenes/entities/enemies/turtle/enemy.gd" id="1_1fxvc"]
+[ext_resource type="Script" path="res://scenes/entities/enemies/turtle/turtle.gd" id="1_1fxvc"]
 [ext_resource type="Texture2D" uid="uid://pmrgbxp12km" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Left.png" id="2_a700b"]
 [ext_resource type="PackedScene" uid="uid://dcwfimqxg27wv" path="res://scenes/entities/enemies/wander.tscn" id="2_gm0cl"]
 [ext_resource type="Texture2D" uid="uid://cvaqb8p2gm87o" path="res://assets/sprites/enemies/turtel/walk/Turtle-Walk-Left.png" id="4_3blme"]
@@ -925,7 +925,7 @@ graph_offset = Vector2(-31, -83)
 radius = 28.0
 height = 80.0
 
-[node name="Enemy" type="CharacterBody2D" groups=["activation", "enemy"]]
+[node name="Turtle" type="CharacterBody2D" groups=["activation", "enemy"]]
 z_index = 5
 collision_layer = 17
 collision_mask = 27
@@ -959,9 +959,9 @@ parameters/conditions/is_hungry = false
 parameters/conditions/is_idle = false
 parameters/conditions/is_scared = false
 parameters/conditions/is_walking = false
-parameters/Shell/blend_position = Vector2(0.0157262, -0.00487804)
+parameters/Shell/blend_position = Vector2(0.0249768, -0.00529099)
 parameters/eat/blend_position = Vector2(0.00643086, 0)
-parameters/hungry/blend_position = Vector2(0.0226601, 0.00529099)
+parameters/hungry/blend_position = Vector2(0.012026, 0.00529099)
 parameters/idle/blend_position = Vector2(0.0147784, -0.00529099)
 parameters/walk/blend_position = Vector2(0.0112541, 0.00581396)
 

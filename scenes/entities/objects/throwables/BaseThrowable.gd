@@ -6,7 +6,7 @@ class_name BaseThrowable
 @export var speed_scale: float = 10.0
 @export var gravity: float = -9.8
 @export var num_of_points: int = 50
-@export var despawn_time: float = 10.0
+@export var despawn_time: float = 9.0
 
 var _direction: Vector2
 var _spawnPosition: Vector2
@@ -89,4 +89,5 @@ func _start_despawn_timer():
 
 func _despawn_time():
 	SharedSignals.projectile_gone.emit(self)
+	SharedSignals.food_was_eaten.emit()
 	queue_free()

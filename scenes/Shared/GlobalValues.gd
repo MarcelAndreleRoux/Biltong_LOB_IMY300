@@ -11,7 +11,12 @@ var inventory_select = INVENTORY_SELECT.NONE
 var can_swap_food: bool = false
 var can_swap_fire: bool = false
 var can_swap_water: bool = false
+var spotted_food: bool = false
+var food_visible: bool = false
 
+var vinesSize: String
+
+var turtle_original_pos: Vector2
 var player_position: Vector2
 
 func update_player_position(new_position: Vector2):
@@ -25,7 +30,9 @@ func finish_changingscene():
 				current_scene = "level2"
 			"level2":
 				current_scene = "level3"
-		# Ensure can_throw is preserved across scenes
+			"level3":
+				current_scene = "level4"
+		
 		can_throw = true
 		
 		# Emit the inventory_changed signal to update the inventory UI after scene transitions
@@ -43,5 +50,7 @@ func change_scene():
 				get_tree().change_scene_to_file("res://scenes/world/level_2.tscn")
 			"level2":
 				get_tree().change_scene_to_file("res://scenes/world/level_3.tscn")
+			"level3":
+				get_tree().change_scene_to_file("res://scenes/world/level_4.tscn")
 		
 		finish_changingscene()

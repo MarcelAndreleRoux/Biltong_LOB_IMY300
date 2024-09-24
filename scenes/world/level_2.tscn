@@ -26,9 +26,9 @@
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="22_qik85"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="23_qgt7x"]
 [ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="25_5arnk"]
-[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="26_f5pin"]
-[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/enemy.tscn" id="26_tk1e4"]
+[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="26_tk1e4"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="29_bvxc5"]
+[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="29_yxia0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r4y2x"]
 texture = ExtResource("2_tuwqc")
@@ -658,20 +658,18 @@ offset_bottom = 175.0
 stream = ExtResource("7_f2hvx")
 
 [node name="Marker2D" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(262, 103)
+position = Vector2(433, 118)
 
-[node name="EatingFood" parent="Marker2D" instance=ExtResource("26_f5pin")]
+[node name="Turtle" parent="." instance=ExtResource("26_tk1e4")]
+position = Vector2(434, 118)
 
-[node name="Marker2D2" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(449, 102)
-
-[node name="EatingFood" parent="Marker2D2" instance=ExtResource("26_f5pin")]
-
-[node name="Enemy" parent="." instance=ExtResource("26_tk1e4")]
-position = Vector2(293, 103)
+[node name="RayCast2D" type="RayCast2D" parent="Turtle"]
 
 [node name="Box" parent="." instance=ExtResource("29_bvxc5")]
 position = Vector2(177, 67)
+
+[node name="waterPool" parent="." instance=ExtResource("29_yxia0")]
+position = Vector2(185, 110)
 
 [connection signal="body_entered" from="GameFinish" to="." method="_on_game_finish_body_entered"]
 [connection signal="pressed" from="WinState/Panel/GridContainer/exit" to="WinState" method="_on_exit_pressed"]

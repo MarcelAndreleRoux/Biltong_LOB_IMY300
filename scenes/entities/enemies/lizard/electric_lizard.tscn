@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c80uy3ni7bgl4"]
+
+[ext_resource type="PackedScene" uid="uid://dcwfimqxg27wv" path="res://scenes/entities/enemies/wander.tscn" id="1_owl6h"]
+[ext_resource type="PackedScene" uid="uid://12o22qh53ey4" path="res://scenes/Shared/electricity.tscn" id="2_i6ub5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_75p2i"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_44s4c"]
+
+[node name="ElectricLizard" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_75p2i")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_44s4c")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="Wander" parent="." instance=ExtResource("1_owl6h")]
+
+[node name="Electricity" parent="." instance=ExtResource("2_i6ub5")]

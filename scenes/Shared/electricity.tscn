@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://12o22qh53ey4"]
+
+[ext_resource type="Script" path="res://scenes/Shared/electricity.gd" id="1_waxd4"]
+[ext_resource type="AudioStream" uid="uid://bqcj8b3ausmi0" path="res://assets/soundeffects/synth.wav" id="2_jme6h"]
+[ext_resource type="Texture2D" uid="uid://dvb8x7axgpvgj" path="res://assets/sprites/objects/electricity/zap/lightning.png" id="2_ob8al"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qpx7"]
+atlas = ExtResource("2_ob8al")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87kd7"]
+atlas = ExtResource("2_ob8al")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xh16"]
+atlas = ExtResource("2_ob8al")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8063p"]
+atlas = ExtResource("2_ob8al")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7d8t"]
+atlas = ExtResource("2_ob8al")
+region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0rpwy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qpx7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87kd7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xh16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8063p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7d8t")
+}],
+"loop": false,
+"name": &"zap",
+"speed": 10.0
+}]
+
+[node name="Electricity" type="Node2D"]
+script = ExtResource("1_waxd4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0rpwy")
+animation = &"zap"
+frame = 4
+frame_progress = 1.0
+
+[node name="electric_zap" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_jme6h")

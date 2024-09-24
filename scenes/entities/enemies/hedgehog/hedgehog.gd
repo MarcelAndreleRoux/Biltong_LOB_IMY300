@@ -12,7 +12,7 @@ enum HedgehogState {
 @export var cone_angle_offset: float = 10.0  # Angle offset for side darts
 @export var angry_duration: float = 0.5  # Duration to stay angry before shooting
 
-@onready var animation_tree: AnimationTree = $AnimationTree
+@onready var animation_tree = $AnimationTree
 
 var current_state: HedgehogState = HedgehogState.IDLE
 var direction: Vector2 = Vector2.ZERO  # Direction the hedgehog is facing
@@ -88,9 +88,9 @@ func _update_animation_parameters():
 		animation_tree["parameters/conditions/is_angry"] = false
 		animation_tree["parameters/conditions/is_shooting"] = true
 	
-	animation_tree.set("parameters/Idle/blend_position", direction)
-	animation_tree.set("parameters/Angry/blend_position", direction)
-	animation_tree.set("parameters/Shoot/blend_position", direction)
+	animation_tree["parameters/idle/blend_position"] = direction
+	animation_tree["parameters/angry/blend_position"] = direction
+	animation_tree["parameters/shoot/blend_position"] = direction
 
 # Handle player spotted
 func _on_player_spotted():

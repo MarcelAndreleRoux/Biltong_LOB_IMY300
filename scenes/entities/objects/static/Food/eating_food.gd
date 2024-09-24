@@ -30,8 +30,6 @@ func _some_waiting_timer():
 	grow_timer.start()
 
 func _wait_before_grow_timer():
-	$grow_timer.queue_free()
-	
 	var timer = Timer.new()
 	timer.name = "regrow_timer"
 	timer.wait_time = 4.0
@@ -52,8 +50,6 @@ func _process(delta):
 		pickup.play()
 
 func _play_grow_animation():
-	$regrow_timer.queue_free()
-	
 	playing_grow = true
 	animated_sprite_2d.play("grow")
 

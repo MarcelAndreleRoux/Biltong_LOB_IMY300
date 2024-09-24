@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-@export var plant_type = "large"
+@export var plant_type = "big"
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var grow = $Grow
@@ -10,6 +10,9 @@ extends StaticBody2D
 var was_burned: bool = false
 var was_grown: bool = false
 
+var default_collision_shape: Vector2 = Vector2.ZERO
+var default_collision_size: Vector2 = Vector2.ZERO
+
 func _ready():
 	if plant_type == "small":
 		animated_sprite_2d.play("small_plant_idle")
@@ -17,13 +20,15 @@ func _ready():
 	else:
 		animated_sprite_2d.play("large_plant_idle")
 		collision_shape_2d.disabled = false
+	
+	GlobalValues.vinesSize = plant_type
 
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("burn"):
 		burn.play()
 		was_burned = true
 		
-		if was_grown or plant_type == "large":
+		if was_grown or plant_type == "big":
 			animated_sprite_2d.play("burn_large")
 		else:
 			animated_sprite_2d.play("burn_small")
@@ -44,11 +49,11 @@ func _update_collision_shape_size():
 	# Example: Adjust the collision shape size based on growth
 	if was_grown:
 		var new_shape = RectangleShape2D.new()
-		new_shape.extents = Vector2(20, 20)  # Adjust size as needed
+		new_shape.extents = Vector2(8, 20)  # Adjust size as needed
 		collision_shape_2d.shape = new_shape
 	else:
 		var default_shape = RectangleShape2D.new()
-		default_shape.extents = Vector2(10, 10)  # Default size
+		default_shape.extents = Vector2(8, 8)  # Default size
 		collision_shape_2d.shape = default_shape
 
 func _on_animated_sprite_2d_animation_finished():

@@ -35,8 +35,6 @@ func _on_door_stateChange(door_id: String, state: bool):
 			doorState = false
 			open.play()
 			animated_sprite_2d.play_backwards(openString)
-	else:
-		print("Invalid link for this door. Expected:", door_link_id, "Got:", door_id)
 
 func _check_link(button: StaticBody2D, button_id: String):
 	if door_link_id == button_id:

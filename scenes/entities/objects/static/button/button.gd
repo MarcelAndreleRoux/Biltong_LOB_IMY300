@@ -26,8 +26,6 @@ func _on_click_area_body_entered(body):
 			click.play()
 			animated_sprite_2d.play("click")
 			SharedSignals.doorState.emit(door_link_id, true)
-		else:
-			print("No link found or incorrect link. found_link:", found_link, "door_link_id:", door_link_id, "door_link_found:", door_link_found)
 
 func _on_click_area_body_exited(body):
 	if area2d_active:
@@ -52,8 +50,6 @@ func _on_detect_box_area_entered(area: Area2D):
 			click.play()
 			animated_sprite_2d.play("click")
 			SharedSignals.doorState.emit(door_link_id, true)
-		else:
-			print("No link found or incorrect link. found_link:", found_link, "door_link_id:", door_link_id, "door_link_found:", door_link_found)
 
 func _on_detect_box_area_exited(area: Area2D):
 	if area.name == "ButtonArea":

@@ -7,24 +7,33 @@ extends Node2D
 var positions: Array = []
 var temp_positions: Array = []
 var current_position: Marker2D
+var current_food_marker: Marker2D = null  # Track the current food marker
 
 var direction: Vector2 = Vector2.ZERO
 var is_eating: bool = false
+var food_visible: bool = false
+
+var food_markers: Array = []  # Array to track active food markers
+var marker_queue: Array = []  # Array to manage the turtle's movement through markers
+var pending_food_markers: Array = []  # Array to store food markers that are not immediately visible
 
 const STOPPING_DISTANCE = 10
 
 func _ready():
 	positions = get_tree().get_nodes_in_group(group_name)
 	_sort_positions()
-	_get_positions()
-	_get_next_position()
 
-	# Listen for the projectile_gone signal to remove the corresponding marker
+	# If no markers are available initially, wait until a marker appears
+	if positions.size() != 0:
+		_get_positions()
+		_get_next_position()
+
 	SharedSignals.projectile_gone.connect(_remove_marker)
+	SharedSignals.food_visibility_changed.connect(_on_food_visibility_changed)
 
 func _physics_process(delta):
-	if is_eating:
-		return  # If eating, do not move
+	if is_eating or current_position == null:
+		return  # If eating or no target, do not move
 
 	var distance_to_target = global_position.distance_to(current_position.global_position)
 
@@ -34,14 +43,43 @@ func _physics_process(delta):
 	else:
 		move_towards_position(delta)
 
+func _on_food_visibility_changed(is_visible: bool):
+	food_visible = is_visible
+
+	if food_visible:
+		# Move pending markers to active queue when they become visible
+		for marker in pending_food_markers:
+			if !food_markers.has(marker):
+				food_markers.append(marker)
+				marker_queue.push_front(marker)  # Prioritize the visible food marker
+				pending_food_markers.erase(marker)  # Remove from pending list
+
+		# Immediately switch to the first food marker if visible
+		if food_markers.size() > 0:
+			current_position = food_markers.front()  # Immediately switch to the food marker
+			_update_direction()  # Start moving toward the food
+			is_eating = false  # Make sure we are not in the eating state
+			move_towards_position(0)  # Start moving immediately
+
 func _get_positions():
 	temp_positions = positions.duplicate()
 
 func _get_next_position():
+	# If there are no markers to move towards, do nothing and wait
+	if temp_positions.is_empty() and marker_queue.is_empty():
+		current_position = null
+		return  # Wait for markers to be added
+	
 	if temp_positions.is_empty():
 		_get_positions()
+
 	current_position = temp_positions.pop_front()
-	_update_direction()
+	
+	# Skip food markers that are no longer visible
+	if current_position.name.begins_with("Projectile") and not GlobalValues.food_visible:
+		_get_next_position()
+	else:
+		_update_direction()
 
 func move_towards_position(delta):
 	_update_direction()
@@ -54,8 +92,8 @@ func move_towards_position(delta):
 		_handle_reached_marker()
 
 func _update_direction():
-	# Only update direction if not eating
-	if not is_eating:
+	# Only update direction if not eating and if there is a current target
+	if not is_eating and current_position != null:
 		direction = (current_position.global_position - global_position).normalized()
 
 func _handle_reached_marker():
@@ -68,6 +106,7 @@ func _handle_reached_marker():
 			is_eating = true
 			SharedSignals.start_eating.emit()
 			_remove_current_marker()
+			current_food_marker = null  # Reset the current food marker after eating
 			is_eating = false  # Assume eating is instantaneous for this version
 			_get_next_position()
 		else:
@@ -76,7 +115,7 @@ func _handle_reached_marker():
 		_get_next_position()
 
 func _remove_current_marker():
-	if current_position:
+	if current_position and is_instance_valid(current_position):
 		positions.erase(current_position)
 		current_position.queue_free()
 		current_position = null
@@ -103,6 +142,17 @@ func _sort_positions():
 	positions = spawnable_markers + regular_markers
 
 func update_positions_with_new_marker(new_marker: Marker2D):
-	positions.append(new_marker)
-	_sort_positions()
-	_get_positions()
+	# Check if the marker is already being processed
+	if new_marker == current_food_marker or food_markers.has(new_marker) or pending_food_markers.has(new_marker):
+		return
+
+	# Add the marker to the queue based on visibility
+	if GlobalValues.food_visible:
+		food_markers.append(new_marker)
+		marker_queue.push_front(new_marker)  # Prioritize food
+	else:
+		pending_food_markers.append(new_marker)
+
+	# If previously waiting for a marker, resume movement now
+	if current_position == null and marker_queue.size() > 0:
+		_get_next_position()

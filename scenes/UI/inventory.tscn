@@ -135,7 +135,7 @@ animation = &"selected_food"
 [node name="FoodFire" type="AnimatedSprite2D" parent="."]
 visible = false
 sprite_frames = SubResource("SpriteFrames_4tiig")
-animation = &"no_item"
+animation = &"selected_food"
 
 [node name="FoodFireWater" type="AnimatedSprite2D" parent="."]
 visible = false

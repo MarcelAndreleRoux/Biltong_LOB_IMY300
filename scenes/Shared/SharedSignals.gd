@@ -32,6 +32,11 @@ signal start_eating
 signal new_marker
 signal can_move_again
 signal marker_spotted
+signal turtle_spotted_food
+signal food_visibility_changed
+signal food_not_visible
+signal food_was_eaten
+signal marker_removed
 
 # Hedgehog Enemy Signals
 signal player_spotted

@@ -140,7 +140,7 @@ func _handle_action_input():
 
 func _start_cooldown_timer():
 	var cooldown_timer = Timer.new()
-	cooldown_timer.wait_time = 5.0
+	cooldown_timer.wait_time = 10.0
 	cooldown_timer.one_shot = true
 	cooldown_timer.timeout.connect(_end_cooldown)
 	add_child(cooldown_timer)
