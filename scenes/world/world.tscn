@@ -484,8 +484,6 @@ layer_2/tile_data = PackedInt32Array(655384, 786434, 0, 655385, 983042, 0, 65538
 
 [node name="Player" parent="." instance=ExtResource("1_qoat8")]
 position = Vector2(326, 204)
-collision_layer = 13
-collision_mask = 27
 
 [node name="Mouse" type="Node2D" parent="Player"]
 position = Vector2(-299, -203)

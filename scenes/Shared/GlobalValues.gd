@@ -49,7 +49,7 @@ func change_scene():
 			"World":
 				get_tree().change_scene_to_file("res://scenes/world/level_2.tscn")
 			"level2":
-				get_tree().change_scene_to_file("res://scenes/world/level_3.tscn")
+				get_tree().change_scene_to_file("res://scenes/world/base_level.tscn")
 			"level3":
 				get_tree().change_scene_to_file("res://scenes/world/level_4.tscn")
 		

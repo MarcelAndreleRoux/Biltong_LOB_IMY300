@@ -1,0 +1,283 @@
+[gd_scene load_steps=21 format=3 uid="uid://6w1c3weeo55k"]
+
+[ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_or47c"]
+[ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_sx5pn"]
+[ext_resource type="TileSet" uid="uid://dip5wcuxyd6cy" path="res://scenes/world/a_tile_set.tres" id="2_1b6ll"]
+[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="2_kq1e4"]
+[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="3_xw322"]
+[ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="4_4ppsl"]
+[ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="5_qiswb"]
+[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="6_acxvv"]
+[ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="6_b2jrw"]
+[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="7_vv36t"]
+[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="8_5m4sj"]
+[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="9_67fif"]
+[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="10_hvgfk"]
+[ext_resource type="Script" path="res://scenes/world/WinState.gd" id="12_jfxe4"]
+[ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="13_4ug3f"]
+[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="13_gemos"]
+[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="15_ti8go"]
+[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="16_rnr62"]
+[ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="17_qr7we"]
+[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_3vmn4"]
+
+[node name="BaseLevel" type="Node2D"]
+script = ExtResource("1_or47c")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("2_1b6ll")
+format = 2
+layer_0/name = "Floor"
+layer_0/tile_data = PackedInt32Array(0, 4, 0, 65536, 4, 0, 131072, 4, 0, 196608, 4, 0, 262144, 4, 0, 327680, 4, 0, 393216, 4, 0, 458752, 4, 0, 524288, 4, 0, 589824, 4, 0, 655360, 4, 0, 720896, 4, 0, 786432, 4, 0, 851968, 4, 0, 917504, 4, 0, 983040, 4, 0, 1048576, 4, 0, 1, 4, 0, 65537, 4, 0, 131073, 4, 0, 196609, 4, 0, 262145, 4, 0, 327681, 4, 0, 393217, 4, 0, 458753, 4, 0, 524289, 4, 0, 589825, 4, 0, 655361, 4, 0, 720897, 4, 0, 786433, 4, 0, 851969, 4, 0, 917505, 4, 0, 983041, 4, 0, 1048577, 4, 0, 2, 4, 0, 65538, 4, 0, 131074, 4, 0, 196610, 4, 0, 262146, 4, 0, 327682, 4, 0, 393218, 4, 0, 458754, 4, 0, 524290, 4, 0, 589826, 4, 0, 655362, 4, 0, 720898, 4, 0, 786434, 4, 0, 851970, 4, 0, 917506, 4, 0, 983042, 4, 0, 1048578, 4, 0, 3, 4, 0, 65539, 4, 0, 131075, 4, 0, 196611, 4, 0, 262147, 4, 0, 327683, 4, 0, 393219, 4, 0, 458755, 4, 0, 524291, 4, 0, 589827, 4, 0, 655363, 4, 0, 720899, 4, 0, 786435, 4, 0, 851971, 4, 0, 917507, 4, 0, 983043, 4, 0, 1048579, 4, 0, 4, 4, 0, 65540, 4, 0, 131076, 4, 0, 196612, 4, 0, 262148, 4, 0, 327684, 4, 0, 393220, 4, 0, 458756, 4, 0, 524292, 4, 0, 589828, 4, 0, 655364, 4, 0, 720900, 4, 0, 786436, 4, 0, 851972, 4, 0, 917508, 4, 0, 983044, 4, 0, 1048580, 4, 0, 5, 4, 0, 65541, 4, 0, 131077, 4, 0, 196613, 4, 0, 262149, 4, 0, 327685, 4, 0, 393221, 4, 0, 458757, 4, 0, 524293, 4, 0, 589829, 4, 0, 655365, 4, 0, 720901, 4, 0, 786437, 4, 0, 851973, 4, 0, 917509, 4, 0, 983045, 4, 0, 1048581, 4, 0, 6, 4, 0, 65542, 4, 0, 131078, 4, 0, 196614, 4, 0, 262150, 4, 0, 327686, 4, 0, 393222, 4, 0, 458758, 4, 0, 524294, 4, 0, 589830, 4, 0, 655366, 4, 0, 720902, 4, 0, 786438, 4, 0, 851974, 4, 0, 917510, 4, 0, 983046, 4, 0, 1048582, 4, 0, 7, 4, 0, 65543, 4, 0, 131079, 4, 0, 196615, 4, 0, 262151, 4, 0, 327687, 4, 0, 393223, 4, 0, 458759, 4, 0, 524295, 4, 0, 589831, 4, 0, 655367, 4, 0, 720903, 4, 0, 786439, 4, 0, 851975, 4, 0, 917511, 4, 0, 983047, 4, 0, 1048583, 4, 0, 8, 4, 0, 65544, 4, 0, 131080, 4, 0, 196616, 4, 0, 262152, 4, 0, 327688, 4, 0, 393224, 4, 0, 458760, 4, 0, 524296, 4, 0, 589832, 4, 0, 655368, 4, 0, 720904, 4, 0, 786440, 4, 0, 851976, 4, 0, 917512, 4, 0, 983048, 4, 0, 1048584, 4, 0, 9, 4, 0, 65545, 4, 0, 131081, 4, 0, 196617, 4, 0, 262153, 4, 0, 327689, 4, 0, 393225, 4, 0, 458761, 4, 0, 524297, 4, 0, 589833, 4, 0, 655369, 4, 0, 720905, 4, 0, 786441, 4, 0, 851977, 4, 0, 917513, 4, 0, 983049, 4, 0, 1048585, 4, 0, 10, 4, 0, 65546, 4, 0, 131082, 4, 0, 196618, 4, 0, 262154, 4, 0, 327690, 4, 0, 393226, 4, 0, 458762, 4, 0, 524298, 4, 0, 589834, 4, 0, 655370, 4, 0, 720906, 4, 0, 786442, 4, 0, 851978, 4, 0, 917514, 4, 0, 983050, 4, 0, 1048586, 4, 0, 11, 4, 0, 65547, 4, 0, 131083, 4, 0, 196619, 4, 0, 262155, 4, 0, 327691, 4, 0, 393227, 4, 0, 458763, 4, 0, 524299, 4, 0, 589835, 4, 0, 655371, 4, 0, 720907, 4, 0, 786443, 4, 0, 851979, 4, 0, 917515, 4, 0, 983051, 4, 0, 1048587, 4, 0, 12, 4, 0, 65548, 4, 0, 131084, 4, 0, 196620, 4, 0, 262156, 4, 0, 327692, 4, 0, 393228, 4, 0, 458764, 4, 0, 524300, 4, 0, 589836, 4, 0, 655372, 4, 0, 720908, 4, 0, 786444, 4, 0, 851980, 4, 0, 917516, 4, 0, 983052, 4, 0, 1048588, 4, 0, 13, 4, 0, 65549, 4, 0, 131085, 4, 0, 196621, 4, 0, 262157, 4, 0, 327693, 4, 0, 393229, 4, 0, 458765, 4, 0, 524301, 4, 0, 589837, 4, 0, 655373, 4, 0, 720909, 4, 0, 786445, 4, 0, 851981, 4, 0, 917517, 4, 0, 983053, 4, 0, 1048589, 4, 0, 14, 4, 0, 65550, 4, 0, 131086, 4, 0, 196622, 4, 0, 262158, 4, 0, 327694, 4, 0, 393230, 4, 0, 458766, 4, 0, 524302, 4, 0, 589838, 4, 0, 655374, 4, 0, 720910, 4, 0, 786446, 4, 0, 851982, 4, 0, 917518, 4, 0, 983054, 4, 0, 1048590, 4, 0, 15, 4, 0, 65551, 4, 0, 131087, 4, 0, 196623, 4, 0, 262159, 4, 0, 327695, 4, 0, 393231, 4, 0, 458767, 4, 0, 524303, 4, 0, 589839, 4, 0, 655375, 4, 0, 720911, 4, 0, 786447, 4, 0, 851983, 4, 0, 917519, 4, 0, 983055, 4, 0, 1048591, 4, 0, 16, 4, 0, 65552, 4, 0, 131088, 4, 0, 196624, 4, 0, 262160, 4, 0, 327696, 4, 0, 393232, 4, 0, 458768, 4, 0, 524304, 4, 0, 589840, 4, 0, 655376, 4, 0, 720912, 4, 0, 786448, 4, 0, 851984, 4, 0, 917520, 4, 0, 983056, 4, 0, 1048592, 4, 0, 17, 4, 0, 65553, 4, 0, 131089, 4, 0, 196625, 4, 0, 262161, 4, 0, 327697, 4, 0, 393233, 4, 0, 458769, 4, 0, 524305, 4, 0, 589841, 4, 0, 655377, 4, 0, 720913, 4, 0, 786449, 4, 0, 851985, 4, 0, 917521, 4, 0, 983057, 4, 0, 1048593, 4, 0, 18, 4, 0, 65554, 4, 0, 131090, 4, 0, 196626, 4, 0, 262162, 4, 0, 327698, 4, 0, 393234, 4, 0, 458770, 4, 0, 524306, 4, 0, 589842, 4, 0, 655378, 4, 0, 720914, 4, 0, 786450, 4, 0, 851986, 4, 0, 917522, 4, 0, 983058, 4, 0, 1048594, 4, 0, 19, 4, 0, 65555, 4, 0, 131091, 4, 0, 196627, 4, 0, 262163, 4, 0, 327699, 4, 0, 393235, 4, 0, 458771, 4, 0, 524307, 4, 0, 589843, 4, 0, 655379, 4, 0, 720915, 4, 0, 786451, 4, 0, 851987, 4, 0, 917523, 4, 0, 983059, 4, 0, 1048595, 4, 0, 20, 4, 0, 65556, 4, 0, 131092, 4, 0, 196628, 4, 0, 262164, 4, 0, 327700, 4, 0, 393236, 4, 0, 458772, 4, 0, 524308, 4, 0, 589844, 4, 0, 655380, 4, 0, 720916, 4, 0, 786452, 4, 0, 851988, 4, 0, 917524, 4, 0, 983060, 4, 0, 1048596, 4, 0, 21, 4, 0, 65557, 4, 0, 131093, 4, 0, 196629, 4, 0, 262165, 4, 0, 327701, 4, 0, 393237, 4, 0, 458773, 4, 0, 524309, 4, 0, 589845, 4, 0, 655381, 4, 0, 720917, 4, 0, 786453, 4, 0, 851989, 4, 0, 917525, 4, 0, 983061, 4, 0, 1048597, 4, 0, 22, 4, 0, 65558, 4, 0, 131094, 4, 0, 196630, 4, 0, 262166, 4, 0, 327702, 4, 0, 393238, 4, 0, 458774, 4, 0, 524310, 4, 0, 589846, 4, 0, 655382, 4, 0, 720918, 4, 0, 786454, 4, 0, 851990, 4, 0, 917526, 4, 0, 983062, 4, 0, 1048598, 4, 0, 23, 4, 0, 65559, 4, 0, 131095, 4, 0, 196631, 4, 0, 262167, 4, 0, 327703, 4, 0, 393239, 4, 0, 458775, 4, 0, 524311, 4, 0, 589847, 4, 0, 655383, 4, 0, 720919, 4, 0, 786455, 4, 0, 851991, 4, 0, 917527, 4, 0, 983063, 4, 0, 1048599, 4, 0, 24, 4, 0, 65560, 4, 0, 131096, 4, 0, 196632, 4, 0, 262168, 4, 0, 327704, 4, 0, 393240, 4, 0, 458776, 4, 0, 524312, 4, 0, 589848, 4, 0, 655384, 4, 0, 720920, 4, 0, 786456, 4, 0, 851992, 4, 0, 917528, 4, 0, 983064, 4, 0, 1048600, 4, 0, 25, 4, 0, 65561, 4, 0, 131097, 4, 0, 196633, 4, 0, 262169, 4, 0, 327705, 4, 0, 393241, 4, 0, 458777, 4, 0, 524313, 4, 0, 589849, 4, 0, 655385, 4, 0, 720921, 4, 0, 786457, 4, 0, 851993, 4, 0, 917529, 4, 0, 983065, 4, 0, 1048601, 4, 0, 26, 4, 0, 65562, 4, 0, 131098, 4, 0, 196634, 4, 0, 262170, 4, 0, 327706, 4, 0, 393242, 4, 0, 458778, 4, 0, 524314, 4, 0, 589850, 4, 0, 655386, 4, 0, 720922, 4, 0, 786458, 4, 0, 851994, 4, 0, 917530, 4, 0, 983066, 4, 0, 1048602, 4, 0, 27, 4, 0, 65563, 4, 0, 131099, 4, 0, 196635, 4, 0, 262171, 4, 0, 327707, 4, 0, 393243, 4, 0, 458779, 4, 0, 524315, 4, 0, 589851, 4, 0, 655387, 4, 0, 720923, 4, 0, 786459, 4, 0, 851995, 4, 0, 917531, 4, 0, 983067, 4, 0, 1048603, 4, 0, 28, 4, 0, 65564, 4, 0, 131100, 4, 0, 196636, 4, 0, 262172, 4, 0, 327708, 4, 0, 393244, 4, 0, 458780, 4, 0, 524316, 4, 0, 589852, 4, 0, 655388, 4, 0, 720924, 4, 0, 786460, 4, 0, 851996, 4, 0, 917532, 4, 0, 983068, 4, 0, 1048604, 4, 0, 29, 4, 0, 65565, 4, 0, 131101, 4, 0, 196637, 4, 0, 262173, 4, 0, 327709, 4, 0, 393245, 4, 0, 458781, 4, 0, 524317, 4, 0, 589853, 4, 0, 655389, 4, 0, 720925, 4, 0, 786461, 4, 0, 851997, 4, 0, 917533, 4, 0, 983069, 4, 0, 1048605, 4, 0)
+layer_1/name = "Walls"
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "Wires"
+layer_2/tile_data = PackedInt32Array()
+
+[node name="Inventory" parent="." instance=ExtResource("5_qiswb")]
+position = Vector2(245, 258)
+
+[node name="Player" parent="." instance=ExtResource("1_sx5pn")]
+position = Vector2(442, 25)
+
+[node name="RayCast2D" type="RayCast2D" parent="Player"]
+
+[node name="AudioListener2D" type="AudioListener2D" parent="Player"]
+current = true
+
+[node name="Box" parent="." instance=ExtResource("17_qr7we")]
+position = Vector2(90, 136)
+
+[node name="Turtle" parent="." instance=ExtResource("2_kq1e4")]
+position = Vector2(440, 96)
+
+[node name="RayCast2D" type="RayCast2D" parent="Turtle"]
+
+[node name="TrajectoryLine" type="Line2D" parent="."]
+position = Vector2(90, 136)
+width = 2.0
+default_color = Color(1, 1, 1, 0.447059)
+
+[node name="Hedgehog" parent="." instance=ExtResource("3_xw322")]
+position = Vector2(443, 168)
+
+[node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
+
+[node name="ElectricLizard" parent="." instance=ExtResource("4_4ppsl")]
+position = Vector2(443, 249)
+
+[node name="RayCast2D" type="RayCast2D" parent="ElectricLizard"]
+
+[node name="GamePause" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("6_acxvv")
+
+[node name="Panel" type="Panel" parent="GamePause"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer3" type="GridContainer" parent="GamePause/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -20.0
+offset_right = 74.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
+layout_mode = 2
+columns = 2
+
+[node name="resume" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("7_vv36t")
+flat = true
+
+[node name="restart" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("8_5m4sj")
+flat = true
+
+[node name="GridContainer2" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
+layout_mode = 2
+
+[node name="exit" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("9_67fif")
+flat = true
+
+[node name="select" type="AudioStreamPlayer2D" parent="GamePause"]
+stream = ExtResource("10_hvgfk")
+
+[node name="Escape" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Escape"]
+offset_left = 12.0
+offset_top = 13.0
+offset_right = 28.0
+offset_bottom = 29.0
+texture = ExtResource("6_b2jrw")
+stretch_mode = 2
+
+[node name="Death" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("12_jfxe4")
+
+[node name="Confetti" type="AudioStreamPlayer2D" parent="Death"]
+stream = ExtResource("13_gemos")
+
+[node name="Panel" type="Panel" parent="Death"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Death/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = 53.0
+offset_right = 74.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 2
+
+[node name="exit" type="Button" parent="Death/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("9_67fif")
+flat = true
+
+[node name="restart" type="Button" parent="Death/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("8_5m4sj")
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="Death/Panel"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 33.0
+offset_right = 405.0
+offset_bottom = 175.0
+
+[node name="select" type="AudioStreamPlayer2D" parent="Death"]
+stream = ExtResource("10_hvgfk")
+
+[node name="WinState" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("12_jfxe4")
+
+[node name="Confetti" type="AudioStreamPlayer2D" parent="WinState"]
+stream = ExtResource("13_4ug3f")
+
+[node name="Panel" type="Panel" parent="WinState"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="WinState/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = 53.0
+offset_right = 74.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 2
+
+[node name="exit" type="Button" parent="WinState/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("9_67fif")
+flat = true
+
+[node name="restart" type="Button" parent="WinState/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("8_5m4sj")
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="WinState/Panel"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 33.0
+offset_right = 405.0
+offset_bottom = 175.0
+
+[node name="select" type="AudioStreamPlayer2D" parent="WinState"]
+stream = ExtResource("10_hvgfk")
+
+[node name="MangoPickup" parent="." instance=ExtResource("15_ti8go")]
+position = Vector2(88, 63)
+
+[node name="waterPool" parent="." instance=ExtResource("16_rnr62")]
+position = Vector2(88, 92)
+
+[node name="EatingFood" parent="." instance=ExtResource("19_3vmn4")]
+position = Vector2(88, 33)
+
+[node name="Marker2D" type="Marker2D" parent="." groups=["FirstEnemy"]]
+position = Vector2(162, 53)
+
+[node name="Marker2D2" type="Marker2D" parent="." groups=["FirstEnemy"]]
+position = Vector2(302, 84)
+
+[node name="Marker2D3" type="Marker2D" parent="." groups=["FirstEnemy"]]
+position = Vector2(233, 135)
+
+[node name="SecondMarkers2" type="Marker2D" parent="." groups=["SecondEnemy"]]
+position = Vector2(309, 191)
+
+[node name="SecondMarkers" type="Marker2D" parent="." groups=["SecondEnemy"]]
+position = Vector2(164, 189)
+
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
+[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
+[connection signal="finished" from="GamePause/select" to="GamePause" method="_on_select_finished"]
+[connection signal="pressed" from="Death/Panel/GridContainer/exit" to="Death" method="_on_exit_pressed"]
+[connection signal="pressed" from="Death/Panel/GridContainer/restart" to="Death" method="_on_restart_pressed"]
+[connection signal="finished" from="Death/select" to="Death" method="_on_select_finished"]
+[connection signal="pressed" from="WinState/Panel/GridContainer/exit" to="WinState" method="_on_exit_pressed"]
+[connection signal="pressed" from="WinState/Panel/GridContainer/restart" to="WinState" method="_on_restart_pressed"]
+[connection signal="finished" from="WinState/select" to="WinState" method="_on_select_finished"]

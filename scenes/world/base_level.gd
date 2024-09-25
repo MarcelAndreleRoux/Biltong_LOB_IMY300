@@ -5,4 +5,3 @@ func _ready():
 
 func _physics_process(_delta):
 	super(_delta)
-

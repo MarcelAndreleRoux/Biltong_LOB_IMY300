@@ -5,7 +5,9 @@ class_name BaseWorld
 
 # Common Nodes
 @onready var player = $Player
+@onready var hedgehog = $Hedgehog
 @onready var turtle = $Turtle
+@onready var electric_lizard = $ElectricLizard
 @onready var trajectory_line = $TrajectoryLine
 @onready var game_pause = $GamePause
 
@@ -65,6 +67,9 @@ func _ready():
 	if GlobalValues.vinesSize == "small":
 		for vine in get_tree().get_nodes_in_group("vines"):
 			player_raycast.add_exception(vine)
+		
+	turtle_raycast.add_exception(hedgehog)
+	turtle_raycast.add_exception(electric_lizard)
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
@@ -372,6 +377,9 @@ func change_scene():
 	if GlobalValues.transition_scene:
 		if GlobalValues.current_scene == "World":
 			get_tree().change_scene_to_file("res://scenes/world/level_2.tscn")
+			GlobalValues.finish_changingscene()
+		if GlobalValues.current_scene == "Level2":
+			get_tree().change_scene_to_file("res://scenes/world/base_level.tscn")
 			GlobalValues.finish_changingscene()
 
 func _on_death_finsish():
