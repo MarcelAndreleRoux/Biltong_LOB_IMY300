@@ -501,6 +501,9 @@ texture = ExtResource("27_rs6p5")
 
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
+[node name="AudioListener2D" type="AudioListener2D" parent="Player"]
+current = true
+
 [node name="TrajectoryLine" type="Line2D" parent="."]
 width = 2.0
 default_color = Color(1, 1, 1, 0.447059)

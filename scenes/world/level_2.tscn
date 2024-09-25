@@ -425,6 +425,9 @@ collision_mask = 27
 
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
+[node name="AudioListener2D" type="AudioListener2D" parent="Player"]
+current = true
+
 [node name="Inventory" parent="." instance=ExtResource("11_5jp0x")]
 position = Vector2(245, 258)
 
@@ -670,6 +673,12 @@ position = Vector2(177, 67)
 
 [node name="waterPool" parent="." instance=ExtResource("29_yxia0")]
 position = Vector2(185, 110)
+
+[node name="SecondMarkers2" type="Marker2D" parent="." groups=["SecondEnemy"]]
+position = Vector2(424, 189)
+
+[node name="SecondMarkers" type="Marker2D" parent="." groups=["SecondEnemy"]]
+position = Vector2(301, 117)
 
 [connection signal="body_entered" from="GameFinish" to="." method="_on_game_finish_body_entered"]
 [connection signal="pressed" from="WinState/Panel/GridContainer/exit" to="WinState" method="_on_exit_pressed"]

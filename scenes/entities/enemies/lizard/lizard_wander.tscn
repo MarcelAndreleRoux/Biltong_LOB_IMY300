@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dx84ik10rs64a"]
+
+[ext_resource type="Script" path="res://LizardWander.gd" id="1_8mxa5"]
+
+[node name="LizardWander" type="Node2D"]
+script = ExtResource("1_8mxa5")
+group_name = "SecondEnemy"
