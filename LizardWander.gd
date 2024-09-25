@@ -40,12 +40,13 @@ func update_direction():
 			_reach_marker()
 
 func get_velocity() -> Vector2:
-	return direction_to_target  # Return the normalized direction vector for movement
+	# helps with animation direction
+	return direction_to_target
 
 func get_next_marker():
 	if marker_queue.size() > 0 and is_instance_valid(marker_queue.front()):
-		target_marker = marker_queue.pop_front()  # Get the next marker in the queue
-		marker_queue.append(target_marker)  # Re-add the marker to the end of the queue
+		target_marker = marker_queue.pop_front()
+		marker_queue.append(target_marker)
 		print("Next marker: ", target_marker.name)
 		
 		is_moving = true
@@ -55,11 +56,10 @@ func get_next_marker():
 func _reach_marker():
 	is_moving = false
 	print("Reached marker: ", target_marker.name)
-	SharedSignals.lizard_marker_reached.emit()  # Notify that the lizard has reached a marker
-	start_stop_timer()  # Start the stop timer before moving to the next marker
+	SharedSignals.lizard_marker_reached.emit()
+	start_stop_timer()
 
 func start_stop_timer():
-	# Start the timer for the stop-and-go behavior
 	stop_timer.start()
 
 func _on_stop_timer_timeout():
