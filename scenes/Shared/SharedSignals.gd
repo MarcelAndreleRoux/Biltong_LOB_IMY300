@@ -38,6 +38,10 @@ signal food_not_visible
 signal food_was_eaten
 signal marker_removed
 
+#Lizard Signals
+signal lizard_marker_reached
+signal lizard_can_move_again
+
 # Hedgehog Enemy Signals
 signal player_spotted
 signal player_lost

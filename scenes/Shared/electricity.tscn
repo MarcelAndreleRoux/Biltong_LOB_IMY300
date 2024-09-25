@@ -26,6 +26,11 @@ region = Rect2(64, 0, 16, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0rpwy"]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5qpx7")
@@ -51,10 +56,9 @@ animations = [{
 script = ExtResource("1_waxd4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
 sprite_frames = SubResource("SpriteFrames_0rpwy")
-animation = &"zap"
-frame = 4
-frame_progress = 1.0
+offset = Vector2(0, -15)
 
 [node name="electric_zap" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_jme6h")
