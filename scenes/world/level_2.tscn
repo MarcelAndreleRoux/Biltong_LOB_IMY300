@@ -679,7 +679,7 @@ position = Vector2(177, 67)
 position = Vector2(185, 110)
 
 [node name="SecondMarkers2" type="Marker2D" parent="." groups=["SecondEnemy"]]
-position = Vector2(424, 189)
+position = Vector2(302, 203)
 
 [node name="SecondMarkers" type="Marker2D" parent="." groups=["SecondEnemy"]]
 position = Vector2(301, 117)
