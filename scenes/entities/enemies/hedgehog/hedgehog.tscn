@@ -496,6 +496,8 @@ states/shoot/position = Vector2(463, 4)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_hfpl3"), "idle", "angry", SubResource("AnimationNodeStateMachineTransition_g5qah"), "angry", "idle", SubResource("AnimationNodeStateMachineTransition_73idu"), "angry", "shoot", SubResource("AnimationNodeStateMachineTransition_nmyif"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_ihpgw")]
 
 [node name="Hedgehog" type="StaticBody2D" groups=["enemy"]]
+collision_layer = 16
+collision_mask = 9
 script = ExtResource("1_h4pte")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -378,6 +378,9 @@ func change_scene():
 		if GlobalValues.current_scene == "World":
 			get_tree().change_scene_to_file("res://scenes/world/level_2.tscn")
 			GlobalValues.finish_changingscene()
+		if GlobalValues.current_scene == "Level2":
+			get_tree().change_scene_to_file("res://scenes/world/base_level.tscn")
+			GlobalValues.finish_changingscene()
 
 func _on_death_finsish():
 	death.death_lose()
