@@ -187,7 +187,6 @@ stretch_mode = 2
 
 [node name="Box" parent="." instance=ExtResource("25_dc2e1")]
 position = Vector2(402, 187)
-collision_layer = 36
 
 [node name="Inventory" parent="." instance=ExtResource("26_smm4u")]
 position = Vector2(245, 258)
