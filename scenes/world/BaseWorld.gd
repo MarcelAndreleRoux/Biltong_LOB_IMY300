@@ -64,8 +64,7 @@ func _ready():
 	GlobalValues.turtle_original_pos = turtle.global_position
 	
 	# Add all vines to the player's raycast exceptions
-	if GlobalValues.vinesSize == "small":
-		for vine in get_tree().get_nodes_in_group("vines"):
+	for vine in get_tree().get_nodes_in_group("vines"):
 			player_raycast.add_exception(vine)
 		
 	enemy_raycast.add_exception(hedgehog)

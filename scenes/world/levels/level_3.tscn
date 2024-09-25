@@ -251,6 +251,11 @@ door_link_id = "Hello"
 [node name="Box" parent="." instance=ExtResource("4_512gt")]
 position = Vector2(351, 191)
 
+[node name="Error" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_30w6t")
+volume_db = -16.138
+pitch_scale = 0.92
+
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
