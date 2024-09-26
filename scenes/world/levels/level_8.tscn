@@ -47,7 +47,7 @@ position = Vector2(208, 40)
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 
 [node name="Turtle" parent="." instance=ExtResource("5_0vbie")]
-position = Vector2(192, 200)
+position = Vector2(256, 200)
 
 [node name="RayCast2D" type="RayCast2D" parent="Turtle"]
 
