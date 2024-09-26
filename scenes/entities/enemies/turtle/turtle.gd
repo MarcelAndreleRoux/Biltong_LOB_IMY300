@@ -24,6 +24,7 @@ var marker_queue: Array = []
 var normal_markers: Array = []
 var food_markers: Array = []
 var pending_food_markers: Array = []
+var projectile_buffer: Array = []
 
 func _ready():
 	print("Enemy ready")
@@ -150,17 +151,20 @@ func _add_new_marker(new_marker: Marker2D):
 		if food_markers.has(new_marker):
 			print("Duplicate marker detected: ", new_marker.name)
 			return
-		
+
 		# Add visible food markers only
 		if new_marker.name.begins_with("Projectile") and GlobalValues.food_visible:
 			food_markers.append(new_marker)
-			marker_queue.push_front(new_marker)  # Prioritize the food marker
 			print("Visible food marker added, current food markers: ", food_markers)
 
 			# Trigger turtle to respond if it's not busy eating or scared
-			if not is_scared and not should_eat:
-				play_moving = false
+			if not is_scared and not should_eat and projectile_buffer.size() == 0:
+				# If not scared or eating and no buffer, move to the new marker immediately
+				marker_queue.push_front(new_marker)  # Prioritize the food marker
 				_start_delay_before_moving()  # Wait 3 seconds before moving toward the food
+			elif is_scared or should_eat or projectile_buffer.size() > 0:
+				# Add the projectile to the buffer if scared or already eating
+				projectile_buffer.append(new_marker)
 		else:
 			print("Invisible food marker ignored.")
 
@@ -260,29 +264,41 @@ func _get_next_marker():
 	print("Getting next marker...")
 	print("Food markers: ", food_markers)
 	print("Marker queue: ", marker_queue)
+	print("Projectile buffer: ", projectile_buffer)
 
-	# Clean up any freed objects in food_markers and marker_queue
+	# Clean up any freed objects in food_markers, marker_queue, and projectile_buffer
 	food_markers = food_markers.filter(func(marker): return is_instance_valid(marker))
 	marker_queue = marker_queue.filter(func(marker): return is_instance_valid(marker))
+	projectile_buffer = projectile_buffer.filter(func(marker): return is_instance_valid(marker))
 
-	# Check if there are any valid markers in the queue
+	# Process the buffer first if it has entries
+	if projectile_buffer.size() > 0:
+		if is_instance_valid(projectile_buffer.front()):
+			print("Processing projectile from buffer: ", projectile_buffer.front().name)
+			target_marker = projectile_buffer.pop_front()
+			play_moving = true
+			return
+		else:
+			print("Invalid buffered projectile, skipping.")
+
+	# If the buffer is empty, revert to processing food markers or normal markers
 	if food_markers.size() == 0 and marker_queue.size() == 0:
 		print("No markers available.")
 		target_marker = null
 		play_moving = false  # Stop moving if no markers are available
 		return
 
-	# Prioritize food markers only if they are visible
+	# Prioritize food markers if they are visible
 	if food_markers.size() > 0 and GlobalValues.food_visible and not food_behind_wall:
 		if is_instance_valid(food_markers.front()):
 			print("Food marker found, moving towards: ", food_markers.front().name)
 			target_marker = food_markers.pop_front()
-			play_moving = true  # Start moving toward the food marker
+			play_moving = true
 			return
 		else:
 			print("Invalid food marker detected, skipping.")
 
-	# No more valid or visible food markers, revert to normal markers
+	# No valid or visible food markers, revert to normal markers
 	if marker_queue.size() > 0 and is_instance_valid(marker_queue.front()):
 		print("No food markers, selecting normal marker: ", marker_queue.front().name)
 		target_marker = marker_queue.front()
@@ -356,6 +372,7 @@ func _update_animation_parameters():
 func _on_scared_area_body_entered(body):
 	if body.is_in_group("player"):
 		is_scared = true
+		SharedSignals.turtle_is_scared.emit(true)
 		player_was_in_area = true
 		play_moving = false
 		_update_animation_parameters()
@@ -369,6 +386,7 @@ func _on_scared_area_body_entered(body):
 func _on_scared_area_body_exited(body):
 	if body.is_in_group("player") and not player_was_in_area:
 		is_scared = false 
+		SharedSignals.turtle_is_scared.emit(false)
 		_update_animation_parameters()
 
 func _resume_movement_after_scared():

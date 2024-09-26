@@ -1,0 +1,136 @@
+[gd_scene load_steps=22 format=3 uid="uid://fg8pnbkcvvaj"]
+
+[ext_resource type="Texture2D" uid="uid://b4sisfqa6vsi4" path="res://assets/sprites/objects/electricity/conductors/Connector-Electric-One-Open.png" id="1_fjomo"]
+[ext_resource type="Script" path="res://scenes/entities/objects/static/board/m_board.gd" id="1_h5h5g"]
+[ext_resource type="AudioStream" uid="uid://cctdxnbrirqk3" path="res://assets/soundeffects/Connect.wav" id="1_scx4e"]
+[ext_resource type="Texture2D" uid="uid://gcaq83xs2cvg" path="res://assets/sprites/objects/electricity/conductors/Connector-Electric-One-Closed.png" id="2_1qg0n"]
+[ext_resource type="Texture2D" uid="uid://lr545yno268c" path="res://assets/sprites/objects/electricity/conductors/Connector-Button-Closed.png" id="2_16jkr"]
+[ext_resource type="AudioStream" uid="uid://dpb5m6wiaqrk7" path="res://assets/soundeffects/Fully_connected.wav" id="2_xobq7"]
+[ext_resource type="Texture2D" uid="uid://dkgsc8w0nfirq" path="res://assets/sprites/objects/electricity/conductors/Connector-Button-Open.png" id="3_xbitt"]
+[ext_resource type="Texture2D" uid="uid://1totqf2qg5tr" path="res://assets/sprites/objects/electricity/conductors/Connector-Electric-Two-Closed.png" id="6_5op72"]
+[ext_resource type="Texture2D" uid="uid://dquq8l6ucff0u" path="res://assets/sprites/objects/electricity/conductors/Connector-Electric-Two-Open.png" id="7_5d7bn"]
+[ext_resource type="Texture2D" uid="uid://cb2dtc1a3kla2" path="res://assets/sprites/objects/electricity/conductors/Connector-Electric-Two-Half.png" id="8_gre6u"]
+[ext_resource type="AudioStream" uid="uid://dpxhfdpe5i7bw" path="res://assets/soundeffects/disconnect_sound.mp3" id="11_beu5q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6gaf"]
+atlas = ExtResource("2_16jkr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxdus"]
+atlas = ExtResource("3_xbitt")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p33c"]
+atlas = ExtResource("2_1qg0n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rm3f6"]
+atlas = ExtResource("1_fjomo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tam4r"]
+atlas = ExtResource("6_5op72")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejacs"]
+atlas = ExtResource("7_5d7bn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysew2"]
+atlas = ExtResource("8_gre6u")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dqd6d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h6gaf")
+}],
+"loop": true,
+"name": &"default_off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxdus")
+}],
+"loop": true,
+"name": &"default_on",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6p33c")
+}],
+"loop": true,
+"name": &"one_connector_off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rm3f6")
+}],
+"loop": true,
+"name": &"one_connector_on",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tam4r")
+}],
+"loop": true,
+"name": &"two_connector_off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejacs")
+}],
+"loop": true,
+"name": &"two_connector_on",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysew2")
+}],
+"loop": true,
+"name": &"two_connector_semi",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hybq"]
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u30mt"]
+size = Vector2(52, 33)
+
+[node name="MBoard" type="StaticBody2D"]
+script = ExtResource("1_h5h5g")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dqd6d")
+animation = &"one_connector_on"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5hybq")
+
+[node name="ConnectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConnectionArea"]
+position = Vector2(0, 13.5)
+shape = SubResource("RectangleShape2D_u30mt")
+
+[node name="Connect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_scx4e")
+volume_db = -2.81
+
+[node name="Connected" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_xobq7")
+volume_db = -25.197
+
+[node name="Disconnect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_beu5q")
+
+[connection signal="body_entered" from="ConnectionArea" to="." method="_on_connection_area_body_entered"]
+[connection signal="body_exited" from="ConnectionArea" to="." method="_on_connection_area_body_exited"]
