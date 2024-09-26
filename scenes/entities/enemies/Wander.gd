@@ -11,11 +11,13 @@ var current_food_marker: Marker2D = null  # Track the current food marker
 
 var direction: Vector2 = Vector2.ZERO
 var is_eating: bool = false
+var is_scared: bool = false
 var food_visible: bool = false
 
 var food_markers: Array = []  # Array to track active food markers
 var marker_queue: Array = []  # Array to manage the turtle's movement through markers
 var pending_food_markers: Array = []  # Array to store food markers that are not immediately visible
+var projectile_buffer: Array = []
 
 const STOPPING_DISTANCE = 10
 
@@ -30,6 +32,7 @@ func _ready():
 
 	SharedSignals.projectile_gone.connect(_remove_marker)
 	SharedSignals.food_visibility_changed.connect(_on_food_visibility_changed)
+	SharedSignals.turtle_is_scared.connect(_change_scared_status)
 
 func _physics_process(delta):
 	if is_eating or current_position == null:
@@ -42,6 +45,9 @@ func _physics_process(delta):
 		_handle_reached_marker()
 	else:
 		move_towards_position(delta)
+
+func _change_scared_status(status: bool):
+	is_scared = status
 
 func _on_food_visibility_changed(is_visible: bool):
 	food_visible = is_visible
@@ -66,20 +72,27 @@ func _get_positions():
 
 func _get_next_position():
 	# If there are no markers to move towards, do nothing and wait
-	if temp_positions.is_empty() and marker_queue.is_empty():
+	if temp_positions.is_empty() and marker_queue.is_empty() and projectile_buffer.is_empty():
 		current_position = null
 		return  # Wait for markers to be added
 	
+	# Prioritize buffered projectiles first
+	if projectile_buffer.size() > 0:
+		current_position = projectile_buffer.pop_front()  # Prioritize buffered food
+		_update_direction()
+		return
+
 	if temp_positions.is_empty():
 		_get_positions()
 
 	current_position = temp_positions.pop_front()
-	
+
 	# Skip food markers that are no longer visible
 	if current_position.name.begins_with("Projectile") and not GlobalValues.food_visible:
 		_get_next_position()
 	else:
 		_update_direction()
+
 
 func move_towards_position(delta):
 	_update_direction()
@@ -149,10 +162,16 @@ func update_positions_with_new_marker(new_marker: Marker2D):
 	# Add the marker to the queue based on visibility
 	if GlobalValues.food_visible:
 		food_markers.append(new_marker)
-		marker_queue.push_front(new_marker)  # Prioritize food
+		
+		# If the turtle is scared or eating, buffer the new marker
+		if is_eating or is_scared:
+			projectile_buffer.append(new_marker)  # Add to buffer
+		else:
+			marker_queue.push_front(new_marker)  # Prioritize food
 	else:
 		pending_food_markers.append(new_marker)
 
 	# If previously waiting for a marker, resume movement now
 	if current_position == null and marker_queue.size() > 0:
 		_get_next_position()
+
