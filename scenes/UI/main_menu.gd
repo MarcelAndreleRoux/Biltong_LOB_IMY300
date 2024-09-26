@@ -16,4 +16,4 @@ func _on_click_finished():
 	if exit:
 		get_tree().quit()
 	else:
-		get_tree().change_scene_to_file("res://scenes/world/world.tscn")
+		get_tree().change_scene_to_file("res://scenes/world/levels/level_1.tscn")

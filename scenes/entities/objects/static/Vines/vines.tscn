@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bsv2rliqboptl"]
+[gd_scene load_steps=27 format=3 uid="uid://bsv2rliqboptl"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/Vines/vines.gd" id="1_epfxr"]
 [ext_resource type="Texture2D" uid="uid://1eu5rcbvdi3h" path="res://assets/sprites/objects/static/vines/vines-Sheet.png" id="2_7a6or"]
@@ -76,6 +76,10 @@ region = Rect2(32, 0, 16, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_feypa"]
 atlas = ExtResource("2_7a6or")
 region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8v5x6"]
+atlas = ExtResource("2_7a6or")
+region = Rect2(0, 0, 16, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nkc6s"]
 animations = [{
@@ -158,7 +162,10 @@ animations = [{
 "name": &"large_plant_idle",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8v5x6")
+}],
 "loop": true,
 "name": &"small_plant_idle",
 "speed": 5.0
@@ -175,7 +182,7 @@ script = ExtResource("1_epfxr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nkc6s")
-animation = &"large_plant_idle"
+animation = &"small_plant_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ssynb")

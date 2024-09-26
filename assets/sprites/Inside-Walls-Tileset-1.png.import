@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnlq1t6a783og"
-path="res://.godot/imported/Inside-Walls-Tileset.png-eff784eaea92d8b4026975474d847c8d.ctex"
+uid="uid://hpuj03a623xf"
+path="res://.godot/imported/Inside-Walls-Tileset-1.png-8b47dc3a76e3da41c9cebf8d2bff73a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Inside-Walls-Tileset.png"
-dest_files=["res://.godot/imported/Inside-Walls-Tileset.png-eff784eaea92d8b4026975474d847c8d.ctex"]
+source_file="res://assets/sprites/Inside-Walls-Tileset-1.png"
+dest_files=["res://.godot/imported/Inside-Walls-Tileset-1.png-8b47dc3a76e3da41c9cebf8d2bff73a8.ctex"]
 
 [params]
 

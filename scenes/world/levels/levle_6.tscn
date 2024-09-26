@@ -1,27 +1,27 @@
-[gd_scene load_steps=20 format=3 uid="uid://donw0wxxwc4d"]
+[gd_scene load_steps=20 format=3 uid="uid://bfagvikce06o5"]
 
-[ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_or47c"]
-[ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_sx5pn"]
-[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="2_kq1e4"]
-[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="3_xw322"]
-[ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="4_4ppsl"]
-[ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="5_qiswb"]
-[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="6_acxvv"]
-[ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="6_b2jrw"]
-[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="7_vv36t"]
-[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="8_5m4sj"]
-[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="9_67fif"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="10_hvgfk"]
-[ext_resource type="Script" path="res://scenes/world/WinState.gd" id="12_jfxe4"]
-[ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="13_4ug3f"]
-[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="13_gemos"]
-[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="15_ti8go"]
-[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="16_rnr62"]
-[ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="17_qr7we"]
-[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_3vmn4"]
+[ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_i5omb"]
+[ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_7173b"]
+[ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="3_sh1mt"]
+[ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="4_0qulc"]
+[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="5_ryjhr"]
+[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="6_vt1nc"]
+[ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="7_gw56b"]
+[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="8_q53dc"]
+[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="9_admfl"]
+[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="10_us24d"]
+[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="11_nw7mt"]
+[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="12_afc3a"]
+[ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_ncek1"]
+[ext_resource type="Script" path="res://scenes/world/WinState.gd" id="14_d6squ"]
+[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_nrglg"]
+[ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="16_vpsf2"]
+[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_dlfoh"]
+[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="18_vvt2t"]
+[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_bocgv"]
 
 [node name="BaseLevel" type="Node2D"]
-script = ExtResource("1_or47c")
+script = ExtResource("1_i5omb")
 
 [node name="TileMap" type="TileMap" parent="."]
 format = 2
@@ -32,10 +32,10 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "Wires"
 layer_2/tile_data = PackedInt32Array()
 
-[node name="Inventory" parent="." instance=ExtResource("5_qiswb")]
+[node name="Inventory" parent="." instance=ExtResource("2_7173b")]
 position = Vector2(245, 258)
 
-[node name="Player" parent="." instance=ExtResource("1_sx5pn")]
+[node name="Player" parent="." instance=ExtResource("3_sh1mt")]
 position = Vector2(442, 25)
 
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
@@ -43,10 +43,10 @@ position = Vector2(442, 25)
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 current = true
 
-[node name="Box" parent="." instance=ExtResource("17_qr7we")]
+[node name="Box" parent="." instance=ExtResource("4_0qulc")]
 position = Vector2(90, 136)
 
-[node name="Turtle" parent="." instance=ExtResource("2_kq1e4")]
+[node name="Turtle" parent="." instance=ExtResource("5_ryjhr")]
 position = Vector2(440, 96)
 
 [node name="RayCast2D" type="RayCast2D" parent="Turtle"]
@@ -56,12 +56,12 @@ position = Vector2(90, 136)
 width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
 
-[node name="Hedgehog" parent="." instance=ExtResource("3_xw322")]
+[node name="Hedgehog" parent="." instance=ExtResource("6_vt1nc")]
 position = Vector2(443, 168)
 
 [node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
 
-[node name="ElectricLizard" parent="." instance=ExtResource("4_4ppsl")]
+[node name="ElectricLizard" parent="." instance=ExtResource("7_gw56b")]
 position = Vector2(443, 249)
 
 [node name="RayCast2D" type="RayCast2D" parent="ElectricLizard"]
@@ -69,7 +69,7 @@ position = Vector2(443, 249)
 [node name="GamePause" type="CanvasLayer" parent="."]
 process_mode = 3
 visible = false
-script = ExtResource("6_acxvv")
+script = ExtResource("8_q53dc")
 
 [node name="Panel" type="Panel" parent="GamePause"]
 anchors_preset = 15
@@ -100,14 +100,14 @@ columns = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-icon = ExtResource("7_vv36t")
+icon = ExtResource("9_admfl")
 flat = true
 
 [node name="restart" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-icon = ExtResource("8_5m4sj")
+icon = ExtResource("10_us24d")
 flat = true
 
 [node name="GridContainer2" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
@@ -117,11 +117,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-icon = ExtResource("9_67fif")
+icon = ExtResource("11_nw7mt")
 flat = true
 
 [node name="select" type="AudioStreamPlayer2D" parent="GamePause"]
-stream = ExtResource("10_hvgfk")
+stream = ExtResource("12_afc3a")
 
 [node name="Escape" type="CanvasLayer" parent="."]
 
@@ -130,16 +130,16 @@ offset_left = 12.0
 offset_top = 13.0
 offset_right = 28.0
 offset_bottom = 29.0
-texture = ExtResource("6_b2jrw")
+texture = ExtResource("13_ncek1")
 stretch_mode = 2
 
 [node name="Death" type="CanvasLayer" parent="."]
 process_mode = 3
 visible = false
-script = ExtResource("12_jfxe4")
+script = ExtResource("14_d6squ")
 
 [node name="Confetti" type="AudioStreamPlayer2D" parent="Death"]
-stream = ExtResource("13_gemos")
+stream = ExtResource("15_nrglg")
 
 [node name="Panel" type="Panel" parent="Death"]
 anchors_preset = 15
@@ -169,14 +169,14 @@ columns = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-icon = ExtResource("9_67fif")
+icon = ExtResource("11_nw7mt")
 flat = true
 
 [node name="restart" type="Button" parent="Death/Panel/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-icon = ExtResource("8_5m4sj")
+icon = ExtResource("10_us24d")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="Death/Panel"]
@@ -187,15 +187,15 @@ offset_right = 405.0
 offset_bottom = 175.0
 
 [node name="select" type="AudioStreamPlayer2D" parent="Death"]
-stream = ExtResource("10_hvgfk")
+stream = ExtResource("12_afc3a")
 
 [node name="WinState" type="CanvasLayer" parent="."]
 process_mode = 3
 visible = false
-script = ExtResource("12_jfxe4")
+script = ExtResource("14_d6squ")
 
 [node name="Confetti" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("13_4ug3f")
+stream = ExtResource("16_vpsf2")
 
 [node name="Panel" type="Panel" parent="WinState"]
 anchors_preset = 15
@@ -225,14 +225,14 @@ columns = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-icon = ExtResource("9_67fif")
+icon = ExtResource("11_nw7mt")
 flat = true
 
 [node name="restart" type="Button" parent="WinState/Panel/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-icon = ExtResource("8_5m4sj")
+icon = ExtResource("10_us24d")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="WinState/Panel"]
@@ -243,15 +243,15 @@ offset_right = 405.0
 offset_bottom = 175.0
 
 [node name="select" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("10_hvgfk")
+stream = ExtResource("12_afc3a")
 
-[node name="MangoPickup" parent="." instance=ExtResource("15_ti8go")]
+[node name="MangoPickup" parent="." instance=ExtResource("17_dlfoh")]
 position = Vector2(88, 63)
 
-[node name="waterPool" parent="." instance=ExtResource("16_rnr62")]
+[node name="waterPool" parent="." instance=ExtResource("18_vvt2t")]
 position = Vector2(88, 92)
 
-[node name="EatingFood" parent="." instance=ExtResource("19_3vmn4")]
+[node name="EatingFood" parent="." instance=ExtResource("19_bocgv")]
 position = Vector2(88, 33)
 
 [node name="TurtleMarker" type="Marker2D" parent="." groups=["FirstEnemy"]]
