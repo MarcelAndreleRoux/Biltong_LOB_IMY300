@@ -36,6 +36,9 @@ var player_in_box_area: bool = false
 var play_box_pickup_once: bool = false
 var is_bouncing_back: bool = false
 
+# Drag Toggle
+var drag_toggle_mode: bool = false  # New variable to track the toggle mode
+
 # Trajectory Line
 var points: Array = []
 
@@ -74,9 +77,13 @@ func _physics_process(_delta):
 	velocity = currentVelocity
 	move_and_slide()
 
-	# Emit the player's position and direction to the box while dragging
+	# Get the mouse position in the world space
+	var mouse_position = get_global_mouse_position()
+
+	# Emit the player's position and the direction toward the mouse
 	if is_dragging and player_in_box_area:
-		SharedSignals.drag_box.emit(global_position, direction)
+		var direction_to_mouse = (mouse_position - global_position).normalized()
+		SharedSignals.drag_box.emit(global_position, direction_to_mouse)
 
 func _handle_movement_input():
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -109,25 +116,32 @@ func _death_finished():
 	SharedSignals.death_finished.emit()
 
 func _handle_action_input():
-	# Handle dragging action only if the player is in the move area
-	if Input.is_action_pressed("interact") and player_in_box_area:
-		if not play_box_pickup_once:
+	# Toggle dragging mode when 'E' is pressed
+	if Input.is_action_just_pressed("toggle_drag"):
+		drag_toggle_mode = !drag_toggle_mode  # Toggle the drag mode on/off
+
+		# If we're in the area and toggled on, start dragging
+		if drag_toggle_mode and player_in_box_area:
+			is_dragging = true
 			box_drop.play()
-			play_box_pickup_once = true
-		
+			print("Dragging started")
+		else:
+			is_dragging = false
+			print("Dragging stopped")
+
+	# Only drag the box if we're in drag mode and in the area
+	if drag_toggle_mode and player_in_box_area:
 		is_dragging = true
 	else:
-		play_box_pickup_once = false
 		is_dragging = false
 
+	# Handle other actions like aiming and throwing
 	if can_aim_throw:
-		# Handle aim toggling
 		if Input.is_action_just_pressed("aim"):
 			is_aiming = true
 		elif Input.is_action_just_released("aim"):
 			is_aiming = false
 
-		# Handle throwing action
 		if is_aiming and not is_on_cooldown and can_throw_proj:
 			if Input.is_action_just_pressed("throw") and not throw_clicked:
 				throw_clicked = true
@@ -161,7 +175,6 @@ func _update_animation_parameters():
 		animation_tree["parameters/Death/blend_position"] = direction
 
 func _play_movement_animation():
-	# Movement
 	if currentVelocity == Vector2.ZERO:
 		if is_aiming and not is_on_cooldown:
 			animation_tree["parameters/conditions/is_idle_aim"] = true
@@ -184,7 +197,6 @@ func _play_movement_animation():
 			animation_tree["parameters/conditions/is_run_aim"] = false
 
 func _play_throw_animation():
-	# Throw animation logic
 	if throw_clicked:
 		throw.play()
 		animation_tree["parameters/conditions/is_idle_throw"] = currentVelocity == Vector2.ZERO
@@ -192,18 +204,3 @@ func _play_throw_animation():
 		animation_tree["parameters/conditions/is_idle_throw"] = false
 		animation_tree["parameters/conditions/is_run_throw"] = false
 		throw_clicked = false
-
-func _on_pickup_area_body_entered(body):
-	if body.is_in_group("pickable"):
-		print(body)
-		if Input.is_action_just_pressed("pickup"):
-			pickup.play()
-
-func _on_pickup_finished():
-	SharedSignals.pickedup_item.emit()
-
-func _on_pickup_area_area_entered(area):
-	if area.name == "ActionArea":
-		print(area)
-		if Input.is_action_just_pressed("pickup"):
-			pickup.play()

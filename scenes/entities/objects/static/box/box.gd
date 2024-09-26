@@ -20,10 +20,17 @@ func _integrate_forces(_state):
 
 func _follow_player(position: Vector2, direction: Vector2):
 	if player_in_area:
-		# Calculate the target position based on the player's position and direction
-		var target_position = position + direction * 15
+		# Define a fixed distance from the player to the box
+		var box_distance_from_player = 13  # Adjust this value for how far the box floats
+
+		# Calculate the new position of the box, offset by the direction toward the mouse
+		var target_position = position + direction * box_distance_from_player
+
 		# Smoothly interpolate the box's position towards the target position
 		global_position = global_position.lerp(target_position, 0.1)
+
+		# Ensure the box does not rotate
+		rotation = 0  # Keep the box from rotating
 
 func _some_waiting_timer():
 	var grow_timer = Timer.new()
@@ -39,18 +46,20 @@ func _show_timeout():
 	move_action.visible = false
 
 func _on_move_area_body_entered(body: Node2D):
-	if body.is_in_group("player"):
+	# Ensure the body is the player
+	if body.is_in_group("player"):  # Check if the body belongs to the 'player' group
 		if not shown_once:
 			move_action.visible = true
 			_some_waiting_timer()
-			
+
 		player_in_area = true
 		SharedSignals.player_move.emit()
 		animatedSprite.play("near_box")
 		shown_once = true
 
 func _on_move_area_body_exited(_body: Node2D):
-	if player_in_area:
+	# Only change the state if the body leaving is the player
+	if player_in_area and _body.is_in_group("player"):
 		player_in_area = false
 		SharedSignals.player_exit.emit()
 		animatedSprite.play("idle")
