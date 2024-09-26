@@ -56,7 +56,7 @@ width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
 
 [node name="Hedgehog" parent="." instance=ExtResource("3_xw322")]
-position = Vector2(262, -97)
+position = Vector2(442, 174)
 
 [node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
 
@@ -267,6 +267,11 @@ position = Vector2(309, 191)
 
 [node name="LizardMarker2" type="Marker2D" parent="." groups=["SecondEnemy"]]
 position = Vector2(164, 189)
+
+[node name="Error" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_gemos")
+volume_db = -16.138
+pitch_scale = 0.92
 
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]

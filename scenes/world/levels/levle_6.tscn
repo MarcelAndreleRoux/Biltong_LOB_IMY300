@@ -292,6 +292,11 @@ plant_type = "small"
 position = Vector2(168, 144)
 plant_type = "small"
 
+[node name="Error" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_nrglg")
+volume_db = -16.138
+pitch_scale = 0.92
+
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
