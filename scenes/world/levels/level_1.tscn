@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=27 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/level_scripts/level_1.gd" id="1_ypnr2"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_u5vqf"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://d07mo5cvixahe" path="res://assets/sprites/UI/Keycaps/Keycaps-S.png" id="22_45by8"]
 [ext_resource type="Texture2D" uid="uid://b8ka5jup28x1v" path="res://assets/sprites/UI/Keycaps/Keycaps-E.png" id="23_cv04v"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="24_6nyao"]
+[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="25_3puo3"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="25_dc2e1"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="26_smm4u"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="27_ijd22"]
@@ -223,6 +224,9 @@ position = Vector2(278, 219)
 
 [node name="pod4" parent="." instance=ExtResource("28_ew5oq")]
 position = Vector2(278, 232)
+
+[node name="Hedgehog" parent="." instance=ExtResource("25_3puo3")]
+position = Vector2(571, 132)
 
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]

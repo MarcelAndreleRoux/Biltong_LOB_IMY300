@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://6707pd1sakq7"]
+[gd_scene load_steps=19 format=3 uid="uid://6707pd1sakq7"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_e5o8h"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_g282t"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="16_rhbfl"]
 [ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="17_6wmhi"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="17_pb20x"]
+[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="18_0wfg3"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="20_18vaj"]
 
 [node name="BaseLevel" type="Node2D"]
@@ -249,6 +250,9 @@ door_link_id = "Hello"
 stream = ExtResource("16_rhbfl")
 volume_db = -16.138
 pitch_scale = 0.92
+
+[node name="Hedgehog" parent="." instance=ExtResource("18_0wfg3")]
+position = Vector2(552, 181)
 
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]

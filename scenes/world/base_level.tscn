@@ -44,7 +44,7 @@ position = Vector2(442, 25)
 current = true
 
 [node name="Box" parent="." instance=ExtResource("17_qr7we")]
-position = Vector2(90, 136)
+position = Vector2(368, 38)
 
 [node name="Turtle" parent="." instance=ExtResource("2_kq1e4")]
 position = Vector2(440, 96)
@@ -57,7 +57,7 @@ width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
 
 [node name="Hedgehog" parent="." instance=ExtResource("3_xw322")]
-position = Vector2(443, 168)
+position = Vector2(262, -97)
 
 [node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
 
