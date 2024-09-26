@@ -27,6 +27,9 @@ signal check_link
 signal found_link
 signal full_link
 
+# Button
+signal button_active
+
 # Trutle Enemy Signals
 signal start_eating
 signal new_marker
