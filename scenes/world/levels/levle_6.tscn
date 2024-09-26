@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bfagvikce06o5"]
+[gd_scene load_steps=20 format=3 uid="uid://b3hmbjs4s12r5"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_i5omb"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_7173b"]
