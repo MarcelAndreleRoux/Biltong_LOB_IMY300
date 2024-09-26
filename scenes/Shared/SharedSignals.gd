@@ -37,6 +37,7 @@ signal food_visibility_changed
 signal food_not_visible
 signal food_was_eaten
 signal marker_removed
+signal turtle_is_scared
 
 #Lizard Signals
 signal lizard_marker_reached
