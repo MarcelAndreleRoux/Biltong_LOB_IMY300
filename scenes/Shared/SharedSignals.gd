@@ -72,6 +72,8 @@ signal fire_mango_land
 # Box
 signal player_move
 signal player_exit
+signal player_push
+signal player_not_push
 signal box_hit_wall
 signal move_box
 signal drag_box
