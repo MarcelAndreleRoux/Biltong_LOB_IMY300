@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://3ybd1h5hqi4"]
+[gd_scene load_steps=13 format=3 uid="uid://3ybd1h5hqi4"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/box/box.gd" id="1_fdijp"]
 [ext_resource type="Texture2D" uid="uid://bgmachaejnlbs" path="res://assets/sprites/objects/static/box/Box.png" id="1_r7u5v"]
@@ -50,7 +50,10 @@ size = Vector2(12, 12)
 size = Vector2(12, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2tsi"]
-size = Vector2(34, 34)
+size = Vector2(52, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_408fc"]
+size = Vector2(18, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sx3ju"]
 size = Vector2(12, 12)
@@ -67,7 +70,7 @@ script = ExtResource("1_fdijp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(4.17233e-07, 1.19209e-07)
 sprite_frames = SubResource("SpriteFrames_qbh86")
-animation = &"idle"
+animation = &"near_box"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kwl1v")
@@ -81,6 +84,11 @@ shape = SubResource("RectangleShape2D_bpty4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveArea"]
 shape = SubResource("RectangleShape2D_y2tsi")
+
+[node name="PushArea" type="Area2D" parent="." groups=["speed_area"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PushArea"]
+shape = SubResource("RectangleShape2D_408fc")
 
 [node name="WallDetectionDown" type="Area2D" parent="."]
 position = Vector2(1, 1)
@@ -117,6 +125,8 @@ texture = ExtResource("3_n4r40")
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="MoveArea" to="." method="_on_move_area_body_entered"]
 [connection signal="body_exited" from="MoveArea" to="." method="_on_move_area_body_exited"]
+[connection signal="body_entered" from="PushArea" to="." method="_on_push_area_body_entered"]
+[connection signal="body_exited" from="PushArea" to="." method="_on_push_area_body_exited"]
 [connection signal="body_entered" from="WallDetectionDown" to="." method="_on_wall_detection_down_body_entered"]
 [connection signal="body_exited" from="WallDetectionDown" to="." method="_on_wall_detection_down_body_exited"]
 [connection signal="body_entered" from="WallDetectionUp" to="." method="_on_wall_detection_up_body_entered"]

@@ -32,12 +32,13 @@ var can_aim_throw: bool = false
 
 # Box
 var is_dragging: bool = false
+var is_pushing: bool = false
 var player_in_box_area: bool = false
 var play_box_pickup_once: bool = false
 var is_bouncing_back: bool = false
 
 # Drag Toggle
-var drag_toggle_mode: bool = false  # New variable to track the toggle mode
+var drag_toggle_mode: bool = false
 
 # Trajectory Line
 var points: Array = []
@@ -49,6 +50,8 @@ func _ready():
 	print("Player ready. Can throw:", GlobalValues.can_throw)
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
+	SharedSignals.player_push.connect(_is_push)
+	SharedSignals.player_not_push.connect(_is_not_push)
 	SharedSignals.can_throw_projectile.connect(_on_can_throw)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
@@ -61,11 +64,28 @@ func _on_can_throw():
 
 func _change_speed():
 	player_in_box_area = true
-	speed = 40
+	# Speed is updated in update_speed()
 
 func _change_speed_back():
 	player_in_box_area = false
-	speed = 100
+	is_dragging = false
+	drag_toggle_mode = false
+	update_speed()
+	# Speed is updated in update_speed()
+
+func _is_push():
+	is_pushing = true
+	update_speed()
+
+func _is_not_push():
+	is_pushing = false
+	update_speed()
+
+func update_speed():
+	if is_dragging or is_pushing:
+		speed = 40
+	else:
+		speed = 100
 
 func _physics_process(_delta):
 	if not is_bouncing_back:
@@ -117,40 +137,19 @@ func _death_finished():
 
 func _handle_action_input():
 	# Toggle dragging mode when 'E' is pressed
-	if Input.is_action_just_pressed("toggle_drag"):
-		drag_toggle_mode = !drag_toggle_mode  # Toggle the drag mode on/off
+	if player_in_box_area:
+		if Input.is_action_just_pressed("toggle_drag"):
+			drag_toggle_mode = !drag_toggle_mode  # Toggle the drag mode on/off
 
-		# If we're in the area and toggled on, start dragging
-		if drag_toggle_mode and player_in_box_area:
-			is_dragging = true
-			box_drop.play()
-			print("Dragging started")
-		else:
-			is_dragging = false
-			print("Dragging stopped")
-
-	# Only drag the box if we're in drag mode and in the area
-	if drag_toggle_mode and player_in_box_area:
-		is_dragging = true
-	else:
-		is_dragging = false
-
-	# Handle other actions like aiming and throwing
-	if can_aim_throw:
-		if Input.is_action_just_pressed("aim"):
-			is_aiming = true
-		elif Input.is_action_just_released("aim"):
-			is_aiming = false
-
-		if is_aiming and not is_on_cooldown and can_throw_proj:
-			if Input.is_action_just_pressed("throw") and not throw_clicked:
-				throw_clicked = true
-				is_on_cooldown = true
-				_play_throw_animation()
-				_start_cooldown_timer()
-		else:
-			if Input.is_action_just_pressed("throw"):
-				error.play()
+			# If we're in the area and toggled on, start dragging
+			if drag_toggle_mode and player_in_box_area:
+				is_dragging = true
+				box_drop.play()
+				print("Dragging started")
+			else:
+				is_dragging = false
+				print("Dragging stopped")
+			update_speed()  # Update speed when is_dragging changes
 
 func _start_cooldown_timer():
 	var cooldown_timer = Timer.new()

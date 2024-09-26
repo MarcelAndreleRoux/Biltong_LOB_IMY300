@@ -57,9 +57,9 @@ func _on_move_area_body_entered(body: Node2D):
 		animatedSprite.play("near_box")
 		shown_once = true
 
-func _on_move_area_body_exited(_body: Node2D):
+func _on_move_area_body_exited(body: Node2D):
 	# Only change the state if the body leaving is the player
-	if player_in_area and _body.is_in_group("player"):
+	if player_in_area and body.is_in_group("player"):
 		player_in_area = false
 		SharedSignals.player_exit.emit()
 		animatedSprite.play("idle")
@@ -83,3 +83,11 @@ func _on_wall_detection_up_body_entered(body):
 func _on_wall_detection_down_body_entered(body):
 	if body.is_in_group("walls"):
 		SharedSignals.wall_detected.emit(Vector2(0, 1))
+
+func _on_push_area_body_entered(body):
+	if body.is_in_group("player"):
+		SharedSignals.player_push.emit()
+
+func _on_push_area_body_exited(body):
+	if player_in_area and body.is_in_group("player"):
+		SharedSignals.player_not_push.emit()
