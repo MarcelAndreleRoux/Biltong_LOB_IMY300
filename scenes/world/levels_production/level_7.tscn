@@ -1,27 +1,22 @@
-[gd_scene load_steps=23 format=3 uid="uid://djwbcxwqfqodw"]
+[gd_scene load_steps=16 format=3 uid="uid://djwbcxwqfqodw"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_t43jk"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_2wgtw"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_imsbv"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="3_rmbml"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="4_laj2i"]
-[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="5_gx538"]
 [ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="6_tcbgb"]
-[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="8_qo8dv"]
-[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="9_p7v45"]
-[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="10_v6r7j"]
-[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="11_hgxwu"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="12_57u5f"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_6k5s6"]
-[ext_resource type="Script" path="res://scenes/world/WinState.gd" id="14_fugmv"]
+[ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="15_jb78l"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_yy2v7"]
-[ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="16_5ld6a"]
-[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_014uw"]
-[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="18_ox2ye"]
-[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_rsjae"]
+[ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="16_eb2ic"]
+[ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="17_j0f4h"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="20_x8xmc"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="21_v6hmi"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="22_2sdir"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tl7af"]
+size = Vector2(87, 43)
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_t43jk")
@@ -46,11 +41,6 @@ position = Vector2(240, 40)
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 
-[node name="Turtle" parent="." instance=ExtResource("5_gx538")]
-position = Vector2(536, 80)
-
-[node name="RayCast2D" type="RayCast2D" parent="Turtle"]
-
 [node name="TrajectoryLine" type="Line2D" parent="."]
 position = Vector2(90, 136)
 width = 2.0
@@ -61,63 +51,6 @@ position = Vector2(368, 176)
 
 [node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
 
-[node name="GamePause" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("8_qo8dv")
-
-[node name="Panel" type="Panel" parent="GamePause"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer3" type="GridContainer" parent="GamePause/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = -20.0
-offset_right = 74.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
-layout_mode = 2
-columns = 2
-
-[node name="resume" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("9_p7v45")
-flat = true
-
-[node name="restart" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_v6r7j")
-flat = true
-
-[node name="GridContainer2" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
-layout_mode = 2
-
-[node name="exit" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer2"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_hgxwu")
-flat = true
-
-[node name="select" type="AudioStreamPlayer2D" parent="GamePause"]
-stream = ExtResource("12_57u5f")
-
 [node name="Escape" type="CanvasLayer" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="Escape"]
@@ -127,127 +60,6 @@ offset_right = 28.0
 offset_bottom = 29.0
 texture = ExtResource("13_6k5s6")
 stretch_mode = 2
-
-[node name="Death" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("14_fugmv")
-
-[node name="Confetti" type="AudioStreamPlayer2D" parent="Death"]
-stream = ExtResource("15_yy2v7")
-
-[node name="Panel" type="Panel" parent="Death"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="Death/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 53.0
-offset_right = 74.0
-offset_bottom = 77.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 2
-
-[node name="exit" type="Button" parent="Death/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_hgxwu")
-flat = true
-
-[node name="restart" type="Button" parent="Death/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_v6r7j")
-flat = true
-
-[node name="TextureRect" type="TextureRect" parent="Death/Panel"]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 33.0
-offset_right = 405.0
-offset_bottom = 175.0
-
-[node name="select" type="AudioStreamPlayer2D" parent="Death"]
-stream = ExtResource("12_57u5f")
-
-[node name="WinState" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("14_fugmv")
-
-[node name="Confetti" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("16_5ld6a")
-
-[node name="Panel" type="Panel" parent="WinState"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="WinState/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 53.0
-offset_right = 74.0
-offset_bottom = 77.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 2
-
-[node name="exit" type="Button" parent="WinState/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_hgxwu")
-flat = true
-
-[node name="restart" type="Button" parent="WinState/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_v6r7j")
-flat = true
-
-[node name="TextureRect" type="TextureRect" parent="WinState/Panel"]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 33.0
-offset_right = 405.0
-offset_bottom = 175.0
-
-[node name="select" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("12_57u5f")
-
-[node name="MangoPickup" parent="." instance=ExtResource("17_014uw")]
-position = Vector2(296, 70)
-
-[node name="waterPool" parent="." instance=ExtResource("18_ox2ye")]
-position = Vector2(296, 99)
-
-[node name="EatingFood" parent="." instance=ExtResource("19_rsjae")]
-position = Vector2(296, 40)
 
 [node name="Door" parent="." instance=ExtResource("22_2sdir")]
 position = Vector2(240, 16)
@@ -297,13 +109,20 @@ door_link_id = "a"
 [node name="Box" parent="." instance=ExtResource("4_laj2i")]
 position = Vector2(192, 56)
 
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
-[connection signal="finished" from="GamePause/select" to="GamePause" method="_on_select_finished"]
-[connection signal="pressed" from="Death/Panel/GridContainer/exit" to="Death" method="_on_exit_pressed"]
-[connection signal="pressed" from="Death/Panel/GridContainer/restart" to="Death" method="_on_restart_pressed"]
-[connection signal="finished" from="Death/select" to="Death" method="_on_select_finished"]
-[connection signal="pressed" from="WinState/Panel/GridContainer/exit" to="WinState" method="_on_exit_pressed"]
-[connection signal="pressed" from="WinState/Panel/GridContainer/restart" to="WinState" method="_on_restart_pressed"]
-[connection signal="finished" from="WinState/select" to="WinState" method="_on_select_finished"]
+[node name="Food" type="Node" parent="." groups=["food"]]
+
+[node name="GamePause" parent="." instance=ExtResource("15_jb78l")]
+visible = false
+
+[node name="Death" parent="." instance=ExtResource("16_eb2ic")]
+visible = false
+
+[node name="WinState" parent="." instance=ExtResource("17_j0f4h")]
+visible = false
+
+[node name="Transition" type="Area2D" parent="."]
+position = Vector2(-64, 56)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
+position = Vector2(177, 180)
+shape = SubResource("RectangleShape2D_tl7af")
