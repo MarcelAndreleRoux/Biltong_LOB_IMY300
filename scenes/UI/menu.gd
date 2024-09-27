@@ -4,7 +4,7 @@ extends Control
 
 var exit: bool = false
 
-func _on_start_pressed():
+func _on_play_pressed():
 	click.play()
 	exit = false
 	
@@ -16,4 +16,4 @@ func _on_click_finished():
 	if exit:
 		get_tree().quit()
 	else:
-		get_tree().change_scene_to_file("res://scenes/world/levels/level_1.tscn")
+		get_tree().change_scene_to_file("res://scenes/world/levels_production/level_1.tscn")
