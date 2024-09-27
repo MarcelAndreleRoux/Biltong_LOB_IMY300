@@ -1,29 +1,13 @@
 extends CanvasLayer
 
+@onready var confetti = $Confetti
 @onready var select = $select
 
 var exit: bool = false
 var reset: bool = false
-var resume: bool = false
 
 func _ready():
 	self.hide()
-
-func _on_restart_pressed():
-	reset = true
-	select.play()
-
-func _on_resume_pressed():
-	select.play()
-	resume = true
-
-func game_exit():
-	get_tree().paused = true
-	self.show()
-
-func game_exit():
-	get_tree().paused = true
-	self.show()
 
 func _on_exit_pressed():
 	exit = true
@@ -38,7 +22,8 @@ func _on_select_finished():
 		get_tree().paused = false
 		get_tree().reload_current_scene()
 		reset = false
-	elif resume:
-		self.hide()
-		get_tree().paused = false
-		resume = false
+
+func death_lose():
+	get_tree().paused = true
+	self.show()
+	confetti.play()
