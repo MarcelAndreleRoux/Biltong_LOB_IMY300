@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bfagvikce06o5"]
+[gd_scene load_steps=17 format=3 uid="uid://bfagvikce06o5"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_thsnq"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_jbp6l"]
@@ -9,10 +9,8 @@
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="14_mwof7"]
 [ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="15_kq7me"]
 [ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="16_jflc3"]
-[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="16_qrd6m"]
 [ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="17_bd31y"]
 [ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="17_wcr21"]
-[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="18_wpdb3"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="19_0xxf4"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="20_oll23"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="21_olfga"]
@@ -65,14 +63,8 @@ offset_bottom = 29.0
 texture = ExtResource("12_hny14")
 stretch_mode = 2
 
-[node name="MangoPickup" parent="." instance=ExtResource("16_qrd6m")]
-position = Vector2(275, 60)
-
 [node name="waterPool" parent="." instance=ExtResource("17_bd31y")]
 position = Vector2(364, 45)
-
-[node name="EatingFood" parent="." instance=ExtResource("18_wpdb3")]
-position = Vector2(275, 40)
 
 [node name="Door" parent="." instance=ExtResource("19_0xxf4")]
 position = Vector2(320, 16)

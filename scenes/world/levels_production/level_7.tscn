@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://djwbcxwqfqodw"]
+[gd_scene load_steps=16 format=3 uid="uid://djwbcxwqfqodw"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_t43jk"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_2wgtw"]
@@ -10,10 +10,7 @@
 [ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="15_jb78l"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_yy2v7"]
 [ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="16_eb2ic"]
-[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_014uw"]
 [ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="17_j0f4h"]
-[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="18_ox2ye"]
-[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_rsjae"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="20_x8xmc"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="21_v6hmi"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="22_2sdir"]
@@ -63,15 +60,6 @@ offset_right = 28.0
 offset_bottom = 29.0
 texture = ExtResource("13_6k5s6")
 stretch_mode = 2
-
-[node name="MangoPickup" parent="." instance=ExtResource("17_014uw")]
-position = Vector2(296, 70)
-
-[node name="waterPool" parent="." instance=ExtResource("18_ox2ye")]
-position = Vector2(296, 99)
-
-[node name="EatingFood" parent="." instance=ExtResource("19_rsjae")]
-position = Vector2(296, 40)
 
 [node name="Door" parent="." instance=ExtResource("22_2sdir")]
 position = Vector2(240, 16)

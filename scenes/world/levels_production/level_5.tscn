@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cn37f77j3x1qa"]
+[gd_scene load_steps=18 format=3 uid="uid://cn37f77j3x1qa"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_4c3ar"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_40q0h"]
@@ -12,7 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="16_j5yxl"]
 [ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="17_ija3k"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="18_kgv0f"]
-[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="18_mptde"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="19_5qcd3"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="20_iwpxk"]
 [ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="20_yvv6y"]
@@ -45,9 +44,6 @@ position = Vector2(63, 44)
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 current = true
 
-[node name="EatingFood2" parent="." instance=ExtResource("20_iwpxk")]
-position = Vector2(96, 56)
-
 [node name="Turtle" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("6_a1pdl")]
 position = Vector2(250, 55)
 target_1 = NodePath("../TurtleMarker")
@@ -74,9 +70,6 @@ offset_right = 28.0
 offset_bottom = 29.0
 texture = ExtResource("14_6f6to")
 stretch_mode = 2
-
-[node name="MangoPickup" parent="." instance=ExtResource("18_mptde")]
-position = Vector2(28, 53)
 
 [node name="Door" parent="." instance=ExtResource("18_kgv0f")]
 position = Vector2(64, 16)
