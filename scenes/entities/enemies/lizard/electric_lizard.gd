@@ -55,7 +55,13 @@ func _physics_process(delta):
 			var next_path_position = navigation_agent_2d.get_next_path_position()
 			var current_position = global_position
 			direction = (next_path_position - current_position).normalized()
-			velocity = direction * speed
+			var new_velocity = direction * speed
+	
+			if navigation_agent_2d.avoidance_enabled:
+				navigation_agent_2d.set_velocity(new_velocity)
+			else:
+				_on_lizard_nav_velocity_computed(new_velocity)
+			
 			move_and_slide()
 	else:
 		velocity = Vector2.ZERO
@@ -120,3 +126,6 @@ func _on_electric_area_body_entered(body):
 
 func _on_electric_area_body_exited(body):
 	pass
+
+func _on_lizard_nav_velocity_computed(safe_velocity):
+	velocity = safe_velocity
