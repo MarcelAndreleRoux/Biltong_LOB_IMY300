@@ -20,8 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://d07mo5cvixahe" path="res://assets/sprites/UI/Keycaps/Keycaps-S.png" id="22_45by8"]
 [ext_resource type="Texture2D" uid="uid://b8ka5jup28x1v" path="res://assets/sprites/UI/Keycaps/Keycaps-E.png" id="23_cv04v"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="24_6nyao"]
-[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="25_3puo3"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="25_dc2e1"]
+[ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="26_o1q7m"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="26_smm4u"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="27_ijd22"]
 [ext_resource type="PackedScene" uid="uid://cswcb0d1r6f1d" path="res://scenes/world/pod.tscn" id="28_ew5oq"]
@@ -74,20 +74,19 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 target_1 = NodePath("../Marker2D")
 target_2 = NodePath("../Marker2D2")
-target_3 = NodePath("../Marker2D3")
+target_3 = NodePath("")
 target_4 = NodePath("../Marker2D4")
+
+[node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("26_o1q7m")]
+position = Vector2(371, 68)
+target_1 = NodePath("../Marker2D")
+target_2 = NodePath("../Marker2D4")
 
 [node name="Marker2D4" type="Marker2D" parent="." groups=["FirstEnemy"]]
 position = Vector2(440, 103)
 
 [node name="EatingFood" parent="Marker2D4" instance=ExtResource("12_bj4lk")]
-position = Vector2(0, -13)
-
-[node name="Marker2D3" type="Marker2D" parent="." groups=["FirstEnemy"]]
-position = Vector2(375, 216)
-
-[node name="EatingFood" parent="Marker2D3" instance=ExtResource("12_bj4lk")]
-position = Vector2(0, -13)
+position = Vector2(0, -1)
 
 [node name="Marker2D" type="Marker2D" parent="." groups=["FirstEnemy"]]
 position = Vector2(250, 55)
@@ -244,11 +243,6 @@ position = Vector2(278, 219)
 
 [node name="pod4" parent="." instance=ExtResource("28_ew5oq")]
 position = Vector2(278, 232)
-
-[node name="Hedgehog" parent="." instance=ExtResource("25_3puo3")]
-position = Vector2(572, 180)
-
-[node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
 
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
