@@ -42,15 +42,15 @@ position = Vector2(111, 37)
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 current = true
 
-[node name="Turtle" parent="." instance=ExtResource("6_fu23d")]
-position = Vector2(215, 50)
-
-[node name="RayCast2D" type="RayCast2D" parent="Turtle"]
-
 [node name="TrajectoryLine" type="Line2D" parent="."]
 position = Vector2(90, 136)
 width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
+
+[node name="Turtle" parent="." instance=ExtResource("6_fu23d")]
+position = Vector2(215, 50)
+
+[node name="RayCast2D" type="RayCast2D" parent="Turtle"]
 
 [node name="GamePause" type="CanvasLayer" parent="."]
 process_mode = 3
