@@ -10,6 +10,7 @@ class_name BaseWorld
 @onready var electric_lizard = $ElectricLizard
 @onready var trajectory_line = $TrajectoryLine
 @onready var game_pause = $GamePause
+@onready var food = $Food
 
 #Raycasts
 @onready var player_raycast = $Player/RayCast2D
@@ -22,6 +23,8 @@ class_name BaseWorld
 #Sounds
 @onready var error = $Error
 @onready var death = $Death
+
+const FOOD = preload("res://scenes/entities/objects/throwables/mushroom/mushroom.tscn")
 
 # Common Variables
 var _main: Node2D
@@ -70,9 +73,10 @@ func _ready():
 	if hedgehog:
 		enemy_raycast.add_exception(hedgehog)
 	
-	if turtle:
-		turtle_raycast.add_exception(hedgehog)
-		turtle_raycast.add_exception(electric_lizard)
+	#if turtle:
+		#turtle_raycast = turtle.get_node("VisibilityRayCast2D")
+		#turtle_raycast.add_exception(player)
+		#turtle_raycast.add_exception(turtle)
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
@@ -84,7 +88,7 @@ func _physics_process(_delta):
 	_update_hedgehog_raycast()
 	_check_inventory_swap()
 	_update_raycast_position()
-	_update_turtle_raycast()
+	#_update_turtle_raycast()
 	change_scene()
 	
 	if GlobalValues.can_throw:
@@ -113,36 +117,36 @@ func _update_hedgehog_raycast():
 		# Reset RayCast2D position to its original position for the next frame
 		enemy_raycast.global_position -= direction_to_player * offset_distance
 
-func _update_turtle_raycast():
-	if _turtle_target_marker and is_instance_valid(_turtle_target_marker):
-		turtle_raycast.global_position = turtle.global_position
-		var marker_position = _turtle_target_marker.global_position
-		turtle_raycast.target_position = marker_position - turtle_raycast.global_position
-
-		# If raycast is colliding with anything, it means the path is blocked
-		if turtle_raycast.is_colliding():
-			if GlobalValues.food_visible:
-				# Food just became invisible
-				GlobalValues.food_visible = false
-				SharedSignals.food_visibility_changed.emit(GlobalValues.food_visible)
-				print("Food is now hidden behind a wall.")
-		else:
-			if not GlobalValues.food_visible:
-				# Food just became visible
-				GlobalValues.food_visible = true
-				SharedSignals.food_visibility_changed.emit(GlobalValues.food_visible)
-				print("Food is now visible.")
-
-		# Emit the visibility change signal only when it changes
-		if GlobalValues.food_visible != previous_food_visible:
-			if GlobalValues.food_visible:
-				print("Food spotted, switching to food marker.")
-				SharedSignals.turtle_spotted_food.emit(_turtle_target_marker)
-			else:
-				print("Food hidden, turtle will ignore this marker.")
-				SharedSignals.food_not_visible.emit(_turtle_target_marker)
-
-		previous_food_visible = GlobalValues.food_visible  # Track the last known visibility
+#func _update_turtle_raycast():
+	#if _turtle_target_marker and is_instance_valid(_turtle_target_marker):
+		#turtle_raycast.global_position = turtle.global_position
+		#var marker_position = _turtle_target_marker.global_position
+		#turtle_raycast.target_position = marker_position - turtle_raycast.global_position
+#
+		## If raycast is colliding with anything, it means the path is blocked
+		#if turtle_raycast.is_colliding():
+			#if GlobalValues.food_visible:
+				## Food just became invisible
+				#GlobalValues.food_visible = false
+				#SharedSignals.food_visibility_changed.emit(GlobalValues.food_visible)
+				#print("Food is now hidden behind a wall.")
+		#else:
+			#if not GlobalValues.food_visible:
+				## Food just became visible
+				#GlobalValues.food_visible = true
+				#SharedSignals.food_visibility_changed.emit(GlobalValues.food_visible)
+				#print("Food is now visible.")
+#
+		## Emit the visibility change signal only when it changes
+		#if GlobalValues.food_visible != previous_food_visible:
+			#if GlobalValues.food_visible:
+				#print("Food spotted, switching to food marker.")
+				#SharedSignals.turtle_spotted_food.emit(_turtle_target_marker)
+			#else:
+				#print("Food hidden, turtle will ignore this marker.")
+				#SharedSignals.food_not_visible.emit(_turtle_target_marker)
+#
+		#previous_food_visible = GlobalValues.food_visible  # Track the last known visibility
 
 func _update_raycast_position():
 	player_raycast.global_position = player.global_position
@@ -195,7 +199,9 @@ func _throw_item():
 	var direction = (mousePosition - playerPosition).normalized()
 
 	instance.initialize(playerPosition, direction, 0, mousePosition)
-	_main.add_child(instance)
+	food.add_child(instance)
+	
+	instance.add_to_group("food_to_eat")
 	
 	# Add shadow for all projectiles
 	var shadow_sprite = Sprite2D.new()
@@ -211,6 +217,7 @@ func _throw_item():
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
 		var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())
 		place_marker_at_landing(landing_position)
+		SharedSignals.food_projectile_thrown.emit(active_marker)
 
 func _start_cooldown_timer():
 	previous_inventory = GlobalValues.inventory_select
@@ -218,7 +225,7 @@ func _start_cooldown_timer():
 	
 	is_on_cooldown = true
 	var cooldown_timer = Timer.new()
-	cooldown_timer.wait_time = 10.0
+	cooldown_timer.wait_time = 0.3
 	cooldown_timer.one_shot = true
 	cooldown_timer.timeout.connect(_end_cooldown)
 	add_child(cooldown_timer)
@@ -349,10 +356,10 @@ func place_marker_at_landing(landing_position: Vector2):
 	SharedSignals.new_marker.emit(new_marker)
 	_start_marker_removal_timer()
 
-func _update_turtle_raycast_target(marker: Marker2D):
-	if _turtle_target_marker != marker:
-		turtle_raycast.enabled = true
-		_turtle_target_marker = marker
+#func _update_turtle_raycast_target(marker: Marker2D):
+	#if _turtle_target_marker != marker:
+		#turtle_raycast.enabled = true
+		#_turtle_target_marker = marker
 
 func _start_marker_removal_timer():
 	var marker_removal_timer = Timer.new()
@@ -364,11 +371,12 @@ func _start_marker_removal_timer():
 
 func _on_new_marker(marker: Marker2D):
 	print("Marker registered: ", marker.global_position)
-	_update_turtle_raycast_target(marker)
+	#_update_turtle_raycast_target(marker)
 
 func _remove_marker():
 	if active_marker != null:
 		print("Marker removed after timer")
+		SharedSignals.projectile_despawned.emit(active_marker)
 		active_marker.queue_free()
 		active_marker = null
 

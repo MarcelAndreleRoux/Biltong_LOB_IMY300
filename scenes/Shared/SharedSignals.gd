@@ -41,6 +41,8 @@ signal food_not_visible
 signal food_was_eaten
 signal marker_removed
 signal turtle_is_scared
+signal food_projectile_thrown(marker: Marker2D)
+signal projectile_despawned(marker: Marker2D)
 
 #Lizard Signals
 signal lizard_marker_reached
