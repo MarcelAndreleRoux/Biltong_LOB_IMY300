@@ -21,10 +21,6 @@ func game_exit():
 	get_tree().paused = true
 	self.show()
 
-func game_exit():
-	get_tree().paused = true
-	self.show()
-
 func _on_exit_pressed():
 	exit = true
 	select.play()

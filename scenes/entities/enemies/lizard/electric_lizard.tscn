@@ -1062,4 +1062,3 @@ shape = SubResource("CapsuleShape2D_solqv")
 
 [connection signal="velocity_computed" from="LizardNav" to="." method="_on_lizard_nav_velocity_computed"]
 [connection signal="body_entered" from="ElectricArea" to="." method="_on_electric_area_body_entered"]
-[connection signal="body_exited" from="ElectricArea" to="." method="_on_electric_area_body_exited"]

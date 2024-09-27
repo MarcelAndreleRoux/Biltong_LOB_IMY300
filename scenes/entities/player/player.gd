@@ -21,6 +21,7 @@ var currentVelocity: Vector2
 var speed: int = 100
 var bounce_back_strength: int = 50
 var bounce_direction: Vector2 = Vector2.ZERO
+var was_poped: bool = false
 
 # Aim and Throw
 var is_aiming: bool = false
@@ -110,15 +111,15 @@ func _handle_movement_input():
 	direction = currentVelocity.normalized()
 	currentVelocity *= speed
 
-func _on_player_killed():
+func _on_player_killed(type: String):
 	# Disable player input and actions
 	set_physics_process(false)
 	
-	# Play the death animation
-	animation_tree["parameters/conditions/is_dead"] = true
-	
-	# Optionally, play a death sound or other effects
-	death_sound.play()
+	if type == "pop":
+		animation_tree["parameters/conditions/is_death_pop"] = true
+	elif type == "peg":
+		animation_tree["parameters/conditions/is_dead"] = true
+		death_sound.play()
 	
 	# Disable further input or actions after death
 	is_on_cooldown = true
@@ -172,6 +173,7 @@ func _update_animation_parameters():
 		animation_tree["parameters/run_aim/blend_position"] = direction
 		animation_tree["parameters/run_throw/blend_position"] = direction
 		animation_tree["parameters/Death/blend_position"] = direction
+		animation_tree["parameters/Death_Pop/blend_position"] = direction
 
 func _play_movement_animation():
 	if currentVelocity == Vector2.ZERO:

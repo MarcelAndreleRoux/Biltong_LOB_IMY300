@@ -171,3 +171,8 @@ func _update_animation_parameters():
 	animation_tree["parameters/lick_on/blend_position"] = direction
 	animation_tree["parameters/run_off/blend_position"] = direction
 	animation_tree["parameters/run_on/blend_position"] = direction
+
+
+func _on_electric_area_body_entered(body):
+	if body.is_in_group("player"):
+		SharedSignals.player_killed.emit("pop")
