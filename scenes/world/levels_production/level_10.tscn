@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cdf1ytjbhqc22"]
+[gd_scene load_steps=20 format=3 uid="uid://dhkb5s7a7hneg"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_yscb4"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_aygkm"]
@@ -7,18 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="4_2cjsr"]
 [ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="6_0qy82"]
 [ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="7_ad16n"]
-[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="8_a0qsf"]
-[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="9_0vgva"]
-[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="10_pa1xy"]
-[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="11_xc7wd"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="12_iul1t"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_vrk7k"]
-[ext_resource type="Script" path="res://scenes/world/WinState.gd" id="14_3wsff"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_6ueol"]
-[ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="16_4ff21"]
 [ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_a6owq"]
+[ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="17_qiwbr"]
 [ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="18_6gt12"]
+[ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="18_p5i3e"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_kt1a8"]
+[ext_resource type="PackedScene" path="res://scenes/UI/win.tscn" id="19_ov150"]
 [ext_resource type="PackedScene" uid="uid://fg8pnbkcvvaj" path="res://scenes/entities/objects/static/board/m_board.tscn" id="20_f641s"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_e10qb"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="22_d185w"]
@@ -64,63 +60,6 @@ target_2 = NodePath("../LizardMarker2")
 
 [node name="RayCast2D" type="RayCast2D" parent="ElectricLizard"]
 
-[node name="GamePause" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("8_a0qsf")
-
-[node name="Panel" type="Panel" parent="GamePause"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer3" type="GridContainer" parent="GamePause/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = -20.0
-offset_right = 74.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
-layout_mode = 2
-columns = 2
-
-[node name="resume" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("9_0vgva")
-flat = true
-
-[node name="restart" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_pa1xy")
-flat = true
-
-[node name="GridContainer2" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
-layout_mode = 2
-
-[node name="exit" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer2"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_xc7wd")
-flat = true
-
-[node name="select" type="AudioStreamPlayer2D" parent="GamePause"]
-stream = ExtResource("12_iul1t")
-
 [node name="Escape" type="CanvasLayer" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="Escape"]
@@ -130,118 +69,6 @@ offset_right = 28.0
 offset_bottom = 29.0
 texture = ExtResource("13_vrk7k")
 stretch_mode = 2
-
-[node name="Death" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("14_3wsff")
-
-[node name="Confetti" type="AudioStreamPlayer2D" parent="Death"]
-stream = ExtResource("15_6ueol")
-
-[node name="Panel" type="Panel" parent="Death"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="Death/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 53.0
-offset_right = 74.0
-offset_bottom = 77.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 2
-
-[node name="exit" type="Button" parent="Death/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_xc7wd")
-flat = true
-
-[node name="restart" type="Button" parent="Death/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_pa1xy")
-flat = true
-
-[node name="TextureRect" type="TextureRect" parent="Death/Panel"]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 33.0
-offset_right = 405.0
-offset_bottom = 175.0
-
-[node name="select" type="AudioStreamPlayer2D" parent="Death"]
-stream = ExtResource("12_iul1t")
-
-[node name="WinState" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("14_3wsff")
-
-[node name="Confetti" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("16_4ff21")
-
-[node name="Panel" type="Panel" parent="WinState"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="WinState/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 53.0
-offset_right = 74.0
-offset_bottom = 77.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 2
-
-[node name="exit" type="Button" parent="WinState/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_xc7wd")
-flat = true
-
-[node name="restart" type="Button" parent="WinState/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_pa1xy")
-flat = true
-
-[node name="TextureRect" type="TextureRect" parent="WinState/Panel"]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 33.0
-offset_right = 405.0
-offset_bottom = 175.0
-
-[node name="select" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("12_iul1t")
 
 [node name="MangoPickup" parent="." instance=ExtResource("17_a6owq")]
 position = Vector2(176, 40)
@@ -306,13 +133,11 @@ position = Vector2(328, 144)
 [node name="Box" parent="." instance=ExtResource("4_2cjsr")]
 position = Vector2(384, 136)
 
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
-[connection signal="finished" from="GamePause/select" to="GamePause" method="_on_select_finished"]
-[connection signal="pressed" from="Death/Panel/GridContainer/exit" to="Death" method="_on_exit_pressed"]
-[connection signal="pressed" from="Death/Panel/GridContainer/restart" to="Death" method="_on_restart_pressed"]
-[connection signal="finished" from="Death/select" to="Death" method="_on_select_finished"]
-[connection signal="pressed" from="WinState/Panel/GridContainer/exit" to="WinState" method="_on_exit_pressed"]
-[connection signal="pressed" from="WinState/Panel/GridContainer/restart" to="WinState" method="_on_restart_pressed"]
-[connection signal="finished" from="WinState/select" to="WinState" method="_on_select_finished"]
+[node name="GamePause" parent="." instance=ExtResource("17_qiwbr")]
+visible = false
+
+[node name="Death" parent="." instance=ExtResource("18_p5i3e")]
+visible = false
+
+[node name="WinState" parent="." instance=ExtResource("19_ov150")]
+visible = false

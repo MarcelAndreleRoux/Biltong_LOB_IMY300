@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=24 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/level_scripts/level_1.gd" id="1_ypnr2"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_u5vqf"]
@@ -10,14 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="12_bj4lk"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="13_6i8vw"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="14_3o1o2"]
-[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="15_e08av"]
-[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="16_ybtdx"]
-[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="17_g6y80"]
-[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="18_t74u0"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="19_n6j6j"]
 [ext_resource type="Texture2D" uid="uid://b1dlss2bmb2l3" path="res://assets/sprites/UI/Keycaps/Keycaps-W.png" id="20_8xygy"]
+[ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="21_5t1u8"]
 [ext_resource type="Texture2D" uid="uid://dw3p3ognw52kx" path="res://assets/sprites/UI/Keycaps/Keycaps_A.png" id="21_s35gc"]
+[ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="21_srmgi"]
 [ext_resource type="Texture2D" uid="uid://d07mo5cvixahe" path="res://assets/sprites/UI/Keycaps/Keycaps-S.png" id="22_45by8"]
+[ext_resource type="PackedScene" path="res://scenes/UI/win.tscn" id="22_gq6qw"]
 [ext_resource type="Texture2D" uid="uid://b8ka5jup28x1v" path="res://assets/sprites/UI/Keycaps/Keycaps-E.png" id="23_cv04v"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="24_6nyao"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="25_dc2e1"]
@@ -98,62 +96,15 @@ door_link_id = "123"
 position = Vector2(24, 81)
 door_link_id = "123"
 
-[node name="GamePause" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("15_e08av")
+[node name="Escape" type="CanvasLayer" parent="."]
 
-[node name="Panel" type="Panel" parent="GamePause"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer3" type="GridContainer" parent="GamePause/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = -20.0
-offset_right = 74.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
-layout_mode = 2
-columns = 2
-
-[node name="resume" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("16_ybtdx")
-flat = true
-
-[node name="restart" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("17_g6y80")
-flat = true
-
-[node name="GridContainer2" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
-layout_mode = 2
-
-[node name="exit" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer2"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("18_t74u0")
-flat = true
-
-[node name="select" type="AudioStreamPlayer2D" parent="GamePause"]
-stream = ExtResource("19_n6j6j")
+[node name="TextureRect" type="TextureRect" parent="Escape"]
+offset_left = 12.0
+offset_top = 13.0
+offset_right = 28.0
+offset_bottom = 29.0
+texture = ExtResource("24_6nyao")
+stretch_mode = 2
 
 [node name="Keycaps" type="Node2D" parent="."]
 z_index = 1
@@ -174,16 +125,6 @@ texture = ExtResource("22_45by8")
 [node name="D" type="Sprite2D" parent="Keycaps"]
 position = Vector2(319, 200)
 texture = ExtResource("23_cv04v")
-
-[node name="Escape" type="CanvasLayer" parent="."]
-
-[node name="TextureRect" type="TextureRect" parent="Escape"]
-offset_left = 12.0
-offset_top = 13.0
-offset_right = 28.0
-offset_bottom = 29.0
-texture = ExtResource("24_6nyao")
-stretch_mode = 2
 
 [node name="Box" parent="." instance=ExtResource("25_dc2e1")]
 position = Vector2(402, 187)
@@ -226,8 +167,13 @@ position = Vector2(278, 232)
 
 [node name="Food" type="Node" parent="." groups=["food"]]
 
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
-[connection signal="finished" from="GamePause/select" to="GamePause" method="_on_select_finished"]
+[node name="GamePause" parent="." instance=ExtResource("21_srmgi")]
+visible = false
+
+[node name="Death" parent="." instance=ExtResource("21_5t1u8")]
+visible = false
+
+[node name="WinState" parent="." instance=ExtResource("22_gq6qw")]
+visible = false
+
 [connection signal="body_entered" from="Transition" to="." method="_on_transition_body_entered"]
