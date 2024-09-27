@@ -10,6 +10,9 @@ extends StaticBody2D
 var was_burned: bool = false
 var was_grown: bool = false
 
+var already_burned: bool = false
+var already_grown: bool = false
+
 var default_collision_shape: Vector2 = Vector2.ZERO
 var default_collision_size: Vector2 = Vector2.ZERO
 
@@ -24,7 +27,9 @@ func _ready():
 	GlobalValues.vinesSize = plant_type
 
 func _on_area_2d_area_entered(area):
-	if area.is_in_group("burn"):
+	if area.is_in_group("burn") and not already_burned:
+		already_burned = true
+		already_grown = false
 		burn.play()
 		was_burned = true
 		
@@ -33,7 +38,9 @@ func _on_area_2d_area_entered(area):
 		else:
 			animated_sprite_2d.play("burn_small")
 	
-	if area.is_in_group("grow"):
+	if area.is_in_group("grow") and not already_grown:
+		already_burned = false
+		already_grown = true
 		grow.play()
 		was_grown = true
 		# Delay enabling the collision shape slightly to ensure the growth animation updates first
