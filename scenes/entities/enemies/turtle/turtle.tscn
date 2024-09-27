@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://vlik5vxjmqh4"]
+[gd_scene load_steps=62 format=3 uid="uid://vlik5vxjmqh4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/turtle/turtle.gd" id="1_1fxvc"]
 [ext_resource type="Texture2D" uid="uid://pmrgbxp12km" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Left.png" id="2_a700b"]
@@ -905,6 +905,10 @@ advance_condition = &"is_walking"
 advance_mode = 2
 advance_condition = &"is_idle"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4q87x"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_d8c0n"]
 states/End/position = Vector2(1003, 62)
 states/Shell/node = SubResource("AnimationNodeBlendSpace2D_sw8yr")
@@ -912,12 +916,12 @@ states/Shell/position = Vector2(655, 139)
 states/eat/node = SubResource("AnimationNodeBlendSpace2D_ixxb7")
 states/eat/position = Vector2(807, -42)
 states/hungry/node = SubResource("AnimationNodeBlendSpace2D_jdyg1")
-states/hungry/position = Vector2(655, 36)
+states/hungry/position = Vector2(882, 62)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_amcfy")
 states/idle/position = Vector2(396, 100)
 states/walk/node = SubResource("AnimationNodeBlendSpace2D_737rd")
 states/walk/position = Vector2(396, -42)
-transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransition_njxco"), "hungry", "eat", SubResource("AnimationNodeStateMachineTransition_avrna"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_d6xjh"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_sv086"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kr72v"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_uxo76"), "idle", "hungry", SubResource("AnimationNodeStateMachineTransition_8vgqf"), "walk", "eat", SubResource("AnimationNodeStateMachineTransition_p0ajb"), "hungry", "walk", SubResource("AnimationNodeStateMachineTransition_bai71"), "hungry", "idle", SubResource("AnimationNodeStateMachineTransition_k02vk"), "walk", "Shell", SubResource("AnimationNodeStateMachineTransition_144lh"), "hungry", "Shell", SubResource("AnimationNodeStateMachineTransition_lrv7n"), "idle", "Shell", SubResource("AnimationNodeStateMachineTransition_3cfh8"), "eat", "Shell", SubResource("AnimationNodeStateMachineTransition_2y0xt"), "Shell", "walk", SubResource("AnimationNodeStateMachineTransition_5twsa"), "Shell", "idle", SubResource("AnimationNodeStateMachineTransition_xjq53")]
+transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransition_njxco"), "hungry", "eat", SubResource("AnimationNodeStateMachineTransition_avrna"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_d6xjh"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_sv086"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kr72v"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_uxo76"), "idle", "hungry", SubResource("AnimationNodeStateMachineTransition_8vgqf"), "walk", "eat", SubResource("AnimationNodeStateMachineTransition_p0ajb"), "hungry", "walk", SubResource("AnimationNodeStateMachineTransition_bai71"), "hungry", "idle", SubResource("AnimationNodeStateMachineTransition_k02vk"), "walk", "Shell", SubResource("AnimationNodeStateMachineTransition_144lh"), "hungry", "Shell", SubResource("AnimationNodeStateMachineTransition_lrv7n"), "idle", "Shell", SubResource("AnimationNodeStateMachineTransition_3cfh8"), "eat", "Shell", SubResource("AnimationNodeStateMachineTransition_2y0xt"), "Shell", "walk", SubResource("AnimationNodeStateMachineTransition_5twsa"), "Shell", "idle", SubResource("AnimationNodeStateMachineTransition_xjq53"), "eat", "idle", SubResource("AnimationNodeStateMachineTransition_4q87x")]
 graph_offset = Vector2(-31, -83)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e6vdn"]

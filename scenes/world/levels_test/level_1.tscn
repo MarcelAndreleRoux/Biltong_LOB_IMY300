@@ -62,7 +62,6 @@ texture = ExtResource("10_n2ej3")
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
-current = true
 
 [node name="Food" type="Node" parent="." groups=["food"]]
 
@@ -70,13 +69,10 @@ current = true
 width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
 
-[node name="Turtle" parent="." node_paths=PackedStringArray("target_1", "target_2", "target_4") instance=ExtResource("11_ha8u1")]
+[node name="Turtle" parent="." instance=ExtResource("11_ha8u1")]
 position = Vector2(28, 52)
 motion_mode = 1
 wall_min_slide_angle = 0.0
-target_1 = NodePath("../Marker2D")
-target_2 = NodePath("../Marker2D2")
-target_4 = NodePath("../Marker2D4")
 
 [node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("26_o1q7m")]
 position = Vector2(371, 68)
