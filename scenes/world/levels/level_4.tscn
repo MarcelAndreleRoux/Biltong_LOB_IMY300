@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cn37f77j3x1qa"]
+[gd_scene load_steps=22 format=3 uid="uid://m2t7mtfsnae"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_xoy2j"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_gr4jm"]
@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_dkqau"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="20_pefhm"]
 
-[node name="BaseLevel" type="Node2D"]
+[node name="BaseLevel3" type="Node2D"]
 script = ExtResource("1_xoy2j")
 
 [node name="TileMap" type="TileMap" parent="."]

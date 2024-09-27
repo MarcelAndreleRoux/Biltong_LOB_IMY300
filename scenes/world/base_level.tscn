@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://fg8pnbkcvvaj" path="res://scenes/entities/objects/static/board/m_board.tscn" id="20_6r4s7"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_caxyd"]
 
-[node name="BaseLevel2" type="Node2D"]
+[node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_or47c")
 
 [node name="TileMap" type="TileMap" parent="."]
