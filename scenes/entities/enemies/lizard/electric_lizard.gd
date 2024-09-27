@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-@export var speed: float = 50.0  # Speed of the lizard
-
 # Exported variables for patrol points (markers)
 @export var target_1: Node2D = null
 @export var target_2: Node2D = null
@@ -9,23 +7,39 @@ extends CharacterBody2D
 @export var target_4: Node2D = null
 @export var target_5: Node2D = null
 
+# Export variable to toggle 'lick_eye' animation
+@export var enable_lick_eye_animation: bool = true
+@export var is_on: bool = true
+@export var speed = 50
+
 @onready var navigation_agent_2d = $LizardNav
 @onready var animation_tree = $AnimationTree
 
-# State variables
-var play_moving: bool = true
 var direction: Vector2 = Vector2.ZERO
-var is_on: bool = true
-var is_idle: bool = false
+
+# Define the lizard's possible states
+enum State {
+	PATROL,
+	PATROL_WAIT,
+	LICK_EYE
+}
+
+var state = State.PATROL  # Initialize to PATROL by default
 
 # Patrol variables
 var patrol_points = []
 var patrol_index = 0
 
+# Timer for handling waiting periods
+var patrol_wait_timer = null
+
 func _ready():
 	print("Lizard ready")
 	
-	# Collect patrol points if any
+	# Seed the random number generator for randomness in animations
+	randomize()
+	
+	# Collect patrol points
 	if target_1:
 		patrol_points.append(target_1.global_position)
 	if target_2:
@@ -47,71 +61,108 @@ func _ready():
 		print("No patrol points set for lizard.")
 
 func _physics_process(delta):
-	if play_moving:
-		if navigation_agent_2d.is_navigation_finished():
-			_on_marker_reached()
-		else:
-			# Update velocity based on navigation agent
-			var next_path_position = navigation_agent_2d.get_next_path_position()
-			var current_position = global_position
-			direction = (next_path_position - current_position).normalized()
-			var new_velocity = direction * speed
+	match state:
+		State.PATROL:
+			patrol_behavior()
+		State.PATROL_WAIT:
+			# Waiting at patrol point; timer will handle transition
+			pass
+		State.LICK_EYE:
+			# Lick eye behavior; timer will handle transition
+			pass
 	
-			if navigation_agent_2d.avoidance_enabled:
-				navigation_agent_2d.set_velocity(new_velocity)
-			else:
-				_on_lizard_nav_velocity_computed(new_velocity)
-			
-			move_and_slide()
+	# Update movement
+	if state == State.PATROL:
+		move_and_slide()
 	else:
-		velocity = Vector2.ZERO
+		velocity = Vector2.ZERO  # Ensure the lizard stops moving when not patrolling
 	
+	# Update direction for animations
+	if velocity.length() > 0:
+		direction = velocity.normalized()
+	else:
+		direction = Vector2.ZERO
 	_update_animation_parameters()
 
-func _on_marker_reached():
-	print("Lizard reached a marker, stopping to wait.")
-	play_moving = false
-	is_idle = true
-	velocity = Vector2.ZERO
-	
-	# Start a timer to wait before moving to the next patrol point
-	var wait_timer = Timer.new()
-	wait_timer.wait_time = 2.0  # Adjust the wait time as needed
-	wait_timer.one_shot = true
-	wait_timer.timeout.connect(_on_wait_timer_timeout)
-	add_child(wait_timer)
-	wait_timer.start()
+func patrol_behavior():
+	# Continue moving towards the patrol point
+	if navigation_agent_2d.is_navigation_finished():
+		# Reached patrol point, start wait timer
+		state = State.PATROL_WAIT
+		start_patrol_wait_timer()
+	else:
+		# Move towards patrol point
+		var next_path_position = navigation_agent_2d.get_next_path_position()
+		direction = (next_path_position - global_position).normalized()
+		velocity = direction * speed
 
-func _on_wait_timer_timeout():
-	# After waiting, proceed to the next patrol point
+func start_patrol_wait_timer():
+	# Start a timer to wait for 2 seconds before deciding the next action
+	_update_animation_parameters()
+	
+	patrol_wait_timer = Timer.new()
+	patrol_wait_timer.wait_time = 2.0  # 2 seconds wait
+	patrol_wait_timer.one_shot = true
+	patrol_wait_timer.timeout.connect(_on_patrol_wait_timeout)
+	add_child(patrol_wait_timer)
+	patrol_wait_timer.start()
+
+func _on_patrol_wait_timeout():
+	patrol_wait_timer.queue_free()
+	patrol_wait_timer = null
+	
+	# Decide whether to play 'lick_eye' animation based on 20% chance
+	if enable_lick_eye_animation and randf() < 0.2:
+		state = State.LICK_EYE
+		start_lick_eye_timer()
+	else:
+		# Proceed to next patrol point
+		patrol_index = (patrol_index + 1) % patrol_points.size()
+		navigation_agent_2d.target_position = patrol_points[patrol_index]
+		state = State.PATROL
+
+func start_lick_eye_timer():
+	# Play 'lick_eye' animation for 2 seconds
+	_update_animation_parameters()
+	
+	var lick_timer = Timer.new()
+	lick_timer.wait_time = 0.7  # 2 seconds for 'lick_eye' animation
+	lick_timer.one_shot = true
+	lick_timer.timeout.connect(_on_lick_eye_timeout)
+	add_child(lick_timer)
+	lick_timer.start()
+
+func _on_lick_eye_timeout():
+	# After 'lick_eye' animation, proceed to next patrol point
 	patrol_index = (patrol_index + 1) % patrol_points.size()
 	navigation_agent_2d.target_position = patrol_points[patrol_index]
-	play_moving = true
-	is_idle = false
+	state = State.PATROL
 
 func _update_animation_parameters():
+	# Reset all animation conditions
+	animation_tree["parameters/conditions/is_run_on"] = false
+	animation_tree["parameters/conditions/is_run_off"] = false
+	animation_tree["parameters/conditions/is_idle_on"] = false
+	animation_tree["parameters/conditions/is_idle_off"] = false
+	animation_tree["parameters/conditions/is_lick_on"] = false
+	animation_tree["parameters/conditions/is_lick_off"] = false
+	
 	if is_on:
-		if play_moving:
-			animation_tree["parameters/conditions/is_run_on"] = true
-			animation_tree["parameters/conditions/is_run_off"] = false
-			animation_tree["parameters/conditions/is_idle_on"] = false
-			animation_tree["parameters/conditions/is_idle_off"] = false
-		elif is_idle:
-			animation_tree["parameters/conditions/is_idle_on"] = true
-			animation_tree["parameters/conditions/is_idle_off"] = false
-			animation_tree["parameters/conditions/is_lick_on"] = false
-			animation_tree["parameters/conditions/is_lick_off"] = false
+		match state:
+			State.PATROL:
+				animation_tree["parameters/conditions/is_run_on"] = true
+			State.PATROL_WAIT:
+				animation_tree["parameters/conditions/is_idle_on"] = true
+			State.LICK_EYE:
+				animation_tree["parameters/conditions/is_lick_on"] = true
 	else:
-		if play_moving:
-			animation_tree["parameters/conditions/is_run_on"] = false
-			animation_tree["parameters/conditions/is_run_off"] = true
-			animation_tree["parameters/conditions/is_idle_on"] = false
-			animation_tree["parameters/conditions/is_idle_off"] = false
-		elif is_idle:
-			animation_tree["parameters/conditions/is_idle_on"] = false
-			animation_tree["parameters/conditions/is_idle_off"] = true
-			animation_tree["parameters/conditions/is_lick_on"] = false
-			animation_tree["parameters/conditions/is_lick_off"] = false
+		match state:
+			State.PATROL:
+				animation_tree["parameters/conditions/is_run_off"] = true
+			State.PATROL_WAIT:
+				animation_tree["parameters/conditions/is_idle_off"] = true
+			State.LICK_EYE:
+				animation_tree["parameters/conditions/is_lick_off"] = true
 	
 	# Update blend positions for animations
 	animation_tree["parameters/idle_off/blend_position"] = direction
@@ -120,12 +171,3 @@ func _update_animation_parameters():
 	animation_tree["parameters/lick_on/blend_position"] = direction
 	animation_tree["parameters/run_off/blend_position"] = direction
 	animation_tree["parameters/run_on/blend_position"] = direction
-
-func _on_electric_area_body_entered(body):
-	pass
-
-func _on_electric_area_body_exited(body):
-	pass
-
-func _on_lizard_nav_velocity_computed(safe_velocity):
-	velocity = safe_velocity
