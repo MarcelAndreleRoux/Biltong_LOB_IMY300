@@ -201,7 +201,9 @@ func _throw_item():
 	instance.initialize(playerPosition, direction, 0, mousePosition)
 	food.add_child(instance)
 	
-	instance.add_to_group("food_to_eat")
+	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
+		# Add this line to add the instance to the "food_to_eat" group
+		instance.add_to_group("food_to_eat")
 	
 	# Add shadow for all projectiles
 	var shadow_sprite = Sprite2D.new()
@@ -217,7 +219,6 @@ func _throw_item():
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
 		var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())
 		place_marker_at_landing(landing_position)
-		SharedSignals.food_projectile_thrown.emit(active_marker)
 
 func _start_cooldown_timer():
 	previous_inventory = GlobalValues.inventory_select
@@ -341,6 +342,8 @@ func calculate_landing_position(start_position: Vector2, direction: Vector2, tar
 	return landing_position
 
 func place_marker_at_landing(landing_position: Vector2):
+	SharedSignals.food_thrown.emit(active_marker)
+	
 	if active_marker != null:
 		active_marker.queue_free()
 

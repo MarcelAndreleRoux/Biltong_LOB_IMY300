@@ -948,6 +948,11 @@ texture = ExtResource("2_3bmot")
 offset = Vector2(0, -7)
 hframes = 6
 
+[node name="LizardNav" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+target_desired_distance = 5.0
+avoidance_enabled = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_75p2i")
@@ -992,5 +997,6 @@ position = Vector2(0, -7)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_solqv")
 
+[connection signal="velocity_computed" from="LizardNav" to="." method="_on_lizard_nav_velocity_computed"]
 [connection signal="body_entered" from="ElectricArea" to="." method="_on_electric_area_body_entered"]
 [connection signal="body_exited" from="ElectricArea" to="." method="_on_electric_area_body_exited"]
