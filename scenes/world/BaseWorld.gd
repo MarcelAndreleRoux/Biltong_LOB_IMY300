@@ -23,6 +23,7 @@ class_name BaseWorld
 #Sounds
 @onready var error = $Error
 @onready var death = $Death
+@onready var win_state = $WinState
 
 const FOOD = preload("res://scenes/entities/objects/throwables/mushroom/mushroom.tscn")
 
@@ -80,7 +81,7 @@ func _ready():
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
-		game_pause.game_over()
+		game_pause.game_exit()
 	
 	if player:
 		GlobalValues.update_player_position(player.global_position)

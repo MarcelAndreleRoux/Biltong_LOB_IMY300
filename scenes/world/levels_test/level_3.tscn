@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://duxeflpd6v6tm"]
+[gd_scene load_steps=20 format=3 uid="uid://duxeflpd6v6tm"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_blq3v"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_7bb2f"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="11_ry0tb"]
 [ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="12_1losk"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_1xgpy"]
+[ext_resource type="PackedScene" uid="uid://85307446xv20" path="res://scenes/entities/objects/static/door/broken_door.tscn" id="14_qgtru"]
 [ext_resource type="Script" path="res://scenes/world/WinState.gd" id="14_u58jg"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_30w6t"]
 [ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="16_w7y4j"]
@@ -119,6 +120,10 @@ offset_right = 28.0
 offset_bottom = 29.0
 texture = ExtResource("13_1xgpy")
 stretch_mode = 2
+
+[node name="BrokenDoor" parent="." instance=ExtResource("14_qgtru")]
+position = Vector2(285, 188)
+door_link_id = "Hello"
 
 [node name="Death" type="CanvasLayer" parent="."]
 process_mode = 3

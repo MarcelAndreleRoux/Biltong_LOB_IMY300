@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://kjvtjbne7yyv"]
+
+[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="1_dmg1a"]
+[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="2_22b0l"]
+[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="3_5k18r"]
+[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="4_7sqre"]
+[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="5_nf0lu"]
+
+[node name="GamePause" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_dmg1a")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer3" type="GridContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -20.0
+offset_right = 74.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Control/Panel/GridContainer3"]
+layout_mode = 2
+columns = 2
+
+[node name="resume" type="Button" parent="Control/Panel/GridContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("2_22b0l")
+flat = true
+
+[node name="restart" type="Button" parent="Control/Panel/GridContainer3/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("3_5k18r")
+flat = true
+
+[node name="GridContainer2" type="GridContainer" parent="Control/Panel/GridContainer3"]
+layout_mode = 2
+
+[node name="exit" type="Button" parent="Control/Panel/GridContainer3/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+icon = ExtResource("4_7sqre")
+flat = true
+
+[node name="select" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_nf0lu")
+
+[connection signal="pressed" from="Control/Panel/GridContainer3/GridContainer/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Control/Panel/GridContainer3/GridContainer/restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Control/Panel/GridContainer3/GridContainer2/exit" to="." method="_on_exit_pressed"]
+[connection signal="finished" from="select" to="." method="_on_select_finished"]

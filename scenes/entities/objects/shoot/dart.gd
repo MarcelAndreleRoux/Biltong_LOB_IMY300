@@ -37,13 +37,11 @@ func update_rotation_and_velocity():
 
 	velocity = (target_position - global_position).normalized() * speed
 
-
 # Example function to set the target position dynamically
 func set_target_position(new_target_position: Vector2):
 	target_position = new_target_position
 	update_rotation_and_velocity()
 
-
 func _on_detection_area_body_entered(body):
 	if body.is_in_group("player"):
-		SharedSignals.player_killed.emit()
+		SharedSignals.player_killed.emit("peg")
