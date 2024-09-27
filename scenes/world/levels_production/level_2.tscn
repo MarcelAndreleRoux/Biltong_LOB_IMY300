@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://6707pd1sakq7"]
+[gd_scene load_steps=15 format=3 uid="uid://6707pd1sakq7"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_e5o8h"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_g282t"]
@@ -13,6 +13,9 @@
 [ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="17_gugyt"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="17_pb20x"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="20_18vaj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwikq"]
+size = Vector2(87, 43)
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_e5o8h")
@@ -87,3 +90,10 @@ visible = false
 
 [node name="WinState" parent="." instance=ExtResource("13_7dtpd")]
 visible = false
+
+[node name="Transition" type="Area2D" parent="."]
+position = Vector2(128, 88)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
+position = Vector2(177, 180)
+shape = SubResource("RectangleShape2D_gwikq")

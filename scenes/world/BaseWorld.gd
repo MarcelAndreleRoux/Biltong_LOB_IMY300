@@ -401,3 +401,31 @@ func change_scene():
 
 func _on_death_finsish():
 	death.death_lose()
+
+const LEVEL_PATHS = [
+	"res://scenes/world/levels_production/level_1.tscn",
+	"res://scenes/world/levels_production/level_2.tscn",
+	"res://scenes/world/levels_production/level_3.tscn",
+	"res://scenes/world/levels_production/level_4.tscn",
+	"res://scenes/world/levels_production/level_5.tscn",
+	"res://scenes/world/levels_production/level_6.tscn",
+	"res://scenes/world/levels_production/level_7.tscn",
+	"res://scenes/world/levels_production/level_8.tscn",
+	"res://scenes/world/levels_production/level_9.tscn",
+	"res://scenes/world/levels_production/level_10.tscn"
+]
+
+func change_scene_to_next_level():
+	# Increment the level counter stored in the LevelManager singleton
+	LevelManager.current_level += 1
+
+	if LevelManager.current_level < LEVEL_PATHS.size():  # Check if there are more levels
+		var next_level = LEVEL_PATHS[LevelManager.current_level]
+		get_tree().change_scene_to_file(next_level)
+	else:
+		print("You've completed all levels!")
+	# Add logic for game completion, e.g., load the main menu or a win screen
+
+
+
+
