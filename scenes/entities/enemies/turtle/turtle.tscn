@@ -1,8 +1,7 @@
-[gd_scene load_steps=62 format=3 uid="uid://vlik5vxjmqh4"]
+[gd_scene load_steps=61 format=3 uid="uid://vlik5vxjmqh4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/turtle/turtle.gd" id="1_1fxvc"]
 [ext_resource type="Texture2D" uid="uid://pmrgbxp12km" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Left.png" id="2_a700b"]
-[ext_resource type="PackedScene" uid="uid://dcwfimqxg27wv" path="res://scenes/entities/enemies/wander.tscn" id="2_gm0cl"]
 [ext_resource type="Texture2D" uid="uid://cvaqb8p2gm87o" path="res://assets/sprites/enemies/turtel/walk/Turtle-Walk-Left.png" id="4_3blme"]
 [ext_resource type="AudioStream" uid="uid://dki5tcy6h2mla" path="res://assets/soundeffects/Eat.wav" id="4_y46p0"]
 [ext_resource type="Texture2D" uid="uid://d3dotr4af58er" path="res://assets/sprites/enemies/turtel/idle/Turtle-Idle-Left.png" id="5_1rg4p"]
@@ -940,8 +939,6 @@ hframes = 21
 position = Vector2(4, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_38uif")
-
-[node name="Wander" parent="." instance=ExtResource("2_gm0cl")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
