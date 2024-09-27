@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cflxkbaa0k0kc"]
+[gd_scene load_steps=3 format=3 uid="uid://cl5gqsyf16m2c"]
 
 [ext_resource type="Script" path="res://Control.gd" id="1_8d3qe"]
 [ext_resource type="Texture2D" uid="uid://d4fceoimr8dg5" path="res://assets/sprites/UI/Hotbar/single_hotbar.png" id="2_qcrhy"]

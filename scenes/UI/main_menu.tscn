@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bl0bp0c4ogc4t"]
+[gd_scene load_steps=7 format=3 uid="uid://bl0bp0c4ogc4t"]
 
 [ext_resource type="Script" path="res://scenes/UI/main_menu.gd" id="1_7pkux"]
-[ext_resource type="Texture2D" uid="uid://umcdv70tufwu" path="res://assets/sprites/UI/Title/Title.png" id="1_kbidf"]
-[ext_resource type="Texture2D" uid="uid://cxy0vop66obh" path="res://assets/sprites/UI/Buttons/Buttons-Tutorial.png" id="1_q30l1"]
 [ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="2_c3bhp"]
+[ext_resource type="Texture2D" uid="uid://h3lrngtkh1sb" path="res://assets/sprites/UI/Title/cover-1.jpg" id="2_yo8la"]
+[ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="3_p5pbu"]
+[ext_resource type="Texture2D" uid="uid://dpa36x1sehyhg" path="res://assets/sprites/UI/Buttons/Play.png" id="3_ps6su"]
 [ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="5_baxkv"]
 
 [node name="MainMenu" type="Control"]
@@ -20,23 +21,36 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -2.0
+offset_right = -1.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_kbidf")
+texture = ExtResource("2_yo8la")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 142.0
+offset_top = -195.0
+offset_right = 270.0
+offset_bottom = -67.0
+grow_vertical = 0
+texture = ExtResource("3_p5pbu")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 172.0
-offset_top = -240.0
-offset_right = -160.0
-offset_bottom = 46.0
-grow_horizontal = 2
+offset_left = 170.0
+offset_top = -156.0
+offset_right = 242.0
+offset_bottom = -104.0
 grow_vertical = 0
-columns = 2
 
 [node name="Start" type="Button" parent="GridContainer"]
 layout_mode = 2
@@ -44,7 +58,7 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 focus_neighbor_left = NodePath("../Exit")
 focus_neighbor_right = NodePath(".")
-icon = ExtResource("1_q30l1")
+icon = ExtResource("3_ps6su")
 flat = true
 icon_alignment = 1
 
