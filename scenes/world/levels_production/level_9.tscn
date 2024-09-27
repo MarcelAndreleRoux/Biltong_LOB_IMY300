@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="12_d5xru"]
 [ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="13_0r73j"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_eh8h2"]
-[ext_resource type="PackedScene" path="res://scenes/UI/win.tscn" id="14_cb6rf"]
+[ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="14_cb6rf"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_s1m62"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_brx04"]
 [ext_resource type="PackedScene" uid="uid://fg8pnbkcvvaj" path="res://scenes/entities/objects/static/board/m_board.tscn" id="20_7tpa2"]

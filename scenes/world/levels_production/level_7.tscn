@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_yy2v7"]
 [ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="16_eb2ic"]
 [ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_014uw"]
-[ext_resource type="PackedScene" path="res://scenes/UI/win.tscn" id="17_j0f4h"]
+[ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="17_j0f4h"]
 [ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="18_ox2ye"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_rsjae"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="20_x8xmc"]

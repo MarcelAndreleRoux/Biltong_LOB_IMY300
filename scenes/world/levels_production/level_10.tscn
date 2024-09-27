@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="18_6gt12"]
 [ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="18_p5i3e"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_kt1a8"]
-[ext_resource type="PackedScene" path="res://scenes/UI/win.tscn" id="19_ov150"]
+[ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="19_ov150"]
 [ext_resource type="PackedScene" uid="uid://fg8pnbkcvvaj" path="res://scenes/entities/objects/static/board/m_board.tscn" id="20_f641s"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_e10qb"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="22_d185w"]

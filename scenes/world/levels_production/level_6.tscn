@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="16_jflc3"]
 [ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="16_qrd6m"]
 [ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="17_bd31y"]
-[ext_resource type="PackedScene" path="res://scenes/UI/win.tscn" id="17_wcr21"]
+[ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="17_wcr21"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="18_wpdb3"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="19_0xxf4"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="20_oll23"]

@@ -416,15 +416,17 @@ const LEVEL_PATHS = [
 ]
 
 func change_scene_to_next_level():
-	# Increment the level counter stored in the LevelManager singleton
-	LevelManager.current_level += 1
-
-	if LevelManager.current_level < LEVEL_PATHS.size():  # Check if there are more levels
-		var next_level = LEVEL_PATHS[LevelManager.current_level]
-		get_tree().change_scene_to_file(next_level)
+	if LevelManager.current_level == 9:  # If we are at the last level (level 10)
+		win_state.win()  # Call the win function on WinState
 	else:
-		print("You've completed all levels!")
-	# Add logic for game completion, e.g., load the main menu or a win screen
+		LevelManager.current_level += 1  # Increment the level counter
+
+		if LevelManager.current_level < LEVEL_PATHS.size():
+			var next_level = LEVEL_PATHS[LevelManager.current_level]
+			get_tree().change_scene_to_file(next_level)
+		else:
+			print("You've completed all levels!")
+
 
 
 

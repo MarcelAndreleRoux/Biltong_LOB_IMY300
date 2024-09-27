@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="6_1bgt6"]
 [ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="12_0taos"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_1xgpy"]
-[ext_resource type="PackedScene" path="res://scenes/UI/win.tscn" id="13_gpbjv"]
+[ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="13_gpbjv"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_30w6t"]
 [ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="17_n53mo"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_aoxyx"]
