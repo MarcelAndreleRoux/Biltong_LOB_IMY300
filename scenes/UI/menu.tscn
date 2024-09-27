@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cm137bw2mlk0q"]
+[gd_scene load_steps=6 format=3 uid="uid://byrr2mj460rau"]
 
-[ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_oawy5"]
-[ext_resource type="Script" path="res://Menu.gd" id="1_vyayb"]
+[ext_resource type="Theme" path="res://assets/themes/menu.tres" id="1_oawy5"]
+[ext_resource type="Script" path="res://scenes/UI/menu.gd" id="1_vyayb"]
 [ext_resource type="Texture2D" uid="uid://h3lrngtkh1sb" path="res://assets/sprites/UI/Title/cover-1.jpg" id="3_gb30e"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_xnclv"]
 [ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="5_nbws3"]

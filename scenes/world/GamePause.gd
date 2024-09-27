@@ -17,7 +17,7 @@ func _on_resume_pressed():
 	select.play()
 	resume = true
 
-func game_over():
+func game_exit():
 	get_tree().paused = true
 	self.show()
 
@@ -28,7 +28,7 @@ func _on_exit_pressed():
 func _on_select_finished():
 	if exit:
 		get_tree().paused = false
-		get_tree().change_scene_to_file("res://scenes/UI/main_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")
 		exit = false
 	elif reset:
 		get_tree().paused = false

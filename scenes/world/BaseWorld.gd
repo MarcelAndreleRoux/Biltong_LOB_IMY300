@@ -80,7 +80,7 @@ func _ready():
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
-		game_pause.game_over()
+		game_pause.game_exit()
 	
 	if player:
 		GlobalValues.update_player_position(player.global_position)
