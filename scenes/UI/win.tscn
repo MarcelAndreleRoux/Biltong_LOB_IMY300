@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://cne7obxas21pa"]
+[gd_scene load_steps=5 format=3 uid="uid://dk24i8aqilmr0"]
 
-[ext_resource type="Script" path="res://scenes/UI/game_pause.gd" id="1_wxb5x"]
-[ext_resource type="Theme" path="res://assets/themes/menu.tres" id="3_d13yp"]
-[ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_ynmkg"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="5_uelmv"]
+[ext_resource type="Script" path="res://scenes/UI/win.gd" id="1_wpx8l"]
+[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="2_h4u0x"]
+[ext_resource type="Theme" path="res://assets/themes/menu.tres" id="3_ed3ax"]
+[ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_kvwr2"]
 
-[node name="GamePause" type="CanvasLayer"]
+[node name="WinState" type="CanvasLayer"]
 process_mode = 3
-script = ExtResource("1_wxb5x")
+script = ExtResource("1_wpx8l")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
@@ -17,29 +17,29 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="select" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_uelmv")
+stream = ExtResource("2_h4u0x")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 480.0
 offset_bottom = 272.0
-theme = ExtResource("3_d13yp")
+theme = ExtResource("3_ed3ax")
 
 [node name="TextureRect2" type="TextureRect" parent="Control"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -74.5
-offset_top = -91.0
+offset_top = -65.5
 offset_right = 74.5
-offset_bottom = 91.0
+offset_bottom = 65.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_ynmkg")
+texture = ExtResource("4_kvwr2")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/TextureRect2"]
 layout_mode = 1
@@ -49,44 +49,34 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -39.5
-offset_top = -19.0
+offset_top = -9.5
 offset_right = 39.5
-offset_bottom = 19.0
+offset_bottom = 9.5
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/TextureRect2/MarginContainer"]
 layout_mode = 2
 
-[node name="Resume" type="Button" parent="Control/TextureRect2/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "resume"
-
-[node name="Restart" type="Button" parent="Control/TextureRect2/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "restart"
-
 [node name="Exit" type="Button" parent="Control/TextureRect2/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "exit"
+text = "main menu"
 
 [node name="Node" type="Node" parent="Control"]
 
 [node name="click" type="AudioStreamPlayer" parent="Control/Node"]
-stream = ExtResource("5_uelmv")
+stream = ExtResource("2_h4u0x")
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -112.5
-offset_right = 112.5
+offset_left = -90.0
+offset_right = 90.0
 offset_bottom = 83.0
 grow_horizontal = 2
-text = "Pause"
+text = "You win!"
 
 [connection signal="finished" from="select" to="." method="_on_select_finished"]
-[connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
