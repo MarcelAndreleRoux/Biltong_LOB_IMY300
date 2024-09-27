@@ -64,7 +64,6 @@ func _ready():
 	SharedSignals.death_finished.connect(_on_death_finsish)
 
 	player_raycast.enabled = true
-	GlobalValues.turtle_original_pos = turtle.global_position
 	
 	# Add all vines to the player's raycast exceptions
 	for vine in get_tree().get_nodes_in_group("vines"):
@@ -199,7 +198,10 @@ func _throw_item():
 	var direction = (mousePosition - playerPosition).normalized()
 
 	instance.initialize(playerPosition, direction, 0, mousePosition)
-	food.add_child(instance)
+	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
+		food.add_child(instance)
+	else:
+		_main.add_child(instance)
 	
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
 		# Add this line to add the instance to the "food_to_eat" group

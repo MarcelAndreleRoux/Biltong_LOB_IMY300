@@ -1,11 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://djwbcxwqfqodw"]
+[gd_scene load_steps=22 format=3 uid="uid://djwbcxwqfqodw"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_t43jk"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_2wgtw"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_imsbv"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="3_rmbml"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="4_laj2i"]
-[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="5_gx538"]
 [ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="6_tcbgb"]
 [ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="8_qo8dv"]
 [ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="9_p7v45"]
@@ -45,11 +44,6 @@ position = Vector2(240, 40)
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
-
-[node name="Turtle" parent="." instance=ExtResource("5_gx538")]
-position = Vector2(536, 80)
-
-[node name="RayCast2D" type="RayCast2D" parent="Turtle"]
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
 position = Vector2(90, 136)
@@ -296,6 +290,8 @@ door_link_id = "a"
 
 [node name="Box" parent="." instance=ExtResource("4_laj2i")]
 position = Vector2(192, 56)
+
+[node name="Food" type="Node" parent="." groups=["food"]]
 
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
 [connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
