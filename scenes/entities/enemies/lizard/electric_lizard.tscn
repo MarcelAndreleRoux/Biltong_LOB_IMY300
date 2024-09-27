@@ -999,7 +999,7 @@ graph_offset = Vector2(0, 56.1572)
 radius = 22.0
 height = 60.0
 
-[node name="ElectricLizard" type="CharacterBody2D" groups=["electrical"]]
+[node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
 script = ExtResource("1_i4f4n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

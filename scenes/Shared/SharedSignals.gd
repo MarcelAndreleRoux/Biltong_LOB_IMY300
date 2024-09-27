@@ -30,6 +30,9 @@ signal full_link
 # Button
 signal button_active
 
+# C_box
+signal lizard_connection
+
 # Trutle Enemy Signals
 signal start_eating
 signal new_marker

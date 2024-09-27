@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=28 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/level_scripts/level_1.gd" id="1_ypnr2"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_u5vqf"]
@@ -21,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://b8ka5jup28x1v" path="res://assets/sprites/UI/Keycaps/Keycaps-E.png" id="23_cv04v"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="24_6nyao"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="25_dc2e1"]
-[ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="26_o1q7m"]
 [ext_resource type="Script" path="res://scenes/world/WinState.gd" id="26_poo8t"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="26_smm4u"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="27_ijd22"]
@@ -69,15 +68,12 @@ texture = ExtResource("10_n2ej3")
 width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
 
-[node name="Turtle" parent="." instance=ExtResource("11_ha8u1")]
+[node name="Turtle" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("11_ha8u1")]
 position = Vector2(28, 52)
 motion_mode = 1
 wall_min_slide_angle = 0.0
-
-[node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("26_o1q7m")]
-position = Vector2(371, 68)
 target_1 = NodePath("../Marker2D")
-target_2 = NodePath("../Marker2D4")
+target_2 = NodePath("../Marker2D2")
 
 [node name="Marker2D4" type="Marker2D" parent="." groups=["FirstEnemy"]]
 position = Vector2(440, 103)

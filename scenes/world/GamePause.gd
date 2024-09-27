@@ -21,7 +21,7 @@ func game_exit():
 	get_tree().paused = true
 	self.show()
 
-func game_exit():
+func game_over():
 	get_tree().paused = true
 	self.show()
 
