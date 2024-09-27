@@ -19,9 +19,6 @@ var current_food_target: Node2D = null
 var patrol_points = []
 var patrol_index = 0
 
-var is_hungry: bool = false
-var should_eat: bool = false
-
 # Define the turtle's possible states
 enum State {
 	PATROL,
@@ -29,7 +26,8 @@ enum State {
 	HUNGRY,
 	GO_TO_FOOD,
 	EATING,
-	IDLE
+	IDLE,
+	SCARED
 }
 
 var state = State.IDLE
@@ -38,6 +36,10 @@ var state = State.IDLE
 var patrol_wait_timer = null
 var hungry_timer = null
 var eating_timer = null
+var scared_timer = null
+
+# Reference to the scared Area2D
+@onready var scared_area = $ScaredArea
 
 func _ready():
 	# Collect patrol points
@@ -77,10 +79,13 @@ func _physics_process(delta):
 		State.IDLE:
 			# Idle state
 			velocity = Vector2.ZERO
-
+		State.SCARED:
+			# Playing Scared animation; timer will handle transition
+			scared_behavior()
+	
 	# Update movement
 	move_and_slide()
-
+	
 	# Update direction for animations
 	if velocity.length() > 0:
 		direction = velocity.normalized()
@@ -148,8 +153,7 @@ func check_for_food():
 			else:
 				# Already have a food target
 				return false
-	else:
-		return false
+	return false
 
 func start_patrol_wait_timer():
 	patrol_wait_timer = Timer.new()
@@ -168,7 +172,6 @@ func _on_patrol_wait_timeout():
 	state = State.PATROL
 
 func start_hungry_timer():
-	is_hungry = true
 	hungry_timer = Timer.new()
 	hungry_timer.wait_time = 3.0  # Wait 3 seconds
 	hungry_timer.one_shot = true
@@ -179,7 +182,7 @@ func start_hungry_timer():
 func _on_hungry_timeout():
 	hungry_timer.queue_free()
 	hungry_timer = null
-	is_hungry = false
+	# After hungry timer, move to food
 	if current_food_target != null and is_instance_valid(current_food_target):
 		navigation_agent_2d.target_position = current_food_target.global_position
 		state = State.GO_TO_FOOD
@@ -189,7 +192,6 @@ func _on_hungry_timeout():
 		navigation_agent_2d.target_position = patrol_points[patrol_index]
 
 func start_eating_timer():
-	should_eat = true
 	eating_timer = Timer.new()
 	eating_timer.wait_time = 3.0  # Wait 3 seconds
 	eating_timer.one_shot = true
@@ -200,7 +202,6 @@ func start_eating_timer():
 func _on_eating_timeout():
 	eating_timer.queue_free()
 	eating_timer = null
-	should_eat = false
 	# Check for more food
 	if check_for_food():
 		# If hungry animation is enabled and we haven't played it yet, play it
@@ -216,6 +217,49 @@ func _on_eating_timeout():
 		state = State.PATROL
 		navigation_agent_2d.target_position = patrol_points[patrol_index]
 
+# --- Scared State Handling ---
+
+func _on_scared_area_body_entered(body):
+	if body.is_in_group("player"):
+		# Transition to SCARED state
+		state = State.SCARED
+		velocity = Vector2.ZERO  # Stop movement
+		# Play scared animation
+		_update_animation_parameters()
+
+
+func _on_scared_area_body_exited(body):
+	if body.is_in_group("player"):
+		# Start scared timer to return to normal state after 3 seconds
+		if scared_timer == null:
+			scared_timer = Timer.new()
+			scared_timer.wait_time = 3.0  # 3 seconds
+			scared_timer.one_shot = true
+			scared_timer.timeout.connect(_on_scared_timeout)
+			add_child(scared_timer)
+			scared_timer.start()
+
+func scared_behavior():
+	# Ensure the turtle is not moving
+	velocity = Vector2.ZERO
+	# Optionally, you can implement movement away from the player here
+	# For now, the turtle simply stops and plays the scared animation
+
+func _on_scared_timeout():
+	scared_timer.queue_free()
+	scared_timer = null
+	# Return to previous behavior
+	if check_for_food():
+		if play_hungry_animation:
+			state = State.HUNGRY
+			start_hungry_timer()
+		else:
+			state = State.GO_TO_FOOD
+	else:
+		state = State.PATROL
+
+# --- Animation Handling ---
+
 func _update_animation_parameters():
 	# Reset all conditions
 	animation_tree["parameters/conditions/is_scared"] = false
@@ -223,19 +267,22 @@ func _update_animation_parameters():
 	animation_tree["parameters/conditions/is_eating"] = false
 	animation_tree["parameters/conditions/is_idle"] = false
 	animation_tree["parameters/conditions/is_hungry"] = false
-
-	if state == State.HUNGRY:
-		animation_tree["parameters/conditions/is_hungry"] = true
-	elif state == State.EATING or state == State.PATROL_WAIT:
-		animation_tree["parameters/conditions/is_eating"] = true
-	elif state == State.PATROL or state == State.GO_TO_FOOD:
-		if velocity.length() > 0:
-			animation_tree["parameters/conditions/is_walking"] = true
-		else:
+	
+	match state:
+		State.SCARED:
+			animation_tree["parameters/conditions/is_scared"] = true
+		State.HUNGRY:
+			animation_tree["parameters/conditions/is_hungry"] = true
+		State.EATING, State.PATROL_WAIT:
+			animation_tree["parameters/conditions/is_eating"] = true
+		State.PATROL, State.GO_TO_FOOD:
+			if velocity.length() > 0:
+				animation_tree["parameters/conditions/is_walking"] = true
+			else:
+				animation_tree["parameters/conditions/is_idle"] = true
+		State.IDLE:
 			animation_tree["parameters/conditions/is_idle"] = true
-	elif state == State.IDLE:
-		animation_tree["parameters/conditions/is_idle"] = true
-
+	
 	# Update blend positions
 	animation_tree["parameters/eat/blend_position"] = direction
 	animation_tree["parameters/walk/blend_position"] = direction
