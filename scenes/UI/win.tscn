@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dk24i8aqilmr0"]
+[gd_scene load_steps=5 format=3 uid="uid://bjowa70ekmjcv"]
 
 [ext_resource type="Script" path="res://scenes/UI/win.gd" id="1_wpx8l"]
 [ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="2_h4u0x"]
-[ext_resource type="Theme" path="res://assets/themes/menu.tres" id="3_ed3ax"]
-[ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_kvwr2"]
+[ext_resource type="Theme" uid="uid://djt63hs6bxmu5" path="res://assets/themes/menu.tres" id="3_ed3ax"]
+[ext_resource type="Texture2D" path="res://assets/sprites/UI/Containers/menu.png" id="4_kvwr2"]
 
 [node name="WinState" type="CanvasLayer"]
 process_mode = 3

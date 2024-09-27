@@ -5,6 +5,7 @@ extends Control
 var exit: bool = false
 
 func _on_play_pressed():
+	LevelManager.current_level = 0
 	click.play()
 	exit = false
 	

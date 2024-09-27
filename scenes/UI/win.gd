@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-@onready var confetti = $Confetti
 @onready var select = $select
 
 var exit: bool = false
@@ -23,7 +22,6 @@ func _on_select_finished():
 		get_tree().reload_current_scene()
 		reset = false
 
-func death_lose():
+func win():
 	get_tree().paused = true
 	self.show()
-	confetti.play()
