@@ -82,8 +82,7 @@ func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
 		game_pause.game_exit()
 	
-	if player:
-		GlobalValues.update_player_position(player.global_position)
+	GlobalValues.update_player_position(player.global_position)
 	
 	_update_hedgehog_raycast()
 	_check_inventory_swap()

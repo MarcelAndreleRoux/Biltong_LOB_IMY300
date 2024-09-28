@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://85307446xv20"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/door/broken_door.gd" id="1_4aq5k"]
-[ext_resource type="Texture2D" path="res://assets/sprites/objects/static/door/Broken-Door.png" id="1_usg6a"]
-[ext_resource type="AudioStream" path="res://assets/soundeffects/disconnect_sound.mp3" id="3_m5dcu"]
+[ext_resource type="Texture2D" uid="uid://b2llov2emibqp" path="res://assets/sprites/objects/static/door/Broken-Door.png" id="1_usg6a"]
+[ext_resource type="PackedScene" uid="uid://cijrkxe11vkjx" path="res://scenes/Shared/audio_controler.tscn" id="3_i0ww8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k2ea3"]
 atlas = ExtResource("1_usg6a")
@@ -100,6 +100,4 @@ animation = &"start"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_xpa08")
 
-[node name="error" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_m5dcu")
-volume_db = 10.735
+[node name="AudioControler" parent="." instance=ExtResource("3_i0ww8")]
