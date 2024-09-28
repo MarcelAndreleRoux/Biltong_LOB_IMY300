@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=15 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="1_ogkoe"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="1_s66vk"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://bfmdlsog7n2t3" path="res://assets/soundeffects/Item-Select.wav" id="11_tt0jh"]
 [ext_resource type="AudioStream" uid="uid://bmsi8kt7jdva3" path="res://assets/soundeffects/Door.wav" id="12_ionrn"]
 [ext_resource type="AudioStream" uid="uid://dki5tcy6h2mla" path="res://assets/soundeffects/Eat.wav" id="13_ik37i"]
+[ext_resource type="AudioStream" uid="uid://cjr6u5i655rvn" path="res://assets/soundeffects/click-234708.mp3" id="14_3co6e"]
 
 [node name="AudioControler" type="Node2D"]
 
@@ -74,3 +75,8 @@ stream = ExtResource("12_ionrn")
 
 [node name="eat" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_ik37i")
+
+[node name="click" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_3co6e")
+volume_db = 4.327
+pitch_scale = 1.2

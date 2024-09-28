@@ -19,9 +19,11 @@ config/icon="res://icon.svg"
 
 SharedSignals="*res://scenes/Shared/SharedSignals.gd"
 GlobalValues="*res://scenes/Shared/GlobalValues.gd"
-GlobalAudioStreamPlayer="*res://scenes/world/audio_stream_player.tscn"
 State="*res://scenes/Shared/State.gd"
 LevelManager="*res://scenes/world/level_scripts/level_manager.gd"
+GlobalAudioStreamPlayer="*res://scenes/Shared/audio_controler.tscn"
+MenuAudioController="*res://scenes/Shared/main_menu_audio_controller.tscn"
+AudioControler="*res://scenes/Shared/audio_controler.tscn"
 
 [display]
 

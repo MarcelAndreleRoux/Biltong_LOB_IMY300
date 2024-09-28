@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://btevp77vj1a2o"]
+
+[ext_resource type="Script" path="res://scenes/Shared/main_menu_audio_controller.gd" id="1_ad78n"]
+[ext_resource type="AudioStream" uid="uid://cq20wvt87j5tc" path="res://assets/music/7. Strange.wav" id="2_nnx4y"]
+[ext_resource type="AudioStream" uid="uid://csgtqob5n3k4p" path="res://assets/music/19. Race Track Chimes.wav" id="3_4ekh8"]
+
+[node name="MenuAudioController" type="Node"]
+script = ExtResource("1_ad78n")
+
+[node name="Tack_1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_nnx4y")
+autoplay = true
+
+[node name="Track_2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_4ekh8")
+autoplay = true
+
+[connection signal="finished" from="Tack_1" to="." method="_on_tack_1_finished"]
+[connection signal="finished" from="Track_2" to="." method="_on_track_2_finished"]
