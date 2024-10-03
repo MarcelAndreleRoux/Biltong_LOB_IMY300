@@ -96,8 +96,12 @@ func _physics_process(_delta):
 	_end = get_local_mouse_position()
 	my_local_pos = to_local(global_position)
 	
-	if Input.is_action_pressed("aim"):
-		calculate_trajectory()
+	if can_aim_throw: 
+		if Input.is_action_pressed("aim"):
+			trajectory_line.visible = true
+			calculate_trajectory()
+		elif not Input.is_action_pressed("aim"):
+			trajectory_line.visible = false
 	
 	if not is_bouncing_back:
 		_handle_action_input()

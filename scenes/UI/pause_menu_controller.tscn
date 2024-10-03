@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://xqncl5fdgict"]
+
+[ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="1_3frbg"]
+[ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="2_ob5sh"]
+
+[node name="PauseMenuController" type="Node"]
+
+[node name="GamePause" parent="." instance=ExtResource("1_3frbg")]
+
+[node name="AudioPausedMenu" parent="." instance=ExtResource("2_ob5sh")]

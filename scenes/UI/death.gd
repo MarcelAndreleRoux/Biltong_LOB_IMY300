@@ -1,21 +1,21 @@
 extends CanvasLayer
 
 @onready var confetti = $Confetti
-@onready var select = $select
 
 var exit: bool = false
 var reset: bool = false
 
 func _ready():
+	AudioController.button_select.connect(_on_select_finished)
 	self.hide()
 
 func _on_restart_pressed():
+	AudioController.play_sfx("button_select")
 	reset = true
-	select.play()
 
 func _on_exit_pressed():
+	AudioController.play_sfx("button_select")
 	exit = true
-	select.play()
 
 func _on_select_finished():
 	if exit:

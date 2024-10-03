@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/water/water.gd" id="1_qjoxv"]
 [ext_resource type="Texture2D" uid="uid://dl0ddxs5kfdqh" path="res://assets/sprites/objects/throwables/water/Water-Throwable.png" id="2_tsf8l"]
-[ext_resource type="PackedScene" uid="uid://cijrkxe11vkjx" path="res://scenes/Shared/audio_controler.tscn" id="3_t3qaw"]
+[ext_resource type="PackedScene" uid="uid://cijrkxe11vkjx" path="res://scenes/Shared/audio_controller.tscn" id="3_b1vab"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k3tn7"]
 size = Vector2(2, 4)
@@ -109,4 +109,4 @@ shape = SubResource("RectangleShape2D_odru2")
 sprite_frames = SubResource("SpriteFrames_l8dmx")
 animation = &"death"
 
-[node name="AudioControler" parent="." instance=ExtResource("3_t3qaw")]
+[node name="AudioControler" parent="." instance=ExtResource("3_b1vab")]

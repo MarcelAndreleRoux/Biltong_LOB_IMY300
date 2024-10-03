@@ -13,6 +13,7 @@ var can_swap_fire: bool = false
 var can_swap_water: bool = false
 var spotted_food: bool = false
 var food_visible: bool = false
+var playing_game: bool = false
 
 var vinesSize: String
 

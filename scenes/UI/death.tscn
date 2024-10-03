@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://h6cpkqtrc5m6"]
+[gd_scene load_steps=4 format=3 uid="uid://dw205vwfju7w2"]
 
 [ext_resource type="Script" path="res://scenes/UI/death.gd" id="1_3le3y"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="2_148q5"]
-[ext_resource type="Theme" path="res://assets/themes/menu.tres" id="3_s2fbq"]
+[ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="3_s2fbq"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_qb3yk"]
 
 [node name="Death" type="CanvasLayer"]
@@ -15,9 +14,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="select" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_148q5")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -66,11 +62,6 @@ text = "restart"
 layout_mode = 2
 text = "exit"
 
-[node name="Node" type="Node" parent="Control"]
-
-[node name="click" type="AudioStreamPlayer" parent="Control/Node"]
-stream = ExtResource("2_148q5")
-
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
@@ -82,6 +73,5 @@ offset_bottom = 83.0
 grow_horizontal = 2
 text = "Dead"
 
-[connection signal="finished" from="select" to="." method="_on_select_finished"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

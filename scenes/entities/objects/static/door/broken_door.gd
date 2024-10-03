@@ -23,7 +23,7 @@ func _on_door_stateChange(door_id: String, state: bool):
 	if door_id == door_link_id:
 		if state:
 			closed_check = false
-			GlobalAudioStreamPlayer.error.play()
+			AudioController.play_sfx("disconnect")
 			animated_sprite_2d.play("default")
 		else:
 			closed_check = true

@@ -1,8 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://bp7ivp7c0j0tp"]
+[gd_scene load_steps=15 format=3 uid="uid://bp7ivp7c0j0tp"]
 
 [ext_resource type="Script" path="res://scenes/UI/inventory.gd" id="1_85urg"]
 [ext_resource type="Texture2D" uid="uid://dcy4jfy1rbqoy" path="res://assets/sprites/UI/Hotbar/Hotbar.png" id="2_ky2a5"]
-[ext_resource type="AudioStream" uid="uid://bfmdlsog7n2t3" path="res://assets/soundeffects/Item-Select.wav" id="6_njw7w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fixxi"]
 atlas = ExtResource("2_ky2a5")
@@ -138,6 +137,3 @@ animation = &"no_item"
 visible = false
 sprite_frames = SubResource("SpriteFrames_wcaii")
 animation = &"no_item"
-
-[node name="Select" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_njw7w")

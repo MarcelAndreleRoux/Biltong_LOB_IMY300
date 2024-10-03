@@ -1,0 +1,113 @@
+[gd_scene load_steps=16 format=3 uid="uid://cijrkxe11vkjx"]
+
+[ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
+[ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
+[ext_resource type="AudioStream" uid="uid://oj8lrlmic0u1" path="res://assets/soundeffects/Player-Run.wav" id="3_h8eqf"]
+[ext_resource type="AudioStream" uid="uid://cf21mmncwxigh" path="res://assets/soundeffects/lizard_walk.wav" id="4_yllhe"]
+[ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="5_m4qxj"]
+[ext_resource type="AudioStream" uid="uid://c3n8vjyc5j3h3" path="res://assets/soundeffects/zap.mp3" id="6_8l2n3"]
+[ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="7_nbyvm"]
+[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="8_pq3mj"]
+[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="9_0nwto"]
+[ext_resource type="AudioStream" uid="uid://dpxhfdpe5i7bw" path="res://assets/soundeffects/disconnect_sound.mp3" id="10_6kchu"]
+[ext_resource type="AudioStream" uid="uid://d3b4s8mp008fr" path="res://assets/soundeffects/shoot.mp3" id="11_j171t"]
+[ext_resource type="AudioStream" uid="uid://bfmdlsog7n2t3" path="res://assets/soundeffects/Item-Select.wav" id="12_dudkp"]
+[ext_resource type="AudioStream" uid="uid://bmsi8kt7jdva3" path="res://assets/soundeffects/Door.wav" id="13_0jao3"]
+[ext_resource type="AudioStream" uid="uid://dki5tcy6h2mla" path="res://assets/soundeffects/Eat.wav" id="14_5jngn"]
+[ext_resource type="AudioStream" uid="uid://cjr6u5i655rvn" path="res://assets/soundeffects/click-234708.mp3" id="15_v332m"]
+
+[node name="AudioController" type="Node2D"]
+script = ExtResource("1_bde8u")
+
+[node name="water_land" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -1)
+stream = ExtResource("2_ptnl1")
+pitch_scale = 1.8
+bus = &"Sfx"
+
+[node name="food_land" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sfx"
+
+[node name="burn" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sfx"
+
+[node name="grow" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sfx"
+
+[node name="player_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_h8eqf")
+bus = &"Sfx"
+
+[node name="player_pop" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sfx"
+
+[node name="player_peg" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sfx"
+
+[node name="lizard_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_yllhe")
+pitch_scale = 1.28
+bus = &"Sfx"
+
+[node name="turtle_walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_m4qxj")
+bus = &"Sfx"
+
+[node name="zap" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_8l2n3")
+volume_db = -10.0
+bus = &"Sfx"
+
+[node name="box_action" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_nbyvm")
+volume_db = 7.0
+bus = &"Sfx"
+
+[node name="button_select" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_pq3mj")
+bus = &"Sfx"
+
+[node name="error" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_0nwto")
+bus = &"Sfx"
+
+[node name="win" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sfx"
+
+[node name="lose" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sfx"
+
+[node name="disconnect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_6kchu")
+volume_db = -5.0
+bus = &"Sfx"
+
+[node name="shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_j171t")
+bus = &"Sfx"
+
+[node name="button_hover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_dudkp")
+volume_db = -5.0
+bus = &"Sfx"
+
+[node name="door_open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_0jao3")
+bus = &"Sfx"
+
+[node name="eat" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_5jngn")
+bus = &"Sfx"
+
+[node name="click" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_v332m")
+volume_db = 4.327
+pitch_scale = 1.2
+bus = &"Sfx"
+
+[node name="select_item" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_dudkp")
+volume_db = -6.71
+bus = &"Sfx"
+
+[connection signal="finished" from="button_select" to="." method="_on_button_select_finished"]

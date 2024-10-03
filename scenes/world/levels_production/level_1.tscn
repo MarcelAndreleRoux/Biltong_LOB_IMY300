@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=26 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/level_scripts/level_1.gd" id="1_ypnr2"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_u5vqf"]
@@ -11,13 +11,14 @@
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="13_6i8vw"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="14_3o1o2"]
 [ext_resource type="Texture2D" uid="uid://b1dlss2bmb2l3" path="res://assets/sprites/UI/Keycaps/Keycaps-W.png" id="20_8xygy"]
-[ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="21_5t1u8"]
+[ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="21_5t1u8"]
 [ext_resource type="Texture2D" uid="uid://dw3p3ognw52kx" path="res://assets/sprites/UI/Keycaps/Keycaps_A.png" id="21_s35gc"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="21_srmgi"]
 [ext_resource type="Texture2D" uid="uid://d07mo5cvixahe" path="res://assets/sprites/UI/Keycaps/Keycaps-S.png" id="22_45by8"]
-[ext_resource type="PackedScene" path="res://scenes/UI/win.tscn" id="22_gq6qw"]
+[ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="22_gq6qw"]
 [ext_resource type="Texture2D" uid="uid://b8ka5jup28x1v" path="res://assets/sprites/UI/Keycaps/Keycaps-E.png" id="23_cv04v"]
 [ext_resource type="PackedScene" uid="uid://85307446xv20" path="res://scenes/entities/objects/static/door/broken_door.tscn" id="23_hc28w"]
+[ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="24_2o77r"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="24_6nyao"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="25_dc2e1"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="26_smm4u"]
@@ -176,3 +177,6 @@ door_link_id = "2"
 [node name="Button3" parent="." instance=ExtResource("14_3o1o2")]
 position = Vector2(296, 56)
 door_link_id = "2"
+
+[node name="AudioPausedMenu" parent="." instance=ExtResource("24_2o77r")]
+visible = false

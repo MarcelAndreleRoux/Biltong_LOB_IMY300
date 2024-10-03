@@ -48,7 +48,7 @@ func _set_visibility(selected: int):
 			else:
 				# Play special error for trying to select uncollected fire
 				food.visible = true
-				food.play("error")
+				#food.play("error")
 
 		GlobalValues.INVENTORY_SELECT.WATER:
 			if GlobalValues.can_swap_water:
@@ -57,7 +57,7 @@ func _set_visibility(selected: int):
 			else:
 				# Play special error for trying to select uncollected water
 				food_fire.visible = true
-				food_fire.play("error")
+				#food_fire.play("error")
 
 		GlobalValues.INVENTORY_SELECT.NONE:
 			# Default state when nothing is selected
