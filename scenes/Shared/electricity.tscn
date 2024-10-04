@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://12o22qh53ey4"]
+[gd_scene load_steps=9 format=3 uid="uid://12o22qh53ey4"]
 
 [ext_resource type="Script" path="res://scenes/Shared/electricity.gd" id="1_waxd4"]
-[ext_resource type="AudioStream" uid="uid://bqcj8b3ausmi0" path="res://assets/soundeffects/synth.wav" id="2_jme6h"]
 [ext_resource type="Texture2D" uid="uid://dvb8x7axgpvgj" path="res://assets/sprites/objects/electricity/zap/lightning.png" id="2_ob8al"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5qpx7"]
@@ -59,6 +58,3 @@ script = ExtResource("1_waxd4")
 rotation = 1.5708
 sprite_frames = SubResource("SpriteFrames_0rpwy")
 offset = Vector2(0, -15)
-
-[node name="electric_zap" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_jme6h")

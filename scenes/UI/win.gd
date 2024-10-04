@@ -6,11 +6,12 @@ var exit: bool = false
 var reset: bool = false
 
 func _ready():
+	AudioController.button_select.connect(_on_select_finished)
 	self.hide()
 
 func _on_exit_pressed():
 	exit = true
-	select.play()
+	AudioController.play_sfx("button_select")
 
 func _on_select_finished():
 	if exit:

@@ -1,10 +1,71 @@
-[gd_scene load_steps=6 format=3 uid="uid://byrr2mj460rau"]
+[gd_scene load_steps=9 format=3 uid="uid://cma31337mqy13"]
 
-[ext_resource type="Theme" path="res://assets/themes/menu.tres" id="1_oawy5"]
+[ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_oawy5"]
 [ext_resource type="Script" path="res://scenes/UI/menu.gd" id="1_vyayb"]
 [ext_resource type="Texture2D" uid="uid://h3lrngtkh1sb" path="res://assets/sprites/UI/Title/cover-1.jpg" id="3_gb30e"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_xnclv"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="5_nbws3"]
+[ext_resource type="PackedScene" uid="uid://53rdelj2ncqx" path="res://scenes/UI/audio_options.tscn" id="5_qclmx"]
+
+[sub_resource type="Animation" id="Animation_yvalh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_xinvh"]
+resource_name = "fade_in_white"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mj4cb"]
+_data = {
+"RESET": SubResource("Animation_yvalh"),
+"fade_in_white": SubResource("Animation_xinvh")
+}
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -19,16 +80,16 @@ script = ExtResource("1_vyayb")
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 481.0
-offset_bottom = 275.0
+offset_bottom = 271.0
 texture = ExtResource("3_gb30e")
 expand_mode = 1
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 layout_mode = 2
 offset_left = 105.0
-offset_top = 92.0
+offset_top = 73.0
 offset_right = 254.0
-offset_bottom = 232.0
+offset_bottom = 251.0
 texture = ExtResource("4_xnclv")
 
 [node name="MarginContainer" type="MarginContainer" parent="TextureRect2"]
@@ -52,14 +113,13 @@ layout_mode = 2
 layout_mode = 2
 text = "Play"
 
+[node name="Option" type="Button" parent="TextureRect2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "OPTIONS"
+
 [node name="Exit" type="Button" parent="TextureRect2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
-
-[node name="Node" type="Node" parent="."]
-
-[node name="click" type="AudioStreamPlayer" parent="Node"]
-stream = ExtResource("5_nbws3")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -69,6 +129,23 @@ offset_right = 154.0
 offset_bottom = 80.0
 text = "LOB"
 
+[node name="Audio" parent="." instance=ExtResource("5_qclmx")]
+visible = false
+layout_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -20.0
+offset_top = -15.0
+offset_right = 499.0
+offset_bottom = 290.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mj4cb")
+}
+
 [connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/Option" to="." method="_on_option_pressed"]
 [connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="finished" from="Node/click" to="." method="_on_click_finished"]

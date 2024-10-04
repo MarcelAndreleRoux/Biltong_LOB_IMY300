@@ -1,0 +1,122 @@
+[gd_scene load_steps=6 format=3 uid="uid://cc2r5liu3fpf7"]
+
+[ext_resource type="Script" path="res://scenes/UI/audio_paused_menu.gd" id="1_xesnx"]
+[ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="2_7qbas"]
+[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="3_2j86o"]
+[ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="3_g8nff"]
+[ext_resource type="Script" path="res://scenes/UI/music_volume_slider.gd" id="4_e21i5"]
+
+[node name="AudioPausedMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_xesnx")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Audio" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+theme = ExtResource("2_7qbas")
+
+[node name="TextureRect2" type="TextureRect" parent="Audio"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -183.0
+offset_top = -161.0
+offset_right = 186.0
+offset_bottom = 214.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_g8nff")
+
+[node name="MarginContainer" type="MarginContainer" parent="Audio/TextureRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.5
+offset_top = -91.5
+offset_right = 109.5
+offset_bottom = 88.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Audio/TextureRect2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MasterVolume" type="Label" parent="Audio/TextureRect2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Master Volume"
+
+[node name="volume_slider3" type="HSlider" parent="Audio/TextureRect2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("4_e21i5")
+bus_name = "Master"
+
+[node name="MusicVolume" type="Label" parent="Audio/TextureRect2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Music Volume"
+
+[node name="volume_slider" type="HSlider" parent="Audio/TextureRect2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("4_e21i5")
+bus_name = "Music"
+
+[node name="SFXVolume" type="Label" parent="Audio/TextureRect2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "SFX Volume"
+
+[node name="volume_slider2" type="HSlider" parent="Audio/TextureRect2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("4_e21i5")
+bus_name = "Sfx"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Audio/TextureRect2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="Audio/TextureRect2/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back
+"
+
+[node name="Label" type="Label" parent="Audio"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -98.5
+offset_right = 98.5
+offset_bottom = 83.0
+grow_horizontal = 2
+text = "AUDIO"
+
+[node name="ButtonSelect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2j86o")
+
+[connection signal="pressed" from="Audio/TextureRect2/MarginContainer/VBoxContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="finished" from="ButtonSelect" to="." method="_on_button_select_finished"]

@@ -1,25 +1,21 @@
-[gd_scene load_steps=19 format=3 uid="uid://bp7ivp7c0j0tp"]
+[gd_scene load_steps=15 format=3 uid="uid://bp7ivp7c0j0tp"]
 
-[ext_resource type="Texture2D" uid="uid://bubb36t4lpk4y" path="res://assets/sprites/UI/Hotbar/Hotbar-Base.png" id="1_85g6n"]
 [ext_resource type="Script" path="res://scenes/UI/inventory.gd" id="1_85urg"]
-[ext_resource type="Texture2D" uid="uid://b18ps7evp5j4c" path="res://assets/sprites/UI/Hotbar/Hotbar-One.png" id="2_tmhmx"]
-[ext_resource type="Texture2D" uid="uid://d10vr5wfrpoj0" path="res://assets/sprites/UI/Hotbar/Hotbar-Two.png" id="3_rrbjr"]
-[ext_resource type="Texture2D" uid="uid://b7o21rum8afij" path="res://assets/sprites/UI/Hotbar/Hotbar-Three.png" id="5_s14cw"]
-[ext_resource type="AudioStream" uid="uid://bfmdlsog7n2t3" path="res://assets/soundeffects/Item-Select.wav" id="6_njw7w"]
+[ext_resource type="Texture2D" uid="uid://dcy4jfy1rbqoy" path="res://assets/sprites/UI/Hotbar/Hotbar.png" id="2_ky2a5"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1kmiq"]
-atlas = ExtResource("1_85g6n")
-region = Rect2(0, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fixxi"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(0, 0, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uhj73"]
-atlas = ExtResource("2_tmhmx")
-region = Rect2(0, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_okavl"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(48, 0, 48, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xsmjo"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1kmiq")
+"texture": SubResource("AtlasTexture_fixxi")
 }],
 "loop": false,
 "name": &"no_item",
@@ -27,30 +23,30 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uhj73")
+"texture": SubResource("AtlasTexture_okavl")
 }],
 "loop": false,
 "name": &"selected_food",
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1wyfm"]
-atlas = ExtResource("1_85g6n")
-region = Rect2(0, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_g814j"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(0, 0, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_glgg6"]
-atlas = ExtResource("3_rrbjr")
-region = Rect2(0, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dovln"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(144, 0, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6nsf4"]
-atlas = ExtResource("3_rrbjr")
-region = Rect2(48, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqbo1"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(96, 0, 48, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4tiig"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1wyfm")
+"texture": SubResource("AtlasTexture_g814j")
 }],
 "loop": true,
 "name": &"no_item",
@@ -58,7 +54,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_glgg6")
+"texture": SubResource("AtlasTexture_dovln")
 }],
 "loop": true,
 "name": &"selected_fire",
@@ -66,34 +62,34 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6nsf4")
+"texture": SubResource("AtlasTexture_gqbo1")
 }],
 "loop": true,
 "name": &"selected_food",
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g7qsn"]
-atlas = ExtResource("1_85g6n")
-region = Rect2(0, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gowp"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(0, 0, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ujk8i"]
-atlas = ExtResource("5_s14cw")
-region = Rect2(48, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rlu5"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(240, 0, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cqrlm"]
-atlas = ExtResource("5_s14cw")
-region = Rect2(0, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qps1"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(192, 0, 48, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f0kig"]
-atlas = ExtResource("5_s14cw")
-region = Rect2(96, 0, 48, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmsmq"]
+atlas = ExtResource("2_ky2a5")
+region = Rect2(288, 0, 48, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wcaii"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g7qsn")
+"texture": SubResource("AtlasTexture_4gowp")
 }],
 "loop": true,
 "name": &"no_item",
@@ -101,7 +97,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ujk8i")
+"texture": SubResource("AtlasTexture_1rlu5")
 }],
 "loop": true,
 "name": &"selected_fire",
@@ -109,7 +105,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cqrlm")
+"texture": SubResource("AtlasTexture_4qps1")
 }],
 "loop": true,
 "name": &"selected_food",
@@ -117,7 +113,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f0kig")
+"texture": SubResource("AtlasTexture_mmsmq")
 }],
 "loop": true,
 "name": &"selected_water",
@@ -128,19 +124,16 @@ animations = [{
 script = ExtResource("1_85urg")
 
 [node name="Food" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(-1.90735e-06, 0)
 sprite_frames = SubResource("SpriteFrames_xsmjo")
 animation = &"selected_food"
 
 [node name="FoodFire" type="AnimatedSprite2D" parent="."]
-visible = false
 sprite_frames = SubResource("SpriteFrames_4tiig")
-animation = &"selected_food"
+animation = &"no_item"
 
 [node name="FoodFireWater" type="AnimatedSprite2D" parent="."]
 visible = false
 sprite_frames = SubResource("SpriteFrames_wcaii")
 animation = &"no_item"
-
-[node name="Select" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_njw7w")

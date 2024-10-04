@@ -11,17 +11,21 @@ config_version=5
 [application]
 
 config/name="LOB_IMY300"
-run/main_scene="res://scenes/UI/menu.tscn"
+run/main_scene="res://scenes/world/main_start/godot_startupscreen.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+boot_splash/image="res://assets/sprites/UI/Title/splash/Godot_Splash_Big.png"
 config/icon="res://icon.svg"
 
 [autoload]
 
 SharedSignals="*res://scenes/Shared/SharedSignals.gd"
 GlobalValues="*res://scenes/Shared/GlobalValues.gd"
-GlobalAudioStreamPlayer="*res://scenes/world/audio_stream_player.tscn"
 State="*res://scenes/Shared/State.gd"
 LevelManager="*res://scenes/world/level_scripts/level_manager.gd"
+MenuAudioController="*res://scenes/Shared/main_menu_audio_controller.tscn"
+AudioController="*res://scenes/Shared/audio_controller.tscn"
+GameMusicController="*res://scenes/world/game_music_controller.gd"
 
 [display]
 

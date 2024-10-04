@@ -8,16 +8,14 @@
 [ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="6_xnhb3"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="12_j2ejk"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="14_wnvch"]
-[ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="16_mqyjd"]
-[ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="17_usaq3"]
-[ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="18_ex6wp"]
+[ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="16_3m50p"]
+[ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="16_mqyjd"]
+[ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="17_usaq3"]
+[ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="18_ex6wp"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="19_e7y32"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="20_4djky"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_n6sdo"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="22_k4ckg"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2aty"]
-size = Vector2(87, 43)
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_4i6or")
@@ -193,13 +191,9 @@ visible = false
 [node name="WinState" parent="." instance=ExtResource("18_ex6wp")]
 visible = false
 
-[node name="Transition" type="Area2D" parent="."]
-position = Vector2(-128, 24)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
-position = Vector2(177, 180)
-shape = SubResource("RectangleShape2D_c2aty")
-
 [node name="Door3" parent="." instance=ExtResource("21_n6sdo")]
 position = Vector2(208, 160)
 door_link_id = "a"
+
+[node name="LevelTransition" parent="." instance=ExtResource("16_3m50p")]
+position = Vector2(52, 204)

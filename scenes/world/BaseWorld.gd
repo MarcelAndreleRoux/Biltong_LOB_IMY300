@@ -8,7 +8,7 @@ class_name BaseWorld
 @onready var hedgehog = $Hedgehog
 @onready var turtle = $Turtle
 @onready var electric_lizard = $ElectricLizard
-@onready var trajectory_line = $TrajectoryLine
+@onready var trajectory_line = $Player/TrajectoryLine
 @onready var game_pause = $GamePause
 @onready var food = $Food
 
@@ -72,18 +72,14 @@ func _ready():
 	
 	if hedgehog:
 		enemy_raycast.add_exception(hedgehog)
-	
-	#if turtle:
-		#turtle_raycast = turtle.get_node("VisibilityRayCast2D")
-		#turtle_raycast.add_exception(player)
-		#turtle_raycast.add_exception(turtle)
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
 		game_pause.game_exit()
 	
-	if player:
-		GlobalValues.update_player_position(player.global_position)
+	GlobalValues.update_player_position(player.global_position)
+	
+	trajectory_line.global_position = to_local(player.global_position)
 	
 	_update_hedgehog_raycast()
 	_check_inventory_swap()
@@ -117,37 +113,6 @@ func _update_hedgehog_raycast():
 		# Reset RayCast2D position to its original position for the next frame
 		enemy_raycast.global_position -= direction_to_player * offset_distance
 
-#func _update_turtle_raycast():
-	#if _turtle_target_marker and is_instance_valid(_turtle_target_marker):
-		#turtle_raycast.global_position = turtle.global_position
-		#var marker_position = _turtle_target_marker.global_position
-		#turtle_raycast.target_position = marker_position - turtle_raycast.global_position
-#
-		## If raycast is colliding with anything, it means the path is blocked
-		#if turtle_raycast.is_colliding():
-			#if GlobalValues.food_visible:
-				## Food just became invisible
-				#GlobalValues.food_visible = false
-				#SharedSignals.food_visibility_changed.emit(GlobalValues.food_visible)
-				#print("Food is now hidden behind a wall.")
-		#else:
-			#if not GlobalValues.food_visible:
-				## Food just became visible
-				#GlobalValues.food_visible = true
-				#SharedSignals.food_visibility_changed.emit(GlobalValues.food_visible)
-				#print("Food is now visible.")
-#
-		## Emit the visibility change signal only when it changes
-		#if GlobalValues.food_visible != previous_food_visible:
-			#if GlobalValues.food_visible:
-				#print("Food spotted, switching to food marker.")
-				#SharedSignals.turtle_spotted_food.emit(_turtle_target_marker)
-			#else:
-				#print("Food hidden, turtle will ignore this marker.")
-				#SharedSignals.food_not_visible.emit(_turtle_target_marker)
-#
-		#previous_food_visible = GlobalValues.food_visible  # Track the last known visibility
-
 func _update_raycast_position():
 	player_raycast.global_position = player.global_position
 	var mouse_position = get_global_mouse_position()
@@ -165,7 +130,7 @@ func _handle_aiming_and_throwing():
 
 	if _isAiming:
 		SharedSignals.show_throw.emit()
-		calculate_trajectory()
+		#calculate_trajectory()
 		
 	# Check if the raycast is not colliding before allowing a throw
 	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
@@ -309,7 +274,7 @@ func calculate_trajectory():
 		var time = total_time * (float(point) / float(num_of_points))
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
-		points.append(player.position + Vector2(dx, dy))
+		points.append(player.global_position + Vector2(dx, dy))
 
 	trajectory_line.points = points
 
@@ -362,11 +327,6 @@ func place_marker_at_landing(landing_position: Vector2):
 	SharedSignals.new_marker.emit(new_marker)
 	_start_marker_removal_timer()
 
-#func _update_turtle_raycast_target(marker: Marker2D):
-	#if _turtle_target_marker != marker:
-		#turtle_raycast.enabled = true
-		#_turtle_target_marker = marker
-
 func _start_marker_removal_timer():
 	var marker_removal_timer = Timer.new()
 	marker_removal_timer.wait_time = 9.0
@@ -401,33 +361,3 @@ func change_scene():
 
 func _on_death_finsish():
 	death.death_lose()
-
-const LEVEL_PATHS = [
-	"res://scenes/world/levels_production/level_1.tscn",
-	"res://scenes/world/levels_production/level_2.tscn",
-	"res://scenes/world/levels_production/level_3.tscn",
-	"res://scenes/world/levels_production/level_4.tscn",
-	"res://scenes/world/levels_production/level_5.tscn",
-	"res://scenes/world/levels_production/level_6.tscn",
-	"res://scenes/world/levels_production/level_7.tscn",
-	"res://scenes/world/levels_production/level_8.tscn",
-	"res://scenes/world/levels_production/level_9.tscn",
-	"res://scenes/world/levels_production/level_10.tscn"
-]
-
-func change_scene_to_next_level():
-	if LevelManager.current_level == 9:  # If we are at the last level (level 10)
-		win_state.win()  # Call the win function on WinState
-	else:
-		LevelManager.current_level += 1  # Increment the level counter
-
-		if LevelManager.current_level < LEVEL_PATHS.size():
-			var next_level = LEVEL_PATHS[LevelManager.current_level]
-			get_tree().change_scene_to_file(next_level)
-		else:
-			print("You've completed all levels!")
-
-
-
-
-

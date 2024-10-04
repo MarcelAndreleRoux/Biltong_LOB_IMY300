@@ -8,6 +8,7 @@ signal drag_box(position: Vector2, direction: Vector2)
 
 # Nodes
 @onready var animation_tree = $AnimationTree
+@onready var trajectory_line = $TrajectoryLine
 
 # Sounds
 @onready var error = $error
@@ -43,6 +44,9 @@ var drag_toggle_mode: bool = false
 
 # Trajectory Line
 var points: Array = []
+
+var _end
+var my_local_pos
 
 func _ready():
 	animation_tree.active = true
@@ -89,6 +93,16 @@ func update_speed():
 		speed = 100
 
 func _physics_process(_delta):
+	_end = get_local_mouse_position()
+	my_local_pos = to_local(global_position)
+	
+	if can_aim_throw: 
+		if Input.is_action_pressed("aim"):
+			trajectory_line.visible = true
+			calculate_trajectory()
+		elif not Input.is_action_pressed("aim"):
+			trajectory_line.visible = false
+	
 	if not is_bouncing_back:
 		_handle_action_input()
 		_handle_movement_input()
@@ -174,6 +188,31 @@ func _update_animation_parameters():
 		animation_tree["parameters/run_throw/blend_position"] = direction
 		animation_tree["parameters/Death/blend_position"] = direction
 		animation_tree["parameters/Death_Pop/blend_position"] = direction
+
+func calculate_trajectory():
+	var DOT = Vector2(1.0, 0.0).dot((_end - my_local_pos).normalized())
+	var angle = 90 - 45 * DOT
+	var gravity = -9.8
+	var num_of_points = 50
+
+	var x_dis = _end.x - my_local_pos.x
+	var y_dis = -1.0 * (_end.y - my_local_pos.y)
+
+	var speed = sqrt((0.5 * gravity * x_dis * x_dis) / pow(cos(deg_to_rad(angle)), 2.0) / (y_dis - (tan(deg_to_rad(angle)) * x_dis)))
+	
+	var x_component = cos(deg_to_rad(angle)) * speed
+	var y_component = sin(deg_to_rad(angle)) * speed
+
+	var total_time = x_dis / x_component
+
+	points.clear()
+	for point in range(num_of_points):
+		var time = total_time * (float(point) / float(num_of_points))
+		var dx = time * x_component
+		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
+		points.append(my_local_pos + Vector2(dx, dy))
+
+	trajectory_line.points = points
 
 func _play_movement_animation():
 	if currentVelocity == Vector2.ZERO:

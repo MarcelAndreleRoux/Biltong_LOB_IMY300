@@ -1,8 +1,19 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://djt63hs6bxmu5"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://c2lumoijk82ik"]
 
-[ext_resource type="FontFile" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="1_tp3pd"]
-[ext_resource type="StyleBox" uid="uid://hekn30x1rt4v" path="res://assets/sprites/UI/Button Styles/button_hover.tres" id="2_ficey"]
-[ext_resource type="StyleBox" uid="uid://b4wwsmiw4y3km" path="res://assets/sprites/UI/Button Styles/button_normal.tres" id="3_kbyga"]
+[ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="1_tp3pd"]
+[ext_resource type="StyleBox" uid="uid://c5qdpar8jp1aq" path="res://assets/sprites/UI/Button Styles/button_hover.tres" id="2_ficey"]
+[ext_resource type="StyleBox" uid="uid://bgr0pj01yjjts" path="res://assets/sprites/UI/Button Styles/button_normal.tres" id="3_kbyga"]
+[ext_resource type="Texture2D" uid="uid://bx2jxm4y0fcbb" path="res://assets/sprites/UI/Slider/head2.png" id="4_yn6k4"]
+[ext_resource type="Texture2D" uid="uid://ceg8y4sekxjx4" path="res://assets/sprites/UI/Slider/head1.png" id="5_pmdls"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2sr2"]
+bg_color = Color(0.870588, 0.619608, 0.254902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_insvv"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_xhrn3"]
+color = Color(0.223529, 0.290196, 0.313726, 1)
+thickness = 3
 
 [resource]
 default_font = ExtResource("1_tp3pd")
@@ -14,6 +25,11 @@ Button/styles/focus = ExtResource("2_ficey")
 Button/styles/hover = ExtResource("2_ficey")
 Button/styles/normal = ExtResource("3_kbyga")
 Button/styles/pressed = ExtResource("2_ficey")
+HSlider/icons/grabber = ExtResource("4_yn6k4")
+HSlider/icons/grabber_highlight = ExtResource("5_pmdls")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_e2sr2")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_insvv")
+HSlider/styles/slider = SubResource("StyleBoxLine_xhrn3")
 Label/colors/font_color = Color(0.870588, 0.619608, 0.254902, 1)
 Label/colors/font_outline_color = Color(1, 1, 1, 1)
 Label/constants/outline_size = 5

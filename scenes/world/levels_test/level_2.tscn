@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="3_k8qd2"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="4_af3kr"]
 [ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="6_fu23d"]
-[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="9_xqjyn"]
+[ext_resource type="Script" path="res://scenes/UI/game_pause.gd" id="9_xqjyn"]
 [ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="10_q1ffr"]
 [ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="11_ydd51"]
 [ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="12_otroi"]
@@ -47,11 +47,6 @@ current = true
 position = Vector2(215, 50)
 
 [node name="RayCast2D" type="RayCast2D" parent="Turtle"]
-
-[node name="TrajectoryLine" type="Line2D" parent="."]
-position = Vector2(90, 136)
-width = 2.0
-default_color = Color(1, 1, 1, 0.447059)
 
 [node name="GamePause" type="CanvasLayer" parent="."]
 process_mode = 3

@@ -4,7 +4,7 @@ extends StaticBody2D
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
-@onready var error = $error
+@onready var audio_controler = $AudioControler
 
 var openString: String
 var closeString: String
@@ -23,7 +23,7 @@ func _on_door_stateChange(door_id: String, state: bool):
 	if door_id == door_link_id:
 		if state:
 			closed_check = false
-			error.play()
+			AudioController.play_sfx("disconnect")
 			animated_sprite_2d.play("default")
 		else:
 			closed_check = true

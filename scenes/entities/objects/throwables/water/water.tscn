@@ -1,24 +1,93 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnatwvomoe1nd"]
+[gd_scene load_steps=17 format=3 uid="uid://bnatwvomoe1nd"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/water/water.gd" id="1_qjoxv"]
 [ext_resource type="Texture2D" uid="uid://dl0ddxs5kfdqh" path="res://assets/sprites/objects/throwables/water/Water-Throwable.png" id="2_tsf8l"]
+[ext_resource type="PackedScene" uid="uid://cijrkxe11vkjx" path="res://scenes/Shared/audio_controller.tscn" id="3_b1vab"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k3tn7"]
 size = Vector2(2, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_odru2"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d3bah"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vwqm"]
 atlas = ExtResource("2_tsf8l")
-region = Rect2(0, 0, 16, 16)
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l153w"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_335ic"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61mdk"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1172g"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rgc3"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twty3"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfke7"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxdi1"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6084y"]
+atlas = ExtResource("2_tsf8l")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l8dmx"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_d3bah")
+"texture": SubResource("AtlasTexture_7vwqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l153w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_335ic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61mdk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1172g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rgc3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twty3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfke7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxdi1")
 }],
-"loop": true,
+"loop": false,
+"name": &"death",
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6084y")
+}],
+"loop": false,
 "name": &"idle",
 "speed": 5.0
 }]
@@ -38,4 +107,6 @@ shape = SubResource("RectangleShape2D_odru2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_l8dmx")
-animation = &"idle"
+animation = &"death"
+
+[node name="AudioControler" parent="." instance=ExtResource("3_b1vab")]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://btevp77vj1a2o"]
+
+[ext_resource type="Script" path="res://scenes/Shared/main_menu_audio_controller.gd" id="1_ad78n"]
+[ext_resource type="AudioStream" uid="uid://cq20wvt87j5tc" path="res://assets/music/7. Strange.wav" id="2_nnx4y"]
+[ext_resource type="AudioStream" uid="uid://bw83mylw3yj71" path="res://assets/music/night-detective-226857.mp3" id="3_ossex"]
+[ext_resource type="AudioStream" uid="uid://c4h276mhl3aji" path="res://assets/music/nightfall-future-bass-music-228100.mp3" id="4_c8kbc"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_sp7ll"]
+streams_count = 3
+stream_0/stream = ExtResource("2_nnx4y")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("3_ossex")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("4_c8kbc")
+stream_2/weight = 1.0
+
+[node name="MenuAudioController" type="Node"]
+script = ExtResource("1_ad78n")
+
+[node name="RandomMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_sp7ll")
+bus = &"Music"
