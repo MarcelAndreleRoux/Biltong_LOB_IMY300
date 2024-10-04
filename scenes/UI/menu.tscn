@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cma31337mqy13"]
+[gd_scene load_steps=6 format=3 uid="uid://cma31337mqy13"]
 
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_oawy5"]
 [ext_resource type="Script" path="res://scenes/UI/menu.gd" id="1_vyayb"]
 [ext_resource type="Texture2D" uid="uid://h3lrngtkh1sb" path="res://assets/sprites/UI/Title/cover-1.jpg" id="3_gb30e"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_xnclv"]
+[ext_resource type="PackedScene" uid="uid://53rdelj2ncqx" path="res://scenes/UI/audio_options.tscn" id="5_qclmx"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -18,7 +19,7 @@ script = ExtResource("1_vyayb")
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 481.0
-offset_bottom = 275.0
+offset_bottom = 271.0
 texture = ExtResource("3_gb30e")
 expand_mode = 1
 
@@ -66,6 +67,10 @@ offset_top = -3.0
 offset_right = 154.0
 offset_bottom = 80.0
 text = "LOB"
+
+[node name="Audio" parent="." instance=ExtResource("5_qclmx")]
+visible = false
+layout_mode = 1
 
 [connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/Option" to="." method="_on_option_pressed"]
