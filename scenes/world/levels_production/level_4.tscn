@@ -9,15 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_8pq3k"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_6410y"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="15_n4cns"]
+[ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="16_e0khn"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="16_h1sos"]
 [ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_km02t"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_6qyfn"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="19_bvmg8"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="20_0vrmc"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="20_pefhm"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bt5c0"]
-size = Vector2(87, 43)
 
 [node name="BaseLevel3" type="Node2D"]
 script = ExtResource("1_xoy2j")
@@ -105,9 +103,5 @@ visible = false
 [node name="WinState" parent="." instance=ExtResource("16_h1sos")]
 visible = false
 
-[node name="Transition" type="Area2D" parent="."]
-position = Vector2(208, 40)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
-position = Vector2(177, 180)
-shape = SubResource("RectangleShape2D_bt5c0")
+[node name="LevelTransition" parent="." instance=ExtResource("16_e0khn")]
+position = Vector2(385, 221)

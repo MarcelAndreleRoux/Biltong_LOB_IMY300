@@ -8,13 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="6_fu23d"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="12_ew204"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="13_7dtpd"]
+[ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="13_xkfor"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="14_jjqiu"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="16_rhbfl"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="17_gugyt"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="17_pb20x"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwikq"]
-size = Vector2(87, 43)
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_e5o8h")
@@ -87,9 +85,5 @@ visible = false
 [node name="WinState" parent="." instance=ExtResource("13_7dtpd")]
 visible = false
 
-[node name="Transition" type="Area2D" parent="."]
-position = Vector2(128, 88)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
-position = Vector2(177, 180)
-shape = SubResource("RectangleShape2D_gwikq")
+[node name="LevelTransition" parent="." instance=ExtResource("13_xkfor")]
+position = Vector2(307, 270)

@@ -10,15 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="14_6f6to"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="16_ci0u3"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="16_j5yxl"]
+[ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="17_0c8du"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="17_ija3k"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="18_kgv0f"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="19_5qcd3"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="20_iwpxk"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="20_yvv6y"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="21_pq15t"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvpk6"]
-size = Vector2(87, 43)
 
 [node name="BaseLevel3" type="Node2D"]
 script = ExtResource("1_4c3ar")
@@ -136,9 +134,5 @@ visible = false
 [node name="WinState" parent="." instance=ExtResource("17_ija3k")]
 visible = false
 
-[node name="Transition" type="Area2D" parent="."]
-position = Vector2(-112, 88)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
-position = Vector2(177, 180)
-shape = SubResource("RectangleShape2D_uvpk6")
+[node name="LevelTransition" parent="." instance=ExtResource("17_0c8du")]
+position = Vector2(67, 269)

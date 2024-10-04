@@ -1,5 +1,6 @@
 extends StaticBody2D
 
+@export var wire: NodePath
 @export var door_link_id: String
 
 var found_link: bool = false
@@ -24,6 +25,7 @@ func _on_click_area_body_entered(body):
 	
 		if found_link and door_link_id == door_link_found:
 			click.play()
+			SharedSignals.wire_change.emit(true, door_link_id)
 			animated_sprite_2d.play("click")
 			SharedSignals.doorState.emit(door_link_id, true)
 
@@ -33,6 +35,7 @@ func _on_click_area_body_exited(body):
 
 	if body.is_in_group("activation"):
 		if found_link and door_link_id == door_link_found:
+			SharedSignals.wire_change.emit(false, door_link_id)
 			animated_sprite_2d.play_backwards("click")
 			SharedSignals.doorState.emit(door_link_id, false)
 

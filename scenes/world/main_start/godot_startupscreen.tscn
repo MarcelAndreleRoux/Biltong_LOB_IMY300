@@ -228,7 +228,7 @@ color = Color(0, 0, 0, 1)
 stream = ExtResource("7_abf6n")
 
 [node name="ChangeScene" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 3.0
 one_shot = true
 autostart = true
 

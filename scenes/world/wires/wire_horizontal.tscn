@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjksoqqo2olnc"]
+
+[ext_resource type="Texture2D" uid="uid://dhjrs6u1jrxlc" path="res://assets/sprites/objects/static/wire/Wires-Tileset.png" id="1_8dreu"]
+[ext_resource type="Script" path="res://scenes/world/wires/wire_horizontal.gd" id="1_vs71v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kc0yl"]
+atlas = ExtResource("1_8dreu")
+region = Rect2(240, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flp62"]
+atlas = ExtResource("1_8dreu")
+region = Rect2(336, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dve5d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kc0yl")
+}],
+"loop": false,
+"name": &"off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flp62")
+}],
+"loop": false,
+"name": &"on",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tut27"]
+size = Vector2(16, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uxgje"]
+size = Vector2(30, 6)
+
+[node name="Horizontal" type="StaticBody2D" groups=["wires"]]
+collision_layer = 2048
+collision_mask = 2048
+script = ExtResource("1_vs71v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dve5d")
+animation = &"on"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tut27")
+
+[node name="connection_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="connection_area"]
+shape = SubResource("RectangleShape2D_uxgje")

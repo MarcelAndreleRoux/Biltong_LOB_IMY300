@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dhkb5s7a7hneg"]
+[gd_scene load_steps=18 format=3 uid="uid://c26tv88pg7x41"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_yscb4"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_aygkm"]
@@ -9,16 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="7_ad16n"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_vrk7k"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_6ueol"]
-[ext_resource type="PackedScene" path="res://scenes/UI/game_pause.tscn" id="17_qiwbr"]
-[ext_resource type="PackedScene" path="res://scenes/UI/death.tscn" id="18_p5i3e"]
-[ext_resource type="PackedScene" uid="uid://bjowa70ekmjcv" path="res://scenes/UI/win.tscn" id="19_ov150"]
+[ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="17_inxj1"]
+[ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="17_qiwbr"]
+[ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="18_p5i3e"]
+[ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="19_ov150"]
 [ext_resource type="PackedScene" uid="uid://fg8pnbkcvvaj" path="res://scenes/entities/objects/static/board/m_board.tscn" id="20_f641s"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_e10qb"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="22_d185w"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="23_7q63b"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3a4vm"]
-size = Vector2(87, 43)
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_yscb4")
@@ -133,9 +131,5 @@ visible = false
 [node name="WinState" parent="." instance=ExtResource("19_ov150")]
 visible = false
 
-[node name="Transition" type="Area2D" parent="."]
-position = Vector2(-128, 88)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Transition"]
-position = Vector2(177, 180)
-shape = SubResource("RectangleShape2D_3a4vm")
+[node name="LevelTransition" parent="." instance=ExtResource("17_inxj1")]
+position = Vector2(48, 267)
