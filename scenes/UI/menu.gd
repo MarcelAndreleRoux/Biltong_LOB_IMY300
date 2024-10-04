@@ -2,11 +2,13 @@ extends Control
 
 @onready var audio = $Audio
 @onready var back = $TextureRect2/MarginContainer/VBoxContainer/VBoxContainer/Back
+@onready var animation_player = $AnimationPlayer
 
 var exit: bool = false
 var options: bool = false
 
 func _ready():
+	animation_player.play("fade_in_white")
 	MenuAudioController.play_music()
 	AudioController.button_select.connect(_on_select_finished)
 

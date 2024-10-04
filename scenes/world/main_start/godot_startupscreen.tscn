@@ -1,15 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://djx7wt3s0yqf2"]
+[gd_scene load_steps=13 format=3 uid="uid://djx7wt3s0yqf2"]
 
 [ext_resource type="Script" path="res://scenes/world/main_start/godot_startupscreen.gd" id="1_3eng2"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/camera_2d.tscn" id="2_fdbcf"]
 [ext_resource type="Texture2D" uid="uid://cmvij47ylbdr7" path="res://assets/sprites/UI/Title/splash/Godot_other1-sheet.png" id="3_pgktt"]
 [ext_resource type="FontFile" uid="uid://b4koppylwngvs" path="res://assets/sprites/UI/Font/PressStart2P-Regular.ttf" id="4_06yyd"]
+[ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="5_dlcvl"]
 [ext_resource type="AudioStream" uid="uid://cbrodfxtffv5d" path="res://assets/soundeffects/GodotLoadScreenFinal_FlickeringLightSound.wav" id="7_abf6n"]
 
 [sub_resource type="Environment" id="Environment_g8wac"]
 background_mode = 3
 glow_bloom = 0.02
-adjustment_enabled = true
 adjustment_contrast = 2.73
 
 [sub_resource type="Curve" id="Curve_gsn0w"]
@@ -19,72 +19,6 @@ point_count = 2
 [sub_resource type="Theme" id="Theme_gqdpt"]
 Label/font_sizes/font_size = 23
 Label/fonts/font = ExtResource("4_06yyd")
-
-[sub_resource type="Animation" id="Animation_f0x5g"]
-resource_name = "splash"
-length = 2.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LightMusic:playing")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CPUParticles2D:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1.2),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ColorRect:color")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6, 1.1, 1.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0.364706), Color(0, 0, 0, 0.639216), Color(0, 0, 0, 0.6), Color(0, 0, 0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4, 1.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0, 1, 2]
-}
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("ShakeCamera")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(1.2),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"apply_shake"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_7xgwk"]
 length = 0.001
@@ -136,6 +70,123 @@ tracks/3/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_f0x5g"]
+resource_name = "splash"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LightMusic:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:color")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.8, 1.1, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0.364706), Color(0, 0, 0, 0.639216), Color(0, 0, 0, 0.282353), Color(0, 0, 0, 0.686275), Color(0, 0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0, 1, 2]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShakeCamera")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.2, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"apply_shake"
+}, {
+"args": [],
+"method": &"apply_shake_smaller"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(2.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(2.4, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x43jy"]
 _data = {
@@ -152,9 +203,9 @@ script = ExtResource("1_3eng2")
 environment = SubResource("Environment_g8wac")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = 2
-position = Vector2(241, 135)
-scale = Vector2(0.261053, 0.260511)
+z_index = 1
+position = Vector2(240.471, 136.46)
+scale = Vector2(0.255888, 0.255753)
 texture = ExtResource("3_pgktt")
 hframes = 3
 
@@ -188,20 +239,31 @@ offset_right = 481.0
 offset_bottom = 269.0
 theme = SubResource("Theme_gqdpt")
 
-[node name="Godot" type="Label" parent="Control"]
+[node name="By" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 189.0
+offset_right = 274.0
+offset_bottom = 212.0
+theme_override_font_sizes/font_size = 16
+text = "By"
+
+[node name="Names" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -54.5
-offset_top = -87.0
-offset_right = 60.5
-offset_bottom = -29.0
+offset_left = -168.5
+offset_top = -72.0
+offset_right = 176.5
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "GODOT"
+theme = ExtResource("5_dlcvl")
+theme_override_font_sizes/font_size = 36
+text = "MARCEL and STEFAN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -214,7 +276,7 @@ offset_top = -1.0
 offset_right = 6.0
 offset_bottom = 124.0
 grow_horizontal = 2
-text = "MADE WITH"
+text = "MADE WITH GODOT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -226,6 +288,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="LightMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_abf6n")
+volume_db = -12.0
 
 [node name="ChangeScene" type="Timer" parent="."]
 wait_time = 3.0
@@ -236,5 +299,22 @@ autostart = true
 libraries = {
 "": SubResource("AnimationLibrary_x43jy")
 }
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+z_index = -1
+offset_left = -41.0
+offset_top = -35.0
+offset_right = 528.0
+offset_bottom = 299.0
+color = Color(0, 0, 0, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -25.0
+offset_top = -24.0
+offset_right = 514.0
+offset_bottom = 298.0
 
 [connection signal="timeout" from="ChangeScene" to="." method="_on_change_scene_timeout"]
