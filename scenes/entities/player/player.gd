@@ -17,6 +17,13 @@ signal drag_box(position: Vector2, direction: Vector2)
 @onready var box_drop = $box_drop
 @onready var death_sound = $death_sound
 
+# Dash variables
+var is_dashing: bool = false
+var dash_speed: float = 200.0  # Speed of the dash
+var dash_time: float = 0.15     # How long the dash lasts (in seconds)
+var dash_timer: float = 0.0    # Tracks dash time
+var last_direction: Vector2 = Vector2.ZERO  # Store the last movement direction
+
 # Movement
 var currentVelocity: Vector2
 var speed: int = 100
@@ -60,6 +67,7 @@ func _ready():
 	SharedSignals.can_throw_projectile.connect(_on_can_throw)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
+	SharedSignals.push_player_forward.connect(start_dash)
 
 func _on_item_pickup():
 	can_aim_throw = true
@@ -92,7 +100,12 @@ func update_speed():
 	else:
 		speed = 100
 
-func _physics_process(_delta):
+func _physics_process(delta):
+	if is_dashing:
+		_perform_dash(delta)
+	else:
+		_handle_movement_input()
+	
 	_end = get_local_mouse_position()
 	my_local_pos = to_local(global_position)
 	
@@ -105,7 +118,6 @@ func _physics_process(_delta):
 	
 	if not is_bouncing_back:
 		_handle_action_input()
-		_handle_movement_input()
 		_play_movement_animation()
 		_update_animation_parameters()
 
@@ -122,8 +134,28 @@ func _physics_process(_delta):
 
 func _handle_movement_input():
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	direction = currentVelocity.normalized()
-	currentVelocity *= speed
+
+	if currentVelocity != Vector2.ZERO:
+		direction = currentVelocity.normalized()
+		last_direction = direction
+		currentVelocity *= speed
+	else:
+		currentVelocity = Vector2.ZERO
+
+func start_dash():
+	# Dash in the last known direction, even if the player isn't currently moving
+	if last_direction != Vector2.ZERO:
+		is_dashing = true
+		dash_timer = dash_time
+		currentVelocity = last_direction * dash_speed
+
+func _perform_dash(delta):
+	if dash_timer > 0:
+		dash_timer -= delta
+		currentVelocity = last_direction * dash_speed
+	else:
+		is_dashing = false
+		currentVelocity = Vector2.ZERO
 
 func _on_player_killed(type: String):
 	# Disable player input and actions

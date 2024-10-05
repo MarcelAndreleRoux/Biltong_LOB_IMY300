@@ -13,6 +13,7 @@ signal calculate_landing_position
 signal request_spawn_projectile
 signal player_killed
 signal death_finished
+signal push_player_forward
 
 # Projectile Signals
 signal projectile_gone
