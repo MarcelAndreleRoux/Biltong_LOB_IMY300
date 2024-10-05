@@ -9,8 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="12_0taos"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_1xgpy"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="13_gpbjv"]
+[ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="14_nt8u3"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="14_tqpsb"]
-[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_30w6t"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="17_n53mo"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_aoxyx"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_larkh"]
@@ -73,11 +73,6 @@ door_link_id = "Hello"
 [node name="Box" parent="." instance=ExtResource("4_512gt")]
 position = Vector2(351, 191)
 
-[node name="Error" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_30w6t")
-volume_db = -16.138
-pitch_scale = 0.92
-
 [node name="Food" type="Node" parent="." groups=["food"]]
 
 [node name="GamePause" parent="." instance=ExtResource("17_n53mo")]
@@ -91,3 +86,6 @@ visible = false
 
 [node name="LevelTransition" parent="." instance=ExtResource("14_tqpsb")]
 position = Vector2(193, 268)
+
+[node name="AudioPausedMenu" parent="." instance=ExtResource("14_nt8u3")]
+visible = false

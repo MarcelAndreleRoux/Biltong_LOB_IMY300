@@ -76,6 +76,9 @@ signal eaten_ground_food
 # Fire Mango
 signal fire_mango_land
 
+# Water
+signal water_land
+
 # Box
 signal player_move
 signal player_exit

@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_6k5s6"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="15_2f44g"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="15_jb78l"]
-[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_yy2v7"]
+[ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="15_v5xm1"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="16_eb2ic"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="17_j0f4h"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="20_x8xmc"]
@@ -63,11 +63,6 @@ stretch_mode = 2
 position = Vector2(240, 16)
 door_link_id = "123"
 
-[node name="Error" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_yy2v7")
-volume_db = -16.138
-pitch_scale = 0.92
-
 [node name="Vines" parent="." instance=ExtResource("20_x8xmc")]
 position = Vector2(160, 128)
 
@@ -120,3 +115,6 @@ visible = false
 
 [node name="LevelTransition" parent="." instance=ExtResource("15_2f44g")]
 position = Vector2(112, 237)
+
+[node name="AudioPausedMenu" parent="." instance=ExtResource("15_v5xm1")]
+visible = false

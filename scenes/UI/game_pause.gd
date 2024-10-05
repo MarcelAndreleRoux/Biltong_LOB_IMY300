@@ -59,11 +59,8 @@ func _on_button_select_finished():
 		self.hide()
 		var audio_paused_menu = get_parent().get_node("AudioPausedMenu")
 		audio_paused_menu.audio_options_selected()
-		options = false  # Add this line to reset the options flag
+		options = false
 	elif resume:
 		self.hide()
-		var audio_paused_menu = get_parent().get_node("AudioPausedMenu")
-		if audio_paused_menu.is_visible():
-			audio_paused_menu.hide()
 		get_tree().paused = false
 		resume = false

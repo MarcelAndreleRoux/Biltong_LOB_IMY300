@@ -23,7 +23,7 @@ func _ready():
 func _process(delta):
 	if player_in_area and Input.is_action_just_pressed("pickup") and not already_picked:
 		already_picked = true
-		GlobalValues.can_swap_water = true  # Set global flag to track item
+		GlobalValues.can_swap_water = true
 		SharedSignals.item_pickup.emit()
 		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.WATER)
 		SharedSignals.inventory_changed.emit(GlobalValues.INVENTORY_SELECT.WATER)

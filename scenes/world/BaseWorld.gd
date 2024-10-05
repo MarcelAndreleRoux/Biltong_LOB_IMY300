@@ -23,7 +23,6 @@ class_name BaseWorld
 @onready var inventory = $Inventory
 
 #Sounds
-@onready var error = $Error
 @onready var death = $Death
 @onready var win_state = $WinState
 
@@ -57,7 +56,6 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 func _ready():
-	MenuAudioController.stop_music()
 	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
@@ -66,6 +64,7 @@ func _ready():
 	SharedSignals.projectile_gone.connect(_remove_marker)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.death_finished.connect(_on_death_finsish)
+	GlobalValues.game_done.connect(_on_game_finished)
 
 	player_raycast.enabled = true
 	
@@ -75,6 +74,9 @@ func _ready():
 	
 	if hedgehog:
 		enemy_raycast.add_exception(hedgehog)
+
+func _on_game_finished():
+	win_state.win()
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
@@ -142,7 +144,9 @@ func _handle_aiming_and_throwing():
 			_throw_item()
 			_start_cooldown_timer()
 		else:
-			print("Cannot throw, something is in the way!")
+			AudioController.play_sfx("error")
+			if _isAiming:
+				_isAiming = false
 
 func _on_item_pickup():
 	GlobalValues.can_throw = true
@@ -210,7 +214,7 @@ func _check_inventory_swap():
 	if Input.is_action_just_pressed("one"):
 		# If player hasn't picked up food yet, play error
 		if not GlobalValues.can_swap_food:
-			error.play()
+			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
@@ -219,7 +223,7 @@ func _check_inventory_swap():
 	if Input.is_action_just_pressed("two"):
 		# If player hasn't picked up fire yet, play error
 		if not GlobalValues.can_swap_fire:
-			error.play()
+			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FIRE)
@@ -228,7 +232,7 @@ func _check_inventory_swap():
 	if Input.is_action_just_pressed("three"):
 		# If player hasn't picked up water yet, play error
 		if not GlobalValues.can_swap_water:
-			error.play()
+			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.WATER)

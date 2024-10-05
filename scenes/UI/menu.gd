@@ -14,6 +14,7 @@ var play: bool = false
 
 func _ready():
 	animation_player.play("fade_in_white")
+	GameMusicController.stop_music()
 	MenuAudioController.play_music()
 	AudioController.button_select.connect(_on_select_finished)
 	options_menu.exit_options_menu.connect(on_exit_options_menu)
@@ -56,6 +57,8 @@ func _on_select_finished():
 		options = false
 	elif play:
 		GlobalValues.playing_game = true
+		MenuAudioController.stop_music()
+		GameMusicController.play_music()
 		get_tree().change_scene_to_file("res://scenes/world/levels_production/level_1.tscn")
 	else:
 		margin_container.visible = true

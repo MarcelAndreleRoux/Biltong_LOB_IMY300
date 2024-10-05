@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @onready var confetti = $Confetti
+@onready var shake_camera = $ShakeCamera
 
 var exit: bool = false
 var reset: bool = false
@@ -10,12 +11,16 @@ func _ready():
 	self.hide()
 
 func _on_restart_pressed():
+	shake_camera.apply_shake_smaller()
 	AudioController.play_sfx("button_select")
 	reset = true
+	_on_select_finished()
 
 func _on_exit_pressed():
+	shake_camera.apply_shake_smaller()
 	AudioController.play_sfx("button_select")
 	exit = true
+	_on_select_finished()
 
 func _on_select_finished():
 	if exit:

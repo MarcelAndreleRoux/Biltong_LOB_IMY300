@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=12 format=3 uid="uid://b5t6g5rjkfsn5"]
+[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://b5t6g5rjkfsn5"]
 
 [ext_resource type="Texture2D" uid="uid://lmep00vlmn16" path="res://assets/sprites/world/Floor-Tileset.png" id="1_xaygf"]
 [ext_resource type="Texture2D" uid="uid://dhjrs6u1jrxlc" path="res://assets/sprites/objects/static/wire/Wires-Tileset.png" id="2_d0dwk"]
@@ -190,6 +190,13 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 0.0
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nf75q"]
+vertices = PackedVector2Array(8, -2, -8, -1, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, -1.5, -8, -1.375)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c3q73"]
 texture = ExtResource("1_xaygf")
 0:0/0 = 0
@@ -215,6 +222,7 @@ texture = ExtResource("1_xaygf")
 5:0/0 = 0
 5:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:0/0/physics_layer_0/angular_velocity = 0.0
+5:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nf75q")
 6:0/0 = 0
 6:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 6:0/0/physics_layer_0/angular_velocity = 0.0

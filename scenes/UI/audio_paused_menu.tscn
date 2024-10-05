@@ -123,6 +123,7 @@ horizontal_alignment = 1
 
 [node name="ButtonSelect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_2j86o")
+bus = &"Sfx"
 
 [connection signal="pressed" from="Audio/TextureRect2/MarginContainer/VBoxContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="finished" from="ButtonSelect" to="." method="_on_button_select_finished"]

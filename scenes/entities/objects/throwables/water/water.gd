@@ -15,7 +15,7 @@ func _physics_process(delta: float):
 
 func impact_landing():
 	landed = true
-	audio_controler.land.play()
+	AudioController.play_sfx("water_land")
 	animated_sprite_2d.play("land")
 
 func _on_fire_area_area_entered(area):
@@ -24,7 +24,6 @@ func _on_fire_area_area_entered(area):
 		
 	if area.is_in_group("grow"):
 		pass
-
 
 func _on_animated_sprite_2d_animation_finished():
 	if landed:

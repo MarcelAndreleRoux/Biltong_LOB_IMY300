@@ -22,6 +22,7 @@ script = ExtResource("1_bde8u")
 [node name="water_land" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(0, -1)
 stream = ExtResource("2_ptnl1")
+volume_db = -10.736
 pitch_scale = 1.8
 bus = &"Sfx"
 
@@ -42,33 +43,37 @@ bus = &"Sfx"
 bus = &"Sfx"
 
 [node name="player_peg" type="AudioStreamPlayer2D" parent="."]
+volume_db = -2.684
 bus = &"Sfx"
 
 [node name="lizard_walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_yllhe")
+volume_db = -12.749
 pitch_scale = 1.28
 bus = &"Sfx"
 
 [node name="turtle_walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_m4qxj")
+volume_db = -10.597
 bus = &"Sfx"
 
 [node name="zap" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_8l2n3")
-volume_db = -10.0
+volume_db = -20.735
 bus = &"Sfx"
 
 [node name="box_action" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_nbyvm")
-volume_db = 7.0
 bus = &"Sfx"
 
 [node name="button_select" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_pq3mj")
+volume_db = -6.71
 bus = &"Sfx"
 
 [node name="error" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_0nwto")
+volume_db = -17.0
 bus = &"Sfx"
 
 [node name="win" type="AudioStreamPlayer2D" parent="."]

@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="4_nqk6f"]
 [ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="6_7oh5b"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_8pq3k"]
-[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_6410y"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="15_n4cns"]
+[ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="16_4dh3l"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="16_e0khn"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="16_h1sos"]
 [ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_km02t"]
@@ -87,11 +87,6 @@ door_link_id = "a"
 [node name="Box" parent="." instance=ExtResource("4_nqk6f")]
 position = Vector2(216, 56)
 
-[node name="Error" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_6410y")
-volume_db = -16.138
-pitch_scale = 0.92
-
 [node name="Food" type="Node" parent="." groups=["food"]]
 
 [node name="GamePause" parent="." instance=ExtResource("20_0vrmc")]
@@ -105,3 +100,6 @@ visible = false
 
 [node name="LevelTransition" parent="." instance=ExtResource("16_e0khn")]
 position = Vector2(385, 221)
+
+[node name="AudioPausedMenu" parent="." instance=ExtResource("16_4dh3l")]
+visible = false

@@ -1,10 +1,11 @@
 extends Node
 
+signal game_done
+
 var current_scene = "World"
 var transition_scene = false
 var can_throw: bool = false
 var inventory_update = false
-var game_done = false
 
 enum INVENTORY_SELECT { NONE, FOOD, FIRE, WATER }
 var inventory_select = INVENTORY_SELECT.NONE
@@ -61,9 +62,8 @@ const LEVEL_PATHS = [
 
 func change_scene_to_next_level():
 	if LevelManager.current_level == 9:  # If we are at the last level (level 10)
-		game_done = true
+		game_done.emit()
 	else:
-		game_done = false
 		LevelManager.current_level += 1  # Increment the level counter
 
 		if LevelManager.current_level < LEVEL_PATHS.size():

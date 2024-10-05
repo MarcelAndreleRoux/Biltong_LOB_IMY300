@@ -86,6 +86,7 @@ func _start_despawn_timer():
 	add_child(timer)
 	timer.start()
 	SharedSignals.fire_mango_land.emit()
+	SharedSignals.water_land.emit()
 
 func _despawn_time():
 	SharedSignals.projectile_gone.emit(self)

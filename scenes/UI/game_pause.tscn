@@ -87,6 +87,7 @@ text = "Pause"
 
 [node name="ButtonSelect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_uelmv")
+bus = &"Sfx"
 
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
