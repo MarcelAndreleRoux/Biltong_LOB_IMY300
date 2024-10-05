@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/level_scripts/level_1.gd" id="1_ypnr2"]
-[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/camera_2d.tscn" id="2_apglj"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_apglj"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_u5vqf"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="7_i1ec7"]
 [ext_resource type="Script" path="res://scenes/world/Mouse.gd" id="8_ni41v"]

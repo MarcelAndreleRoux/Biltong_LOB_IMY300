@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ciboe7sdibtc3"]
 
-[ext_resource type="Script" path="res://scenes/world/main_start/Camera2D.gd" id="1_t8jmc"]
+[ext_resource type="Script" path="res://scenes/world/main_start/shake_camera.gd" id="1_t8jmc"]
 
 [node name="ShakeCamera" type="Camera2D"]
 position = Vector2(241, 135)

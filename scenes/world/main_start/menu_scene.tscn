@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://qbo352g2ap5v"]
 
-[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/camera_2d.tscn" id="1_4f7jk"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="1_4f7jk"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_l500c"]
 
 [sub_resource type="Environment" id="Environment_ca11l"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnobf44t3wkei"]
+[gd_scene load_steps=6 format=3 uid="uid://bnobf44t3wkei"]
 
 [ext_resource type="Script" path="res://scenes/UI/game_pause.gd" id="1_wxb5x"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_8pyex"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="3_d13yp"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_ynmkg"]
 [ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="5_uelmv"]
@@ -8,6 +9,8 @@
 [node name="GamePause" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_wxb5x")
+
+[node name="ShakeCamera" parent="." instance=ExtResource("2_8pyex")]
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15

@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cma31337mqy13"]
+[gd_scene load_steps=10 format=3 uid="uid://cma31337mqy13"]
 
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_oawy5"]
 [ext_resource type="Script" path="res://scenes/UI/menu.gd" id="1_vyayb"]
 [ext_resource type="Texture2D" uid="uid://h3lrngtkh1sb" path="res://assets/sprites/UI/Title/cover-1.jpg" id="3_gb30e"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="3_tc8qs"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_xnclv"]
-[ext_resource type="PackedScene" uid="uid://53rdelj2ncqx" path="res://scenes/UI/audio_options.tscn" id="5_qclmx"]
+[ext_resource type="PackedScene" uid="uid://pjr0tdqacf2g" path="res://scenes/UI/options_menu.tscn" id="6_x258p"]
 
 [sub_resource type="Animation" id="Animation_yvalh"]
 length = 0.001
@@ -77,6 +78,8 @@ grow_vertical = 2
 theme = ExtResource("1_oawy5")
 script = ExtResource("1_vyayb")
 
+[node name="ShakeCamera" parent="." instance=ExtResource("3_tc8qs")]
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 481.0
@@ -84,52 +87,58 @@ offset_bottom = 271.0
 texture = ExtResource("3_gb30e")
 expand_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="Lob" type="Label" parent="."]
+custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
-offset_left = 105.0
-offset_top = 73.0
-offset_right = 254.0
-offset_bottom = 251.0
-texture = ExtResource("4_xnclv")
+offset_left = 1.0
+offset_right = 171.0
+offset_bottom = 83.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "LOB"
+horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="TextureRect2"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -39.5
-offset_top = -19.0
-offset_right = 39.5
-offset_bottom = 19.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = 52.0
+offset_right = -238.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect2/MarginContainer"]
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer"]
 layout_mode = 2
+texture = ExtResource("4_xnclv")
 
-[node name="Play" type="Button" parent="TextureRect2/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TextureRect2"]
+layout_mode = 2
+offset_left = 46.0
+offset_top = 76.0
+offset_right = 199.0
+offset_bottom = 165.0
+theme_override_constants/separation = 7
+
+[node name="Play" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
 layout_mode = 2
 text = "Play"
 
-[node name="Option" type="Button" parent="TextureRect2/MarginContainer/VBoxContainer"]
+[node name="Levels" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
+layout_mode = 2
+text = "Levels"
+
+[node name="Option" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
 layout_mode = 2
 text = "OPTIONS"
 
-[node name="Exit" type="Button" parent="TextureRect2/MarginContainer/VBoxContainer"]
+[node name="Exit" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 19.0
-offset_top = -3.0
-offset_right = 154.0
-offset_bottom = 80.0
-text = "LOB"
-
-[node name="Audio" parent="." instance=ExtResource("5_qclmx")]
+[node name="Options_Menu" parent="." instance=ExtResource("6_x258p")]
 visible = false
 layout_mode = 1
 
@@ -146,6 +155,6 @@ libraries = {
 "": SubResource("AnimationLibrary_mj4cb")
 }
 
-[connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/Option" to="." method="_on_option_pressed"]
-[connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Option" to="." method="_on_option_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

@@ -3,6 +3,7 @@ extends BaseWorld
 @onready var keycaps = $Keycaps
 
 func _ready():
+	GameMusicController.play_music()
 	super()
 	_display_keycaps_start()
 

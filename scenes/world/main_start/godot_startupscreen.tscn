@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://djx7wt3s0yqf2"]
 
 [ext_resource type="Script" path="res://scenes/world/main_start/godot_startupscreen.gd" id="1_3eng2"]
-[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/camera_2d.tscn" id="2_fdbcf"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_fdbcf"]
 [ext_resource type="Texture2D" uid="uid://cmvij47ylbdr7" path="res://assets/sprites/UI/Title/splash/Godot_other1-sheet.png" id="3_pgktt"]
 [ext_resource type="FontFile" uid="uid://b4koppylwngvs" path="res://assets/sprites/UI/Font/PressStart2P-Regular.ttf" id="4_06yyd"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="5_dlcvl"]

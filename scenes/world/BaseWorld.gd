@@ -10,6 +10,8 @@ class_name BaseWorld
 @onready var electric_lizard = $ElectricLizard
 @onready var trajectory_line = $Player/TrajectoryLine
 @onready var game_pause = $GamePause
+@onready var audio_paused_menu = $AudioPausedMenu
+@onready var game_music_player = GameMusicController
 @onready var food = $Food
 
 #Raycasts
@@ -55,6 +57,7 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 func _ready():
+	MenuAudioController.stop_music()
 	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
@@ -84,8 +87,6 @@ func _physics_process(_delta):
 	_update_hedgehog_raycast()
 	_check_inventory_swap()
 	_update_raycast_position()
-	#_update_turtle_raycast()
-	change_scene()
 	
 	if GlobalValues.can_throw:
 		_handle_aiming_and_throwing()
@@ -349,15 +350,6 @@ func _remove_marker():
 func _on_transition_body_entered(body):
 	if body.is_in_group("player"):
 		GlobalValues.transition_scene = true
-
-func change_scene():
-	if GlobalValues.transition_scene:
-		if GlobalValues.current_scene == "World":
-			get_tree().change_scene_to_file("res://scenes/world/level_2.tscn")
-			GlobalValues.finish_changingscene()
-		if GlobalValues.current_scene == "Level2":
-			get_tree().change_scene_to_file("res://scenes/world/base_level.tscn")
-			GlobalValues.finish_changingscene()
 
 func _on_death_finsish():
 	death.death_lose()

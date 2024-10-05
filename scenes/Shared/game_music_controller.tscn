@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://ctbl3sokmebn3"]
 
-[ext_resource type="Script" path="res://scenes/world/game_music_controller.gd" id="1_uxfob"]
+[ext_resource type="Script" path="res://scenes/Shared/game_music_controller.gd" id="1_uxfob"]
 [ext_resource type="AudioStream" uid="uid://yn3jhtgbf6yx" path="res://assets/music/9. Space Debris.wav" id="2_3hlnb"]
 [ext_resource type="AudioStream" uid="uid://bgkakg5gljh4h" path="res://assets/music/10. Boundless Slumber.wav" id="3_rya47"]
 [ext_resource type="AudioStream" uid="uid://c7thlidkl8koy" path="res://assets/music/11. Poseidon's Realm.wav" id="4_icxfx"]
@@ -32,7 +32,7 @@ stream_7/weight = 1.0
 [node name="GameMusicControler" type="Node"]
 script = ExtResource("1_uxfob")
 
-[node name="RandomAudioPlayer" type="AudioStreamPlayer" parent="."]
+[node name="RandomAudioPlayerGame" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_0avr3")
-volume_db = -20.0
+volume_db = -15.0
 bus = &"Music"
