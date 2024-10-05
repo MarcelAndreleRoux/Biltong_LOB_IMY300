@@ -48,26 +48,22 @@ func game_exit():
 
 func _on_button_select_finished():
 	if exit:
-		# Unpause the game and exit to the menu
 		get_tree().paused = false
 		get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")
 		exit = false
 	elif reset:
-		# Reload the scene and resume
 		get_tree().paused = false
 		get_tree().reload_current_scene()
 		reset = false
 	elif options:
 		self.hide()
-		get_tree().paused = true
 		var audio_paused_menu = get_parent().get_node("AudioPausedMenu")
 		audio_paused_menu.audio_options_selected()
+		options = false  # Add this line to reset the options flag
 	elif resume:
-		# Hide the pause menu and resume the game
 		self.hide()
 		var audio_paused_menu = get_parent().get_node("AudioPausedMenu")
 		if audio_paused_menu.is_visible():
-			audio_paused_menu.hide()  # Ensure the audio options menu is hidden
-		# Resume the game
+			audio_paused_menu.hide()
 		get_tree().paused = false
 		resume = false
