@@ -683,6 +683,23 @@ tracks/5/keys = {
 "update": 0,
 "values": [-18.0, -18.0]
 }
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shake_screen"
+}, {
+"args": [],
+"method": &"shake_screen"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_fns7b"]
 resource_name = "walk_right"
@@ -759,6 +776,23 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [-18.0, -18.0]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shake_screen"
+}, {
+"args": [],
+"method": &"shake_screen"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rr4hs"]
@@ -922,7 +956,7 @@ states/idle/position = Vector2(396, 100)
 states/walk/node = SubResource("AnimationNodeBlendSpace2D_737rd")
 states/walk/position = Vector2(396, -42)
 transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransition_njxco"), "hungry", "eat", SubResource("AnimationNodeStateMachineTransition_avrna"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_d6xjh"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_sv086"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kr72v"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_uxo76"), "idle", "hungry", SubResource("AnimationNodeStateMachineTransition_8vgqf"), "walk", "eat", SubResource("AnimationNodeStateMachineTransition_p0ajb"), "hungry", "walk", SubResource("AnimationNodeStateMachineTransition_bai71"), "hungry", "idle", SubResource("AnimationNodeStateMachineTransition_k02vk"), "walk", "Shell", SubResource("AnimationNodeStateMachineTransition_144lh"), "hungry", "Shell", SubResource("AnimationNodeStateMachineTransition_lrv7n"), "idle", "Shell", SubResource("AnimationNodeStateMachineTransition_3cfh8"), "eat", "Shell", SubResource("AnimationNodeStateMachineTransition_2y0xt"), "Shell", "walk", SubResource("AnimationNodeStateMachineTransition_5twsa"), "Shell", "idle", SubResource("AnimationNodeStateMachineTransition_xjq53"), "eat", "idle", SubResource("AnimationNodeStateMachineTransition_4q87x")]
-graph_offset = Vector2(-31, -83)
+graph_offset = Vector2(54.5906, -83)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e6vdn"]
 radius = 28.0
@@ -965,9 +999,9 @@ parameters/conditions/is_hungry = false
 parameters/conditions/is_idle = false
 parameters/conditions/is_scared = false
 parameters/conditions/is_walking = false
-parameters/Shell/blend_position = Vector2(0.0249768, -0.00529099)
-parameters/eat/blend_position = Vector2(0.00643086, 0)
-parameters/hungry/blend_position = Vector2(0.012026, 0.00529099)
+parameters/Shell/blend_position = Vector2(0.0676379, -0.00529099)
+parameters/eat/blend_position = Vector2(0.0447451, -0.00529099)
+parameters/hungry/blend_position = Vector2(0.0260146, -0.026455)
 parameters/idle/blend_position = Vector2(0.0147784, -0.00529099)
 parameters/walk/blend_position = Vector2(0.0112541, 0.00581396)
 

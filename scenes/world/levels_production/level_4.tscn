@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://m2t7mtfsnae"]
+[gd_scene load_steps=18 format=3 uid="uid://m2t7mtfsnae"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_xoy2j"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_gr4jm"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="16_e0khn"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="16_h1sos"]
 [ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_km02t"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="17_oh0lg"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_6qyfn"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="19_bvmg8"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="20_0vrmc"]
@@ -103,3 +104,5 @@ position = Vector2(385, 221)
 
 [node name="AudioPausedMenu" parent="." instance=ExtResource("16_4dh3l")]
 visible = false
+
+[node name="ShakeCamera" parent="." instance=ExtResource("17_oh0lg")]

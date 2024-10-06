@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cs4ef8lxk1jmp"]
+[gd_scene load_steps=17 format=3 uid="uid://cs4ef8lxk1jmp"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_qo3d2"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_svys4"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="14_cb6rf"]
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="15_31t3w"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="15_ksp62"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="16_82nrr"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_brx04"]
 [ext_resource type="PackedScene" uid="uid://fg8pnbkcvvaj" path="res://scenes/entities/objects/static/board/m_board.tscn" id="20_7tpa2"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_3ygka"]
@@ -106,3 +107,5 @@ position = Vector2(193, 221)
 
 [node name="AudioPausedMenu" parent="." instance=ExtResource("15_31t3w")]
 visible = false
+
+[node name="ShakeCamera" parent="." instance=ExtResource("16_82nrr")]

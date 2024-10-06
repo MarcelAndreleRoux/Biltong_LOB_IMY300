@@ -204,7 +204,7 @@ environment = SubResource("Environment_g8wac")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(240.471, 136.46)
+position = Vector2(241.471, 135.46)
 scale = Vector2(0.255888, 0.255753)
 texture = ExtResource("3_pgktt")
 hframes = 3

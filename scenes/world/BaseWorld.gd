@@ -13,6 +13,7 @@ class_name BaseWorld
 @onready var audio_paused_menu = $AudioPausedMenu
 @onready var game_music_player = GameMusicController
 @onready var food = $Food
+@onready var shake_camera = $ShakeCamera
 
 #Raycasts
 @onready var player_raycast = $Player/RayCast2D
@@ -65,6 +66,7 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.death_finished.connect(_on_death_finsish)
 	GlobalValues.game_done.connect(_on_game_finished)
+	SharedSignals.shake_turtle.connect(_shake)
 
 	player_raycast.enabled = true
 	
@@ -77,6 +79,9 @@ func _ready():
 
 func _on_game_finished():
 	win_state.win()
+
+func _shake():
+	shake_camera.apply_shake_semi_small()
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
@@ -133,7 +138,6 @@ func _handle_aiming_and_throwing():
 
 	if _isAiming:
 		SharedSignals.show_throw.emit()
-		#calculate_trajectory()
 		
 	# Check if the raycast is not colliding before allowing a throw
 	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:

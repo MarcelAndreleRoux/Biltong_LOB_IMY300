@@ -5,7 +5,8 @@ extends Camera2D
 @export var randomStrength: float = 10.0
 @export var shakeFade = 5.0
 
-@export var randomStrength_small: float = 1.0
+@export var randomStrength_small: float = 2.0
+@export var randomStrength_semi_small: float = 0.3
 
 @export var randomStrength_super_small: float = 0.2
 
@@ -18,6 +19,9 @@ func apply_shake():
 
 func apply_shake_smaller():
 	shake_stength = randomStrength_small
+
+func apply_shake_semi_small():
+	shake_stength = randomStrength_semi_small
 
 func apply_shake_super_small():
 	shake_stength = randomStrength_super_small

@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://brwqtg218v1k3"]
+[gd_scene load_steps=24 format=3 uid="uid://brwqtg218v1k3"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/Food/eating_food.gd" id="1_5n20k"]
 [ext_resource type="Texture2D" uid="uid://dnbga5a23o4x5" path="res://assets/sprites/objects/throwables/food/Mushroom-Grow.png" id="1_oorxx"]
 [ext_resource type="Texture2D" uid="uid://djrp2hvvp5nsx" path="res://assets/sprites/objects/throwables/food/Mushroom-Selected.png" id="2_6iat7"]
 [ext_resource type="Texture2D" uid="uid://bocxbuatv3htb" path="res://assets/sprites/UI/Keycaps/Keycaps-D.png" id="4_i3jbr"]
+[ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="4_sgc0r"]
 [ext_resource type="AudioStream" uid="uid://c5irlygn28uyp" path="res://assets/soundeffects/box_drop.wav" id="5_efoko"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lggqh"]
@@ -98,6 +99,42 @@ size = Vector2(8, 9)
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2owp"]
 radius = 9.05539
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ci0o"]
+atlas = ExtResource("4_sgc0r")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d33al"]
+atlas = ExtResource("4_sgc0r")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jehqo"]
+atlas = ExtResource("4_sgc0r")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjtr6"]
+atlas = ExtResource("4_sgc0r")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ivn03"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ci0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d33al")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jehqo")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_gjtr6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
 [node name="EatingFood" type="StaticBody2D" groups=["pickable"]]
 script = ExtResource("1_5n20k")
 
@@ -116,9 +153,14 @@ shape = SubResource("RectangleShape2D_7nm16")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionArea"]
 shape = SubResource("CircleShape2D_b2owp")
 
+[node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
+position = Vector2(13, -18)
+sprite_frames = SubResource("SpriteFrames_ivn03")
+frame_progress = 0.684538
+
 [node name="ActionButton" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(17, -30)
+position = Vector2(13, -18)
 texture = ExtResource("4_i3jbr")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

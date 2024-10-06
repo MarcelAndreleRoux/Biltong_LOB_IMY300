@@ -1,9 +1,9 @@
 extends StaticBody2D
 
-@onready var action_button = $ActionButton
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var pickup = $AudioStreamPlayer2D
+@onready var action_button_press = $ActionButtonPress
 
 var eating: bool = false
 var playing_grow: bool = false
@@ -13,7 +13,7 @@ var player_in_area: bool = false
 
 func _ready():
 	collision_shape_2d.disabled = true
-	action_button.visible = false
+	action_button_press.visible = false
 	animated_sprite_2d.play("idle")
 
 func _play_grow_backwards():
@@ -44,7 +44,7 @@ func _process(delta):
 		SharedSignals.item_pickup.emit()
 		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
 		SharedSignals.show_aim.emit()
-		action_button.visible = false
+		action_button_press.visible = false
 		GlobalValues.can_swap_food = true
 		animated_sprite_2d.play("idle")
 		pickup.play()
@@ -57,7 +57,8 @@ func _on_action_area_body_entered(body):
 	if body.is_in_group("player") and not eating and not already_picked:
 		player_in_area = true
 		animated_sprite_2d.play("pickup")
-		action_button.visible = true
+		action_button_press.play("default")
+		action_button_press.visible = true
 	
 	if body.is_in_group("enemy"):
 		eating = true
@@ -68,7 +69,7 @@ func _on_action_area_body_exited(body):
 		player_in_area = false
 		if not eating and not already_picked:
 			animated_sprite_2d.play("idle")
-			action_button.visible = false
+			action_button_press.visible = false
 
 func _on_animated_sprite_2d_animation_finished():
 	if playing_grow:

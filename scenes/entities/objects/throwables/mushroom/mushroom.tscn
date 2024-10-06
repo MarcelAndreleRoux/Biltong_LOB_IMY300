@@ -1,33 +1,80 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcrd5kpbngnaq"]
+[gd_scene load_steps=14 format=3 uid="uid://dcrd5kpbngnaq"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/mushroom/mushroom.gd" id="1_56ddq"]
-[ext_resource type="Texture2D" uid="uid://b8d65qfp0mw60" path="res://assets/sprites/objects/throwables/food/Mushroom-Throwable.png" id="2_gjojw"]
+[ext_resource type="Texture2D" uid="uid://ddqmemhdx8cr2" path="res://assets/sprites/objects/throwables/food/Food-Throwablet.png" id="2_opxoc"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5x0bb"]
-atlas = ExtResource("2_gjojw")
-region = Rect2(0, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ns5w"]
+atlas = ExtResource("2_opxoc")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sdxry"]
-atlas = ExtResource("2_gjojw")
-region = Rect2(0, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_mii5w"]
+atlas = ExtResource("2_opxoc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg27q"]
+atlas = ExtResource("2_opxoc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jto0t"]
+atlas = ExtResource("2_opxoc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuhnd"]
+atlas = ExtResource("2_opxoc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j778i"]
+atlas = ExtResource("2_opxoc")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qr6s"]
+atlas = ExtResource("2_opxoc")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ca6un"]
+atlas = ExtResource("2_opxoc")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7w3v6"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5x0bb")
+"texture": SubResource("AtlasTexture_5ns5w")
 }],
-"loop": true,
+"loop": false,
 "name": &"eat",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sdxry")
+"texture": SubResource("AtlasTexture_mii5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg27q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jto0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wuhnd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j778i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qr6s")
 }],
-"loop": true,
+"loop": false,
+"name": &"land",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ca6un")
+}],
+"loop": false,
 "name": &"throw",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_72ge8"]
@@ -36,20 +83,22 @@ radius = 2.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_m45rm"]
 radius = 8.0
 
-[node name="Mushroom" type="CharacterBody2D"]
-z_index = 2
-collision_layer = 128
-collision_mask = 128
+[node name="Mushroom" type="CharacterBody2D" groups=["throwables"]]
+z_index = 1
+collision_layer = 256
+collision_mask = 0
 script = ExtResource("1_56ddq")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="MushroomSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7w3v6")
-animation = &"throw"
+animation = &"land"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_72ge8")
 
-[node name="EatingArea" type="Area2D" parent="."]
+[node name="EatingArea" type="Area2D" parent="." groups=["throwables"]]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EatingArea"]
 shape = SubResource("CircleShape2D_m45rm")

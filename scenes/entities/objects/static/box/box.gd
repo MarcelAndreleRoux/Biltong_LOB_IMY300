@@ -2,21 +2,28 @@ extends RigidBody2D
 
 @onready var Area = $MoveArea
 @onready var animatedSprite = $AnimatedSprite2D
-@onready var move_action = $MoveAction
+@onready var action_button_press = $ActionButtonPress
 
 var remove_box: bool = false
 var player_in_area: bool = false
 var shown_once: bool = false
 
 func _ready():
-	move_action.visible = false
+	action_button_press.visible = false
 	animatedSprite.play("idle")
 	#SharedSignals.move_box.connect(move_in_direction)
 	SharedSignals.drag_box.connect(_follow_player)
+	SharedSignals.is_dragging_box.connect(_is_dragging)
 
 func _integrate_forces(_state):
 	rotation = 0
 	angular_velocity = 0
+
+func _is_dragging(state: bool):
+	if state:
+		animatedSprite.play("idle")
+	else:
+		animatedSprite.play("near_box")
 
 func _follow_player(position: Vector2, direction: Vector2):
 	if player_in_area:
@@ -43,13 +50,14 @@ func _some_waiting_timer():
 
 func _show_timeout():
 	$show_timer.queue_free()
-	move_action.visible = false
+	action_button_press.visible = false
 
 func _on_move_area_body_entered(body: Node2D):
 	# Ensure the body is the player
 	if body.is_in_group("player"):  # Check if the body belongs to the 'player' group
 		if not shown_once:
-			move_action.visible = true
+			action_button_press.play("default")
+			action_button_press.visible = true
 			_some_waiting_timer()
 
 		player_in_area = true

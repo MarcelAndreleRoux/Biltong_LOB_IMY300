@@ -14,6 +14,7 @@ extends CharacterBody2D
 
 @onready var navigation_agent_2d = $LizardNav
 @onready var animation_tree = $AnimationTree
+@onready var electricity = $Electricity
 
 var direction: Vector2 = Vector2.ZERO
 
@@ -172,7 +173,19 @@ func _update_animation_parameters():
 	animation_tree["parameters/run_off/blend_position"] = direction
 	animation_tree["parameters/run_on/blend_position"] = direction
 
-
 func _on_electric_area_body_entered(body):
 	if body.is_in_group("player"):
 		SharedSignals.player_killed.emit("pop")
+	
+	if body.is_in_group("conductor"):
+		# Calculate direction from conductor to lizard
+		var conductor_position = body.global_position
+		var lizard_position = self.global_position
+		var direction = (lizard_position - conductor_position).normalized()
+		
+		# Debugging: Print positions and direction
+		print("Lizard Position: ", lizard_position, " | Conductor Position: ", conductor_position)
+		print("Direction Vector: ", direction)
+		
+		# Pass the direction vector to the electrical outputer
+		electricity.output_charge(direction)

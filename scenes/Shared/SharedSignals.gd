@@ -17,6 +17,7 @@ signal push_player_forward
 
 # Projectile Signals
 signal projectile_gone
+signal distroy_throwable
 
 # Object Signals
 signal shadow_update
@@ -34,7 +35,11 @@ signal button_active
 # C_box
 signal lizard_connection
 
+# Dart
+signal dart_hit_wall
+
 # Trutle Enemy Signals
+signal shake_turtle
 signal start_eating
 signal new_marker
 signal can_move_again
@@ -47,7 +52,6 @@ signal marker_removed
 signal turtle_is_scared
 signal food_projectile_thrown(marker: Marker2D)
 signal projectile_despawned(marker: Marker2D)
-
 signal food_thrown
 
 #Lizard Signals
@@ -89,3 +93,4 @@ signal box_hit_wall
 signal move_box
 signal drag_box
 signal wall_detected
+signal is_dragging_box

@@ -15,6 +15,7 @@ func _ready():
 	animatedSprite.play("idle_off")
 	#SharedSignals.move_box.connect(move_in_direction)
 	SharedSignals.drag_box.connect(_follow_player)
+	SharedSignals.is_dragging_box.connect(_is_dragging)
 
 func _integrate_forces(_state):
 	rotation = 0
@@ -47,6 +48,16 @@ func _show_timeout():
 	$show_timer.queue_free()
 	move_action.visible = false
 
+func _is_dragging(state: bool):
+	if state and charged_state:
+		animatedSprite.play("idle_on")
+	elif state and not charged_state:
+		animatedSprite.play("idle_off")
+	elif not state and charged_state:
+		animatedSprite.play("near_on_box")
+	elif not state and not charged_state:
+		animatedSprite.play("near_off_box")
+
 func _on_move_area_body_entered(body: Node2D):
 	# Ensure the body is the player
 	if body.is_in_group("player"):  # Check if the body belongs to the 'player' group
@@ -76,23 +87,6 @@ func _on_move_area_body_exited(body: Node2D):
 func _bounce_box(bounce_vector: Vector2):
 	global_position += bounce_vector
 
-# Restrict Movement
-func _on_wall_detection_left_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(-1, 0))
-
-func _on_wall_detection_right_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(1, 0))
-
-func _on_wall_detection_up_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(0, -1))
-
-func _on_wall_detection_down_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(0, 1))
-
 func _on_push_area_body_entered(body):
 	if body.is_in_group("player"):
 		SharedSignals.player_push.emit()
@@ -118,3 +112,20 @@ func _on_animated_sprite_2d_animation_finished():
 		animatedSprite.play("idle_on")
 	else:
 		animatedSprite.play("idle_off")
+
+# Restrict Movement
+func _on_wall_detection_left_body_entered(body):
+	if body.is_in_group("walls"):
+		SharedSignals.wall_detected.emit(Vector2(-1, 0))
+
+func _on_wall_detection_right_body_entered(body):
+	if body.is_in_group("walls"):
+		SharedSignals.wall_detected.emit(Vector2(1, 0))
+
+func _on_wall_detection_up_body_entered(body):
+	if body.is_in_group("walls"):
+		SharedSignals.wall_detected.emit(Vector2(0, -1))
+
+func _on_wall_detection_down_body_entered(body):
+	if body.is_in_group("walls"):
+		SharedSignals.wall_detected.emit(Vector2(0, 1))

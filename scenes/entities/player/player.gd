@@ -20,9 +20,8 @@ signal drag_box(position: Vector2, direction: Vector2)
 # Dash variables
 var is_dashing: bool = false
 var dash_speed: float = 200.0  # Speed of the dash
-var dash_time: float = 0.15     # How long the dash lasts (in seconds)
+var dash_time: float = 0.15    # How long the dash lasts (in seconds)
 var dash_timer: float = 0.0    # Tracks dash time
-var last_direction: Vector2 = Vector2.ZERO  # Store the last movement direction
 
 # Movement
 var currentVelocity: Vector2
@@ -59,7 +58,6 @@ func _ready():
 	animation_tree.active = true
 	can_throw_proj = GlobalValues.can_throw
 	can_aim_throw = GlobalValues.can_throw
-	print("Player ready. Can throw:", GlobalValues.can_throw)
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
 	SharedSignals.player_push.connect(_is_push)
@@ -77,14 +75,12 @@ func _on_can_throw():
 
 func _change_speed():
 	player_in_box_area = true
-	# Speed is updated in update_speed()
 
 func _change_speed_back():
 	player_in_box_area = false
 	is_dragging = false
 	drag_toggle_mode = false
 	update_speed()
-	# Speed is updated in update_speed()
 
 func _is_push():
 	is_pushing = true
@@ -137,22 +133,19 @@ func _handle_movement_input():
 
 	if currentVelocity != Vector2.ZERO:
 		direction = currentVelocity.normalized()
-		last_direction = direction
 		currentVelocity *= speed
 	else:
 		currentVelocity = Vector2.ZERO
 
 func start_dash():
-	# Dash in the last known direction, even if the player isn't currently moving
-	if last_direction != Vector2.ZERO:
-		is_dashing = true
-		dash_timer = dash_time
-		currentVelocity = last_direction * dash_speed
+	is_dashing = true
+	dash_timer = dash_time
+	currentVelocity = Vector2(0, 1) * dash_speed  # Always dash downward
 
 func _perform_dash(delta):
 	if dash_timer > 0:
 		dash_timer -= delta
-		currentVelocity = last_direction * dash_speed
+		currentVelocity = Vector2(0, 1) * dash_speed
 	else:
 		is_dashing = false
 		currentVelocity = Vector2.ZERO
@@ -187,14 +180,17 @@ func _handle_action_input():
 	if player_in_box_area:
 		if Input.is_action_just_pressed("toggle_drag"):
 			drag_toggle_mode = !drag_toggle_mode  # Toggle the drag mode on/off
-
+			
 			# If we're in the area and toggled on, start dragging
 			if drag_toggle_mode and player_in_box_area:
 				is_dragging = true
-				box_drop.play()
+				pickup.play()
+				SharedSignals.is_dragging_box.emit(true)
 				print("Dragging started")
 			else:
 				is_dragging = false
+				box_drop.play()
+				SharedSignals.is_dragging_box.emit(false)
 				print("Dragging stopped")
 			update_speed()  # Update speed when is_dragging changes
 

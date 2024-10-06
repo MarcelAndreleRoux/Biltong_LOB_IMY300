@@ -14,6 +14,9 @@ var closed: bool = true
 var closing_door: bool = false
 var opening_door: bool = false
 
+var player_present: bool = false
+var door_present: bool = false
+
 var closed_check: bool = true
 
 func _ready():
@@ -63,3 +66,25 @@ func _on_animation_tree_animation_finished(anim_name):
 		closing_door = false
 		opening_door = false
 		update_door_animation()
+
+func _on_not_squash_front_body_entered(body):
+	if body.is_in_group("player"):
+		print("player here")
+		player_present = true
+	else:
+		player_present = false
+	
+	if player_present and door_present:
+		print("this was sent")
+		SharedSignals.push_player_forward.emit()
+
+func _on_not_squash_front_area_entered(area):
+	if area.is_in_group("door"):
+		print("Door here")
+		door_present = true
+	else:
+		door_present = false
+	
+	if player_present and door_present:
+		print("this was sent")
+		SharedSignals.push_player_forward.emit()

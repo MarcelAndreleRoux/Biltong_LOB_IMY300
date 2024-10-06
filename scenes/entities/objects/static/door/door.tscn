@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/door/door.gd" id="1_c253f"]
 [ext_resource type="Texture2D" uid="uid://bptsjgrtlhoar" path="res://assets/sprites/objects/static/door/Door.png" id="2_nmxmq"]
-[ext_resource type="Script" path="res://scenes/entities/objects/static/door/NotSquash.gd" id="3_c0078"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rhg0m"]
 size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_di4hg"]
+size = Vector2(14, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6hknn"]
 size = Vector2(16, 32)
@@ -372,7 +374,7 @@ states/open_normal/position = Vector2(589, 183)
 transitions = ["Start", "closed_normal", SubResource("AnimationNodeStateMachineTransition_073os"), "closed_normal", "open_normal", SubResource("AnimationNodeStateMachineTransition_qn27u"), "open_normal", "close_normal", SubResource("AnimationNodeStateMachineTransition_h4lwl"), "close_normal", "open_normal", SubResource("AnimationNodeStateMachineTransition_r0qrq"), "close_normal", "closed_normal", SubResource("AnimationNodeStateMachineTransition_npd3c")]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k232k"]
-size = Vector2(18, 38)
+size = Vector2(18, 26)
 
 [node name="Door" type="StaticBody2D"]
 script = ExtResource("1_c253f")
@@ -383,11 +385,16 @@ texture = ExtResource("2_nmxmq")
 hframes = 8
 frame = 1
 
-[node name="Left" type="CollisionShape2D" parent="." groups=["door"]]
+[node name="Left" type="CollisionShape2D" parent="."]
 position = Vector2(8, 0)
 shape = SubResource("RectangleShape2D_rhg0m")
 
-[node name="Right" type="CollisionShape2D" parent="." groups=["door"]]
+[node name="Area2D" type="Area2D" parent="Left" groups=["door"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left/Area2D"]
+shape = SubResource("RectangleShape2D_di4hg")
+
+[node name="Right" type="CollisionShape2D" parent="."]
 position = Vector2(-14, 0)
 shape = SubResource("RectangleShape2D_6hknn")
 
@@ -407,9 +414,10 @@ parameters/conditions/is_closing = false
 parameters/conditions/is_opening = false
 
 [node name="NotSquashFront" type="Area2D" parent="."]
-script = ExtResource("3_c0078")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NotSquashFront"]
 shape = SubResource("RectangleShape2D_k232k")
 
 [connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
+[connection signal="area_entered" from="NotSquashFront" to="." method="_on_not_squash_front_area_entered"]
+[connection signal="body_entered" from="NotSquashFront" to="." method="_on_not_squash_front_body_entered"]

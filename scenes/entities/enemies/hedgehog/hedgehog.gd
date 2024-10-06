@@ -145,3 +145,9 @@ func _spawn_dart(direction: Vector2):
 func _stop_all_timers():
 	angry_timer.stop()
 	shoot_timer.stop()
+
+func _on_area_2d_area_entered(area):
+	print(area)
+	if area.is_in_group("throwables"):
+		SharedSignals.distroy_throwable.emit()
+

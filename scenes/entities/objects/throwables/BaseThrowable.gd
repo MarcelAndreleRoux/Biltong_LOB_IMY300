@@ -2,11 +2,13 @@ extends CharacterBody2D
 
 class_name BaseThrowable
 
-@export var speed: float = 700.0
+@export var speed: float = 600.0
 @export var speed_scale: float = 10.0
 @export var gravity: float = -9.8
-@export var num_of_points: int = 50
+@export var num_of_points: int = 20
 @export var despawn_time: float = 8.0
+
+signal projectile_landed
 
 var _direction: Vector2
 var _spawnPosition: Vector2
@@ -39,13 +41,15 @@ func _physics_process(delta: float):
 			_currentPointIndex += 1
 		
 		if _currentPointIndex >= _trajectoryPoints.size():
+			projectile_landed.emit()
+		
+		if _currentPointIndex >= _trajectoryPoints.size():
 			SharedSignals.shadow_done.emit()
 			can_be_eaten = true
 			_start_despawn_timer()
 	else:
 		if _trajectoryPoints == null:
 			print("Error: Trajectory points are null")
-		
 
 func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
 	_spawnPosition = position
@@ -85,8 +89,6 @@ func _start_despawn_timer():
 	timer.timeout.connect(_despawn_time)
 	add_child(timer)
 	timer.start()
-	SharedSignals.fire_mango_land.emit()
-	SharedSignals.water_land.emit()
 
 func _despawn_time():
 	SharedSignals.projectile_gone.emit(self)

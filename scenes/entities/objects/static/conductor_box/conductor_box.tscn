@@ -162,7 +162,6 @@ script = ExtResource("1_isf1l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-5.96046e-08, 1.19209e-07)
-scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_xqjmm")
 animation = &"near_off_box"
 
