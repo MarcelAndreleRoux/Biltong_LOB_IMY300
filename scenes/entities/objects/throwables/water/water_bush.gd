@@ -28,24 +28,29 @@ func _process(delta):
 		SharedSignals.inventory_changed.emit(GlobalValues.INVENTORY_SELECT.WATER)
 		animated_sprite_2d.play("pickup")
 		AudioController.play_sfx("water_pickup")
+		action_button_press.visible = false
 
 func _some_waiting_timer():
 	var grow_timer = Timer.new()
 	grow_timer.name = "show_timer"
-	grow_timer.wait_time = 7.0
+	grow_timer.wait_time = 5.0
 	grow_timer.one_shot = true
 	grow_timer.timeout.connect(_show_timeout)
 	add_child(grow_timer)
 	grow_timer.start()
 
 func _show_timeout():
-	$show_timer.queue_free()
 	action_button_press.visible = false
 
 func _on_action_area_body_entered(body):
 	if body.is_in_group("player") and not picked_up_once and not already_picked:
 		player_in_area = true
-		action_button_press.visible = true
+		if not GlobalValues.has_pickup_water_once:
+			GlobalValues.has_pickup_water_once = true
+			action_button_press.play("default")
+			action_button_press.visible = true
+		else:
+			action_button_press.visible = false
 		_some_waiting_timer()
 		animated_sprite_2d.play("close")
 		collision_shape_2d.disabled = false

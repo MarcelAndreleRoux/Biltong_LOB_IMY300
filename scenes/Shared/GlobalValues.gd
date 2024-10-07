@@ -17,6 +17,13 @@ var spotted_food: bool = false
 var food_visible: bool = false
 var playing_game: bool = false
 
+# Pickups (e.g. box, firebush, waterbush)
+var has_pickeup_box_once: bool = false
+var has_pickeup_c_box_once: bool = false
+var has_pickeup_fire_once: bool = false
+var has_pickeup_food_once: bool = false
+var has_pickup_water_once: bool = false
+
 var wire_on: bool = false
 var vinesSize: String
 

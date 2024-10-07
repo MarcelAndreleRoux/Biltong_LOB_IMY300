@@ -42,7 +42,7 @@ func _follow_player(position: Vector2, direction: Vector2):
 func _some_waiting_timer():
 	var grow_timer = Timer.new()
 	grow_timer.name = "show_timer"
-	grow_timer.wait_time = 7.0
+	grow_timer.wait_time = 5.0
 	grow_timer.one_shot = true
 	grow_timer.timeout.connect(_show_timeout)
 	add_child(grow_timer)
@@ -56,10 +56,15 @@ func _on_move_area_body_entered(body: Node2D):
 	# Ensure the body is the player
 	if body.is_in_group("player"):  # Check if the body belongs to the 'player' group
 		if not shown_once:
-			action_button_press.play("default")
-			action_button_press.visible = true
+			if not GlobalValues.has_pickeup_box_once:
+				GlobalValues.has_pickeup_box_once = true
+				action_button_press.play("default")
+				action_button_press.visible = true
+			else:
+				action_button_press.visible = false
+				
 			_some_waiting_timer()
-
+		
 		player_in_area = true
 		SharedSignals.player_move.emit()
 		animatedSprite.play("near_box")
@@ -74,23 +79,6 @@ func _on_move_area_body_exited(body: Node2D):
 
 func _bounce_box(bounce_vector: Vector2):
 	global_position += bounce_vector
-
-# Restrict Movement
-func _on_wall_detection_left_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(-1, 0))
-
-func _on_wall_detection_right_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(1, 0))
-
-func _on_wall_detection_up_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(0, -1))
-
-func _on_wall_detection_down_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(0, 1))
 
 func _on_push_area_body_entered(body):
 	if body.is_in_group("player"):

@@ -56,8 +56,12 @@ func _on_action_area_body_entered(body):
 	if body.is_in_group("player") and not eating and not already_picked:
 		player_in_area = true
 		animated_sprite_2d.play("pickup")
-		action_button_press.play("default")
-		action_button_press.visible = true
+		if not GlobalValues.has_pickeup_food_once:
+			GlobalValues.has_pickeup_food_once = true
+			action_button_press.play("default")
+			action_button_press.visible = true
+		else:
+			action_button_press.visible = false
 	
 	if body.is_in_group("enemy"):
 		eating = true
