@@ -3,8 +3,6 @@ extends StaticBody2D
 @export var plant_type = "big"
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
-@onready var grow = $Grow
-@onready var burn = $Burn
 @onready var collision_shape_2d = $CollisionShape2D
 
 var was_burned: bool = false
@@ -30,7 +28,7 @@ func _on_area_2d_area_entered(area):
 	if area.is_in_group("burn") and not already_burned:
 		already_burned = true
 		already_grown = false
-		burn.play()
+		AudioController.play_sfx("burn")
 		was_burned = true
 		
 		if was_grown or plant_type == "big":
@@ -41,7 +39,7 @@ func _on_area_2d_area_entered(area):
 	if area.is_in_group("grow") and not already_grown:
 		already_burned = false
 		already_grown = true
-		grow.play()
+		AudioController.play_sfx("grow")
 		was_grown = true
 		# Delay enabling the collision shape slightly to ensure the growth animation updates first
 		await get_tree().create_timer(0.5).timeout
@@ -56,11 +54,11 @@ func _update_collision_shape_size():
 	# Example: Adjust the collision shape size based on growth
 	if was_grown:
 		var new_shape = RectangleShape2D.new()
-		new_shape.extents = Vector2(8, 20)  # Adjust size as needed
+		new_shape.extents = Vector2(8, 20)
 		collision_shape_2d.shape = new_shape
 	else:
 		var default_shape = RectangleShape2D.new()
-		default_shape.extents = Vector2(8, 8)  # Default size
+		default_shape.extents = Vector2(8, 8)
 		collision_shape_2d.shape = default_shape
 
 func _on_animated_sprite_2d_animation_finished():

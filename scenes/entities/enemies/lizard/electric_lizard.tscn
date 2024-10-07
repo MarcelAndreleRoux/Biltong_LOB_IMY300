@@ -1,9 +1,7 @@
-[gd_scene load_steps=66 format=3 uid="uid://c80uy3ni7bgl4"]
+[gd_scene load_steps=64 format=3 uid="uid://c80uy3ni7bgl4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/lizard/electric_lizard.gd" id="1_i4f4n"]
 [ext_resource type="Texture2D" uid="uid://kqsruf5qtkkq" path="res://assets/sprites/enemies/electric lizzard/Idle/on/Lizard-On-Idle-Default-Left.png" id="2_3bmot"]
-[ext_resource type="PackedScene" uid="uid://12o22qh53ey4" path="res://scenes/Shared/electricity.tscn" id="2_i6ub5"]
-[ext_resource type="PackedScene" uid="uid://dx84ik10rs64a" path="res://scenes/entities/enemies/lizard/lizard_wander.tscn" id="3_mpxfq"]
 [ext_resource type="Texture2D" uid="uid://bi4fl54u6b3os" path="res://assets/sprites/enemies/electric lizzard/Idle/off/Lizard-Off-Idle-Default-Left.png" id="3_ypg2t"]
 [ext_resource type="Texture2D" uid="uid://dlooa4bvlphv1" path="res://assets/sprites/enemies/electric lizzard/Idle/on/Lizard-On-Idle-Default-Right.png" id="4_byw7i"]
 [ext_resource type="Texture2D" uid="uid://ceskedvdcgd6d" path="res://assets/sprites/enemies/electric lizzard/Idle/off/Lizard-Off-Idle-Default-Right.png" id="5_k3ovm"]
@@ -1000,6 +998,8 @@ radius = 22.0
 height = 60.0
 
 [node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
+collision_layer = 16
+collision_mask = 65535
 script = ExtResource("1_i4f4n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -1040,10 +1040,6 @@ parameters/lick_on/blend_position = Vector2(0.025, 0.00414944)
 parameters/run_off/blend_position = Vector2(0.00961542, 0.00414944)
 parameters/run_on/blend_position = Vector2(0.0115385, 0.0124481)
 
-[node name="Electricity" parent="." instance=ExtResource("2_i6ub5")]
-
-[node name="LizardWander" parent="." instance=ExtResource("3_mpxfq")]
-
 [node name="walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_5ds80")
 volume_db = -23.0
@@ -1054,6 +1050,8 @@ stream = ExtResource("17_4juwg")
 volume_db = -8.0
 
 [node name="ElectricArea" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 65535
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElectricArea"]
 position = Vector2(0, -7)
@@ -1061,4 +1059,5 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_solqv")
 
 [connection signal="velocity_computed" from="LizardNav" to="." method="_on_lizard_nav_velocity_computed"]
+[connection signal="area_entered" from="ElectricArea" to="." method="_on_electric_area_area_entered"]
 [connection signal="body_entered" from="ElectricArea" to="." method="_on_electric_area_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://duxeflpd6v6tm"]
+[gd_scene load_steps=16 format=3 uid="uid://duxeflpd6v6tm"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_blq3v"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_7bb2f"]
@@ -11,12 +11,15 @@
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="13_gpbjv"]
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="14_nt8u3"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="14_tqpsb"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="15_1kely"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="17_n53mo"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_aoxyx"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_larkh"]
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_blq3v")
+
+[node name="ShakeCamera" parent="." instance=ExtResource("15_1kely")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_n6nnm")

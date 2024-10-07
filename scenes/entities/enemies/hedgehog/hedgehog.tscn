@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bh6flmufkyjat"]
+[gd_scene load_steps=34 format=3 uid="uid://bh6flmufkyjat"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/hedgehog/hedgehog.gd" id="1_h4pte"]
 [ext_resource type="Texture2D" uid="uid://bgi3b1klmhiro" path="res://assets/sprites/enemies/hedgehog/idle/Porcupine-Idle-Left.png" id="2_3eopg"]
@@ -495,6 +495,10 @@ states/shoot/node = SubResource("AnimationNodeBlendSpace2D_gbg24")
 states/shoot/position = Vector2(463, 4)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_hfpl3"), "idle", "angry", SubResource("AnimationNodeStateMachineTransition_g5qah"), "angry", "idle", SubResource("AnimationNodeStateMachineTransition_73idu"), "angry", "shoot", SubResource("AnimationNodeStateMachineTransition_nmyif"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_ihpgw")]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_numq4"]
+radius = 19.0
+height = 50.0
+
 [node name="Hedgehog" type="StaticBody2D" groups=["enemy"]]
 collision_layer = 16
 collision_mask = 9
@@ -529,3 +533,12 @@ parameters/shoot/blend_position = Vector2(0.0453284, -0.037037)
 stream = ExtResource("8_6tbxl")
 volume_db = -8.0
 pitch_scale = 1.36
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_numq4")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

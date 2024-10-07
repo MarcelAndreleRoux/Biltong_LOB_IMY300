@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c26tv88pg7x41"]
+[gd_scene load_steps=19 format=3 uid="uid://c26tv88pg7x41"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_yscb4"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_aygkm"]
@@ -11,15 +11,18 @@
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="17_inxj1"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="17_qiwbr"]
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="17_to6dt"]
+[ext_resource type="PackedScene" uid="uid://cb08oxqkyxkb5" path="res://scenes/entities/objects/static/m_board/m_board.tscn" id="18_67o7g"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="18_eysad"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="18_p5i3e"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="19_ov150"]
-[ext_resource type="PackedScene" uid="uid://fg8pnbkcvvaj" path="res://scenes/entities/objects/static/board/m_board.tscn" id="20_f641s"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="21_e10qb"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="22_d185w"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="23_7q63b"]
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_yscb4")
+
+[node name="ShakeCamera" parent="." instance=ExtResource("18_eysad")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_aygkm")
@@ -74,16 +77,6 @@ position = Vector2(448, 208)
 [node name="LizardMarker2" type="Marker2D" parent="." groups=["SecondEnemy"]]
 position = Vector2(120, 208)
 
-[node name="MBoard" parent="." instance=ExtResource("20_f641s")]
-position = Vector2(432, 184)
-connector_name = "one"
-door_link_id = "123"
-
-[node name="MBoard2" parent="." instance=ExtResource("20_f641s")]
-position = Vector2(136, 184)
-connector_name = "one"
-door_link_id = "a"
-
 [node name="Door" parent="." instance=ExtResource("21_e10qb")]
 position = Vector2(240, 96)
 door_link_id = "123"
@@ -131,3 +124,13 @@ position = Vector2(48, 267)
 
 [node name="AudioPausedMenu" parent="." instance=ExtResource("17_to6dt")]
 visible = false
+
+[node name="MBoard2" parent="." instance=ExtResource("18_67o7g")]
+position = Vector2(437, 187)
+connector_name = "one"
+door_link_id = "123"
+
+[node name="MBoard" parent="." instance=ExtResource("18_67o7g")]
+position = Vector2(131, 184)
+connector_name = "one"
+door_link_id = "a"

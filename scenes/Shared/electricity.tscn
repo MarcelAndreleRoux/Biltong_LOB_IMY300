@@ -48,13 +48,17 @@ animations = [{
 }],
 "loop": false,
 "name": &"zap",
-"speed": 10.0
+"speed": 15.0
 }]
 
 [node name="Electricity" type="Node2D"]
 script = ExtResource("1_waxd4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-rotation = 1.5708
 sprite_frames = SubResource("SpriteFrames_0rpwy")
-offset = Vector2(0, -15)
+animation = &"zap"
+frame = 4
+frame_progress = 1.0
+offset = Vector2(0, -16)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

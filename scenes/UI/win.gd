@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var select = $select
+@onready var buttonselect = $Buttonselect
 
 var exit: bool = false
 var reset: bool = false
@@ -11,7 +11,7 @@ func _ready():
 
 func _on_exit_pressed():
 	exit = true
-	AudioController.play_sfx("button_select")
+	buttonselect.play()
 
 func _on_select_finished():
 	if exit:

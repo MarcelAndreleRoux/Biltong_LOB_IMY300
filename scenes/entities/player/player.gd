@@ -17,6 +17,14 @@ signal drag_box(position: Vector2, direction: Vector2)
 @onready var box_drop = $box_drop
 @onready var death_sound = $death_sound
 
+@export var add_distance_blocker: bool = true
+
+# Dash variables
+var is_dashing: bool = false
+var dash_speed: float = 200.0  # Speed of the dash
+var dash_time: float = 0.15    # How long the dash lasts (in seconds)
+var dash_timer: float = 0.0    # Tracks dash time
+
 # Movement
 var currentVelocity: Vector2
 var speed: int = 100
@@ -31,6 +39,8 @@ var throw_clicked: bool = false
 var is_on_cooldown: bool = false
 var can_throw_proj: bool = false
 var can_aim_throw: bool = false
+var MIN_AIM_DISTANCE: float = 20.0
+var MAX_AIM_DISTANCE: float = 200.0
 
 # Box
 var is_dragging: bool = false
@@ -52,7 +62,6 @@ func _ready():
 	animation_tree.active = true
 	can_throw_proj = GlobalValues.can_throw
 	can_aim_throw = GlobalValues.can_throw
-	print("Player ready. Can throw:", GlobalValues.can_throw)
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
 	SharedSignals.player_push.connect(_is_push)
@@ -60,6 +69,7 @@ func _ready():
 	SharedSignals.can_throw_projectile.connect(_on_can_throw)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
+	SharedSignals.push_player_forward.connect(start_dash)
 
 func _on_item_pickup():
 	can_aim_throw = true
@@ -69,14 +79,12 @@ func _on_can_throw():
 
 func _change_speed():
 	player_in_box_area = true
-	# Speed is updated in update_speed()
 
 func _change_speed_back():
 	player_in_box_area = false
 	is_dragging = false
 	drag_toggle_mode = false
 	update_speed()
-	# Speed is updated in update_speed()
 
 func _is_push():
 	is_pushing = true
@@ -92,10 +100,18 @@ func update_speed():
 	else:
 		speed = 100
 
-func _physics_process(_delta):
+func _physics_process(delta):
+	if is_dashing:
+		_perform_dash(delta)
+	else:
+		_handle_movement_input()
+	
+	# Get mouse position and calculate the direction to the mouse from the player
 	_end = get_local_mouse_position()
 	my_local_pos = to_local(global_position)
-	
+	var aim_direction = _end - global_position
+	var distance_to_mouse = aim_direction.length()
+
 	if can_aim_throw: 
 		if Input.is_action_pressed("aim"):
 			trajectory_line.visible = true
@@ -105,25 +121,39 @@ func _physics_process(_delta):
 	
 	if not is_bouncing_back:
 		_handle_action_input()
-		_handle_movement_input()
 		_play_movement_animation()
 		_update_animation_parameters()
 
+	# Apply the calculated velocity
 	velocity = currentVelocity
 	move_and_slide()
 
-	# Get the mouse position in the world space
-	var mouse_position = get_global_mouse_position()
-
-	# Emit the player's position and the direction toward the mouse
+	# Emit the player's position and the direction toward the mouse (adjusted for minimum distance)
 	if is_dragging and player_in_box_area:
-		var direction_to_mouse = (mouse_position - global_position).normalized()
+		var direction_to_mouse = (get_global_mouse_position() - global_position).normalized()
 		SharedSignals.drag_box.emit(global_position, direction_to_mouse)
 
 func _handle_movement_input():
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	direction = currentVelocity.normalized()
-	currentVelocity *= speed
+
+	if currentVelocity != Vector2.ZERO:
+		direction = currentVelocity.normalized()
+		currentVelocity *= speed
+	else:
+		currentVelocity = Vector2.ZERO
+
+func start_dash():
+	is_dashing = true
+	dash_timer = dash_time
+	currentVelocity = Vector2(0, 1) * dash_speed  # Always dash downward
+
+func _perform_dash(delta):
+	if dash_timer > 0:
+		dash_timer -= delta
+		currentVelocity = Vector2(0, 1) * dash_speed
+	else:
+		is_dashing = false
+		currentVelocity = Vector2.ZERO
 
 func _on_player_killed(type: String):
 	# Disable player input and actions
@@ -155,14 +185,17 @@ func _handle_action_input():
 	if player_in_box_area:
 		if Input.is_action_just_pressed("toggle_drag"):
 			drag_toggle_mode = !drag_toggle_mode  # Toggle the drag mode on/off
-
+			
 			# If we're in the area and toggled on, start dragging
 			if drag_toggle_mode and player_in_box_area:
 				is_dragging = true
-				box_drop.play()
+				pickup.play()
+				SharedSignals.is_dragging_box.emit(true)
 				print("Dragging started")
 			else:
 				is_dragging = false
+				box_drop.play()
+				SharedSignals.is_dragging_box.emit(false)
 				print("Dragging stopped")
 			update_speed()  # Update speed when is_dragging changes
 
@@ -190,10 +223,23 @@ func _update_animation_parameters():
 		animation_tree["parameters/Death_Pop/blend_position"] = direction
 
 func calculate_trajectory():
-	var DOT = Vector2(1.0, 0.0).dot((_end - my_local_pos).normalized())
+	var aim_direction = _end - my_local_pos
+	var aim_distance = aim_direction.length()
+	
+	# Clamp the aim distance between MIN_AIM_DISTANCE and MAX_AIM_DISTANCE
+	if add_distance_blocker:
+		if aim_distance < MIN_AIM_DISTANCE:
+			aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
+			_end = my_local_pos + aim_direction
+		elif aim_distance > MAX_AIM_DISTANCE:
+			aim_direction = aim_direction.normalized() * MAX_AIM_DISTANCE
+			_end = my_local_pos + aim_direction
+	
+	# Proceed with the original trajectory calculations using the adjusted _end
+	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 	var gravity = -9.8
-	var num_of_points = 50
+	var num_of_points = 25
 
 	var x_dis = _end.x - my_local_pos.x
 	var y_dis = -1.0 * (_end.y - my_local_pos.y)

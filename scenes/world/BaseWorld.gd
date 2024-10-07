@@ -13,6 +13,7 @@ class_name BaseWorld
 @onready var audio_paused_menu = $AudioPausedMenu
 @onready var game_music_player = GameMusicController
 @onready var food = $Food
+@onready var shake_camera = $ShakeCamera
 
 #Raycasts
 @onready var player_raycast = $Player/RayCast2D
@@ -56,6 +57,7 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 func _ready():
+	GameMusicController.play_music()
 	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
@@ -65,7 +67,7 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.death_finished.connect(_on_death_finsish)
 	GlobalValues.game_done.connect(_on_game_finished)
-
+	
 	player_raycast.enabled = true
 	
 	# Add all vines to the player's raycast exceptions
@@ -77,6 +79,9 @@ func _ready():
 
 func _on_game_finished():
 	win_state.win()
+
+func _shake():
+	shake_camera.apply_shake_semi_small()
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
@@ -120,8 +125,14 @@ func _update_raycast_position():
 	player_raycast.global_position = player.global_position
 	var mouse_position = get_global_mouse_position()
 	var relative_mouse_position = mouse_position - player_raycast.global_position
+	
+	# Clamp aim distance to a minimum of 10px
+	var distance_to_mouse = relative_mouse_position.length()
+	if distance_to_mouse < 10.0:
+		relative_mouse_position = relative_mouse_position.normalized() * 10.0
+	
 	player_raycast.target_position = relative_mouse_position
-	_end = get_global_mouse_position()
+	_end = player.global_position + relative_mouse_position  # Update target position
 
 func _handle_aiming_and_throwing():
 	if Input.is_action_pressed("aim") and not is_on_cooldown:
@@ -133,7 +144,6 @@ func _handle_aiming_and_throwing():
 
 	if _isAiming:
 		SharedSignals.show_throw.emit()
-		#calculate_trajectory()
 		
 	# Check if the raycast is not colliding before allowing a throw
 	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
@@ -181,12 +191,12 @@ func _throw_item():
 	# Add shadow for all projectiles
 	var shadow_sprite = Sprite2D.new()
 	shadow_sprite.texture = shadow_texture
+	shadow_sprite.name = "shadow_sprite"
 	shadow_sprite.global_position = throw_start_position
 	shadow_sprite.z_index = -1
 	instance.add_child(shadow_sprite)
 
-	SharedSignals.shadow_update.connect(_on_update_shadow)
-	SharedSignals.shadow_done.connect(_on_shadow_done)
+	SharedSignals.shadow_update.emit(throw_start_position)
 	shadow = shadow_sprite
 
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
@@ -282,12 +292,6 @@ func calculate_trajectory():
 		points.append(player.global_position + Vector2(dx, dy))
 
 	trajectory_line.points = points
-
-func _on_update_shadow(direction: Vector2, distance: float):
-	shadow.global_position = throw_start_position + direction * distance
-
-func _on_shadow_done():
-	shadow.hide()
 
 func calculate_landing_position(start_position: Vector2, direction: Vector2, target_position: Vector2) -> Vector2:
 	var distance = start_position.distance_to(target_position)

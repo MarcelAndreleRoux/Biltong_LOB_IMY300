@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=19 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
 [ext_resource type="AudioStream" uid="uid://oj8lrlmic0u1" path="res://assets/soundeffects/Player-Run.wav" id="3_h8eqf"]
+[ext_resource type="AudioStream" uid="uid://ci7foj10sake0" path="res://assets/soundeffects/slime-splatter-6-220264.mp3" id="3_om823"]
+[ext_resource type="AudioStream" uid="uid://de8iugobo7j51" path="res://assets/soundeffects/vine-burn.mp3" id="4_2yeln"]
 [ext_resource type="AudioStream" uid="uid://cf21mmncwxigh" path="res://assets/soundeffects/lizard_walk.wav" id="4_yllhe"]
 [ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="5_m4qxj"]
 [ext_resource type="AudioStream" uid="uid://c3n8vjyc5j3h3" path="res://assets/soundeffects/zap.mp3" id="6_8l2n3"]
@@ -15,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://bmsi8kt7jdva3" path="res://assets/soundeffects/Door.wav" id="13_0jao3"]
 [ext_resource type="AudioStream" uid="uid://dki5tcy6h2mla" path="res://assets/soundeffects/Eat.wav" id="14_5jngn"]
 [ext_resource type="AudioStream" uid="uid://cjr6u5i655rvn" path="res://assets/soundeffects/click-234708.mp3" id="15_v332m"]
+[ext_resource type="AudioStream" uid="uid://c5irlygn28uyp" path="res://assets/soundeffects/box_drop.wav" id="18_s37rq"]
 
 [node name="AudioController" type="Node2D"]
 script = ExtResource("1_bde8u")
@@ -27,9 +30,14 @@ pitch_scale = 1.8
 bus = &"Sfx"
 
 [node name="food_land" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_om823")
+volume_db = -10.0
 bus = &"Sfx"
 
 [node name="burn" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_2yeln")
+volume_db = -5.0
+pitch_scale = 0.8
 bus = &"Sfx"
 
 [node name="grow" type="AudioStreamPlayer2D" parent="."]
@@ -54,7 +62,7 @@ bus = &"Sfx"
 
 [node name="turtle_walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_m4qxj")
-volume_db = -10.597
+volume_db = -14.623
 bus = &"Sfx"
 
 [node name="zap" type="AudioStreamPlayer2D" parent="."]
@@ -114,5 +122,17 @@ bus = &"Sfx"
 stream = ExtResource("12_dudkp")
 volume_db = -6.71
 bus = &"Sfx"
+
+[node name="box_drop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_s37rq")
+
+[node name="fire_pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_s37rq")
+
+[node name="water_pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_s37rq")
+
+[node name="food_pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_s37rq")
 
 [connection signal="finished" from="button_select" to="." method="_on_button_select_finished"]

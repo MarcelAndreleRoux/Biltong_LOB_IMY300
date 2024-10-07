@@ -1,47 +1,40 @@
-[gd_scene load_steps=25 format=3 uid="uid://m2t7mtfsnae"]
+[gd_scene load_steps=18 format=3 uid="uid://6cf7oc3th3bh"]
 
-[ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_xoy2j"]
-[ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="2_gr4jm"]
-[ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_hauuc"]
-[ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="3_tecls"]
-[ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="4_nqk6f"]
-[ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="5_ouffw"]
-[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="6_7oh5b"]
-[ext_resource type="Script" path="res://scenes/world/GamePause.gd" id="8_mqrpi"]
-[ext_resource type="Texture2D" uid="uid://v40hdx1ywm82" path="res://assets/sprites/UI/Buttons/Buttons-Resume.png" id="9_s1hqb"]
-[ext_resource type="Texture2D" uid="uid://b3kmbjcfws608" path="res://assets/sprites/UI/Buttons/Buttons-Restart.png" id="10_nk465"]
-[ext_resource type="Texture2D" uid="uid://m8s7v4j2frwx" path="res://assets/sprites/UI/Buttons/Buttons-Exit.png" id="11_q10wk"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="12_px82u"]
-[ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="13_8pq3k"]
-[ext_resource type="Script" path="res://scenes/world/WinState.gd" id="14_mdn54"]
-[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="15_6410y"]
-[ext_resource type="AudioStream" uid="uid://dsxlv3x56q8mm" path="res://assets/soundeffects/confetti.mp3" id="16_w6hej"]
-[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_km02t"]
-[ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_6qyfn"]
-[ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="19_bvmg8"]
-[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="19_dkqau"]
-[ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="20_pefhm"]
-[ext_resource type="PackedScene" uid="uid://cpwmwdbljcnru" path="res://scenes/entities/objects/static/conductor_box/conductor_box.tscn" id="22_84abl"]
-[ext_resource type="PackedScene" uid="uid://fg8pnbkcvvaj" path="res://scenes/entities/objects/static/board/m_board.tscn" id="22_nacpq"]
-[ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="23_8hv3a"]
+[ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_0vski"]
+[ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_pw6my"]
+[ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="3_ulc8o"]
+[ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="4_1pewe"]
+[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="5_jtj34"]
+[ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="6_l881j"]
+[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/fire_bush.tscn" id="7_wcba7"]
+[ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="8_qehpa"]
+[ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="9_rbywm"]
+[ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="10_of7yl"]
+[ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="11_bfe11"]
+[ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="12_l2b40"]
+[ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="13_xp0sq"]
+[ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="14_bhjgx"]
+[ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="15_ctqtj"]
+[ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="16_3pgxk"]
+[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="17_rxdsx"]
 
 [node name="BaseLevel3" type="Node2D"]
-script = ExtResource("1_xoy2j")
+script = ExtResource("1_0vski")
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource("2_hauuc")
+tile_set = ExtResource("2_pw6my")
 format = 2
 layer_0/name = "Floor"
-layer_0/tile_data = PackedInt32Array(27, 524293, 0, 65563, 524293, 0, 131099, 524293, 0, 196635, 524293, 0, 262171, 524293, 0, 327707, 524293, 0, 393243, 524293, 0, 458779, 524293, 0, 524315, 524293, 0, 589851, 524293, 0, 655387, 524293, 0, 720923, 524293, 0, 786459, 524293, 0, 851995, 524293, 0, 917531, 524288, 0, 983067, 524288, 0, 1048603, 524288, 0, 28, 524293, 0, 65564, 524293, 0, 131100, 524293, 0, 196636, 524293, 0, 262172, 524293, 0, 327708, 524293, 0, 393244, 524293, 0, 458780, 524293, 0, 524316, 524293, 0, 589852, 524293, 0, 655388, 524293, 0, 720924, 524293, 0, 786460, 524293, 0, 851996, 524293, 0, 917532, 524288, 0, 983068, 524288, 0, 1048604, 524288, 0, 29, 524293, 0, 65565, 524293, 0, 131101, 524293, 0, 196637, 524293, 0, 262173, 524293, 0, 327709, 524293, 0, 393245, 524293, 0, 458781, 524293, 0, 524317, 524293, 0, 589853, 524293, 0, 655389, 524293, 0, 720925, 524293, 0, 786461, 524293, 0, 851997, 524293, 0, 917533, 524288, 0, 983069, 524288, 0, 1048605, 524288, 0, 3, 327680, 0, 65539, 393216, 0, 131075, 65536, 0, 196611, 327680, 0, 262147, 393216, 0, 327683, 458752, 0, 393219, 458752, 0, 458755, 458752, 0, 524291, 327680, 0, 589827, 262144, 0, 655363, 0, 0, 720899, 524293, 0, 786435, 524293, 0, 851971, 524293, 0, 917507, 524293, 0, 983043, 524288, 0, 1048579, 524288, 0, 4, 196608, 0, 65540, 327680, 0, 131076, 393216, 0, 196612, 0, 0, 262148, 458752, 0, 327684, 0, 0, 393220, 458752, 0, 458756, 262144, 0, 524292, 393216, 0, 589828, 458752, 0, 655364, 0, 0, 720900, 524293, 0, 786436, 524293, 0, 851972, 524293, 0, 917508, 524293, 0, 983044, 524288, 0, 1048580, 524288, 0, 5, 65536, 0, 65541, 393216, 0, 131077, 458752, 0, 196613, 65536, 0, 262149, 196608, 0, 327685, 131072, 0, 393221, 0, 0, 458757, 0, 0, 524293, 327680, 0, 589829, 262144, 0, 655365, 65536, 0, 720901, 524293, 0, 786437, 524293, 0, 851973, 524293, 0, 917509, 524293, 0, 983045, 524288, 0, 1048581, 524288, 0, 6, 327680, 0, 65542, 458752, 0, 131078, 262144, 0, 196614, 327680, 0, 262150, 327680, 0, 327686, 196608, 0, 393222, 131072, 0, 458758, 327680, 0, 524294, 196608, 0, 589830, 393216, 0, 655366, 393216, 0, 720902, 524293, 0, 786438, 524293, 0, 851974, 524293, 0, 917510, 524293, 0, 983046, 524288, 0, 1048582, 524288, 0, 7, 65536, 0, 65543, 393216, 0, 131079, 262144, 0, 196615, 196608, 0, 262151, 0, 0, 327687, 131072, 0, 393223, 458752, 0, 458759, 196608, 0, 524295, 131072, 0, 589831, 393216, 0, 655367, 0, 0, 720903, 524293, 0, 786439, 524293, 0, 851975, 524293, 0, 917511, 524293, 0, 983047, 524288, 0, 1048583, 524288, 0, 8, 131072, 0, 65544, 393216, 0, 131080, 65536, 0, 196616, 0, 0, 262152, 131072, 0, 327688, 393216, 0, 393224, 0, 0, 458760, 131072, 0, 524296, 131072, 0, 589832, 196608, 0, 655368, 0, 0, 720904, 524293, 0, 786440, 524293, 0, 851976, 524293, 0, 917512, 524293, 0, 983048, 524288, 0, 1048584, 524288, 0, 9, 458752, 0, 65545, 393216, 0, 131081, 393216, 0, 196617, 131072, 0, 262153, 262144, 0, 327689, 196608, 0, 393225, 131072, 0, 458761, 262144, 0, 524297, 393216, 0, 589833, 393216, 0, 655369, 262144, 0, 720905, 524293, 0, 786441, 524293, 0, 851977, 524293, 0, 917513, 524293, 0, 983049, 524288, 0, 1048585, 524288, 0, 10, 131072, 0, 65546, 196608, 0, 131082, 65536, 0, 196618, 131072, 0, 262154, 262144, 0, 327690, 262144, 0, 393226, 458752, 0, 458762, 393216, 0, 524298, 393216, 0, 589834, 0, 0, 655370, 196608, 0, 720906, 524293, 0, 786442, 524293, 0, 851978, 524293, 0, 917514, 524293, 0, 983050, 524288, 0, 1048586, 524288, 0, 11, 131072, 0, 65547, 0, 0, 131083, 458752, 0, 196619, 65536, 0, 262155, 131072, 0, 327691, 327680, 0, 393227, 327680, 0, 458763, 393216, 0, 524299, 0, 0, 589835, 393216, 0, 655371, 393216, 0, 720907, 524293, 0, 786443, 524293, 0, 851979, 524293, 0, 917515, 524293, 0, 983051, 524288, 0, 1048587, 524288, 0, 12, 262144, 0, 65548, 393216, 0, 131084, 458752, 0, 196620, 196608, 0, 262156, 196608, 0, 327692, 458752, 0, 393228, 131072, 0, 458764, 65536, 0, 524300, 65536, 0, 589836, 196608, 0, 655372, 0, 0, 720908, 524293, 0, 786444, 524293, 0, 851980, 524293, 0, 917516, 524293, 0, 983052, 524288, 0, 1048588, 524288, 0, 13, 262144, 0, 65549, 458752, 0, 131085, 0, 0, 196621, 0, 0, 262157, 131072, 0, 327693, 65536, 0, 393229, 196608, 0, 458765, 196608, 0, 524301, 196608, 0, 589837, 458752, 0, 655373, 262144, 0, 720909, 524293, 0, 786445, 524293, 0, 851981, 524293, 0, 917517, 524293, 0, 983053, 524288, 0, 1048589, 524288, 0, 14, 458752, 0, 65550, 458752, 0, 131086, 327680, 0, 196622, 458752, 0, 262158, 196608, 0, 327694, 262144, 0, 393230, 65536, 0, 458766, 262144, 0, 524302, 393216, 0, 589838, 131072, 0, 655374, 393216, 0, 720910, 524293, 0, 786446, 524293, 0, 851982, 524293, 0, 917518, 524293, 0, 983054, 524288, 0, 1048590, 524288, 0, 15, 393216, 0, 65551, 0, 0, 131087, 327680, 0, 196623, 0, 0, 262159, 65536, 0, 327695, 262144, 0, 393231, 196608, 0, 458767, 196608, 0, 524303, 131072, 0, 589839, 65536, 0, 655375, 131072, 0, 720911, 524293, 0, 786447, 524293, 0, 851983, 524293, 0, 917519, 524293, 0, 983055, 524288, 0, 1048591, 524288, 0, 16, 131072, 0, 65552, 196608, 0, 131088, 262144, 0, 196624, 196608, 0, 262160, 0, 0, 327696, 327680, 0, 393232, 458752, 0, 458768, 0, 0, 524304, 327680, 0, 589840, 262144, 0, 655376, 65536, 0, 720912, 524293, 0, 786448, 524293, 0, 851984, 524293, 0, 917520, 524293, 0, 983056, 524288, 0, 1048592, 524288, 0, 17, 393216, 0, 65553, 327680, 0, 131089, 458752, 0, 196625, 327680, 0, 262161, 131072, 0, 327697, 196608, 0, 393233, 458752, 0, 458769, 131072, 0, 524305, 0, 0, 589841, 65536, 0, 655377, 393216, 0, 720913, 524293, 0, 786449, 524293, 0, 851985, 524293, 0, 917521, 524293, 0, 983057, 524288, 0, 1048593, 524288, 0, 18, 65536, 0, 65554, 196608, 0, 131090, 65536, 0, 196626, 196608, 0, 262162, 131072, 0, 327698, 131072, 0, 393234, 0, 0, 458770, 196608, 0, 524306, 131072, 0, 589842, 196608, 0, 655378, 131072, 0, 720914, 524293, 0, 786450, 524293, 0, 851986, 524293, 0, 917522, 524293, 0, 983058, 524288, 0, 1048594, 524288, 0, 19, 458752, 0, 65555, 131072, 0, 131091, 458752, 0, 196627, 0, 0, 262163, 458752, 0, 327699, 393216, 0, 393235, 131072, 0, 458771, 65536, 0, 524307, 65536, 0, 589843, 196608, 0, 655379, 196608, 0, 720915, 524293, 0, 786451, 524293, 0, 851987, 524293, 0, 917523, 524293, 0, 983059, 524288, 0, 1048595, 524288, 0, 20, 262144, 0, 65556, 458752, 0, 131092, 327680, 0, 196628, 65536, 0, 262164, 65536, 0, 327700, 262144, 0, 393236, 131072, 0, 458772, 458752, 0, 524308, 196608, 0, 589844, 262144, 0, 655380, 65536, 0, 720916, 524293, 0, 786452, 524293, 0, 851988, 524293, 0, 917524, 524293, 0, 983060, 524288, 0, 1048596, 524288, 0, 21, 327680, 0, 65557, 0, 0, 131093, 393216, 0, 196629, 196608, 0, 262165, 393216, 0, 327701, 196608, 0, 393237, 458752, 0, 458773, 131072, 0, 524309, 393216, 0, 589845, 196608, 0, 655381, 0, 0, 720917, 524293, 0, 786453, 524293, 0, 851989, 524293, 0, 917525, 524293, 0, 983061, 524288, 0, 1048597, 524288, 0, 22, 458752, 0, 65558, 262144, 0, 131094, 327680, 0, 196630, 458752, 0, 262166, 262144, 0, 327702, 262144, 0, 393238, 262144, 0, 458774, 131072, 0, 524310, 131072, 0, 589846, 327680, 0, 655382, 131072, 0, 720918, 524293, 0, 786454, 524293, 0, 851990, 524293, 0, 917526, 524293, 0, 983062, 524288, 0, 1048598, 524288, 0, 23, 0, 0, 65559, 131072, 0, 131095, 196608, 0, 196631, 262144, 0, 262167, 65536, 0, 327703, 393216, 0, 393239, 458752, 0, 458775, 262144, 0, 524311, 327680, 0, 589847, 458752, 0, 655383, 65536, 0, 720919, 458752, 0, 786455, 262144, 0, 851991, 524293, 0, 917527, 524288, 0, 983063, 524288, 0, 1048599, 524288, 0, 24, 65536, 0, 65560, 393216, 0, 131096, 65536, 0, 196632, 196608, 0, 262168, 131072, 0, 327704, 131072, 0, 393240, 458752, 0, 458776, 65536, 0, 524312, 196608, 0, 589848, 458752, 0, 655384, 196608, 0, 720920, 196608, 0, 786456, 131072, 0, 851992, 524293, 0, 917528, 524288, 0, 983064, 524288, 0, 1048600, 524288, 0, 25, 196608, 0, 65561, 393216, 0, 131097, 0, 0, 196633, 327680, 0, 262169, 131072, 0, 327705, 327680, 0, 393241, 131072, 0, 458777, 65536, 0, 524313, 131072, 0, 589849, 196608, 0, 655385, 0, 0, 720921, 196608, 0, 786457, 524293, 0, 851993, 524293, 0, 917529, 524288, 0, 983065, 524288, 0, 1048601, 524288, 0, 26, 458752, 0, 65562, 196608, 0, 131098, 393216, 0, 196634, 0, 0, 262170, 458752, 0, 327706, 262144, 0, 393242, 0, 0, 458778, 458752, 0, 524314, 393216, 0, 589850, 131072, 0, 655386, 0, 0, 720922, 196608, 0, 786458, 524293, 0, 851994, 524293, 0, 917530, 524288, 0, 983066, 524288, 0, 1048602, 524288, 0, 0, 524288, 0, 65536, 524288, 0, 131072, 524288, 0, 196608, 524288, 0, 262144, 524288, 0, 327680, 524288, 0, 393216, 524288, 0, 458752, 524288, 0, 524288, 524288, 0, 589824, 524288, 0, 655360, 524288, 0, 720896, 524288, 0, 786432, 524288, 0, 851968, 524288, 0, 917504, 524288, 0, 983040, 524288, 0, 1048576, 524288, 0, 1, 524288, 0, 65537, 524288, 0, 131073, 524288, 0, 196609, 524288, 0, 262145, 524288, 0, 327681, 524288, 0, 393217, 524288, 0, 458753, 524288, 0, 524289, 524288, 0, 589825, 524288, 0, 655361, 524288, 0, 720897, 524288, 0, 786433, 524288, 0, 851969, 524288, 0, 917505, 524288, 0, 983041, 524288, 0, 1048577, 524288, 0, 2, 524288, 0, 65538, 524288, 0, 131074, 524288, 0, 196610, 524288, 0, 262146, 524288, 0, 327682, 524288, 0, 393218, 524288, 0, 458754, 524288, 0, 524290, 524288, 0, 589826, 524288, 0, 655362, 524288, 0, 720898, 524288, 0, 786434, 524288, 0, 851970, 524288, 0, 917506, 524288, 0, 983042, 524288, 0, 1048578, 524288, 0)
+layer_0/tile_data = PackedInt32Array(720919, 393221, 0, 786455, 327685, 0, 720920, 393221, 0, 786456, 393221, 0, 131075, 393221, 0, 196611, 393221, 0, 262147, 458757, 0, 327683, 458757, 0, 393219, 393221, 0, 458755, 327685, 0, 524291, 393221, 0, 589827, 393221, 0, 655363, 327685, 0, 131076, 458757, 0, 196612, 458757, 0, 262148, 458757, 0, 327684, 393221, 0, 393220, 458757, 0, 458756, 458757, 0, 524292, 327685, 0, 589828, 393221, 0, 655364, 393221, 0, 131077, 458757, 0, 196613, 458757, 0, 262149, 458757, 0, 327685, 327685, 0, 393221, 393221, 0, 458757, 393221, 0, 524293, 327685, 0, 589829, 393221, 0, 655365, 393221, 0, 131078, 327685, 0, 196614, 458757, 0, 262150, 393221, 0, 327686, 393221, 0, 393222, 327685, 0, 458758, 458757, 0, 524294, 458757, 0, 589830, 458757, 0, 655366, 458757, 0, 131079, 393221, 0, 196615, 393221, 0, 262151, 458757, 0, 327687, 327685, 0, 393223, 327685, 0, 458759, 458757, 0, 524295, 327685, 0, 589831, 327685, 0, 655367, 458757, 0, 131080, 327685, 0, 196616, 393221, 0, 262152, 327685, 0, 327688, 393221, 0, 393224, 458757, 0, 458760, 458757, 0, 524296, 327685, 0, 589832, 458757, 0, 655368, 393221, 0, 131081, 393221, 0, 196617, 458757, 0, 262153, 458757, 0, 327689, 393221, 0, 393225, 393221, 0, 458761, 458757, 0, 524297, 393221, 0, 589833, 458757, 0, 655369, 458757, 0, 131082, 327685, 0, 196618, 327685, 0, 262154, 393221, 0, 327690, 393221, 0, 393226, 327685, 0, 458762, 393221, 0, 524298, 327685, 0, 589834, 327685, 0, 655370, 458757, 0, 131083, 393221, 0, 196619, 327685, 0, 262155, 458757, 0, 524299, 393221, 0, 589835, 327685, 0, 655371, 327685, 0, 131084, 393221, 0, 196620, 327685, 0, 262156, 458757, 0, 524300, 458757, 0, 589836, 327685, 0, 655372, 327685, 0, 131085, 327685, 0, 196621, 393221, 0, 262157, 458757, 0, 524301, 458757, 0, 589837, 393221, 0, 655373, 393221, 0, 131086, 458757, 0, 196622, 327685, 0, 262158, 327685, 0, 524302, 393221, 0, 589838, 327685, 0, 655374, 327685, 0, 131087, 327685, 0, 196623, 393221, 0, 262159, 327685, 0, 524303, 327685, 0, 589839, 327685, 0, 655375, 393221, 0, 131088, 327685, 0, 196624, 458757, 0, 262160, 327685, 0, 524304, 393221, 0, 589840, 393221, 0, 655376, 393221, 0, 131089, 458757, 0, 196625, 458757, 0, 262161, 327685, 0, 524305, 327685, 0, 589841, 393221, 0, 655377, 327685, 0, 131090, 458757, 0, 196626, 458757, 0, 262162, 327685, 0, 524306, 393221, 0, 589842, 458757, 0, 655378, 458757, 0, 131091, 327685, 0, 196627, 458757, 0, 262163, 327685, 0, 524307, 458757, 0, 589843, 458757, 0, 655379, 327685, 0, 131092, 327685, 0, 196628, 327685, 0, 262164, 327685, 0, 524308, 393221, 0, 589844, 393221, 0, 655380, 393221, 0, 131093, 393221, 0, 196629, 393221, 0, 262165, 327685, 0, 524309, 458757, 0, 589845, 393221, 0, 655381, 458757, 0, 131094, 458757, 0, 196630, 327685, 0, 262166, 393221, 0, 327702, 458757, 0, 393238, 393221, 0, 458774, 393221, 0, 524310, 327685, 0, 589846, 393221, 0, 655382, 458757, 0, 131095, 393221, 0, 196631, 458757, 0, 262167, 393221, 0, 327703, 458757, 0, 393239, 393221, 0, 458775, 327685, 0, 524311, 458757, 0, 589847, 458757, 0, 655383, 327685, 0, 131096, 327685, 0, 196632, 393221, 0, 262168, 393221, 0, 327704, 458757, 0, 393240, 393221, 0, 458776, 393221, 0, 524312, 393221, 0, 589848, 393221, 0, 655384, 458757, 0, 131097, 393221, 0, 196633, 393221, 0, 262169, 393221, 0, 327705, 327685, 0, 393241, 327685, 0, 458777, 393221, 0, 524313, 458757, 0, 589849, 393221, 0, 655385, 458757, 0, 6, 327685, 0, 65542, 327685, 0, 7, 393221, 0, 65543, 458757, 0, 0, 524293, 0, 65536, 524293, 0, 131072, 524293, 0, 196608, 524293, 0, 262144, 524293, 0, 327680, 524293, 0, 393216, 524293, 0, 458752, 524293, 0, 524288, 524293, 0, 589824, 524293, 0, 655360, 524293, 0, 720896, 524293, 0, 786432, 524293, 0, 851968, 524293, 0, 917504, 524293, 0, 983040, 524293, 0, 1048576, 524293, 0, 1, 524293, 0, 65537, 524293, 0, 131073, 524293, 0, 196609, 524293, 0, 262145, 524293, 0, 327681, 524293, 0, 393217, 524293, 0, 458753, 524293, 0, 524289, 524293, 0, 589825, 524293, 0, 655361, 524293, 0, 720897, 524293, 0, 786433, 524293, 0, 851969, 524293, 0, 917505, 524293, 0, 983041, 524293, 0, 1048577, 524293, 0, 2, 524293, 0, 65538, 524293, 0, 131074, 524293, 0, 196610, 524293, 0, 262146, 524293, 0, 327682, 524293, 0, 393218, 524293, 0, 458754, 524293, 0, 524290, 524293, 0, 589826, 524293, 0, 655362, 524293, 0, 720898, 524293, 0, 786434, 524293, 0, 851970, 524293, 0, 917506, 524293, 0, 983042, 524293, 0, 1048578, 524293, 0, 786435, 524293, 0, 851971, 524293, 0, 917507, 524293, 0, 983043, 524293, 0, 1048579, 524293, 0, 786436, 524293, 0, 851972, 524293, 0, 917508, 524293, 0, 983044, 524293, 0, 1048580, 524293, 0, 786437, 524293, 0, 851973, 524293, 0, 917509, 524293, 0, 983045, 524293, 0, 1048581, 524293, 0, 786438, 524293, 0, 851974, 524293, 0, 917510, 524293, 0, 983046, 524293, 0, 1048582, 524293, 0, 786439, 524293, 0, 851975, 524293, 0, 917511, 524293, 0, 983047, 524293, 0, 1048583, 524293, 0, 786440, 524293, 0, 851976, 524293, 0, 917512, 524293, 0, 983048, 524293, 0, 1048584, 524293, 0, 786441, 524293, 0, 851977, 524293, 0, 917513, 524293, 0, 983049, 524293, 0, 1048585, 524293, 0, 786442, 524293, 0, 851978, 524293, 0, 917514, 524293, 0, 983050, 524293, 0, 1048586, 524293, 0, 786443, 524293, 0, 851979, 524293, 0, 917515, 524293, 0, 983051, 524293, 0, 1048587, 524293, 0, 786444, 524293, 0, 851980, 524293, 0, 917516, 524293, 0, 983052, 524293, 0, 1048588, 524293, 0, 786445, 524293, 0, 851981, 524293, 0, 917517, 524293, 0, 983053, 524293, 0, 1048589, 524293, 0, 786446, 524293, 0, 851982, 524293, 0, 917518, 524293, 0, 983054, 524293, 0, 1048590, 524293, 0, 786447, 524293, 0, 851983, 524293, 0, 917519, 524293, 0, 983055, 524293, 0, 1048591, 524293, 0, 786448, 524293, 0, 851984, 524293, 0, 917520, 524293, 0, 983056, 524293, 0, 1048592, 524293, 0, 786449, 524293, 0, 851985, 524293, 0, 917521, 524293, 0, 983057, 524293, 0, 1048593, 524293, 0, 786450, 524293, 0, 851986, 524293, 0, 917522, 524293, 0, 983058, 524293, 0, 1048594, 524293, 0, 786451, 524293, 0, 851987, 524293, 0, 917523, 524293, 0, 983059, 524293, 0, 1048595, 524293, 0, 786452, 524293, 0, 851988, 524293, 0, 917524, 524293, 0, 983060, 524293, 0, 1048596, 524293, 0, 786453, 524293, 0, 851989, 524293, 0, 917525, 524293, 0, 983061, 524293, 0, 1048597, 524293, 0, 786454, 524293, 0, 851990, 524293, 0, 917526, 524293, 0, 983062, 524293, 0, 1048598, 524293, 0, 851991, 524293, 0, 917527, 524293, 0, 983063, 524293, 0, 1048599, 524293, 0, 851992, 524293, 0, 917528, 524293, 0, 983064, 524293, 0, 1048600, 524293, 0, 851993, 524293, 0, 917529, 524293, 0, 983065, 524293, 0, 1048601, 524293, 0, 851994, 524293, 0, 917530, 524293, 0, 983066, 524293, 0, 1048602, 524293, 0, 851995, 524293, 0, 917531, 524293, 0, 983067, 524293, 0, 1048603, 524293, 0, 851996, 524293, 0, 917532, 524293, 0, 983068, 524293, 0, 1048604, 524293, 0, 851997, 524293, 0, 917533, 524293, 0, 983069, 524293, 0, 1048605, 524293, 0, 27, 524293, 0, 65563, 524293, 0, 131099, 524293, 0, 196635, 524293, 0, 262171, 524293, 0, 327707, 524293, 0, 393243, 524293, 0, 458779, 524293, 0, 524315, 524293, 0, 589851, 524293, 0, 655387, 524293, 0, 720923, 524293, 0, 786459, 524293, 0, 28, 524293, 0, 65564, 524293, 0, 131100, 524293, 0, 196636, 524293, 0, 262172, 524293, 0, 327708, 524293, 0, 393244, 524293, 0, 458780, 524293, 0, 524316, 524293, 0, 589852, 524293, 0, 655388, 524293, 0, 720924, 524293, 0, 786460, 524293, 0, 29, 524293, 0, 65565, 524293, 0, 131101, 524293, 0, 196637, 524293, 0, 262173, 524293, 0, 327709, 524293, 0, 393245, 524293, 0, 458781, 524293, 0, 524317, 524293, 0, 589853, 524293, 0, 655389, 524293, 0, 720925, 524293, 0, 786461, 524293, 0, 786457, 524293, 0, 786458, 524293, 0, 131098, 458757, 0, 196634, 393221, 0, 262170, 393221, 0, 327706, 458757, 0, 393242, 393221, 0, 458778, 458757, 0, 524314, 393221, 0, 589850, 327685, 0, 655386, 458757, 0)
 layer_1/name = "Walls"
 layer_1/tile_data = PackedInt32Array(720899, 1245191, 0, 720900, 1310727, 0, 5, 589831, 0, 65541, 786439, 0, 720901, 1310727, 0, 720902, 1310727, 0, 720903, 1310727, 0, 8, 983047, 0, 65544, 1507335, 0, 720904, 1310727, 0, 9, 589831, 0, 65545, 1507335, 0, 720905, 1310727, 0, 10, 655367, 0, 65546, 786439, 0, 720906, 1310727, 0, 11, 589831, 0, 65547, 786439, 0, 327691, 2293767, 0, 393227, 196615, 0, 458763, 786439, 0, 720907, 1310727, 0, 12, 983047, 0, 65548, 1507335, 0, 327692, 1310727, 0, 393228, 655367, 0, 458764, 1507335, 0, 720908, 1310727, 0, 13, 983047, 0, 65549, 1507335, 0, 327693, 1310727, 0, 393229, 983047, 0, 458765, 1507335, 0, 720909, 1310727, 0, 14, 589831, 0, 65550, 1507335, 0, 327694, 1310727, 0, 393230, 589831, 0, 458766, 1507335, 0, 720910, 1310727, 0, 15, 983047, 0, 65551, 786439, 0, 327695, 1310727, 0, 393231, 655367, 0, 458767, 1507335, 0, 720911, 1310727, 0, 16, 655367, 0, 65552, 786439, 0, 327696, 1310727, 0, 393232, 983047, 0, 458768, 786439, 0, 720912, 1310727, 0, 17, 983047, 0, 65553, 1507335, 0, 327697, 1310727, 0, 393233, 589831, 0, 458769, 786439, 0, 720913, 1310727, 0, 18, 655367, 0, 65554, 786439, 0, 327698, 1310727, 0, 393234, 983047, 0, 458770, 1507335, 0, 720914, 1310727, 0, 19, 589831, 0, 65555, 786439, 0, 720915, 1310727, 0, 20, 983047, 0, 65556, 1507335, 0, 21, 983047, 0, 65557, 1507335, 0, 22, 589831, 0, 65558, 786439, 0, 720918, 1310727, 0, 23, 589831, 0, 65559, 786439, 0, 3, 131079, 0, 65539, 720903, 0, 131075, 1114119, 0, 196611, 1114119, 0, 262147, 1114119, 0, 327683, 1114119, 0, 393219, 1114119, 0, 458755, 1114119, 0, 524291, 1114119, 0, 589827, 1114119, 0, 655363, 1114119, 0, 4, 589831, 0, 65540, 1507335, 0, 327699, 1310727, 0, 393235, 655367, 0, 458771, 786439, 0, 327700, 1310727, 0, 393236, 983047, 0, 458772, 786439, 0, 720916, 1310727, 0, 327701, 2359303, 0, 393237, 65543, 0, 458773, 786439, 0, 720917, 1310727, 0, 24, 983047, 0, 65560, 1507335, 0, 25, 589831, 0, 65561, 1507335, 0, 720921, 1310727, 0, 26, 7, 0, 65562, 917511, 0, 131098, 1048583, 0, 196634, 1048583, 0, 262170, 1048583, 0, 327706, 1048583, 0, 393242, 1048583, 0, 458778, 1048583, 0, 524314, 1048583, 0, 589850, 1048583, 0, 655386, 1048583, 0, 720922, 1441799, 0)
 layer_2/name = "Wires"
 layer_2/tile_data = PackedInt32Array(196633, 524290, 0, 262169, 1048578, 0, 327705, 1048578, 0, 393241, 1048578, 0, 458777, 1048578, 0, 524313, 1048578, 0, 589849, 1048578, 0, 655385, 1048578, 0)
 
-[node name="Inventory" parent="." instance=ExtResource("2_gr4jm")]
+[node name="Inventory" parent="." instance=ExtResource("3_ulc8o")]
 position = Vector2(245, 258)
 
-[node name="Player" parent="." instance=ExtResource("3_tecls")]
+[node name="Player" parent="." instance=ExtResource("4_1pewe")]
 position = Vector2(112, 40)
 
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
@@ -49,77 +42,15 @@ position = Vector2(112, 40)
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 current = true
 
-[node name="Turtle" parent="." instance=ExtResource("5_ouffw")]
-position = Vector2(661, 66)
-
-[node name="RayCast2D" type="RayCast2D" parent="Turtle"]
-
 [node name="TrajectoryLine" type="Line2D" parent="."]
 position = Vector2(90, 136)
 width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
 
-[node name="Hedgehog" parent="." instance=ExtResource("6_7oh5b")]
+[node name="Hedgehog" parent="." instance=ExtResource("5_jtj34")]
 position = Vector2(264, 64)
 
 [node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
-
-[node name="GamePause" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("8_mqrpi")
-
-[node name="Panel" type="Panel" parent="GamePause"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer3" type="GridContainer" parent="GamePause/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = -20.0
-offset_right = 74.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
-layout_mode = 2
-columns = 2
-
-[node name="resume" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("9_s1hqb")
-flat = true
-
-[node name="restart" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_nk465")
-flat = true
-
-[node name="GridContainer2" type="GridContainer" parent="GamePause/Panel/GridContainer3"]
-layout_mode = 2
-
-[node name="exit" type="Button" parent="GamePause/Panel/GridContainer3/GridContainer2"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_q10wk")
-flat = true
-
-[node name="select" type="AudioStreamPlayer2D" parent="GamePause"]
-stream = ExtResource("12_px82u")
 
 [node name="Escape" type="CanvasLayer" parent="."]
 
@@ -128,181 +59,50 @@ offset_left = 12.0
 offset_top = 13.0
 offset_right = 28.0
 offset_bottom = 29.0
-texture = ExtResource("13_8pq3k")
+texture = ExtResource("6_l881j")
 stretch_mode = 2
 
-[node name="Death" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("14_mdn54")
-
-[node name="Confetti" type="AudioStreamPlayer2D" parent="Death"]
-stream = ExtResource("15_6410y")
-
-[node name="Panel" type="Panel" parent="Death"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="Death/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 53.0
-offset_right = 74.0
-offset_bottom = 77.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 2
-
-[node name="exit" type="Button" parent="Death/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_q10wk")
-flat = true
-
-[node name="restart" type="Button" parent="Death/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_nk465")
-flat = true
-
-[node name="TextureRect" type="TextureRect" parent="Death/Panel"]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 33.0
-offset_right = 405.0
-offset_bottom = 175.0
-
-[node name="select" type="AudioStreamPlayer2D" parent="Death"]
-stream = ExtResource("12_px82u")
-
-[node name="WinState" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-script = ExtResource("14_mdn54")
-
-[node name="Confetti" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("16_w6hej")
-
-[node name="Panel" type="Panel" parent="WinState"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="WinState/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = 53.0
-offset_right = 74.0
-offset_bottom = 77.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 2
-
-[node name="exit" type="Button" parent="WinState/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("11_q10wk")
-flat = true
-
-[node name="restart" type="Button" parent="WinState/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 6
-icon = ExtResource("10_nk465")
-flat = true
-
-[node name="TextureRect" type="TextureRect" parent="WinState/Panel"]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 33.0
-offset_right = 405.0
-offset_bottom = 175.0
-
-[node name="select" type="AudioStreamPlayer2D" parent="WinState"]
-stream = ExtResource("12_px82u")
-
-[node name="MangoPickup" parent="." instance=ExtResource("17_km02t")]
+[node name="MangoPickup" parent="." instance=ExtResource("7_wcba7")]
 position = Vector2(160, 112)
 
-[node name="EatingFood" parent="." instance=ExtResource("19_dkqau")]
-position = Vector2(144, 40)
-
-[node name="Door" parent="." instance=ExtResource("19_bvmg8")]
+[node name="Door" parent="." instance=ExtResource("8_qehpa")]
 position = Vector2(112, 16)
 
-[node name="Door2" parent="." instance=ExtResource("19_bvmg8")]
+[node name="Door2" parent="." instance=ExtResource("8_qehpa")]
 position = Vector2(384, 192)
 door_link_id = "a"
 
-[node name="Vines" parent="." instance=ExtResource("20_pefhm")]
+[node name="Vines" parent="." instance=ExtResource("9_rbywm")]
 position = Vector2(184, 32)
 
-[node name="Vines2" parent="." instance=ExtResource("20_pefhm")]
+[node name="Vines2" parent="." instance=ExtResource("9_rbywm")]
 position = Vector2(184, 48)
 
-[node name="Vines3" parent="." instance=ExtResource("20_pefhm")]
+[node name="Vines3" parent="." instance=ExtResource("9_rbywm")]
 position = Vector2(184, 64)
 
-[node name="Button" parent="." instance=ExtResource("18_6qyfn")]
+[node name="Button" parent="." instance=ExtResource("10_of7yl")]
 position = Vector2(392, 56)
 door_link_id = "a"
 
-[node name="Box" parent="." instance=ExtResource("4_nqk6f")]
+[node name="Box" parent="." instance=ExtResource("11_bfe11")]
 position = Vector2(216, 56)
 
-[node name="Error" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_6410y")
-volume_db = -16.138
-pitch_scale = 0.92
+[node name="Food" type="Node" parent="." groups=["food"]]
 
-[node name="Conductor_Box" parent="." instance=ExtResource("22_84abl")]
-position = Vector2(68, 150)
+[node name="GamePause" parent="." instance=ExtResource("12_l2b40")]
+visible = false
 
-[node name="MBoard" parent="." instance=ExtResource("22_nacpq")]
-position = Vector2(86, 120)
-connector_name = "two"
-door_link_id = "a"
+[node name="Death" parent="." instance=ExtResource("13_xp0sq")]
+visible = false
 
-[node name="Marker2D2" type="Marker2D" parent="."]
-position = Vector2(87, 155)
+[node name="WinState" parent="." instance=ExtResource("14_bhjgx")]
+visible = false
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(286, 154)
+[node name="LevelTransition" parent="." instance=ExtResource("15_ctqtj")]
+position = Vector2(385, 221)
 
-[node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("23_8hv3a")]
-position = Vector2(236, 160)
-target_1 = NodePath("../Marker2D")
-target_2 = NodePath("../Marker2D2")
+[node name="AudioPausedMenu" parent="." instance=ExtResource("16_3pgxk")]
+visible = false
 
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/resume" to="GamePause" method="_on_resume_pressed"]
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer/restart" to="GamePause" method="_on_restart_pressed"]
-[connection signal="pressed" from="GamePause/Panel/GridContainer3/GridContainer2/exit" to="GamePause" method="_on_exit_pressed"]
-[connection signal="finished" from="GamePause/select" to="GamePause" method="_on_select_finished"]
-[connection signal="pressed" from="Death/Panel/GridContainer/exit" to="Death" method="_on_exit_pressed"]
-[connection signal="pressed" from="Death/Panel/GridContainer/restart" to="Death" method="_on_restart_pressed"]
-[connection signal="finished" from="Death/select" to="Death" method="_on_select_finished"]
-[connection signal="pressed" from="WinState/Panel/GridContainer/exit" to="WinState" method="_on_exit_pressed"]
-[connection signal="pressed" from="WinState/Panel/GridContainer/restart" to="WinState" method="_on_restart_pressed"]
-[connection signal="finished" from="WinState/select" to="WinState" method="_on_select_finished"]
+[node name="ShakeCamera" parent="." instance=ExtResource("17_rxdsx")]

@@ -36,6 +36,8 @@ var patrol_wait_timer = null
 func _ready():
 	print("Lizard ready")
 	
+	SharedSignals.lizard_connection.connect(_play_zap)
+	
 	# Seed the random number generator for randomness in animations
 	randomize()
 	
@@ -172,7 +174,47 @@ func _update_animation_parameters():
 	animation_tree["parameters/run_off/blend_position"] = direction
 	animation_tree["parameters/run_on/blend_position"] = direction
 
-
 func _on_electric_area_body_entered(body):
 	if body.is_in_group("player"):
 		SharedSignals.player_killed.emit("pop")
+		_player_zap(body)
+
+func _player_zap(object):
+	var player_position = object.global_position  # Get the player's position
+	var lizard_position = self.global_position  # Get the lizard's position
+	var direction = (player_position - lizard_position).normalized()  # Correct direction from lizard to player
+
+	# Instantiate the zap scene independently
+	var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
+
+	# Define the offset amount (10px)
+	var offset_amount = 30
+
+	# Offset the spawn position by 10px in the direction from the lizard to the player
+	electrical_zap.global_position = lizard_position + (direction * offset_amount)
+
+	# Add the zap to the current scene first, before calling output_charge
+	get_tree().current_scene.add_child(electrical_zap)
+
+	# Now that it's added to the scene, call the charge
+	electrical_zap.output_charge(direction)
+
+func _play_zap(object):
+	var conductor_position = object.global_position
+	var lizard_position = self.global_position
+	var direction = (lizard_position - conductor_position).normalized()
+	
+	# Instantiate the zap scene independently
+	var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
+	
+	# Define the offset amount (10px)
+	var offset_amount = -10
+	
+	# Offset the spawn position by 10px in the direction vector
+	electrical_zap.global_position = lizard_position + (direction * offset_amount)
+	
+	# Add the zap to the current scene first, before calling output_charge
+	get_tree().current_scene.add_child(electrical_zap)
+	
+	# Now that it's added to the scene, call the charge
+	electrical_zap.output_charge(direction)

@@ -4,27 +4,24 @@ extends BaseThrowable
 @onready var audio_controler = $AudioControler
 
 var landed: bool = false
+var played_once: bool = false
 
 func _ready():
+	SharedSignals.distroy_throwable.connect(_remove_myself)
 	super()
-	SharedSignals.water_land.connect(impact_landing)
+	projectile_landed.connect(_play_death)
 	animated_sprite_2d.play("idle")
 
 func _physics_process(delta: float):
 	super(delta)
+	
+	if animated_sprite_2d.frame == 14:
+		self.queue_free()
 
-func impact_landing():
-	landed = true
+func _play_death():
 	AudioController.play_sfx("water_land")
 	animated_sprite_2d.play("land")
 
-func _on_fire_area_area_entered(area):
-	if area.is_in_group("burn"):
-		pass
-		
-	if area.is_in_group("grow"):
-		pass
-
-func _on_animated_sprite_2d_animation_finished():
-	if landed:
-		animated_sprite_2d.visible = false
+func _remove_myself():
+	AudioController.play_sfx("water_land")
+	animated_sprite_2d.play("land")
