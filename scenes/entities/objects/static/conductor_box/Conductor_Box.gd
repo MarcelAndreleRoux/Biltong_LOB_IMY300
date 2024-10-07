@@ -2,7 +2,7 @@ extends RigidBody2D
 
 @onready var Area = $MoveArea
 @onready var animatedSprite = $AnimatedSprite2D
-@onready var move_action = $MoveAction
+@onready var action_button_press = $ActionButtonPress
 
 var remove_box: bool = false
 var player_in_area: bool = false
@@ -11,11 +11,12 @@ var shown_once: bool = false
 var charged_state: bool = false
 
 func _ready():
-	move_action.visible = false
+	action_button_press.visible = false
 	animatedSprite.play("idle_off")
 	#SharedSignals.move_box.connect(move_in_direction)
 	SharedSignals.drag_box.connect(_follow_player)
 	SharedSignals.is_dragging_box.connect(_is_dragging)
+	SharedSignals.conductor_connection.connect(_play_zap)
 
 func _integrate_forces(_state):
 	rotation = 0
@@ -46,7 +47,7 @@ func _some_waiting_timer():
 
 func _show_timeout():
 	$show_timer.queue_free()
-	move_action.visible = false
+	action_button_press.visible = false
 
 func _is_dragging(state: bool):
 	if state and charged_state:
@@ -62,7 +63,7 @@ func _on_move_area_body_entered(body: Node2D):
 	# Ensure the body is the player
 	if body.is_in_group("player"):  # Check if the body belongs to the 'player' group
 		if not shown_once:
-			move_action.visible = true
+			action_button_press.visible = true
 			_some_waiting_timer()
 
 		player_in_area = true
@@ -96,16 +97,17 @@ func _on_push_area_body_exited(body):
 		SharedSignals.player_not_push.emit()
 
 func _on_conduction_area_body_entered(body):
-	if body.is_in_group("lizard"):
+	if body.is_in_group("lizard"):  # When a lizard enters the area
 		charged_state = true
 		animatedSprite.play("turn_on")
-		SharedSignals.lizard_connection.emit(true)
+		SharedSignals.lizard_connection.emit(self)
+		SharedSignals.lizard_connection_made.emit(true)
 
 func _on_conduction_area_body_exited(body):
 	if body.is_in_group("lizard"):
 		charged_state = false
 		animatedSprite.play("turn_off")
-		SharedSignals.lizard_connection.emit(false)
+		SharedSignals.lizard_connection_made.emit(false)
 
 func _on_animated_sprite_2d_animation_finished():
 	if charged_state:
@@ -113,19 +115,24 @@ func _on_animated_sprite_2d_animation_finished():
 	else:
 		animatedSprite.play("idle_off")
 
-# Restrict Movement
-func _on_wall_detection_left_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(-1, 0))
-
-func _on_wall_detection_right_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(1, 0))
-
-func _on_wall_detection_up_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(0, -1))
-
-func _on_wall_detection_down_body_entered(body):
-	if body.is_in_group("walls"):
-		SharedSignals.wall_detected.emit(Vector2(0, 1))
+func _play_zap(object):
+	# Ensure zap only plays if there is a connection (charged_state = true)
+	if charged_state:
+		var conductor_position = object.global_position
+		var lizard_position = self.global_position
+		var direction = (lizard_position - conductor_position).normalized()
+		
+		# Instantiate the zap scene independently
+		var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
+		
+		# Define the offset amount (10px)
+		var offset_amount = -10
+		
+		# Offset the spawn position by 10px in the direction vector
+		electrical_zap.global_position = lizard_position + (direction * offset_amount)
+		
+		# Add the zap to the current scene first, before calling output_charge
+		get_tree().current_scene.add_child(electrical_zap)
+		
+		# Now that it's added to the scene, call the charge
+		electrical_zap.output_charge(direction)

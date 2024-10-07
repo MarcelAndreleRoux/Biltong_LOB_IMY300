@@ -29,11 +29,16 @@ signal check_link
 signal found_link
 signal full_link
 
+# Lizard
+signal sent_input_charge
+
 # Button
 signal button_active
 
 # C_box
 signal lizard_connection
+signal conductor_connection
+signal lizard_connection_made
 
 # Dart
 signal dart_hit_wall

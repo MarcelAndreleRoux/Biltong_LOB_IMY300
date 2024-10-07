@@ -2,7 +2,6 @@ extends StaticBody2D
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
-@onready var pickup = $AudioStreamPlayer2D
 @onready var action_button_press = $ActionButtonPress
 
 var eating: bool = false
@@ -47,7 +46,7 @@ func _process(delta):
 		action_button_press.visible = false
 		GlobalValues.can_swap_food = true
 		animated_sprite_2d.play("idle")
-		pickup.play()
+		AudioController.play_sfx("food_pickup")
 
 func _play_grow_animation():
 	playing_grow = true

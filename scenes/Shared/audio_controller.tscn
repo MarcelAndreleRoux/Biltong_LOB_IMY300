@@ -126,4 +126,13 @@ bus = &"Sfx"
 [node name="box_drop" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")
 
+[node name="fire_pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_s37rq")
+
+[node name="water_pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_s37rq")
+
+[node name="food_pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_s37rq")
+
 [connection signal="finished" from="button_select" to="." method="_on_button_select_finished"]

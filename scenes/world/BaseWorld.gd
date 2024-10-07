@@ -57,8 +57,8 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 func _ready():
+	GameMusicController.play_music()
 	# Initialize common functionality
-	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
 	original_inv_position = inventory.position
 	SharedSignals.new_marker.connect(_on_new_marker)
@@ -181,17 +181,6 @@ func _throw_item():
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
 		# Add this line to add the instance to the "food_to_eat" group
 		instance.add_to_group("food_to_eat")
-	
-	# Add shadow for all projectiles
-	var shadow_sprite = Sprite2D.new()
-	shadow_sprite.texture = shadow_texture
-	shadow_sprite.global_position = throw_start_position
-	shadow_sprite.z_index = -1
-	instance.add_child(shadow_sprite)
-
-	SharedSignals.shadow_update.connect(_on_update_shadow)
-	SharedSignals.shadow_done.connect(_on_shadow_done)
-	shadow = shadow_sprite
 
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
 		var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())
@@ -286,12 +275,6 @@ func calculate_trajectory():
 		points.append(player.global_position + Vector2(dx, dy))
 
 	trajectory_line.points = points
-
-func _on_update_shadow(direction: Vector2, distance: float):
-	shadow.global_position = throw_start_position + direction * distance
-
-func _on_shadow_done():
-	shadow.hide()
 
 func calculate_landing_position(start_position: Vector2, direction: Vector2, target_position: Vector2) -> Vector2:
 	var distance = start_position.distance_to(target_position)

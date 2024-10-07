@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="16_4eh3c"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="16_jflc3"]
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="16_lfp78"]
-[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_pool.tscn" id="17_bd31y"]
+[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_bush.tscn" id="17_bd31y"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="17_ic8cu"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="17_wcr21"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="19_0xxf4"]
@@ -20,6 +20,8 @@
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_thsnq")
+
+[node name="ShakeCamera" parent="." instance=ExtResource("17_ic8cu")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_jbp6l")
@@ -62,7 +64,7 @@ offset_bottom = 29.0
 texture = ExtResource("12_hny14")
 stretch_mode = 2
 
-[node name="waterPool" parent="." instance=ExtResource("17_bd31y")]
+[node name="WaterBush" parent="." instance=ExtResource("17_bd31y")]
 position = Vector2(364, 45)
 
 [node name="Door" parent="." instance=ExtResource("19_0xxf4")]
@@ -123,5 +125,3 @@ position = Vector2(321, 204)
 
 [node name="AudioPausedMenu" parent="." instance=ExtResource("16_lfp78")]
 visible = false
-
-[node name="ShakeCamera" parent="." instance=ExtResource("17_ic8cu")]

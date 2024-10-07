@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://djwrb4bfed3up"]
+[gd_scene load_steps=15 format=3 uid="uid://djwrb4bfed3up"]
 
 [ext_resource type="Texture2D" uid="uid://d2ii77wxwvry5" path="res://assets/sprites/objects/throwables/fire/Fire_Mango.png" id="1_f61ro"]
-[ext_resource type="Script" path="res://scenes/entities/objects/throwables/fire/mango_pickup.gd" id="1_r3l62"]
-[ext_resource type="Texture2D" uid="uid://bocxbuatv3htb" path="res://assets/sprites/UI/Keycaps/Keycaps-D.png" id="3_b17a8"]
+[ext_resource type="Script" path="res://scenes/entities/objects/throwables/fire/fire_bush.gd" id="1_r3l62"]
+[ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="3_sa3t3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iakft"]
 size = Vector2(4, 4)
@@ -46,9 +46,46 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fi4m"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_kp0t5"]
+radius = 20.025
 
-[node name="MangoPickup" type="StaticBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ci0o"]
+atlas = ExtResource("3_sa3t3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d33al"]
+atlas = ExtResource("3_sa3t3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jehqo"]
+atlas = ExtResource("3_sa3t3")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjtr6"]
+atlas = ExtResource("3_sa3t3")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oskxl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ci0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d33al")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jehqo")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_gjtr6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="FireBush" type="StaticBody2D"]
 script = ExtResource("1_r3l62")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -61,14 +98,12 @@ animation = &"idle"
 [node name="ActionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionArea"]
-shape = SubResource("RectangleShape2D_7fi4m")
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_kp0t5")
 
-[node name="pickup" type="AudioStreamPlayer2D" parent="."]
-
-[node name="ActionButton" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(17, -30)
-texture = ExtResource("3_b17a8")
+[node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
+position = Vector2(13, -16)
+sprite_frames = SubResource("SpriteFrames_oskxl")
 
 [connection signal="body_entered" from="ActionArea" to="." method="_on_action_area_body_entered"]
 [connection signal="body_exited" from="ActionArea" to="." method="_on_action_area_body_exited"]

@@ -9,6 +9,7 @@ class_name BaseThrowable
 @export var despawn_time: float = 8.0
 
 signal projectile_landed
+signal shadow_done
 
 var _direction: Vector2
 var _spawnPosition: Vector2

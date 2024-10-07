@@ -18,6 +18,8 @@
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_e5o8h")
 
+[node name="ShakeCamera" parent="." instance=ExtResource("14_d4res")]
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_g282t")
 format = 2
@@ -86,5 +88,3 @@ position = Vector2(307, 270)
 
 [node name="AudioPausedMenu" parent="." instance=ExtResource("13_m5kfd")]
 visible = false
-
-[node name="ShakeCamera" parent="." instance=ExtResource("14_d4res")]

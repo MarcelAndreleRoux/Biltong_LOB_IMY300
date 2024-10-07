@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://cb08oxqkyxkb5"]
 
-[ext_resource type="Script" path="res://scenes/entities/objects/static/board/m_board.gd" id="1_wiw61"]
+[ext_resource type="Script" path="res://scenes/entities/objects/static/m_board/m_board.gd" id="1_wiw61"]
 [ext_resource type="Texture2D" uid="uid://lr545yno268c" path="res://assets/sprites/objects/electricity/conductors/Connector-Button-Closed.png" id="2_l7g70"]
 [ext_resource type="Texture2D" uid="uid://dkgsc8w0nfirq" path="res://assets/sprites/objects/electricity/conductors/Connector-Button-Open.png" id="3_hegnq"]
 [ext_resource type="Texture2D" uid="uid://gcaq83xs2cvg" path="res://assets/sprites/objects/electricity/conductors/Connector-Electric-One-Closed.png" id="4_lelk6"]
@@ -105,7 +105,9 @@ size = Vector2(12, 12)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u30mt"]
 size = Vector2(52, 33)
 
-[node name="MBoard" type="StaticBody2D" groups=["conductor"]]
+[node name="MBoard" type="StaticBody2D"]
+collision_layer = 8192
+collision_mask = 65535
 script = ExtResource("1_wiw61")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -116,6 +118,8 @@ animation = &"one_connector_on"
 shape = SubResource("RectangleShape2D_5hybq")
 
 [node name="ConnectionArea" type="Area2D" parent="."]
+collision_layer = 16384
+collision_mask = 65535
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConnectionArea"]
 position = Vector2(0, 13.5)

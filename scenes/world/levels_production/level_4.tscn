@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="16_4dh3l"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="16_e0khn"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="16_h1sos"]
-[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/mango_pickup.tscn" id="17_km02t"]
+[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/fire_bush.tscn" id="17_km02t"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="17_oh0lg"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="18_6qyfn"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="19_bvmg8"]
@@ -20,6 +20,8 @@
 
 [node name="BaseLevel3" type="Node2D"]
 script = ExtResource("1_xoy2j")
+
+[node name="ShakeCamera" parent="." instance=ExtResource("17_oh0lg")]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_hauuc")
@@ -104,5 +106,3 @@ position = Vector2(385, 221)
 
 [node name="AudioPausedMenu" parent="." instance=ExtResource("16_4dh3l")]
 visible = false
-
-[node name="ShakeCamera" parent="." instance=ExtResource("17_oh0lg")]
