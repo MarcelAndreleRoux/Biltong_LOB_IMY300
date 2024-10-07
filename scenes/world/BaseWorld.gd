@@ -59,6 +59,7 @@ var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 func _ready():
 	GameMusicController.play_music()
 	# Initialize common functionality
+	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
 	original_inv_position = inventory.position
 	SharedSignals.new_marker.connect(_on_new_marker)
@@ -66,8 +67,7 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.death_finished.connect(_on_death_finsish)
 	GlobalValues.game_done.connect(_on_game_finished)
-	SharedSignals.shake_turtle.connect(_shake)
-
+	
 	player_raycast.enabled = true
 	
 	# Add all vines to the player's raycast exceptions
@@ -125,8 +125,14 @@ func _update_raycast_position():
 	player_raycast.global_position = player.global_position
 	var mouse_position = get_global_mouse_position()
 	var relative_mouse_position = mouse_position - player_raycast.global_position
+	
+	# Clamp aim distance to a minimum of 10px
+	var distance_to_mouse = relative_mouse_position.length()
+	if distance_to_mouse < 10.0:
+		relative_mouse_position = relative_mouse_position.normalized() * 10.0
+	
 	player_raycast.target_position = relative_mouse_position
-	_end = get_global_mouse_position()
+	_end = player.global_position + relative_mouse_position  # Update target position
 
 func _handle_aiming_and_throwing():
 	if Input.is_action_pressed("aim") and not is_on_cooldown:
@@ -181,6 +187,17 @@ func _throw_item():
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
 		# Add this line to add the instance to the "food_to_eat" group
 		instance.add_to_group("food_to_eat")
+	
+	# Add shadow for all projectiles
+	var shadow_sprite = Sprite2D.new()
+	shadow_sprite.texture = shadow_texture
+	shadow_sprite.name = "shadow_sprite"
+	shadow_sprite.global_position = throw_start_position
+	shadow_sprite.z_index = -1
+	instance.add_child(shadow_sprite)
+
+	SharedSignals.shadow_update.emit(throw_start_position)
+	shadow = shadow_sprite
 
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
 		var landing_position = calculate_landing_position(playerPosition, direction, get_global_mouse_position())

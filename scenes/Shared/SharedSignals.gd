@@ -35,6 +35,9 @@ signal sent_input_charge
 # Button
 signal button_active
 
+# Throw
+signal throw_direction
+
 # C_box
 signal lizard_connection
 signal conductor_connection

@@ -17,6 +17,8 @@ signal drag_box(position: Vector2, direction: Vector2)
 @onready var box_drop = $box_drop
 @onready var death_sound = $death_sound
 
+@export var add_distance_blocker: bool = true
+
 # Dash variables
 var is_dashing: bool = false
 var dash_speed: float = 200.0  # Speed of the dash
@@ -37,6 +39,8 @@ var throw_clicked: bool = false
 var is_on_cooldown: bool = false
 var can_throw_proj: bool = false
 var can_aim_throw: bool = false
+var MIN_AIM_DISTANCE: float = 20.0
+var MAX_AIM_DISTANCE: float = 200.0
 
 # Box
 var is_dragging: bool = false
@@ -102,9 +106,12 @@ func _physics_process(delta):
 	else:
 		_handle_movement_input()
 	
+	# Get mouse position and calculate the direction to the mouse from the player
 	_end = get_local_mouse_position()
 	my_local_pos = to_local(global_position)
-	
+	var aim_direction = _end - global_position
+	var distance_to_mouse = aim_direction.length()
+
 	if can_aim_throw: 
 		if Input.is_action_pressed("aim"):
 			trajectory_line.visible = true
@@ -117,15 +124,13 @@ func _physics_process(delta):
 		_play_movement_animation()
 		_update_animation_parameters()
 
+	# Apply the calculated velocity
 	velocity = currentVelocity
 	move_and_slide()
 
-	# Get the mouse position in the world space
-	var mouse_position = get_global_mouse_position()
-
-	# Emit the player's position and the direction toward the mouse
+	# Emit the player's position and the direction toward the mouse (adjusted for minimum distance)
 	if is_dragging and player_in_box_area:
-		var direction_to_mouse = (mouse_position - global_position).normalized()
+		var direction_to_mouse = (get_global_mouse_position() - global_position).normalized()
 		SharedSignals.drag_box.emit(global_position, direction_to_mouse)
 
 func _handle_movement_input():
@@ -218,10 +223,23 @@ func _update_animation_parameters():
 		animation_tree["parameters/Death_Pop/blend_position"] = direction
 
 func calculate_trajectory():
-	var DOT = Vector2(1.0, 0.0).dot((_end - my_local_pos).normalized())
+	var aim_direction = _end - my_local_pos
+	var aim_distance = aim_direction.length()
+	
+	# Clamp the aim distance between MIN_AIM_DISTANCE and MAX_AIM_DISTANCE
+	if add_distance_blocker:
+		if aim_distance < MIN_AIM_DISTANCE:
+			aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
+			_end = my_local_pos + aim_direction
+		elif aim_distance > MAX_AIM_DISTANCE:
+			aim_direction = aim_direction.normalized() * MAX_AIM_DISTANCE
+			_end = my_local_pos + aim_direction
+	
+	# Proceed with the original trajectory calculations using the adjusted _end
+	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 	var gravity = -9.8
-	var num_of_points = 50
+	var num_of_points = 25
 
 	var x_dis = _end.x - my_local_pos.x
 	var y_dis = -1.0 * (_end.y - my_local_pos.y)
