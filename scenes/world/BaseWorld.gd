@@ -67,6 +67,7 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.death_finished.connect(_on_death_finsish)
 	GlobalValues.game_done.connect(_on_game_finished)
+	SharedSignals.shake_turtle.connect(_shake)
 	
 	player_raycast.enabled = true
 	
