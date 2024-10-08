@@ -2,8 +2,6 @@ extends Node2D
 
 @onready var animation_player = $AnimationPlayer
 @onready var change_scene = $ChangeScene
-@onready var animation_player_timer = $AnimationPlayerTimer
-@onready var partical = $Partical
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

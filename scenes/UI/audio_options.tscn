@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://53rdelj2ncqx"]
+[gd_scene load_steps=6 format=3 uid="uid://53rdelj2ncqx"]
 
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_jwyh0"]
 [ext_resource type="Texture2D" uid="uid://h3lrngtkh1sb" path="res://assets/sprites/UI/Title/cover-1.jpg" id="2_ohej0"]
 [ext_resource type="Script" path="res://scenes/UI/audio_options.gd" id="2_t062x"]
 [ext_resource type="Script" path="res://scenes/UI/music_volume_slider.gd" id="3_27u4k"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="3_dq80h"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="6_yfpmo"]
 
 [node name="Audio" type="Control"]
 layout_mode = 3
@@ -115,8 +114,11 @@ offset_bottom = 83.0
 grow_horizontal = 2
 text = "AUDIO"
 
-[node name="ButtonSelect" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_yfpmo")
-
+[connection signal="drag_started" from="TextureRect2/MarginContainer/VBoxContainer/volume_slider3" to="." method="_on_volume_slider_3_drag_started"]
+[connection signal="mouse_entered" from="TextureRect2/MarginContainer/VBoxContainer/volume_slider3" to="." method="_on_volume_slider_3_mouse_entered"]
+[connection signal="drag_started" from="TextureRect2/MarginContainer/VBoxContainer/volume_slider" to="." method="_on_volume_slider_drag_started"]
+[connection signal="mouse_entered" from="TextureRect2/MarginContainer/VBoxContainer/volume_slider" to="." method="_on_volume_slider_mouse_entered"]
+[connection signal="drag_started" from="TextureRect2/MarginContainer/VBoxContainer/volume_slider2" to="." method="_on_volume_slider_2_drag_started"]
+[connection signal="mouse_entered" from="TextureRect2/MarginContainer/VBoxContainer/volume_slider2" to="." method="_on_volume_slider_2_mouse_entered"]
+[connection signal="mouse_entered" from="TextureRect2/MarginContainer/VBoxContainer/VBoxContainer/Back" to="." method="_on_back_mouse_entered"]
 [connection signal="pressed" from="TextureRect2/MarginContainer/VBoxContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]
-[connection signal="finished" from="ButtonSelect" to="." method="_on_button_select_finished"]

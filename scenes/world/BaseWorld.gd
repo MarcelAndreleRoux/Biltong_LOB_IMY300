@@ -57,6 +57,7 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 func _ready():
+	MenuAudioController.stop_music()
 	GameMusicController.play_music()
 	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
@@ -68,6 +69,7 @@ func _ready():
 	SharedSignals.death_finished.connect(_on_death_finsish)
 	GlobalValues.game_done.connect(_on_game_finished)
 	SharedSignals.shake_turtle.connect(_shake)
+	SharedSignals.dart_hit_wall.connect(_shake)
 	
 	player_raycast.enabled = true
 	

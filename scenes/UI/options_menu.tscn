@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://pjr0tdqacf2g"]
+[gd_scene load_steps=7 format=3 uid="uid://pjr0tdqacf2g"]
 
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_grbyv"]
 [ext_resource type="Script" path="res://scenes/UI/options_menu.gd" id="2_akspg"]
+[ext_resource type="Script" path="res://scenes/UI/music_volume_slider.gd" id="3_iifh5"]
+[ext_resource type="Theme" uid="uid://cuucoj82fet30" path="res://scenes/UI/theme/options_menu.tres" id="3_jk5jw"]
+[ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="4_sulik"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ftji"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 0.831373)
 
 [node name="Options_Menu" type="Control"]
 layout_mode = 3
@@ -13,28 +19,118 @@ grow_vertical = 2
 theme = ExtResource("1_grbyv")
 script = ExtResource("2_akspg")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6ftji")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Options_Label" type="Label" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 200
-
-[node name="Options_Label" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
+offset_left = 177.0
+offset_right = 303.0
+offset_bottom = 37.0
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 40
 text = "Options"
 
-[node name="Back" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Back" type="Button" parent="."]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+offset_left = 116.0
+offset_top = 244.0
+offset_right = 366.0
+offset_bottom = 261.0
 size_flags_horizontal = 4
 text = "Back"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]
+[node name="AudioSettings" type="VBoxContainer" parent="."]
+layout_direction = 1
+layout_mode = 2
+offset_left = 7.0
+offset_top = 40.0
+offset_right = 198.0
+offset_bottom = 145.0
+theme = ExtResource("3_jk5jw")
+
+[node name="Label" type="Label" parent="AudioSettings"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_sulik")
+theme_override_font_sizes/font_size = 17
+text = "Audio Settings"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AudioSettings"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("3_jk5jw")
+theme_override_constants/separation = -5
+
+[node name="MasterVolume" type="Label" parent="AudioSettings/VBoxContainer"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="volume_slider3" type="HSlider" parent="AudioSettings/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("3_iifh5")
+bus_name = "Master"
+
+[node name="MusicVolume" type="Label" parent="AudioSettings/VBoxContainer"]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="volume_slider" type="HSlider" parent="AudioSettings/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("3_iifh5")
+bus_name = "Music"
+
+[node name="SFXVolume" type="Label" parent="AudioSettings/VBoxContainer"]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="volume_slider2" type="HSlider" parent="AudioSettings/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 1.0
+script = ExtResource("3_iifh5")
+bus_name = "Sfx"
+
+[node name="GameQuality" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 252.0
+offset_top = 40.0
+offset_right = 322.0
+offset_bottom = 54.0
+theme = ExtResource("3_jk5jw")
+
+[node name="Label" type="Label" parent="GameQuality"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_sulik")
+theme_override_font_sizes/font_size = 17
+text = "Display"
+
+[node name="Other" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 152.0
+offset_right = 68.0
+offset_bottom = 166.0
+theme = ExtResource("3_jk5jw")
+
+[node name="Label" type="Label" parent="Other"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_sulik")
+theme_override_font_sizes/font_size = 17
+text = "Gameplay"
+
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="changed" from="AudioSettings/VBoxContainer/volume_slider3" to="." method="_on_volume_slider_3_changed"]
+[connection signal="value_changed" from="AudioSettings/VBoxContainer/volume_slider3" to="." method="_on_volume_slider_3_value_changed"]
+[connection signal="value_changed" from="AudioSettings/VBoxContainer/volume_slider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="AudioSettings/VBoxContainer/volume_slider2" to="." method="_on_volume_slider_2_value_changed"]

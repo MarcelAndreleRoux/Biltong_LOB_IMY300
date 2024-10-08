@@ -19,6 +19,9 @@ func _physics_process(delta):
 	if collision:
 		# Access the collider using `get_collider()`
 		var collider = collision.get_collider()
+		
+		SharedSignals.dart_hit_wall.emit()
+		
 		# Handle collision with the player or other objects
 		if collider.is_in_group("player"):
 			queue_free()
@@ -44,8 +47,5 @@ func set_target_position(new_target_position: Vector2):
 
 func _on_detection_area_body_entered(body):
 	if body.is_in_group("player"):
+		SharedSignals.dart_hit_wall.emit()
 		SharedSignals.player_killed.emit("peg")
-
-
-func _on_animated_sprite_2d_animation_finished():
-	pass # Replace with function body.

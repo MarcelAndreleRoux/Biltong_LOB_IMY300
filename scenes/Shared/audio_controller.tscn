@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=21 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
@@ -9,15 +9,17 @@
 [ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="5_m4qxj"]
 [ext_resource type="AudioStream" uid="uid://c3n8vjyc5j3h3" path="res://assets/soundeffects/zap.mp3" id="6_8l2n3"]
 [ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="7_nbyvm"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="8_pq3mj"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="9_0nwto"]
+[ext_resource type="AudioStream" uid="uid://bd0q8s3v81vsv" path="res://assets/soundeffects/video-game-menu-click-sounds-148373.mp3" id="10_4ktbp"]
 [ext_resource type="AudioStream" uid="uid://dpxhfdpe5i7bw" path="res://assets/soundeffects/disconnect_sound.mp3" id="10_6kchu"]
+[ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="10_bliwg"]
 [ext_resource type="AudioStream" uid="uid://d3b4s8mp008fr" path="res://assets/soundeffects/shoot.mp3" id="11_j171t"]
 [ext_resource type="AudioStream" uid="uid://bfmdlsog7n2t3" path="res://assets/soundeffects/Item-Select.wav" id="12_dudkp"]
 [ext_resource type="AudioStream" uid="uid://bmsi8kt7jdva3" path="res://assets/soundeffects/Door.wav" id="13_0jao3"]
 [ext_resource type="AudioStream" uid="uid://dki5tcy6h2mla" path="res://assets/soundeffects/Eat.wav" id="14_5jngn"]
 [ext_resource type="AudioStream" uid="uid://cjr6u5i655rvn" path="res://assets/soundeffects/click-234708.mp3" id="15_v332m"]
 [ext_resource type="AudioStream" uid="uid://c5irlygn28uyp" path="res://assets/soundeffects/box_drop.wav" id="18_s37rq"]
+[ext_resource type="AudioStream" uid="uid://b6khru067y4lq" path="res://assets/soundeffects/1154762.audio-Ui_Click_Bubble_04.wav" id="20_oabrp"]
 
 [node name="AudioController" type="Node2D"]
 script = ExtResource("1_bde8u")
@@ -75,8 +77,8 @@ stream = ExtResource("7_nbyvm")
 bus = &"Sfx"
 
 [node name="button_select" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_pq3mj")
-volume_db = -6.71
+stream = ExtResource("10_bliwg")
+volume_db = -4.697
 bus = &"Sfx"
 
 [node name="error" type="AudioStreamPlayer2D" parent="."]
@@ -100,8 +102,8 @@ stream = ExtResource("11_j171t")
 bus = &"Sfx"
 
 [node name="button_hover" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("12_dudkp")
-volume_db = -5.0
+stream = ExtResource("10_4ktbp")
+volume_db = -2.987
 bus = &"Sfx"
 
 [node name="door_open" type="AudioStreamPlayer2D" parent="."]
@@ -134,5 +136,16 @@ stream = ExtResource("18_s37rq")
 
 [node name="food_pickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")
+
+[node name="TICKSOUND_MASTER" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_oabrp")
+
+[node name="TICKSOUND_MUSIC" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_oabrp")
+bus = &"Music"
+
+[node name="TICKSOUND_SFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_oabrp")
+bus = &"Sfx"
 
 [connection signal="finished" from="button_select" to="." method="_on_button_select_finished"]
