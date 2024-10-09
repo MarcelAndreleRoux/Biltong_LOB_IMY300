@@ -180,9 +180,7 @@ func _on_area_2d_area_entered(area):
 	if area.is_in_group("throwables"):
 		projectile = area.get_parent()
 		if projectile and projectile.get_landed_state():
-			if global_position.distance_to(projectile.global_position) < 10:
-				print("Projectile landed near hedgehog")
-				projectile.projectile_landed.connect(_change_state)
+			projectile.projectile_landed.connect(_change_state)
 
 func _change_state():
 	projectile._remove_myself()

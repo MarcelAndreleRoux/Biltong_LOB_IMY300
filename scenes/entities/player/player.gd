@@ -245,7 +245,7 @@ func calculate_trajectory():
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 	var gravity = -9.8
-	var num_of_points = 25
+	var num_of_points = 50
 
 	var x_dis = _end.x - my_local_pos.x
 	var y_dis = -1.0 * (_end.y - my_local_pos.y)

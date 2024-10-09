@@ -243,8 +243,10 @@ func _on_throw_check_area_area_entered(area):
 			wet_walk.play()
 			was_water = true
 		
-		if area.get_parent().get_landed_state():
-			_change_state()
+		projectile = area.get_parent()
+		
+		if projectile and projectile.get_landed_state():
+			projectile.projectile_landed.connect(_change_state)
 
 func _change_state():
 	if was_water:

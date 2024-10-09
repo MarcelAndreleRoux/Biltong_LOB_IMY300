@@ -11,13 +11,13 @@
 [ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="7_nbyvm"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="9_0nwto"]
 [ext_resource type="AudioStream" uid="uid://dxdbsmoc04pti" path="res://assets/soundeffects/505649-SBsfi2-Simple_Zap_007.wav" id="9_80yay"]
-[ext_resource type="AudioStream" uid="uid://bd0q8s3v81vsv" path="res://assets/soundeffects/video-game-menu-click-sounds-148373.mp3" id="10_4ktbp"]
 [ext_resource type="AudioStream" uid="uid://dpxhfdpe5i7bw" path="res://assets/soundeffects/disconnect_sound.mp3" id="10_6kchu"]
 [ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="10_bliwg"]
 [ext_resource type="AudioStream" uid="uid://d3b4s8mp008fr" path="res://assets/soundeffects/shoot.mp3" id="11_j171t"]
 [ext_resource type="AudioStream" uid="uid://bfmdlsog7n2t3" path="res://assets/soundeffects/Item-Select.wav" id="12_dudkp"]
 [ext_resource type="AudioStream" uid="uid://bmsi8kt7jdva3" path="res://assets/soundeffects/Door.wav" id="13_0jao3"]
 [ext_resource type="AudioStream" uid="uid://dki5tcy6h2mla" path="res://assets/soundeffects/Eat.wav" id="14_5jngn"]
+[ext_resource type="AudioStream" uid="uid://drw44c81do7uk" path="res://assets/soundeffects/hover.wav" id="15_fgry8"]
 [ext_resource type="AudioStream" uid="uid://cjr6u5i655rvn" path="res://assets/soundeffects/click-234708.mp3" id="15_v332m"]
 [ext_resource type="AudioStream" uid="uid://c5irlygn28uyp" path="res://assets/soundeffects/box_drop.wav" id="18_s37rq"]
 [ext_resource type="AudioStream" uid="uid://b6khru067y4lq" path="res://assets/soundeffects/1154762.audio-Ui_Click_Bubble_04.wav" id="20_oabrp"]
@@ -81,7 +81,7 @@ stream = ExtResource("7_nbyvm")
 bus = &"Sfx"
 
 [node name="button_select" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_4ktbp")
+stream = ExtResource("10_bliwg")
 bus = &"Sfx"
 
 [node name="error" type="AudioStreamPlayer2D" parent="."]
@@ -105,7 +105,7 @@ stream = ExtResource("11_j171t")
 bus = &"Sfx"
 
 [node name="button_hover" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_bliwg")
+stream = ExtResource("15_fgry8")
 volume_db = -2.987
 bus = &"Sfx"
 

@@ -37,7 +37,8 @@ enum State {
 	GO_TO_FOOD,
 	EATING,
 	IDLE,
-	SCARED
+	SCARED,
+	SCARED_OUT
 }
 
 var state = State.IDLE
@@ -47,6 +48,7 @@ var patrol_wait_timer: Timer = null
 var hungry_timer: Timer = null
 var eating_timer: Timer = null
 var scared_timer: Timer = null
+var scared_out_timer: Timer = null
 
 # --- Ready Function ---
 
@@ -92,6 +94,8 @@ func _physics_process(delta):
 			idle_behavior()
 		State.SCARED:
 			scared_behavior()
+		State.SCARED_OUT:
+			scared_out_behavior()
 	
 	# Update movement based on velocity
 	velocity = direction * speed if state in [State.PATROL, State.GO_TO_FOOD] else Vector2.ZERO
@@ -112,13 +116,14 @@ func _physics_process(delta):
 func patrol_behavior():
 	# Check for food before continuing patrol
 	if check_for_food():
-		velocity = Vector2.ZERO
-		if play_hungry_animation:
-			state = State.HUNGRY
-			start_hungry_timer()
-		else:
-			state = State.GO_TO_FOOD
-			navigation_agent_2d.target_position = current_food_target.global_position
+		if state not in [State.HUNGRY, State.GO_TO_FOOD, State.EATING]:
+			velocity = Vector2.ZERO
+			if play_hungry_animation:
+				state = State.HUNGRY
+				start_hungry_timer()
+			else:
+				state = State.GO_TO_FOOD
+				navigation_agent_2d.target_position = current_food_target.global_position
 		return
 	
 	# Continue moving towards the patrol point
@@ -175,22 +180,28 @@ func idle_behavior():
 # --- Go To Food Behavior ---
 
 func go_to_food_behavior():
-	# If the current food target is null or no longer valid, stop and go back to patrol if possible
+	# If the current food target is null or no longer valid, check for other food
 	if current_food_target == null or not is_instance_valid(current_food_target):
-		# Clear the target and transition back to patrol if patrol points exist
 		current_food_target = null
-		if patrol_points.size() > 0:
-			state = State.PATROL
-			patrol_index = (patrol_index + 1) % patrol_points.size()
-			navigation_agent_2d.target_position = patrol_points[patrol_index]
+		if check_for_food():
+			# Continue going to the new food without changing state
+			navigation_agent_2d.target_position = current_food_target.global_position
 		else:
-			state = State.IDLE
-		velocity = Vector2.ZERO
+			# No other food, go back to patrol or idle
+			if patrol_points.size() > 0:
+				state = State.PATROL
+				patrol_index = (patrol_index + 1) % patrol_points.size()
+				navigation_agent_2d.target_position = patrol_points[patrol_index]
+			else:
+				state = State.IDLE
+			velocity = Vector2.ZERO
 		return
 
 	# If the turtle has reached the food, transition to eating
 	if navigation_agent_2d.is_navigation_finished():
-		current_food_target.queue_free()
+		# Mark the food as eaten
+		current_food_target.remove_from_group("food_to_eat")
+		current_food_target.mark_as_eaten()
 		current_food_target = null
 		state = State.EATING
 		start_eating_timer()
@@ -202,10 +213,13 @@ func go_to_food_behavior():
 # --- Eating Timer ---
 
 func start_eating_timer():
+	if eating_timer != null:
+		return  # Eating timer is already running, do not reset it
 	# Start a timer to simulate eating duration
 	eating_timer = Timer.new()
 	eating_timer.wait_time = 3.0  # Wait 3 seconds
 	eating_timer.one_shot = true
+	# Connect the signal correctly
 	eating_timer.timeout.connect(_on_eating_timeout)
 	add_child(eating_timer)
 	eating_timer.start()
@@ -214,7 +228,7 @@ func _on_eating_timeout():
 	eating_timer.queue_free()
 	eating_timer = null
 	# After eating, check for more food
-	if check_for_food():
+	if check_for_food() and eating_timer == null:
 		if play_hungry_animation:
 			state = State.HUNGRY
 			start_hungry_timer()
@@ -258,14 +272,14 @@ func _on_hungry_timeout():
 func _on_scared_area_body_entered(body):
 	if body.is_in_group("player"):
 		state = State.SCARED
-		velocity = Vector2.ZERO  # Stop movement
+		velocity = Vector2.ZERO
 		_update_animation_parameters()
 
 func _on_scared_area_body_exited(body):
 	if body.is_in_group("player"):
 		if scared_timer == null:
 			scared_timer = Timer.new()
-			scared_timer.wait_time = 3.0  # Wait 3 seconds
+			scared_timer.wait_time = 3.0
 			scared_timer.one_shot = true
 			scared_timer.timeout.connect(_on_scared_timeout)
 			add_child(scared_timer)
@@ -278,7 +292,26 @@ func scared_behavior():
 func _on_scared_timeout():
 	scared_timer.queue_free()
 	scared_timer = null
-	# After being scared, return to previous behavior
+	# After being scared, transition to SCARED_OUT state
+	state = State.SCARED_OUT
+
+# --- SCARED_OUT Behavior ---
+
+func scared_out_behavior():
+	velocity = Vector2.ZERO  # Turtle remains stationary or you can set movement here
+	if scared_out_timer == null:
+		# Start a timer for the SCARED_OUT state duration
+		scared_out_timer = Timer.new()
+		scared_out_timer.wait_time = 0.5
+		scared_out_timer.one_shot = true
+		scared_out_timer.timeout.connect(_on_scared_out_timeout)
+		add_child(scared_out_timer)
+		scared_out_timer.start()
+
+func _on_scared_out_timeout():
+	scared_out_timer.queue_free()
+	scared_out_timer = null
+	# After SCARED_OUT, return to previous behavior
 	if check_for_food():
 		if play_hungry_animation:
 			state = State.HUNGRY
@@ -303,19 +336,21 @@ func check_for_food():
 		var closest_food: Node2D = null
 		var closest_distance: float = INF
 		for food in food_nodes:
+			# Skip food that's queued for deletion
+			if food.is_queued_for_deletion():
+				continue
 			var distance = global_position.distance_to(food.global_position)
 			if distance < closest_distance:
 				closest_distance = distance
 				closest_food = food
 		if closest_food != null:
-			current_food_target = closest_food
-			# Update direction based on the position of the food
-			direction = (current_food_target.global_position - global_position).normalized()
-
-			# Update the blend position for the animation
-			_update_animation_parameters()
-
-			navigation_agent_2d.target_position = current_food_target.global_position
+			if state not in [State.EATING]:
+				current_food_target = closest_food
+				# Update direction based on the position of the food
+				direction = (current_food_target.global_position - global_position).normalized()
+				# Update the blend position for the animation
+				_update_animation_parameters()
+				navigation_agent_2d.target_position = current_food_target.global_position
 			return true
 	else:
 		# No food found, clear current food target and return false
@@ -327,6 +362,7 @@ func check_for_food():
 func _update_animation_parameters():
 	# Reset all animation conditions
 	animation_tree.set("parameters/conditions/is_scared", false)
+	animation_tree.set("parameters/conditions/is_shell_out", false)
 	animation_tree.set("parameters/conditions/is_walking", false)
 	animation_tree.set("parameters/conditions/is_eating", false)
 	animation_tree.set("parameters/conditions/is_idle", false)
@@ -335,6 +371,8 @@ func _update_animation_parameters():
 	match state:
 		State.SCARED:
 			animation_tree.set("parameters/conditions/is_scared", true)
+		State.SCARED_OUT:
+			animation_tree.set("parameters/conditions/is_shell_out", true)
 		State.HUNGRY:
 			animation_tree.set("parameters/conditions/is_hungry", true)
 		State.EATING:
@@ -355,6 +393,8 @@ func _update_animation_parameters():
 	animation_tree.set("parameters/eat/blend_position", direction)
 	animation_tree.set("parameters/idle/blend_position", direction)
 	animation_tree.set("parameters/hungry/blend_position", direction)
+	animation_tree.set("parameters/scared/blend_position", direction)
+	animation_tree.set("parameters/ShellOut/blend_position", direction)
 
 func shake_screen():
 	SharedSignals.shake_turtle.emit()

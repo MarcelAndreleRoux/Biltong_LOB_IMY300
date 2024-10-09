@@ -77,7 +77,11 @@ func _ready():
 	for vine in get_tree().get_nodes_in_group("vines"):
 			player_raycast.add_exception(vine)
 	
+	if turtle:
+		player_raycast.add_exception(turtle)
+	
 	if hedgehog:
+		player_raycast.add_exception(hedgehog)
 		enemy_raycast.add_exception(hedgehog)
 
 func _on_game_finished():
