@@ -353,5 +353,7 @@ libraries = {
 [connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Option" to="." method="_on_option_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/TextureRect2/ConfirmQuit/TextureRect2/HBoxContainer/Cancel" to="." method="_on_cancel_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/TextureRect2/ConfirmQuit/TextureRect2/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/TextureRect2/ConfirmQuit/TextureRect2/HBoxContainer/Confirm" to="." method="_on_confirm_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/TextureRect2/ConfirmQuit/TextureRect2/HBoxContainer/Confirm" to="." method="_on_confirm_pressed"]

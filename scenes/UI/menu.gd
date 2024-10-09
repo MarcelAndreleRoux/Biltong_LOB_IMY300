@@ -88,3 +88,9 @@ func _on_option_mouse_entered():
 
 func _on_exit_mouse_entered():
 	AudioController.play_sfx("button_hover")
+
+func _on_cancel_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_confirm_mouse_entered():
+	AudioController.play_sfx("button_hover")

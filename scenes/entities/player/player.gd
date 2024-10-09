@@ -39,7 +39,7 @@ var throw_clicked: bool = false
 var is_on_cooldown: bool = false
 var can_throw_proj: bool = false
 var can_aim_throw: bool = false
-var MIN_AIM_DISTANCE: float = 20.0
+var MIN_AIM_DISTANCE: float = 40.0
 var MAX_AIM_DISTANCE: float = 200.0
 
 # Box

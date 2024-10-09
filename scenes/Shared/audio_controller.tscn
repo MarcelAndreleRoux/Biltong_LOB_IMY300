@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=22 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://ci7foj10sake0" path="res://assets/soundeffects/slime-splatter-6-220264.mp3" id="3_om823"]
 [ext_resource type="AudioStream" uid="uid://de8iugobo7j51" path="res://assets/soundeffects/vine-burn.mp3" id="4_2yeln"]
 [ext_resource type="AudioStream" uid="uid://cf21mmncwxigh" path="res://assets/soundeffects/lizard_walk.wav" id="4_yllhe"]
+[ext_resource type="AudioStream" uid="uid://dksuk1mg8fwhi" path="res://assets/soundeffects/thwop-91757.mp3" id="5_3d732"]
 [ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="5_m4qxj"]
 [ext_resource type="AudioStream" uid="uid://c3n8vjyc5j3h3" path="res://assets/soundeffects/zap.mp3" id="6_8l2n3"]
 [ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="7_nbyvm"]
@@ -43,6 +44,8 @@ pitch_scale = 0.8
 bus = &"Sfx"
 
 [node name="grow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_3d732")
+volume_db = -5.0
 bus = &"Sfx"
 
 [node name="player_walk" type="AudioStreamPlayer2D" parent="."]

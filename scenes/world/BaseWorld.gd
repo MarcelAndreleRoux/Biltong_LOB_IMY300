@@ -88,7 +88,7 @@ func _shake():
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
-		game_pause.game_exit()
+		game_pause.game_pause()
 	
 	GlobalValues.update_player_position(player.global_position)
 	

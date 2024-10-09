@@ -44,7 +44,7 @@ func _on_area_2d_area_entered(area):
 		# Delay enabling the collision shape slightly to ensure the growth animation updates first
 		await get_tree().create_timer(0.5).timeout
 		_update_collision_shape_size()
-
+		
 		if was_burned:
 			animated_sprite_2d.play("grow_burn")
 		else:

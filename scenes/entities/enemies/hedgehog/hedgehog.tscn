@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://d3b4s8mp008fr" path="res://assets/soundeffects/shoot.mp3" id="8_6tbxl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dxkb0"]
-size = Vector2(10, 7.5)
+size = Vector2(22, 15.75)
 
 [sub_resource type="Animation" id="Animation_c8bve"]
 length = 0.001
@@ -496,8 +496,8 @@ states/shoot/position = Vector2(463, 4)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_hfpl3"), "idle", "angry", SubResource("AnimationNodeStateMachineTransition_g5qah"), "angry", "idle", SubResource("AnimationNodeStateMachineTransition_73idu"), "angry", "shoot", SubResource("AnimationNodeStateMachineTransition_nmyif"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_ihpgw")]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_numq4"]
-radius = 19.0
-height = 50.0
+radius = 17.0
+height = 46.0
 
 [node name="Hedgehog" type="StaticBody2D" groups=["enemy"]]
 collision_layer = 16
@@ -509,6 +509,7 @@ texture = ExtResource("2_3eopg")
 hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 4.125)
 shape = SubResource("RectangleShape2D_dxkb0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -537,7 +538,7 @@ pitch_scale = 1.36
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, 0)
+position = Vector2(-2, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_numq4")
 

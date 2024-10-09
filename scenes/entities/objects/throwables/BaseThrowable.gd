@@ -9,7 +9,7 @@ class_name BaseThrowable
 
 signal projectile_landed
 
-var num_of_points: int = 15
+var num_of_points: int = 20
 var gravity: float = -9.8
 var _direction: Vector2
 var _spawnPosition: Vector2
@@ -19,6 +19,7 @@ var _currentPointIndex: int = 0
 var can_be_eaten: bool = false
 var shadow_sprite: Sprite2D
 var shadow_offset: float = 10.0
+var projectile_landed_boolean: bool = false
 
 var MIN_AIM_DISTANCE: float = 20.0
 var MAX_AIM_DISTANCE: float = 200.0
@@ -26,6 +27,7 @@ var MAX_AIM_DISTANCE: float = 200.0
 var time: float = 0.0
 var time_mult: float = 6.0
 
+var I_landed: bool = false
 var start_place: Vector2 = Vector2.ZERO
 
 func _ready():
@@ -35,6 +37,9 @@ func _ready():
 
 func _player_gp(player_global_pos):
 	start_place = player_global_pos
+
+func _delete_throwable():
+	queue_free()  # Frees the projectile from the scene
 
 func _physics_process(delta: float):
 	if _trajectoryPoints != null and _currentPointIndex < _trajectoryPoints.size():
@@ -52,16 +57,19 @@ func _physics_process(delta: float):
 		if global_position.distance_to(target) < 1.0:
 			_currentPointIndex += 1
 		
-		if _currentPointIndex >= _trajectoryPoints.size():
-			projectile_landed.emit()
-			$shadow_sprite.queue_free()
+		I_landed = _currentPointIndex >= _trajectoryPoints.size() - 10
 		
 		if _currentPointIndex >= _trajectoryPoints.size():
 			can_be_eaten = true
+			projectile_landed.emit()
+			$shadow_sprite.queue_free()
 			_start_despawn_timer()
 	else:
 		if _trajectoryPoints == null:
 			print("Error: Trajectory points are null")
+
+func get_landed_state():
+	return I_landed
 
 func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
 	_spawnPosition = position

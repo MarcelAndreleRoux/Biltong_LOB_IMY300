@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k3tn7"]
 size = Vector2(2, 4)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_odru2"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_iw4n1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vjvaf"]
 atlas = ExtResource("3_x3k3x")
@@ -197,10 +197,10 @@ script = ExtResource("1_qjoxv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_k3tn7")
 
-[node name="GrowArea" type="Area2D" parent="." groups=["grow", "throwables"]]
+[node name="GrowArea" type="Area2D" parent="." groups=["grow", "throwables", "water"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrowArea"]
-shape = SubResource("RectangleShape2D_odru2")
+shape = SubResource("CircleShape2D_iw4n1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_l8dmx")

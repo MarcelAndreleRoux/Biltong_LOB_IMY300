@@ -21,6 +21,7 @@ var angry_timer: Timer
 var shoot_timer: Timer
 var player_visible: bool = false  # Track player visibility
 var shoot: bool = false  # Fail-safe to ensure shooting only when allowed
+var projectile: BaseThrowable = null
 
 func _ready():
 	# Initialize timers
@@ -147,7 +148,12 @@ func _stop_all_timers():
 	shoot_timer.stop()
 
 func _on_area_2d_area_entered(area):
-	print(area)
 	if area.is_in_group("throwables"):
-		SharedSignals.distroy_throwable.emit()
+		projectile = area.get_parent()
+		if projectile and projectile.get_landed_state():
+			if global_position.distance_to(projectile.global_position) < 10:
+				print("Projectile landed near hedgehog")
+				projectile.projectile_landed.connect(_change_state)
 
+func _change_state():
+	projectile._remove_myself()

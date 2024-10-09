@@ -14,8 +14,10 @@ extends CharacterBody2D
 
 @onready var navigation_agent_2d = $LizardNav
 @onready var animation_tree = $AnimationTree
+@onready var wet_walk = $wet_walk
 
 var direction: Vector2 = Vector2.ZERO
+var was_water: bool = false
 
 # Define the lizard's possible states
 enum State {
@@ -32,6 +34,9 @@ var patrol_index = 0
 
 # Timer for handling waiting periods
 var patrol_wait_timer = null
+
+# projectile
+var projectile: BaseThrowable = null
 
 func _ready():
 	print("Lizard ready")
@@ -218,3 +223,20 @@ func _play_zap(object):
 	
 	# Now that it's added to the scene, call the charge
 	electrical_zap.output_charge(direction)
+
+func _on_throw_check_area_area_entered(area):
+	if area.is_in_group("throwables"):
+		if area.is_in_group("fire"):
+			was_water = false
+		if area.is_in_group("water"):
+			wet_walk.play()
+			was_water = true
+		
+		if area.get_parent().get_landed_state():
+			_change_state()
+
+func _change_state():
+	if was_water:
+		is_on = false
+	else:
+		is_on = true

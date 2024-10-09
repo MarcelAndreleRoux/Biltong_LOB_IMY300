@@ -149,26 +149,24 @@ animations = [{
 radius = 2.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d70w1"]
-radius = 16.0
+radius = 12.0
 
-[node name="FireMango" type="CharacterBody2D"]
+[node name="FireMango" type="CharacterBody2D" groups=["throwables"]]
 z_index = 2
 collision_layer = 128
 collision_mask = 0
 script = ExtResource("1_kilkr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["throwables"]]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_r7cee")
 animation = &"land"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_mul82")
 
-[node name="FireArea" type="Area2D" parent="." groups=["burn", "throwables"]]
+[node name="FireArea" type="Area2D" parent="." groups=["burn", "fire", "throwables"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FireArea"]
-visible = false
 shape = SubResource("CircleShape2D_d70w1")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
