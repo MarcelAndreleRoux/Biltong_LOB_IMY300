@@ -41,7 +41,7 @@ func _player_gp(player_global_pos):
 	start_place = player_global_pos
 
 func _delete_throwable():
-	queue_free()  # Frees the projectile from the scene
+	queue_free()
 
 func _physics_process(delta: float):
 	if _trajectoryPoints != null and _currentPointIndex < _trajectoryPoints.size():
@@ -61,7 +61,7 @@ func _physics_process(delta: float):
 		if global_position.distance_to(target) < 1.0:
 			_currentPointIndex += 1
 		
-		I_landed = _currentPointIndex >= _trajectoryPoints.size() - 8
+		I_landed = _currentPointIndex >= _trajectoryPoints.size() - 10
 		
 		if _currentPointIndex >= _trajectoryPoints.size():
 			rotation = 0.0

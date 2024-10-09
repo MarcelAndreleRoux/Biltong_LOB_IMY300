@@ -1,7 +1,6 @@
 extends BaseThrowable
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
-@onready var audio_controler = $AudioControler
 
 var landed: bool = false
 var played_once: bool = false
@@ -16,7 +15,7 @@ func _ready():
 func _physics_process(delta: float):
 	super(delta)
 	
-	if animated_sprite_2d.frame == 14:
+	if animated_sprite_2d.frame == 13:
 		self.queue_free()
 
 func _play_death():

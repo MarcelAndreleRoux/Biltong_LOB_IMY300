@@ -81,8 +81,7 @@ stream = ExtResource("7_nbyvm")
 bus = &"Sfx"
 
 [node name="button_select" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_bliwg")
-volume_db = -4.697
+stream = ExtResource("10_4ktbp")
 bus = &"Sfx"
 
 [node name="error" type="AudioStreamPlayer2D" parent="."]
@@ -106,7 +105,7 @@ stream = ExtResource("11_j171t")
 bus = &"Sfx"
 
 [node name="button_hover" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_4ktbp")
+stream = ExtResource("10_bliwg")
 volume_db = -2.987
 bus = &"Sfx"
 
