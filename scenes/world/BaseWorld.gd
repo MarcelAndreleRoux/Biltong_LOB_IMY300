@@ -156,6 +156,7 @@ func _handle_aiming_and_throwing():
 			trajectory_line.visible = false
 			_throw_item()
 			_start_cooldown_timer()
+			AudioController.play_sfx("throw")
 		else:
 			AudioController.play_sfx("error")
 			if _isAiming:

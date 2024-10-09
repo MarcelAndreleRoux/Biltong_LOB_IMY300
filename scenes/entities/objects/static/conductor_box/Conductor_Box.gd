@@ -45,6 +45,17 @@ func _some_waiting_timer():
 	add_child(grow_timer)
 	grow_timer.start()
 
+func receive_electricity():
+	charged_state = true
+	animatedSprite.play("turn_on")
+	SharedSignals.lizard_connection.emit(self)
+	SharedSignals.lizard_connection_made.emit(true)
+
+func stop_electricity():
+	charged_state = false
+	animatedSprite.play("idle_off")
+	SharedSignals.lizard_connection_made.emit(false)
+
 func _show_timeout():
 	$show_timer.queue_free()
 	action_button_press.visible = false
@@ -103,17 +114,22 @@ func _on_push_area_body_exited(body):
 		SharedSignals.player_not_push.emit()
 
 func _on_conduction_area_body_entered(body):
-	if body.is_in_group("lizard"):  # When a lizard enters the area
-		charged_state = true
-		animatedSprite.play("turn_on")
-		SharedSignals.lizard_connection.emit(self)
-		SharedSignals.lizard_connection_made.emit(true)
+	if body.is_in_group("lizard"):
+		if body.get_electrical_state():
+			charged_state = true
+			animatedSprite.play("turn_on")
+			SharedSignals.lizard_connection.emit(self)
+			SharedSignals.lizard_connection_made.emit(true)
+		else:
+			charged_state = false
+			SharedSignals.lizard_connection_made.emit(false)
 
 func _on_conduction_area_body_exited(body):
 	if body.is_in_group("lizard"):
-		charged_state = false
-		animatedSprite.play("turn_off")
-		SharedSignals.lizard_connection_made.emit(false)
+		if body.get_electrical_state():
+			charged_state = false
+			animatedSprite.play("turn_off")
+			SharedSignals.lizard_connection_made.emit(false)
 
 func _on_animated_sprite_2d_animation_finished():
 	if charged_state:

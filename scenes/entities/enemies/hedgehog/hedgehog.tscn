@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bh6flmufkyjat"]
+[gd_scene load_steps=43 format=3 uid="uid://bh6flmufkyjat"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/hedgehog/hedgehog.gd" id="1_h4pte"]
 [ext_resource type="Texture2D" uid="uid://bgi3b1klmhiro" path="res://assets/sprites/enemies/hedgehog/idle/Porcupine-Idle-Left.png" id="2_3eopg"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://duts1814wx05g" path="res://assets/sprites/enemies/hedgehog/angry/Porcupine--Right.png" id="5_wy184"]
 [ext_resource type="Texture2D" uid="uid://hcrjcdhe1lxn" path="res://assets/sprites/enemies/hedgehog/shoot/Porcupine-Shoot-Left.png" id="6_0tkwo"]
 [ext_resource type="Texture2D" uid="uid://utiwoso1o8uo" path="res://assets/sprites/enemies/hedgehog/shoot/Porcupine-Shoot-Right.png" id="7_o4qlh"]
+[ext_resource type="Texture2D" uid="uid://bfsxmcb5aifr" path="res://assets/sprites/enemies/hedgehog/angry/Porcupine--Left--Up.png" id="8_3mdqr"]
 [ext_resource type="AudioStream" uid="uid://d3b4s8mp008fr" path="res://assets/soundeffects/shoot.mp3" id="8_6tbxl"]
+[ext_resource type="Texture2D" uid="uid://c61qqxlq8i0uf" path="res://assets/sprites/enemies/hedgehog/angry/Porcupine--Right--Up.png" id="9_ta7f8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dxkb0"]
 size = Vector2(22, 15.75)
@@ -417,11 +419,117 @@ tracks/4/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_t0kt8"]
+resource_name = "angry_up_left"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("8_3mdqr")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_jdbhl"]
+resource_name = "angry_up_right"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_ta7f8")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ww4vt"]
 _data = {
 "RESET": SubResource("Animation_c8bve"),
 "angry_left": SubResource("Animation_7hbo7"),
 "angry_right": SubResource("Animation_och0p"),
+"angry_up_left": SubResource("Animation_t0kt8"),
+"angry_up_right": SubResource("Animation_jdbhl"),
 "idle_left": SubResource("Animation_0l1vy"),
 "idle_right": SubResource("Animation_t3lkm"),
 "shoot_left": SubResource("Animation_8y5bh"),
@@ -438,6 +546,19 @@ animation = &"angry_right"
 blend_point_0/node = SubResource("AnimationNodeAnimation_pcsfr")
 blend_point_0/pos = Vector2(-1, 0)
 blend_point_1/node = SubResource("AnimationNodeAnimation_7bte3")
+blend_point_1/pos = Vector2(1, 0)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c2uwm"]
+animation = &"angry_up_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hkamy"]
+animation = &"angry_up_right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_p74jd"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_c2uwm")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_hkamy")
 blend_point_1/pos = Vector2(1, 0)
 blend_mode = 1
 
@@ -474,26 +595,41 @@ advance_mode = 2
 advance_mode = 2
 advance_condition = &"is_angry"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_73idu"]
-advance_mode = 2
-advance_condition = &"is_idle"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nmyif"]
 advance_mode = 2
 advance_condition = &"is_shooting"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ihpgw"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dvtwr"]
+switch_mode = 1
+advance_mode = 2
+advance_condition = &"is_angry_up"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jbdl7"]
+switch_mode = 1
+advance_mode = 2
+advance_condition = &"is_angry"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_35xr2"]
 advance_mode = 2
 advance_condition = &"is_idle"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yntqs"]
+advance_mode = 2
+advance_condition = &"is_angry_up"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_t8iil"]
+states/End/position = Vector2(157, 12)
+states/Start/position = Vector2(157, 177)
 states/angry/node = SubResource("AnimationNodeBlendSpace2D_g7qn6")
-states/angry/position = Vector2(554, 108)
+states/angry/position = Vector2(570, 100)
+states/angry_up/node = SubResource("AnimationNodeBlendSpace2D_p74jd")
+states/angry_up/position = Vector2(379, 100)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_2ecld")
-states/idle/position = Vector2(379, 108)
+states/idle/position = Vector2(379, 177)
 states/shoot/node = SubResource("AnimationNodeBlendSpace2D_gbg24")
-states/shoot/position = Vector2(463, 4)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_hfpl3"), "idle", "angry", SubResource("AnimationNodeStateMachineTransition_g5qah"), "angry", "idle", SubResource("AnimationNodeStateMachineTransition_73idu"), "angry", "shoot", SubResource("AnimationNodeStateMachineTransition_nmyif"), "shoot", "idle", SubResource("AnimationNodeStateMachineTransition_ihpgw")]
+states/shoot/position = Vector2(379, 12)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_hfpl3"), "idle", "angry", SubResource("AnimationNodeStateMachineTransition_g5qah"), "angry", "shoot", SubResource("AnimationNodeStateMachineTransition_nmyif"), "angry", "angry_up", SubResource("AnimationNodeStateMachineTransition_dvtwr"), "angry_up", "angry", SubResource("AnimationNodeStateMachineTransition_jbdl7"), "angry_up", "idle", SubResource("AnimationNodeStateMachineTransition_35xr2"), "shoot", "angry_up", SubResource("AnimationNodeStateMachineTransition_yntqs")]
+graph_offset = Vector2(-41.3829, -38.2131)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_numq4"]
 radius = 17.0
@@ -524,9 +660,11 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_t8iil")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/is_angry = false
+parameters/conditions/is_angry_up = false
 parameters/conditions/is_idle = false
 parameters/conditions/is_shooting = false
 parameters/angry/blend_position = Vector2(0.0342276, -0.153439)
+parameters/angry_up/blend_position = Vector2(0.0197711, -0.026455)
 parameters/idle/blend_position = Vector2(0.0360777, 0.026455)
 parameters/shoot/blend_position = Vector2(0.0453284, -0.037037)
 

@@ -134,15 +134,15 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a4ccq")
 }, {
-"duration": 1.0,
+"duration": 1.2,
 "texture": SubResource("AtlasTexture_m7rpt")
 }, {
-"duration": 1.0,
+"duration": 1.2,
 "texture": SubResource("AtlasTexture_n6x01")
 }],
 "loop": false,
 "name": &"land",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mul82"]
@@ -160,13 +160,17 @@ script = ExtResource("1_kilkr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_r7cee")
 animation = &"land"
+frame = 8
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_mul82")
 
 [node name="FireArea" type="Area2D" parent="." groups=["burn", "fire", "throwables"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FireArea"]
+visible = false
 shape = SubResource("CircleShape2D_d70w1")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

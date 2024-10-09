@@ -998,12 +998,13 @@ graph_offset = Vector2(0, 56.1572)
 radius = 22.0
 height = 60.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhwp5"]
-size = Vector2(21, 15.75)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ilvfv"]
+radius = 9.125
+height = 27.0
 
 [node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
 collision_layer = 16
-collision_mask = 20540
+collision_mask = 62524
 script = ExtResource("1_i4f4n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -1070,12 +1071,15 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_solqv")
 
 [node name="ThrowCheckArea" type="Area2D" parent="."]
+collision_mask = 897
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ThrowCheckArea"]
 position = Vector2(-2.5, -5.125)
-shape = SubResource("RectangleShape2D_qhwp5")
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ilvfv")
 
 [connection signal="velocity_computed" from="LizardNav" to="." method="_on_lizard_nav_velocity_computed"]
 [connection signal="area_entered" from="ElectricArea" to="." method="_on_electric_area_area_entered"]
 [connection signal="body_entered" from="ElectricArea" to="." method="_on_electric_area_body_entered"]
+[connection signal="body_exited" from="ElectricArea" to="." method="_on_electric_area_body_exited"]
 [connection signal="area_entered" from="ThrowCheckArea" to="." method="_on_throw_check_area_area_entered"]

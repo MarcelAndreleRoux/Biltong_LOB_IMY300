@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=23 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
@@ -8,9 +8,9 @@
 [ext_resource type="AudioStream" uid="uid://cf21mmncwxigh" path="res://assets/soundeffects/lizard_walk.wav" id="4_yllhe"]
 [ext_resource type="AudioStream" uid="uid://dksuk1mg8fwhi" path="res://assets/soundeffects/thwop-91757.mp3" id="5_3d732"]
 [ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="5_m4qxj"]
-[ext_resource type="AudioStream" uid="uid://c3n8vjyc5j3h3" path="res://assets/soundeffects/zap.mp3" id="6_8l2n3"]
 [ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="7_nbyvm"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="9_0nwto"]
+[ext_resource type="AudioStream" uid="uid://dxdbsmoc04pti" path="res://assets/soundeffects/505649-SBsfi2-Simple_Zap_007.wav" id="9_80yay"]
 [ext_resource type="AudioStream" uid="uid://bd0q8s3v81vsv" path="res://assets/soundeffects/video-game-menu-click-sounds-148373.mp3" id="10_4ktbp"]
 [ext_resource type="AudioStream" uid="uid://dpxhfdpe5i7bw" path="res://assets/soundeffects/disconnect_sound.mp3" id="10_6kchu"]
 [ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="10_bliwg"]
@@ -21,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://cjr6u5i655rvn" path="res://assets/soundeffects/click-234708.mp3" id="15_v332m"]
 [ext_resource type="AudioStream" uid="uid://c5irlygn28uyp" path="res://assets/soundeffects/box_drop.wav" id="18_s37rq"]
 [ext_resource type="AudioStream" uid="uid://b6khru067y4lq" path="res://assets/soundeffects/1154762.audio-Ui_Click_Bubble_04.wav" id="20_oabrp"]
+[ext_resource type="AudioStream" uid="uid://b87li477jh1w4" path="res://assets/soundeffects/Throw.mp3" id="22_12ggk"]
 
 [node name="AudioController" type="Node2D"]
 script = ExtResource("1_bde8u")
@@ -71,8 +72,8 @@ volume_db = -14.623
 bus = &"Sfx"
 
 [node name="zap" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_8l2n3")
-volume_db = -20.735
+stream = ExtResource("9_80yay")
+volume_db = -10.0
 bus = &"Sfx"
 
 [node name="box_action" type="AudioStreamPlayer2D" parent="."]
@@ -149,6 +150,11 @@ bus = &"Music"
 
 [node name="TICKSOUND_SFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("20_oabrp")
+bus = &"Sfx"
+
+[node name="throw" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("22_12ggk")
+volume_db = -12.077
 bus = &"Sfx"
 
 [connection signal="finished" from="button_select" to="." method="_on_button_select_finished"]

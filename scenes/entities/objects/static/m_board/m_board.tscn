@@ -105,7 +105,7 @@ size = Vector2(12, 12)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u30mt"]
 size = Vector2(52, 33)
 
-[node name="MBoard" type="StaticBody2D"]
+[node name="MBoard" type="StaticBody2D" groups=["m_board"]]
 collision_layer = 8192
 collision_mask = 65535
 script = ExtResource("1_wiw61")

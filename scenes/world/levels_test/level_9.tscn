@@ -52,13 +52,6 @@ default_color = Color(1, 1, 1, 0.447059)
 position = Vector2(285, 162)
 collision_layer = 36
 
-[node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("5_oi3oa")]
-position = Vector2(313, 131)
-target_1 = NodePath("../LizardMarker")
-target_2 = NodePath("../LizardMarker2")
-
-[node name="RayCast2D" type="RayCast2D" parent="ElectricLizard"]
-
 [node name="Escape" type="CanvasLayer" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="Escape"]
@@ -123,3 +116,10 @@ position = Vector2(236, 43)
 
 [node name="EatingFood" parent="." instance=ExtResource("19_s2yj3")]
 position = Vector2(237, 95)
+
+[node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("5_oi3oa")]
+position = Vector2(313, 131)
+target_1 = NodePath("../LizardMarker")
+target_2 = NodePath("../LizardMarker2")
+
+[node name="RayCast2D" type="RayCast2D" parent="ElectricLizard"]

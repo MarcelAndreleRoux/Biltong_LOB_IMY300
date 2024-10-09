@@ -198,6 +198,8 @@ script = ExtResource("1_qjoxv")
 shape = SubResource("RectangleShape2D_k3tn7")
 
 [node name="GrowArea" type="Area2D" parent="." groups=["grow", "throwables", "water"]]
+collision_layer = 512
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrowArea"]
 shape = SubResource("CircleShape2D_iw4n1")

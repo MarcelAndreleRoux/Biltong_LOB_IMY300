@@ -15,7 +15,7 @@ func _ready():
 		already_picked = true
 		animated_sprite_2d.play("pickup")
 		return
-
+	
 	collision_shape_2d.disabled = true
 	action_button_press.visible = false
 	animated_sprite_2d.play("idle")
@@ -56,7 +56,6 @@ func _some_waiting_timer():
 	grow_timer.start()
 
 func _show_timeout():
-	$show_timer.queue_free()
 	action_button_press.visible = false
 
 func _on_action_area_body_exited(body):

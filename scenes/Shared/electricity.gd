@@ -9,8 +9,6 @@ func _ready():
 	animated_sprite_2d.visible = false
 
 func output_charge(direction: Vector2):
-	SharedSignals.sent_input_charge.emit()
-	
 	# Calculate the angle from the direction vector
 	var angle = direction.angle()
 	

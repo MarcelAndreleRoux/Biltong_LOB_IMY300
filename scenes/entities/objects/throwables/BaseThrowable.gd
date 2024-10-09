@@ -9,7 +9,7 @@ class_name BaseThrowable
 
 signal projectile_landed
 
-var num_of_points: int = 20
+var num_of_points: int = 15
 var gravity: float = -9.8
 var _direction: Vector2
 var _spawnPosition: Vector2
@@ -29,6 +29,8 @@ var time_mult: float = 6.0
 
 var I_landed: bool = false
 var start_place: Vector2 = Vector2.ZERO
+
+var rotation_time: float = 1.0
 
 func _ready():
 	global_position = _spawnPosition
@@ -50,6 +52,8 @@ func _physics_process(delta: float):
 		velocity = direction * adjusted_speed * delta
 
 		move_and_slide()
+		
+		rotation += (2 * PI / rotation_time) * delta
 
 		var distance_travelled = (global_position - _spawnPosition).length()
 		$shadow_sprite.global_position = start_place + (_direction * distance_travelled)
@@ -57,9 +61,10 @@ func _physics_process(delta: float):
 		if global_position.distance_to(target) < 1.0:
 			_currentPointIndex += 1
 		
-		I_landed = _currentPointIndex >= _trajectoryPoints.size() - 10
+		I_landed = _currentPointIndex >= _trajectoryPoints.size() - 8
 		
 		if _currentPointIndex >= _trajectoryPoints.size():
+			rotation = 0.0
 			can_be_eaten = true
 			projectile_landed.emit()
 			$shadow_sprite.queue_free()
