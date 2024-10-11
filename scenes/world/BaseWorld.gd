@@ -69,7 +69,7 @@ func _ready():
 	SharedSignals.death_finished.connect(_on_death_finsish)
 	GlobalValues.game_done.connect(_on_game_finished)
 	SharedSignals.shake_turtle.connect(_shake)
-	SharedSignals.dart_hit_wall.connect(_shake)
+	SharedSignals.dart_hit_wall.connect(_shake_more)
 	
 	player_raycast.enabled = true
 	
@@ -89,6 +89,9 @@ func _on_game_finished():
 
 func _shake():
 	shake_camera.apply_shake_semi_small()
+
+func _shake_more():
+	shake_camera.apply_shake_smaller()
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):

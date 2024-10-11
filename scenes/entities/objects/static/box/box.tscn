@@ -96,6 +96,7 @@ animations = [{
 }]
 
 [node name="Box" type="RigidBody2D" groups=["activation", "object", "special_object"]]
+z_index = 1
 collision_layer = 36
 collision_mask = 31
 gravity_scale = 0.0
