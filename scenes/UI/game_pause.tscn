@@ -1,10 +1,126 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnobf44t3wkei"]
+[gd_scene load_steps=17 format=3 uid="uid://bnobf44t3wkei"]
 
 [ext_resource type="Script" path="res://scenes/UI/game_pause.gd" id="1_wxb5x"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_8pyex"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="3_d13yp"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_ynmkg"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="5_uelmv"]
+[ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="5_e0vfk"]
+[ext_resource type="PackedScene" uid="uid://pjr0tdqacf2g" path="res://scenes/UI/options_menu.tscn" id="6_ymjmn"]
+[ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="7_ansnh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wivdg"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 0.772549)
+
+[sub_resource type="Theme" id="Theme_xnvxv"]
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(1, 1, 1, 0)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/font_sizes/font_size = 19
+Label/fonts/font = ExtResource("5_e0vfk")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mi6kk"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0.223529, 0.290196, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0823529, 0.113725, 0.156863, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uh07q"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0.223529, 0.290196, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.870588, 0.619608, 0.254902, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eq5ca"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0.223529, 0.290196, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.870588, 0.619608, 0.254902, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xoowa"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0.223529, 0.290196, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.870588, 0.619608, 0.254902, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q2aaa"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0, 0.505882, 0.92549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.372549, 0.694118, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rxlb2"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0, 0.376471, 0.87451, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.505882, 0.92549, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n6wi2"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0, 0.376471, 0.87451, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.505882, 0.92549, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
 
 [node name="GamePause" type="CanvasLayer"]
 process_mode = 3
@@ -34,9 +150,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -74.5
-offset_top = -91.0
+offset_top = -76.0
 offset_right = 74.5
-offset_bottom = 91.0
+offset_bottom = 106.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_ynmkg")
@@ -85,12 +201,106 @@ offset_bottom = 83.0
 grow_horizontal = 2
 text = "Pause"
 
+[node name="ConfirmQuit" type="Panel" parent="Control"]
+visible = false
+layout_mode = 0
+offset_right = 481.0
+offset_bottom = 270.0
+
+[node name="Panel" type="Panel" parent="Control/ConfirmQuit"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.5
+offset_top = -52.0
+offset_right = 121.5
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wivdg")
+
+[node name="TextureRect2" type="TextureRect" parent="Control/ConfirmQuit"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -111.0
+offset_right = 168.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_ynmkg")
+
+[node name="Label" type="Label" parent="Control/ConfirmQuit/TextureRect2"]
+layout_mode = 0
+offset_left = 74.5
+offset_top = 49.0
+offset_right = 257.5
+offset_bottom = 132.0
+theme = SubResource("Theme_xnvxv")
+text = "Are You Sure You
+Want To Exit the Game?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ConfirmQuit/TextureRect2"]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.5
+offset_top = 9.5
+offset_right = 65.5
+offset_bottom = 32.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="Cancel" type="Button" parent="Control/ConfirmQuit/TextureRect2/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_mi6kk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uh07q")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_eq5ca")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xoowa")
+text = "Cancel
+"
+
+[node name="Confirm" type="Button" parent="Control/ConfirmQuit/TextureRect2/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.894118, 0.894118, 0.894118, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_q2aaa")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rxlb2")
+theme_override_styles/focus = SubResource("StyleBoxFlat_n6wi2")
+text = "COnfirm"
+
+[node name="Options_Menu" parent="." instance=ExtResource("6_ymjmn")]
+visible = false
+offset_left = 1.0
+offset_right = 1.0
+
 [node name="ButtonSelect" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_uelmv")
+stream = ExtResource("7_ansnh")
 bus = &"Sfx"
 
+[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_mouse_entered"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_mouse_entered"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Options" to="." method="_on_options_mouse_entered"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="mouse_entered" from="Control/ConfirmQuit/TextureRect2/HBoxContainer/Cancel" to="." method="_on_cancel_mouse_entered"]
+[connection signal="pressed" from="Control/ConfirmQuit/TextureRect2/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="mouse_entered" from="Control/ConfirmQuit/TextureRect2/HBoxContainer/Confirm" to="." method="_on_confirm_mouse_entered"]
+[connection signal="pressed" from="Control/ConfirmQuit/TextureRect2/HBoxContainer/Confirm" to="." method="_on_confirm_pressed"]
 [connection signal="finished" from="ButtonSelect" to="." method="_on_button_select_finished"]

@@ -188,7 +188,7 @@ animations = [{
 
 [node name="Conductor_Box" type="RigidBody2D" groups=["conductor"]]
 collision_layer = 4132
-collision_mask = 65535
+collision_mask = 64639
 gravity_scale = 0.0
 lock_rotation = true
 linear_damp = 50.0

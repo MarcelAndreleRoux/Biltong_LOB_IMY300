@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dqpuwao3jd1mk"]
 
 [ext_resource type="Script" path="res://scenes/UI/win.gd" id="1_wpx8l"]
-[ext_resource type="AudioStream" uid="uid://vb07punj6l04" path="res://assets/soundeffects/Menu-Select.wav" id="2_h4u0x"]
+[ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="2_l50l6"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="3_ed3ax"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_kvwr2"]
 
@@ -17,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Buttonselect" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_h4u0x")
+stream = ExtResource("2_l50l6")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -74,4 +74,5 @@ grow_horizontal = 2
 text = "You win!"
 
 [connection signal="finished" from="Buttonselect" to="." method="_on_select_finished"]
+[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

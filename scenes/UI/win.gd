@@ -26,3 +26,6 @@ func _on_select_finished():
 func win():
 	get_tree().paused = true
 	self.show()
+
+func _on_exit_mouse_entered():
+	AudioController.play_sfx("button_hover")

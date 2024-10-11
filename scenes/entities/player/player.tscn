@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=3 uid="uid://wdw24tbqrqxv"]
+[gd_scene load_steps=102 format=3 uid="uid://wdw24tbqrqxv"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_3avnw"]
 [ext_resource type="Texture2D" uid="uid://cr80tfvpf61v2" path="res://assets/sprites/player/idle/normal/idle_left.png" id="2_a82sk"]
@@ -196,7 +196,8 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_xhcff"]
 resource_name = "death_pop_left"
-length = 0.8
+length = 0.4
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -240,7 +241,7 @@ tracks/3/path = NodePath("Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -252,7 +253,7 @@ tracks/4/path = NodePath("pop:playing")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.2),
+"times": PackedFloat32Array(0.05),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -260,7 +261,8 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_kokgu"]
 resource_name = "death_pop_right"
-length = 0.8
+length = 0.4
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -304,7 +306,7 @@ tracks/3/path = NodePath("Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -316,7 +318,7 @@ tracks/4/path = NodePath("pop:playing")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.2),
+"times": PackedFloat32Array(0.05),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -1473,7 +1475,7 @@ states/Death/node = SubResource("AnimationNodeBlendSpace2D_50uqu")
 states/Death/position = Vector2(633, 198)
 states/Death_Pop/node = SubResource("AnimationNodeBlendSpace2D_ixjon")
 states/Death_Pop/position = Vector2(788.966, 198)
-states/End/position = Vector2(974, 198)
+states/End/position = Vector2(-22, 267)
 states/Start/position = Vector2(-22, 126)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_hyt8p")
 states/idle/position = Vector2(141, 126)
@@ -1488,13 +1490,16 @@ states/run_aim/position = Vector2(390, 388)
 states/run_throw/node = SubResource("AnimationNodeBlendSpace2D_6s7m0")
 states/run_throw/position = Vector2(633, 388)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pcgw8"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_7obb7"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8e435"), "idle_aim", "run_aim", SubResource("AnimationNodeStateMachineTransition_b8nng"), "run_aim", "idle_aim", SubResource("AnimationNodeStateMachineTransition_0w5i3"), "idle", "idle_aim", SubResource("AnimationNodeStateMachineTransition_6r02k"), "idle_aim", "idle", SubResource("AnimationNodeStateMachineTransition_fvqkp"), "run", "run_aim", SubResource("AnimationNodeStateMachineTransition_e7g8d"), "run_aim", "run", SubResource("AnimationNodeStateMachineTransition_4vojj"), "idle_aim", "idle_throw", SubResource("AnimationNodeStateMachineTransition_t3xt5"), "run_aim", "run_throw", SubResource("AnimationNodeStateMachineTransition_uccsp"), "run_throw", "run", SubResource("AnimationNodeStateMachineTransition_f6q61"), "run_throw", "idle", SubResource("AnimationNodeStateMachineTransition_4ibk3"), "idle_throw", "idle", SubResource("AnimationNodeStateMachineTransition_fgh4t"), "idle_throw", "run", SubResource("AnimationNodeStateMachineTransition_0f6b7"), "idle_throw", "idle_aim", SubResource("AnimationNodeStateMachineTransition_84utv"), "run_throw", "run_aim", SubResource("AnimationNodeStateMachineTransition_fvmwh"), "idle_aim", "Death", SubResource("AnimationNodeStateMachineTransition_3my61"), "idle_throw", "Death", SubResource("AnimationNodeStateMachineTransition_602e7"), "idle", "Death", SubResource("AnimationNodeStateMachineTransition_ri6wv"), "run", "Death", SubResource("AnimationNodeStateMachineTransition_dybqg"), "run_throw", "Death", SubResource("AnimationNodeStateMachineTransition_6okve"), "run_aim", "Death", SubResource("AnimationNodeStateMachineTransition_1uvub"), "idle", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_w52kq"), "idle_aim", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_8dlbp"), "idle_throw", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_wuwv2"), "run", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_bkjxd"), "run_aim", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_rbs0f"), "run_throw", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_jiwwb")]
-graph_offset = Vector2(-156.393, 27.5414)
+graph_offset = Vector2(-435.217, 27.5414)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8y64"]
 size = Vector2(11, 9)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a8jf0"]
 radius = 20.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_buonc"]
+polygon = PackedVector2Array(3, -11, 3, -10, 4, -10, 4, -4, 3, -4, 3, -3, 4, -3, 4, 1, 3, 1, 3, 2, 1, 2, 1, 1, -1, 1, -1, 2, -4, 2, -4, 1, -5, 1, -5, -3, -4, -3, -4, -4, -5, -4, -5, -10, -4, -10, -4, -11)
 
 [node name="Player" type="CharacterBody2D" groups=["activation", "player"]]
 z_index = 2
@@ -1513,6 +1518,7 @@ offset = Vector2(0, -5)
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-0.5, -2.5)
 shape = SubResource("CircleShape2D_jtfu5")
 
@@ -1587,14 +1593,19 @@ bus = &"Sfx"
 position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoxMoveArea"]
+visible = false
 position = Vector2(-0.5, 2.5)
 shape = SubResource("RectangleShape2D_g8y64")
 
 [node name="SpeedArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpeedArea"]
+visible = false
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_a8jf0")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_buonc")
 
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]

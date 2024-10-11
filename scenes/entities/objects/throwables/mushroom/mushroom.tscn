@@ -83,7 +83,7 @@ radius = 2.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_m45rm"]
 radius = 8.0
 
-[node name="Mushroom" type="CharacterBody2D" groups=["throwables"]]
+[node name="Mushroom" type="CharacterBody2D" groups=["food", "throwables"]]
 z_index = 1
 collision_layer = 256
 collision_mask = 0
@@ -94,13 +94,12 @@ sprite_frames = SubResource("SpriteFrames_7w3v6")
 animation = &"land"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_72ge8")
 
-[node name="EatingArea" type="Area2D" parent="." groups=["throwables"]]
-visible = false
+[node name="EatingArea" type="Area2D" parent="." groups=["food", "throwables"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EatingArea"]
 shape = SubResource("CircleShape2D_m45rm")
 
+[connection signal="animation_finished" from="MushroomSprite" to="." method="_on_mushroom_sprite_animation_finished"]
 [connection signal="body_entered" from="EatingArea" to="." method="_on_eating_area_body_entered"]

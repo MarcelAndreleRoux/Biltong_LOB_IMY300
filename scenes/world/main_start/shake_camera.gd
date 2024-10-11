@@ -21,7 +21,7 @@ func apply_shake():
 
 func apply_shake_smaller():
 	small = false
-	shake_stength = randomStrength_small
+	shake_stength = randomStrength_semi_small
 
 func apply_shake_semi_small():
 	small = true

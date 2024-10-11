@@ -116,6 +116,12 @@ func _physics_process(delta):
 		if Input.is_action_pressed("aim"):
 			trajectory_line.visible = true
 			calculate_trajectory()
+
+			# Check if the raycast is colliding, and change the color accordingly
+			if $RayCast2D.is_colliding():
+				trajectory_line.default_color = Color(1, 0, 0, 0.2)
+			else:
+				trajectory_line.default_color = Color(1, 1, 1, 0.3)
 		elif not Input.is_action_pressed("aim"):
 			trajectory_line.visible = false
 	
@@ -239,7 +245,7 @@ func calculate_trajectory():
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 	var gravity = -9.8
-	var num_of_points = 25
+	var num_of_points = 50
 
 	var x_dis = _end.x - my_local_pos.x
 	var y_dis = -1.0 * (_end.y - my_local_pos.y)

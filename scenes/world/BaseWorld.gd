@@ -69,7 +69,7 @@ func _ready():
 	SharedSignals.death_finished.connect(_on_death_finsish)
 	GlobalValues.game_done.connect(_on_game_finished)
 	SharedSignals.shake_turtle.connect(_shake)
-	SharedSignals.dart_hit_wall.connect(_shake)
+	SharedSignals.dart_hit_wall.connect(_shake_more)
 	
 	player_raycast.enabled = true
 	
@@ -77,7 +77,11 @@ func _ready():
 	for vine in get_tree().get_nodes_in_group("vines"):
 			player_raycast.add_exception(vine)
 	
+	if turtle:
+		player_raycast.add_exception(turtle)
+	
 	if hedgehog:
+		player_raycast.add_exception(hedgehog)
 		enemy_raycast.add_exception(hedgehog)
 
 func _on_game_finished():
@@ -86,9 +90,12 @@ func _on_game_finished():
 func _shake():
 	shake_camera.apply_shake_semi_small()
 
+func _shake_more():
+	shake_camera.apply_shake_smaller()
+
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
-		game_pause.game_exit()
+		game_pause.game_pause()
 	
 	GlobalValues.update_player_position(player.global_position)
 	
@@ -156,6 +163,7 @@ func _handle_aiming_and_throwing():
 			trajectory_line.visible = false
 			_throw_item()
 			_start_cooldown_timer()
+			AudioController.play_sfx("throw")
 		else:
 			AudioController.play_sfx("error")
 			if _isAiming:

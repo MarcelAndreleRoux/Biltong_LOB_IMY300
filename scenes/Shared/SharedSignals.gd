@@ -42,6 +42,7 @@ signal throw_direction
 signal lizard_connection
 signal conductor_connection
 signal lizard_connection_made
+signal lizard_state_change
 
 # Dart
 signal dart_hit_wall

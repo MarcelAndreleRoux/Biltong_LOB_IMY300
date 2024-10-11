@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3322830yx8qq"]
+[gd_scene load_steps=19 format=3 uid="uid://b3322830yx8qq"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_wh5ws"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_bc261"]
@@ -15,6 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="13_hpjac"]
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="14_yj5w4"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="15_bh8rl"]
+[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/fire_bush.tscn" id="16_84e56"]
+[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_bush.tscn" id="17_hg6e6"]
+[ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="18_s4idt"]
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_wh5ws")
@@ -92,3 +95,12 @@ position = Vector2(193, 268)
 visible = false
 
 [node name="ShakeCamera" parent="." instance=ExtResource("15_bh8rl")]
+
+[node name="WaterBush" parent="." instance=ExtResource("17_hg6e6")]
+position = Vector2(395, 44)
+
+[node name="EatingFood" parent="." instance=ExtResource("18_s4idt")]
+position = Vector2(361, 69)
+
+[node name="FireBush" parent="." instance=ExtResource("16_84e56")]
+position = Vector2(396, 68)

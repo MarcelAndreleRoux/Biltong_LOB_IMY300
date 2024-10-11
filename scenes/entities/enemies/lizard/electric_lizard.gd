@@ -14,8 +14,10 @@ extends CharacterBody2D
 
 @onready var navigation_agent_2d = $LizardNav
 @onready var animation_tree = $AnimationTree
+@onready var wet_walk = $wet_walk
 
 var direction: Vector2 = Vector2.ZERO
+var was_water: bool = false
 
 # Define the lizard's possible states
 enum State {
@@ -32,6 +34,10 @@ var patrol_index = 0
 
 # Timer for handling waiting periods
 var patrol_wait_timer = null
+
+# projectile
+var projectile: BaseThrowable = null
+var nearby_objects = []
 
 func _ready():
 	print("Lizard ready")
@@ -128,7 +134,7 @@ func start_lick_eye_timer():
 	_update_animation_parameters()
 	
 	var lick_timer = Timer.new()
-	lick_timer.wait_time = 0.7  # 2 seconds for 'lick_eye' animation
+	lick_timer.wait_time = 2.0  # 2 seconds for 'lick_eye' animation
 	lick_timer.one_shot = true
 	lick_timer.timeout.connect(_on_lick_eye_timeout)
 	add_child(lick_timer)
@@ -175,46 +181,85 @@ func _update_animation_parameters():
 	animation_tree["parameters/run_on/blend_position"] = direction
 
 func _on_electric_area_body_entered(body):
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and is_on:
 		SharedSignals.player_killed.emit("pop")
 		_player_zap(body)
+	
+	if body.is_in_group("conductor") or body.is_in_group("m_board"):
+		nearby_objects.append(body)
+		if is_on:
+			body.receive_electricity() 
+
+func _on_electric_area_body_exited(body):
+	if body in nearby_objects:
+		nearby_objects.erase(body)
+		body.stop_electricity()
+
+func get_electrical_state() -> bool:
+	return is_on
 
 func _player_zap(object):
-	var player_position = object.global_position  # Get the player's position
-	var lizard_position = self.global_position  # Get the lizard's position
-	var direction = (player_position - lizard_position).normalized()  # Correct direction from lizard to player
+	if is_on:
+		var player_position = object.global_position
+		var lizard_position = self.global_position
+		var direction = (player_position - lizard_position).normalized()
 
-	# Instantiate the zap scene independently
-	var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
+		var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
 
-	# Define the offset amount (10px)
-	var offset_amount = 30
+		var offset_amount = 30
 
-	# Offset the spawn position by 10px in the direction from the lizard to the player
-	electrical_zap.global_position = lizard_position + (direction * offset_amount)
+		electrical_zap.global_position = lizard_position + (direction * offset_amount)
 
-	# Add the zap to the current scene first, before calling output_charge
-	get_tree().current_scene.add_child(electrical_zap)
+		get_tree().current_scene.add_child(electrical_zap)
 
-	# Now that it's added to the scene, call the charge
-	electrical_zap.output_charge(direction)
+		electrical_zap.output_charge(direction)
 
 func _play_zap(object):
-	var conductor_position = object.global_position
-	var lizard_position = self.global_position
-	var direction = (lizard_position - conductor_position).normalized()
+	if is_on:
+		var conductor_position = object.global_position
+		var lizard_position = self.global_position
+		var direction = (lizard_position - conductor_position).normalized()
+		
+		# Instantiate the zap scene independently
+		var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
+		
+		# Define the offset amount (10px)
+		var offset_amount = -10
+		
+		# Offset the spawn position by 10px in the direction vector
+		electrical_zap.global_position = lizard_position + (direction * offset_amount)
+		
+		# Add the zap to the current scene first, before calling output_charge
+		get_tree().current_scene.add_child(electrical_zap)
+		
+		# Now that it's added to the scene, call the charge
+		electrical_zap.output_charge(direction)
+
+func _on_throw_check_area_area_entered(area):
+	if area.is_in_group("throwables"):
+		if area.is_in_group("fire"):
+			was_water = false
+		if area.is_in_group("water"):
+			wet_walk.play()
+			was_water = true
+		
+		projectile = area.get_parent()
+		
+		if projectile and projectile.get_landed_state():
+			projectile.projectile_landed.connect(_change_state)
+
+func _change_state():
+	if was_water:
+		is_on = false
+	else:
+		is_on = true
 	
-	# Instantiate the zap scene independently
-	var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
+	SharedSignals.lizard_state_change.emit(is_on)
 	
-	# Define the offset amount (10px)
-	var offset_amount = -10
-	
-	# Offset the spawn position by 10px in the direction vector
-	electrical_zap.global_position = lizard_position + (direction * offset_amount)
-	
-	# Add the zap to the current scene first, before calling output_charge
-	get_tree().current_scene.add_child(electrical_zap)
-	
-	# Now that it's added to the scene, call the charge
-	electrical_zap.output_charge(direction)
+	# Immediately handle the connection/disconnection of nearby objects
+	if is_on:
+		for obj in nearby_objects:
+			obj.receive_electricity()
+	else:
+		for obj in nearby_objects:
+			obj.stop_electricity()

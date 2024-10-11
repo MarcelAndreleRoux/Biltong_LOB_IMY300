@@ -2,11 +2,11 @@ extends BaseThrowable
 
 @onready var mushroom_sprite = $MushroomSprite
 
-var landed: bool = false  # Keeps track of whether the mushroom has landed
+var landed: bool = false
 var remove: bool = false
+var remove_food: bool = false
 
 func _ready():
-	SharedSignals.distroy_throwable.connect(_remove_myself)
 	mushroom_sprite.play("eat")
 	projectile_landed.connect(_play_death)
 	super()
@@ -25,5 +25,9 @@ func _play_death():
 		landed = true
 
 func _remove_myself():
+	remove_food = true
 	mushroom_sprite.play("land")
-	remove = true
+
+func _on_mushroom_sprite_animation_finished():
+	if remove_food:
+		_delete_throwable()

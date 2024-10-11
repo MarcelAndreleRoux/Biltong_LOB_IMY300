@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cm3vb8x5ang4d"]
+[gd_scene load_steps=6 format=3 uid="uid://cm3vb8x5ang4d"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/shoot/dart.gd" id="1_d1qit"]
 [ext_resource type="Texture2D" uid="uid://cjp1f8ros7tgw" path="res://assets/sprites/objects/throwables/dart/Dart.png" id="2_ni70x"]
-[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="3_th3fg"]
-[ext_resource type="PackedScene" uid="uid://12o22qh53ey4" path="res://scenes/Shared/electricity.tscn" id="4_1uvwy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e2qfk"]
 animations = [{
@@ -20,14 +18,12 @@ animations = [{
 size = Vector2(3, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ohwk"]
-size = Vector2(8, 14)
+size = Vector2(7, 14)
 
 [node name="dart" type="CharacterBody2D"]
 collision_layer = 64
 collision_mask = 15
 script = ExtResource("1_d1qit")
-
-[node name="ShakeCamera" parent="." instance=ExtResource("3_th3fg")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e2qfk")
@@ -37,13 +33,11 @@ position = Vector2(-0.5, -2.5)
 shape = SubResource("RectangleShape2D_5abna")
 
 [node name="DetectionArea" type="Area2D" parent="."]
-position = Vector2(21, 2)
+position = Vector2(0, -2)
 collision_mask = 255
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(-21, -4)
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_3ohwk")
-
-[node name="Electricity" parent="." instance=ExtResource("4_1uvwy")]
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

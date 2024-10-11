@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dw205vwfju7w2"]
+[gd_scene load_steps=5 format=3 uid="uid://dw205vwfju7w2"]
 
 [ext_resource type="Script" path="res://scenes/UI/death.gd" id="1_3le3y"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_dmx07"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="3_s2fbq"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_qb3yk"]
-[ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="5_g8oc2"]
 
 [node name="Death" type="CanvasLayer"]
 process_mode = 3
@@ -77,11 +76,5 @@ offset_bottom = 83.0
 grow_horizontal = 2
 text = "Dead"
 
-[node name="ButtonSelect" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_g8oc2")
-
-[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_mouse_entered"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
-[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="finished" from="ButtonSelect" to="." method="_on_button_select_finished"]

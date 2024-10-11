@@ -5,6 +5,7 @@ extends BaseThrowable
 @onready var land = $land
 
 var landed: bool = false
+var remove: bool = false
 
 func _ready():
 	SharedSignals.distroy_throwable.connect(_remove_myself)
@@ -26,3 +27,8 @@ func _play_death():
 func _remove_myself():
 	AudioController.play_sfx("burn")
 	animated_sprite_2d.play("land")
+	remove = true
+
+func _on_animated_sprite_2d_animation_finished():
+	if remove:
+		_delete_throwable()

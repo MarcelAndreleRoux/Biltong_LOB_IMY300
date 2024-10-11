@@ -9,7 +9,6 @@ class_name BaseThrowable
 
 signal projectile_landed
 
-var num_of_points: int = 15
 var gravity: float = -9.8
 var _direction: Vector2
 var _spawnPosition: Vector2
@@ -19,22 +18,35 @@ var _currentPointIndex: int = 0
 var can_be_eaten: bool = false
 var shadow_sprite: Sprite2D
 var shadow_offset: float = 10.0
+var projectile_landed_boolean: bool = false
 
 var MIN_AIM_DISTANCE: float = 20.0
 var MAX_AIM_DISTANCE: float = 200.0
 
+var MIN_POINTS: int = 15
+var MAX_POINTS: int = 50
+
 var time: float = 0.0
 var time_mult: float = 6.0
 
+var I_landed: bool = false
 var start_place: Vector2 = Vector2.ZERO
 
+var rotation_time: float = 1.0
+
+var has_been_eaten: bool = false
+
 func _ready():
+	add_to_group("throwables")
 	global_position = _spawnPosition
 	global_rotation = _spawnRotation
 	SharedSignals.shadow_update.connect(_player_gp)
 
 func _player_gp(player_global_pos):
 	start_place = player_global_pos
+
+func _delete_throwable():
+	queue_free()
 
 func _physics_process(delta: float):
 	if _trajectoryPoints != null and _currentPointIndex < _trajectoryPoints.size():
@@ -45,6 +57,8 @@ func _physics_process(delta: float):
 		velocity = direction * adjusted_speed * delta
 
 		move_and_slide()
+		
+		rotation += (2 * PI / rotation_time) * delta
 
 		var distance_travelled = (global_position - _spawnPosition).length()
 		$shadow_sprite.global_position = start_place + (_direction * distance_travelled)
@@ -52,16 +66,21 @@ func _physics_process(delta: float):
 		if global_position.distance_to(target) < 1.0:
 			_currentPointIndex += 1
 		
-		if _currentPointIndex >= _trajectoryPoints.size():
-			projectile_landed.emit()
-			$shadow_sprite.queue_free()
+		I_landed = _currentPointIndex >= _trajectoryPoints.size() - 10
 		
 		if _currentPointIndex >= _trajectoryPoints.size():
+			rotation = 0.0
 			can_be_eaten = true
+			I_landed = true
+			projectile_landed.emit()
+			$shadow_sprite.queue_free()
 			_start_despawn_timer()
 	else:
 		if _trajectoryPoints == null:
 			print("Error: Trajectory points are null")
+
+func get_landed_state():
+	return I_landed
 
 func initialize(position: Vector2, direction: Vector2, rotation: float, end_position: Vector2):
 	_spawnPosition = position
@@ -70,6 +89,13 @@ func initialize(position: Vector2, direction: Vector2, rotation: float, end_posi
 	_trajectoryPoints = calculate_trajectory(end_position)
 	_currentPointIndex = 0
 	time = 0.0
+
+func calculate_number_of_points(aim_distance: float) -> int:
+	# Ensure the aim_distance is clamped between MIN_AIM_DISTANCE and MAX_AIM_DISTANCE
+	aim_distance = clamp(aim_distance, MIN_AIM_DISTANCE, MAX_AIM_DISTANCE)
+
+	# Linear interpolation between MIN_POINTS and MAX_POINTS based on aim distance
+	return int(lerp(MIN_POINTS, MAX_POINTS, (aim_distance - MIN_AIM_DISTANCE) / (MAX_AIM_DISTANCE - MIN_AIM_DISTANCE)))
 
 func calculate_trajectory(_End: Vector2) -> Array:
 	var aim_direction = _End - _spawnPosition
@@ -83,6 +109,9 @@ func calculate_trajectory(_End: Vector2) -> Array:
 		elif aim_distance > MAX_AIM_DISTANCE:
 			aim_direction = aim_direction.normalized() * MAX_AIM_DISTANCE
 			_End = _spawnPosition + aim_direction
+	
+	# Determine number of trajectory points based on aim distance
+	var num_of_points = calculate_number_of_points(aim_distance)
 	
 	# Proceed with the original trajectory calculations using the adjusted _End
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
@@ -106,6 +135,14 @@ func calculate_trajectory(_End: Vector2) -> Array:
 		points.append(_spawnPosition + Vector2(dx, dy))
 	
 	return points
+
+func mark_as_eaten():
+	has_been_eaten = true
+	# Optionally remove from group
+	remove_from_group("food_to_eat")
+	SharedSignals.food_was_eaten.emit()
+	# Proceed to queue_free or other logic
+	queue_free()
 
 func _start_despawn_timer():
 	var timer = Timer.new()
