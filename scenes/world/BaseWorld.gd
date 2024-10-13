@@ -15,10 +15,13 @@ class_name BaseWorld
 @onready var food = $Food
 @onready var shake_camera = $ShakeCamera
 
-#Raycasts
+# Raycasts
 @onready var player_raycast = $Player/RayCast2D
 @onready var turtle_raycast = $Turtle/RayCast2D
 @onready var enemy_raycast = $Hedgehog/RayCast2D
+
+# Signal 
+signal throw_action
 
 #Inventory
 @onready var inventory = $Inventory
@@ -70,6 +73,7 @@ func _ready():
 	GlobalValues.game_done.connect(_on_game_finished)
 	SharedSignals.shake_turtle.connect(_shake)
 	SharedSignals.dart_hit_wall.connect(_shake_more)
+	SharedSignals.start_player_screen_shake.connect(_start_player_screen_shake)
 	
 	player_raycast.enabled = true
 	
@@ -83,6 +87,12 @@ func _ready():
 	if hedgehog:
 		player_raycast.add_exception(hedgehog)
 		enemy_raycast.add_exception(hedgehog)
+
+func _start_player_screen_shake(state: bool):
+	if state:
+		shake_camera.start_endless_shake_semi_small()
+	else:
+		shake_camera.stop_endless_shake()
 
 func _on_game_finished():
 	win_state.win()
@@ -158,12 +168,12 @@ func _handle_aiming_and_throwing():
 	# Check if the raycast is not colliding before allowing a throw
 	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
 		if not player_raycast.is_colliding():
+			throw_action.emit()
 			SharedSignals.can_throw_projectile.emit()
 			_isAiming = false
 			trajectory_line.visible = false
 			_throw_item()
 			_start_cooldown_timer()
-			AudioController.play_sfx("throw")
 		else:
 			AudioController.play_sfx("error")
 			if _isAiming:
@@ -220,7 +230,7 @@ func _start_cooldown_timer():
 	
 	is_on_cooldown = true
 	var cooldown_timer = Timer.new()
-	cooldown_timer.wait_time = 0.3
+	cooldown_timer.wait_time = 0.5
 	cooldown_timer.one_shot = true
 	cooldown_timer.timeout.connect(_end_cooldown)
 	add_child(cooldown_timer)

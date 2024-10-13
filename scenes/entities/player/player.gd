@@ -9,6 +9,8 @@ signal drag_box(position: Vector2, direction: Vector2)
 # Nodes
 @onready var animation_tree = $AnimationTree
 @onready var trajectory_line = $TrajectoryLine
+@onready var base_world = get_parent()
+@onready var throwhold = $throwhold
 
 # Sounds
 @onready var error = $error
@@ -55,6 +57,10 @@ var drag_toggle_mode: bool = false
 # Trajectory Line
 var points: Array = []
 
+var min_db = -80  # Minimum volume in decibels (silence)
+var max_db = 0    # Maximum volume in decibels (full volume)
+var fade_speed = 0.1  # Speed of volume fade in and out
+
 var _end
 var my_local_pos
 
@@ -62,6 +68,9 @@ func _ready():
 	animation_tree.active = true
 	can_throw_proj = GlobalValues.can_throw
 	can_aim_throw = GlobalValues.can_throw
+	
+	base_world.throw_action.connect(_on_throw_action)
+	
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
 	SharedSignals.player_push.connect(_is_push)
@@ -70,6 +79,13 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
 	SharedSignals.push_player_forward.connect(start_dash)
+
+func _on_throw_action():
+	# Ensure that the throw animation only triggers once
+	if not is_on_cooldown:
+		throw_clicked = true
+		_play_movement_animation()
+		_start_cooldown_timer()
 
 func _on_item_pickup():
 	can_aim_throw = true
@@ -114,6 +130,7 @@ func _physics_process(delta):
 
 	if can_aim_throw: 
 		if Input.is_action_pressed("aim"):
+			is_aiming = true
 			trajectory_line.visible = true
 			calculate_trajectory()
 
@@ -122,8 +139,9 @@ func _physics_process(delta):
 				trajectory_line.default_color = Color(1, 0, 0, 0.2)
 			else:
 				trajectory_line.default_color = Color(1, 1, 1, 0.3)
+			
 		elif not Input.is_action_pressed("aim"):
-			trajectory_line.visible = false
+			reset_aiming_state()
 	
 	if not is_bouncing_back:
 		_handle_action_input()
@@ -139,6 +157,28 @@ func _physics_process(delta):
 		var direction_to_mouse = (get_global_mouse_position() - global_position).normalized()
 		SharedSignals.drag_box.emit(global_position, direction_to_mouse)
 
+func reset_aiming_state():
+	# Stop aiming
+	is_aiming = false
+	trajectory_line.visible = false
+	
+	# Reset aim distance to minimum when aiming stops
+	var aim_direction = (_end - global_position).normalized() * MIN_AIM_DISTANCE
+	_end = global_position + aim_direction
+	trajectory_line.default_color = Color(1, 1, 1)  # Reset color when not aiming
+
+	# Stop the shake and fade out the sound when aiming is released
+	SharedSignals.start_player_screen_shake.emit(false)
+	fade_out_audio(throwhold)
+
+func stop_throwhold_sound():
+	# Fade out the throwhold sound and stop it
+	if throwhold.playing:
+		# Convert min_db to a float to ensure all arguments are the same type
+		throwhold.volume_db = lerp(throwhold.volume_db, float(min_db), fade_speed)
+		if throwhold.volume_db <= float(min_db) + 0.01:
+			throwhold.stop()
+
 func _handle_movement_input():
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
@@ -151,7 +191,7 @@ func _handle_movement_input():
 func start_dash():
 	is_dashing = true
 	dash_timer = dash_time
-	currentVelocity = Vector2(0, 1) * dash_speed  # Always dash downward
+	currentVelocity = Vector2(0, 1) * dash_speed
 
 func _perform_dash(delta):
 	if dash_timer > 0:
@@ -206,15 +246,40 @@ func _handle_action_input():
 			update_speed()  # Update speed when is_dragging changes
 
 func _start_cooldown_timer():
+	is_on_cooldown = true
 	var cooldown_timer = Timer.new()
-	cooldown_timer.wait_time = 0.3
+	cooldown_timer.wait_time = 0.5
 	cooldown_timer.one_shot = true
 	cooldown_timer.timeout.connect(_end_cooldown)
 	add_child(cooldown_timer)
 	cooldown_timer.start()
 
 func _end_cooldown():
+	# Reset cooldown and stop the throw animation
 	is_on_cooldown = false
+	throw_clicked = false
+	
+	# Check if the player is still aiming after the throw
+	if is_aiming:
+		if currentVelocity == Vector2.ZERO:
+			# Play the idle aiming animation if the player is stationary
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run"] = false
+			animation_tree["parameters/conditions/is_idle_aim"] = true
+			animation_tree["parameters/conditions/is_run_aim"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+		else:
+			# Play the running aiming animation if the player is moving
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run"] = false
+			animation_tree["parameters/conditions/is_idle_aim"] = false
+			animation_tree["parameters/conditions/is_run_aim"] = true
+			animation_tree["parameters/conditions/is_run_throw"] = false
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+	else:
+		# Otherwise, return to idle or running animation based on player state
+		_play_movement_animation()
 
 func _update_animation_parameters():
 	# Update blend positions for animations
@@ -228,19 +293,86 @@ func _update_animation_parameters():
 		animation_tree["parameters/Death/blend_position"] = direction
 		animation_tree["parameters/Death_Pop/blend_position"] = direction
 
+func fade_in_audio(audio_player: AudioStreamPlayer2D):
+	if not audio_player.playing:
+		audio_player.play()  # Start the audio if it's not playing
+	audio_player.volume_db = lerp(audio_player.volume_db, float(max_db), fade_speed)
+
+# Audio fade-out function
+func fade_out_audio(audio_player: AudioStreamPlayer2D):
+	if audio_player.playing:
+		audio_player.volume_db = lerp(audio_player.volume_db, float(min_db), fade_speed)
+		if audio_player.volume_db <= float(min_db) + 0.01:
+			audio_player.stop()
+
 func calculate_trajectory():
 	var aim_direction = _end - my_local_pos
 	var aim_distance = aim_direction.length()
-	
-	# Clamp the aim distance between MIN_AIM_DISTANCE and MAX_AIM_DISTANCE
+
+	# Define the soft maximum distance where pulling becomes harder and the hard max distance
+	var soft_max_distance = 180.0
+	var hard_max_distance = 215.0  # Hard max distance where pulling is almost impossible
+
+	# Track whether the player is at the max distance
+	var is_at_max_distance = false
+
+	# Clamp the aim distance between MIN_AIM_DISTANCE and hard_max_distance
 	if add_distance_blocker:
-		if aim_distance < MIN_AIM_DISTANCE:
-			aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
-			_end = my_local_pos + aim_direction
-		elif aim_distance > MAX_AIM_DISTANCE:
-			aim_direction = aim_direction.normalized() * MAX_AIM_DISTANCE
-			_end = my_local_pos + aim_direction
-	
+		if is_aiming:
+			if aim_distance < MIN_AIM_DISTANCE:
+				# Ensure the distance doesn't go below the minimum
+				aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
+				_end = my_local_pos + aim_direction
+				aim_distance = MIN_AIM_DISTANCE
+			elif aim_distance > soft_max_distance:
+				# Start stretching beyond soft_max_distance towards hard_max_distance
+				var extra_distance = aim_distance - soft_max_distance
+
+				# Progressive slow-down logic as we approach the hard max
+				var stretch_factor = (hard_max_distance - soft_max_distance) / (extra_distance + (hard_max_distance - soft_max_distance))
+				aim_distance = soft_max_distance + extra_distance * stretch_factor
+
+				# Ensure that we never exceed hard_max_distance
+				aim_distance = min(aim_distance, hard_max_distance)
+
+				aim_direction = aim_direction.normalized() * aim_distance
+				_end = my_local_pos + aim_direction
+
+				print("aim_distance", aim_distance)
+
+				trajectory_line.default_color = Color(1, 0.5, 0)  # Orange color to indicate max distance
+				is_at_max_distance = true  # Player is at max distance
+
+				# Start shaking and fade in the sound when reaching max distance
+				SharedSignals.start_player_screen_shake.emit(true)
+				fade_in_audio(throwhold)
+			else:
+				# Normal trajectory and color if under soft max distance
+				trajectory_line.default_color = Color(1, 1, 1)  # White color if not at max distance
+				is_at_max_distance = false
+
+			# Calculate the volume based on aim distance (scaled between min and max aim distance)
+			var aim_volume = (aim_distance - MIN_AIM_DISTANCE) / (hard_max_distance - MIN_AIM_DISTANCE)
+			aim_volume = clamp(aim_volume, 0.0, 1.0)  # Ensure it stays between 0.0 and 1.0
+
+			# Map aim_volume (0.0 to 1.0) to decibels (-80.0 to 0.0 dB)
+			var volume_db = lerp(float(min_db), float(max_db), aim_volume)
+
+			# Adjust the throwhold sound's volume based on the aim distance
+			throwhold.volume_db = lerp(throwhold.volume_db, volume_db, fade_speed)
+
+			# Update the shader uniform for the trajectory line
+			if trajectory_line.material is ShaderMaterial:
+				trajectory_line.material.set("shader_param/distance", aim_distance)
+		else:
+			# Reset aiming state and fade out the sound when aim action is released
+			reset_aiming_state()
+
+	# Stop the shake and fade out the sound if no longer at max distance
+	if not is_at_max_distance:
+		SharedSignals.start_player_screen_shake.emit(false)
+		fade_out_audio(throwhold)
+
 	# Proceed with the original trajectory calculations using the adjusted _end
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
@@ -251,7 +383,7 @@ func calculate_trajectory():
 	var y_dis = -1.0 * (_end.y - my_local_pos.y)
 
 	var speed = sqrt((0.5 * gravity * x_dis * x_dis) / pow(cos(deg_to_rad(angle)), 2.0) / (y_dis - (tan(deg_to_rad(angle)) * x_dis)))
-	
+
 	var x_component = cos(deg_to_rad(angle)) * speed
 	var y_component = sin(deg_to_rad(angle)) * speed
 
@@ -266,9 +398,45 @@ func calculate_trajectory():
 
 	trajectory_line.points = points
 
+# New function to apply shaking effect to trajectory line
+func apply_trajectory_shake():
+	var shake_intensity = 5.0  # Adjust the intensity of the shake
+	var shake_speed = 0.1      # How fast the shaking occurs
+
+	# Apply a random offset to each point of the trajectory
+	for i in range(points.size()):
+		var random_offset = Vector2(randf_range(-shake_intensity, shake_intensity), randf_range(-shake_intensity, shake_intensity)) * shake_speed
+		points[i] += random_offset
+
+	# Update the trajectory line with shaken points
+	trajectory_line.points = points
+
 func _play_movement_animation():
+	# Handle throw animation during cooldown
+	if is_on_cooldown and throw_clicked:
+		if currentVelocity == Vector2.ZERO:
+			# Play idle throw animation if the player is stationary
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run"] = false
+			animation_tree["parameters/conditions/is_idle_aim"] = false
+			animation_tree["parameters/conditions/is_run_aim"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
+			animation_tree["parameters/conditions/is_idle_throw"] = true
+		else:
+			# Play running throw animation if the player is moving
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run"] = false
+			animation_tree["parameters/conditions/is_run_aim"] = false
+			animation_tree["parameters/conditions/is_idle_aim"] = false
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = true
+		
+		# Return here to ensure no other animations play during the throw
+		return
+	
+	# Normal movement and aiming animations when not in cooldown
 	if currentVelocity == Vector2.ZERO:
-		if is_aiming and not is_on_cooldown:
+		if is_aiming:
 			animation_tree["parameters/conditions/is_idle_aim"] = true
 			animation_tree["parameters/conditions/is_run_aim"] = false
 			animation_tree["parameters/conditions/idle"] = false
@@ -278,7 +446,7 @@ func _play_movement_animation():
 			animation_tree["parameters/conditions/is_run"] = false
 			animation_tree["parameters/conditions/is_idle_aim"] = false
 	else:
-		if is_aiming and not is_on_cooldown:
+		if is_aiming:
 			animation_tree["parameters/conditions/is_run_aim"] = true
 			animation_tree["parameters/conditions/is_idle_aim"] = false
 			animation_tree["parameters/conditions/idle"] = false
@@ -287,12 +455,3 @@ func _play_movement_animation():
 			animation_tree["parameters/conditions/is_run"] = true
 			animation_tree["parameters/conditions/idle"] = false
 			animation_tree["parameters/conditions/is_run_aim"] = false
-
-func _play_throw_animation():
-	if throw_clicked:
-		throw.play()
-		animation_tree["parameters/conditions/is_idle_throw"] = currentVelocity == Vector2.ZERO
-		animation_tree["parameters/conditions/is_run_throw"] = currentVelocity != Vector2.ZERO
-		animation_tree["parameters/conditions/is_idle_throw"] = false
-		animation_tree["parameters/conditions/is_run_throw"] = false
-		throw_clicked = false

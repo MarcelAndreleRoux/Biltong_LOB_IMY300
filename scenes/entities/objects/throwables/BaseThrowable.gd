@@ -21,7 +21,7 @@ var shadow_offset: float = 10.0
 var projectile_landed_boolean: bool = false
 
 var MIN_AIM_DISTANCE: float = 20.0
-var MAX_AIM_DISTANCE: float = 200.0
+var MAX_AIM_DISTANCE: float = 215.0
 
 var MIN_POINTS: int = 15
 var MAX_POINTS: int = 50
@@ -100,20 +100,41 @@ func calculate_number_of_points(aim_distance: float) -> int:
 func calculate_trajectory(_End: Vector2) -> Array:
 	var aim_direction = _End - _spawnPosition
 	var aim_distance = aim_direction.length()
+
+	# Define the soft maximum distance where pulling becomes harder and the hard max distance
+	var soft_max_distance = 180.0
+	var hard_max_distance = 215.0  # Hard max distance where pulling is almost impossible
+
+	# Track whether the projectile has reached max distance
+	var is_at_max_distance = false
 	
-	# Clamp the aim distance between MIN_AIM_DISTANCE and MAX_AIM_DISTANCE
+	# Apply distance blocking and progressive stretching
 	if add_distance_blocker:
 		if aim_distance < MIN_AIM_DISTANCE:
 			aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
 			_End = _spawnPosition + aim_direction
-		elif aim_distance > MAX_AIM_DISTANCE:
-			aim_direction = aim_direction.normalized() * MAX_AIM_DISTANCE
+			aim_distance = MIN_AIM_DISTANCE
+		elif aim_distance > soft_max_distance:
+			# Gradually slow down the progress towards hard_max_distance
+			var extra_distance = aim_distance - soft_max_distance
+
+			# Progressive slow-down logic as we approach the hard max
+			var stretch_factor = (hard_max_distance - soft_max_distance) / (extra_distance + (hard_max_distance - soft_max_distance))
+			aim_distance = soft_max_distance + extra_distance * stretch_factor
+
+			# Ensure that we never exceed hard_max_distance
+			aim_distance = min(aim_distance, hard_max_distance)
+
+			aim_direction = aim_direction.normalized() * aim_distance
 			_End = _spawnPosition + aim_direction
-	
-	# Determine number of trajectory points based on aim distance
+			is_at_max_distance = true
+		else:
+			is_at_max_distance = false
+
+	# Determine number of trajectory points based on the adjusted aim distance
 	var num_of_points = calculate_number_of_points(aim_distance)
-	
-	# Proceed with the original trajectory calculations using the adjusted _End
+
+	# Proceed with trajectory calculations
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 	

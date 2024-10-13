@@ -1,6 +1,7 @@
-[gd_scene load_steps=102 format=3 uid="uid://wdw24tbqrqxv"]
+[gd_scene load_steps=104 format=3 uid="uid://wdw24tbqrqxv"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_3avnw"]
+[ext_resource type="Shader" path="res://scenes/entities/player/trajectory_line.gdshader" id="2_64tba"]
 [ext_resource type="Texture2D" uid="uid://cr80tfvpf61v2" path="res://assets/sprites/player/idle/normal/idle_left.png" id="2_a82sk"]
 [ext_resource type="Texture2D" uid="uid://27xp53nfu7p8" path="res://assets/sprites/player/idle/normal/idle_right.png" id="2_cvxxc"]
 [ext_resource type="Texture2D" uid="uid://uurgovmb7rws" path="res://assets/sprites/player/idle/aim/idle_aim_left.png" id="5_otdpo"]
@@ -24,6 +25,13 @@
 [ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="19_js8qq"]
 [ext_resource type="AudioStream" uid="uid://dd0edimolfc37" path="res://assets/soundeffects/hitHurt (1).wav" id="20_qr2kr"]
 [ext_resource type="AudioStream" uid="uid://btkytx0byl2mb" path="res://assets/soundeffects/happy-pop-2-185287.mp3" id="23_tjb2q"]
+[ext_resource type="AudioStream" uid="uid://drbhc0rdkcet4" path="res://assets/soundeffects/ThrowHold.wav" id="25_3qtaa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vpcv0"]
+shader = ExtResource("2_64tba")
+shader_parameter/distance = null
+shader_parameter/soft_max_distance = 180.0
+shader_parameter/hard_max_distance = 215.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jtfu5"]
 radius = 3.53553
@@ -541,6 +549,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_346wx"]
 resource_name = "idle_left_throw"
 length = 0.6
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -671,6 +680,7 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_pi383"]
 resource_name = "idle_right_throw"
 length = 0.6
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -901,6 +911,7 @@ tracks/5/keys = {
 [sub_resource type="Animation" id="Animation_o7fm6"]
 resource_name = "run_left_throw"
 length = 0.7
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1119,6 +1130,7 @@ tracks/4/keys = {
 [sub_resource type="Animation" id="Animation_ew46e"]
 resource_name = "run_right_throw"
 length = 0.7
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1393,32 +1405,26 @@ advance_mode = 2
 advance_condition = &"is_run_throw"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f6q61"]
-switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_run"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4ibk3"]
-switch_mode = 2
 advance_mode = 2
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fgh4t"]
-switch_mode = 2
 advance_mode = 2
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0f6b7"]
-switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_run"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_84utv"]
-switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_idle_aim"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fvmwh"]
-switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_run_aim"
 
@@ -1490,16 +1496,13 @@ states/run_aim/position = Vector2(390, 388)
 states/run_throw/node = SubResource("AnimationNodeBlendSpace2D_6s7m0")
 states/run_throw/position = Vector2(633, 388)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pcgw8"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_7obb7"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8e435"), "idle_aim", "run_aim", SubResource("AnimationNodeStateMachineTransition_b8nng"), "run_aim", "idle_aim", SubResource("AnimationNodeStateMachineTransition_0w5i3"), "idle", "idle_aim", SubResource("AnimationNodeStateMachineTransition_6r02k"), "idle_aim", "idle", SubResource("AnimationNodeStateMachineTransition_fvqkp"), "run", "run_aim", SubResource("AnimationNodeStateMachineTransition_e7g8d"), "run_aim", "run", SubResource("AnimationNodeStateMachineTransition_4vojj"), "idle_aim", "idle_throw", SubResource("AnimationNodeStateMachineTransition_t3xt5"), "run_aim", "run_throw", SubResource("AnimationNodeStateMachineTransition_uccsp"), "run_throw", "run", SubResource("AnimationNodeStateMachineTransition_f6q61"), "run_throw", "idle", SubResource("AnimationNodeStateMachineTransition_4ibk3"), "idle_throw", "idle", SubResource("AnimationNodeStateMachineTransition_fgh4t"), "idle_throw", "run", SubResource("AnimationNodeStateMachineTransition_0f6b7"), "idle_throw", "idle_aim", SubResource("AnimationNodeStateMachineTransition_84utv"), "run_throw", "run_aim", SubResource("AnimationNodeStateMachineTransition_fvmwh"), "idle_aim", "Death", SubResource("AnimationNodeStateMachineTransition_3my61"), "idle_throw", "Death", SubResource("AnimationNodeStateMachineTransition_602e7"), "idle", "Death", SubResource("AnimationNodeStateMachineTransition_ri6wv"), "run", "Death", SubResource("AnimationNodeStateMachineTransition_dybqg"), "run_throw", "Death", SubResource("AnimationNodeStateMachineTransition_6okve"), "run_aim", "Death", SubResource("AnimationNodeStateMachineTransition_1uvub"), "idle", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_w52kq"), "idle_aim", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_8dlbp"), "idle_throw", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_wuwv2"), "run", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_bkjxd"), "run_aim", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_rbs0f"), "run_throw", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_jiwwb")]
-graph_offset = Vector2(-435.217, 27.5414)
+graph_offset = Vector2(-46.217, 65.5414)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8y64"]
 size = Vector2(11, 9)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a8jf0"]
 radius = 20.0
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_buonc"]
-polygon = PackedVector2Array(3, -11, 3, -10, 4, -10, 4, -4, 3, -4, 3, -3, 4, -3, 4, 1, 3, 1, 3, 2, 1, 2, 1, 1, -1, 1, -1, 2, -4, 2, -4, 1, -5, 1, -5, -3, -4, -3, -4, -4, -5, -4, -5, -10, -4, -10, -4, -11)
 
 [node name="Player" type="CharacterBody2D" groups=["activation", "player"]]
 z_index = 2
@@ -1508,9 +1511,10 @@ collision_mask = 27
 script = ExtResource("1_3avnw")
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
+material = SubResource("ShaderMaterial_vpcv0")
 position = Vector2(90, 136)
 width = 2.0
-default_color = Color(1, 1, 1, 0.447059)
+default_color = Color(1, 1, 1, 0.372549)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_a82sk")
@@ -1604,8 +1608,9 @@ visible = false
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_a8jf0")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-occluder = SubResource("OccluderPolygon2D_buonc")
+[node name="throwhold" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("25_3qtaa")
+bus = &"Sfx"
 
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]

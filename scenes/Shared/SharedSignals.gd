@@ -44,6 +44,9 @@ signal conductor_connection
 signal lizard_connection_made
 signal lizard_state_change
 
+# Shake Camera Signals
+signal start_player_screen_shake
+
 # Dart
 signal dart_hit_wall
 
