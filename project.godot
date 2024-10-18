@@ -15,7 +15,7 @@ run/main_scene="res://scenes/world/main_start/godot_startupscreen.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 boot_splash/image="res://assets/sprites/UI/Title/splash/Godot_Splash_Big.png"
-config/icon="res://icon.svg"
+config/icon="res://Sprite-0001.png"
 
 [autoload]
 
