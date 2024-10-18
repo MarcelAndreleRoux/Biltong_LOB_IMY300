@@ -44,6 +44,10 @@ var can_aim_throw: bool = false
 var MIN_AIM_DISTANCE: float = 20.0
 var MAX_AIM_DISTANCE: float = 200.0
 
+# Define the soft maximum distance where pulling becomes harder and the hard max distance
+var soft_max_distance = 180.0
+var hard_max_distance = 215.0  # Hard max distance where pulling is almost impossible
+
 # Box
 var is_dragging: bool = false
 var is_pushing: bool = false
@@ -308,10 +312,6 @@ func fade_out_audio(audio_player: AudioStreamPlayer2D):
 func calculate_trajectory():
 	var aim_direction = _end - my_local_pos
 	var aim_distance = aim_direction.length()
-
-	# Define the soft maximum distance where pulling becomes harder and the hard max distance
-	var soft_max_distance = 180.0
-	var hard_max_distance = 215.0  # Hard max distance where pulling is almost impossible
 
 	# Track whether the player is at the max distance
 	var is_at_max_distance = false

@@ -241,9 +241,21 @@ theme_override_constants/separation = 7
 layout_mode = 2
 text = "Play"
 
-[node name="Levels" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
+[node name="Continue" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
+visible = false
 layout_mode = 2
-text = "Levels"
+text = "Continue
+"
+
+[node name="NewGame" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "New Game"
+
+[node name="LoadSaves" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
+layout_mode = 2
+text = "Load Save
+"
 
 [node name="Option" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
 layout_mode = 2
@@ -348,7 +360,7 @@ libraries = {
 
 [connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/Play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/Levels" to="." method="_on_levels_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/LoadSaves" to="." method="_on_levels_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/Option" to="." method="_on_option_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Option" to="." method="_on_option_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]

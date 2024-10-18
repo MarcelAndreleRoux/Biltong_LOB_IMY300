@@ -1,24 +1,19 @@
-[gd_scene load_steps=26 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=21 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/level_scripts/level_1.gd" id="1_ypnr2"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_apglj"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_u5vqf"]
+[ext_resource type="PackedScene" uid="uid://csuvdsw70jxom" path="res://scenes/world/mouse/mouse.tscn" id="5_e2n7h"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="7_i1ec7"]
-[ext_resource type="Script" path="res://scenes/world/Mouse.gd" id="8_ni41v"]
-[ext_resource type="Texture2D" uid="uid://cb21ls7xc0kej" path="res://assets/sprites/UI/Mouse/Aim.png" id="9_blhmv"]
-[ext_resource type="Texture2D" uid="uid://dej73xmk4mfeg" path="res://assets/sprites/UI/Mouse/Throw.png" id="10_n2ej3"]
 [ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="11_ha8u1"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="12_bj4lk"]
+[ext_resource type="PackedScene" uid="uid://d0h17547c2v73" path="res://scenes/world/mouse/keycaps.tscn" id="12_ci5ky"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="13_6i8vw"]
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="14_3o1o2"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="18_jac8h"]
-[ext_resource type="Texture2D" uid="uid://b1dlss2bmb2l3" path="res://assets/sprites/UI/Keycaps/Keycaps-W.png" id="20_8xygy"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="21_5t1u8"]
-[ext_resource type="Texture2D" uid="uid://dw3p3ognw52kx" path="res://assets/sprites/UI/Keycaps/Keycaps_A.png" id="21_s35gc"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="21_srmgi"]
-[ext_resource type="Texture2D" uid="uid://d07mo5cvixahe" path="res://assets/sprites/UI/Keycaps/Keycaps-S.png" id="22_45by8"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="22_gq6qw"]
-[ext_resource type="Texture2D" uid="uid://b8ka5jup28x1v" path="res://assets/sprites/UI/Keycaps/Keycaps-E.png" id="23_cv04v"]
 [ext_resource type="PackedScene" uid="uid://85307446xv20" path="res://scenes/entities/objects/static/door/broken_door.tscn" id="23_hc28w"]
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="24_2o77r"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="24_6nyao"]
@@ -44,17 +39,7 @@ layer_2/tile_data = PackedInt32Array(655384, 786434, 0, 655385, 983042, 0, 65538
 [node name="Player" parent="." instance=ExtResource("7_i1ec7")]
 position = Vector2(326, 204)
 
-[node name="Mouse" type="Node2D" parent="Player"]
-position = Vector2(-299, -203)
-script = ExtResource("8_ni41v")
-
-[node name="Aim" type="Sprite2D" parent="Player/Mouse"]
-position = Vector2(327, 180)
-texture = ExtResource("9_blhmv")
-
-[node name="Throw" type="Sprite2D" parent="Player/Mouse"]
-position = Vector2(273, 180)
-texture = ExtResource("10_n2ej3")
+[node name="Mouse" parent="Player" instance=ExtResource("5_e2n7h")]
 
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
@@ -102,6 +87,7 @@ door_link_id = "123"
 position = Vector2(175, 172)
 
 [node name="Escape" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="Escape"]
 offset_left = 12.0
@@ -111,25 +97,7 @@ offset_bottom = 29.0
 texture = ExtResource("24_6nyao")
 stretch_mode = 2
 
-[node name="Keycaps" type="Node2D" parent="."]
-z_index = 1
-position = Vector2(26, 3)
-
-[node name="W" type="Sprite2D" parent="Keycaps"]
-position = Vector2(299, 181)
-texture = ExtResource("20_8xygy")
-
-[node name="A" type="Sprite2D" parent="Keycaps"]
-position = Vector2(279, 200)
-texture = ExtResource("21_s35gc")
-
-[node name="S" type="Sprite2D" parent="Keycaps"]
-position = Vector2(299, 217)
-texture = ExtResource("22_45by8")
-
-[node name="D" type="Sprite2D" parent="Keycaps"]
-position = Vector2(319, 200)
-texture = ExtResource("23_cv04v")
+[node name="Keycaps" parent="." instance=ExtResource("12_ci5ky")]
 
 [node name="Box" parent="." instance=ExtResource("25_dc2e1")]
 position = Vector2(402, 187)

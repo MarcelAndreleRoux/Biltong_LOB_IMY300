@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=24 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
@@ -22,6 +22,14 @@
 [ext_resource type="AudioStream" uid="uid://b6khru067y4lq" path="res://assets/soundeffects/1154762.audio-Ui_Click_Bubble_04.wav" id="20_oabrp"]
 [ext_resource type="AudioStream" uid="uid://i7n6ja3av0mo" path="res://assets/soundeffects/throwing-clothes-on-the-floor-2-48133.mp3" id="21_1cfnj"]
 [ext_resource type="AudioStream" uid="uid://drbhc0rdkcet4" path="res://assets/soundeffects/ThrowHold.wav" id="22_24qkt"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r0d2o"]
+streams_count = 5
+stream_0/weight = 1.0
+stream_1/weight = 1.0
+stream_2/weight = 1.0
+stream_3/weight = 1.0
+stream_4/weight = 1.0
 
 [node name="AudioController" type="Node2D"]
 script = ExtResource("1_bde8u")
@@ -130,6 +138,8 @@ bus = &"Sfx"
 [node name="box_drop" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")
 
+[node name="fire_bush_idle" type="AudioStreamPlayer2D" parent="."]
+
 [node name="fire_pickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")
 
@@ -159,5 +169,8 @@ bus = &"Sfx"
 [node name="throwhold" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("22_24qkt")
 bus = &"Sfx"
+
+[node name="button_select_rand" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_r0d2o")
 
 [connection signal="finished" from="button_select" to="." method="_on_button_select_finished"]

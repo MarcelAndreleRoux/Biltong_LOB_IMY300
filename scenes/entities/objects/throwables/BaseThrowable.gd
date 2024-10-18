@@ -29,6 +29,10 @@ var MAX_POINTS: int = 50
 var time: float = 0.0
 var time_mult: float = 6.0
 
+# Define the soft maximum distance where pulling becomes harder and the hard max distance
+var soft_max_distance = 180.0
+var hard_max_distance = 215.0  # Hard max distance where pulling is almost impossible
+
 var I_landed: bool = false
 var start_place: Vector2 = Vector2.ZERO
 
@@ -100,10 +104,6 @@ func calculate_number_of_points(aim_distance: float) -> int:
 func calculate_trajectory(_End: Vector2) -> Array:
 	var aim_direction = _End - _spawnPosition
 	var aim_distance = aim_direction.length()
-
-	# Define the soft maximum distance where pulling becomes harder and the hard max distance
-	var soft_max_distance = 180.0
-	var hard_max_distance = 215.0  # Hard max distance where pulling is almost impossible
 
 	# Track whether the projectile has reached max distance
 	var is_at_max_distance = false
