@@ -17,6 +17,8 @@ func _ready():
 func _process(delta):
 	if GlobalValues.can_throw:
 		if not done_once:
+			aim.play("default")
+			
 			if not aimed_done_once:
 				if Input.is_action_just_pressed("aim"):
 					aim.visible = true
@@ -25,7 +27,6 @@ func _process(delta):
 					
 					if not played_once:
 						played_once = true
-						aim.play("default")
 						throw.play("default")
 					
 					_some_waiting_timer()

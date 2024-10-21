@@ -29,19 +29,19 @@ func _process(delta):
 	if not played_once:
 		if Input.is_action_just_pressed("move_up"):
 			w_clicked = true
-			w.play("idle")
+			w.visible = false
 		
 		if Input.is_action_just_pressed("move_down"):
 			s_clicked = true
-			s.play("idle")
+			s.visible = false
 		
 		if Input.is_action_just_pressed("move_left"):
 			a_clicked = true
-			a.play("idle")
+			a.visible = false
 		
 		if Input.is_action_just_pressed("move_right"):
 			d_clicked = true
-			d.play("idle")
+			d.visible = false
 		
 		if w_clicked and s_clicked and a_clicked and d_clicked:
 			done.play("check")
