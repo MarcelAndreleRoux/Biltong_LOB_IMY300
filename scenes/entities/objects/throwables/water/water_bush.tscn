@@ -1,0 +1,108 @@
+[gd_scene load_steps=15 format=3 uid="uid://ds2p76qsyb33l"]
+
+[ext_resource type="Script" path="res://scenes/entities/objects/throwables/water/water_bush.gd" id="1_1jlhk"]
+[ext_resource type="Texture2D" uid="uid://3cffibg3i4ns" path="res://assets/sprites/objects/throwables/water/Water-Sheet.png" id="2_4koa6"]
+[ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="3_phyi4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rtusq"]
+size = Vector2(4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dns8"]
+atlas = ExtResource("2_4koa6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmv8w"]
+atlas = ExtResource("2_4koa6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8iyoe"]
+atlas = ExtResource("2_4koa6")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j2pcn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5dns8")
+}],
+"loop": true,
+"name": &"close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qmv8w")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8iyoe")
+}],
+"loop": true,
+"name": &"pickup",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pna5x"]
+radius = 23.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ci0o"]
+atlas = ExtResource("3_phyi4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d33al"]
+atlas = ExtResource("3_phyi4")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jehqo"]
+atlas = ExtResource("3_phyi4")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjtr6"]
+atlas = ExtResource("3_phyi4")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r6ave"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ci0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d33al")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jehqo")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_gjtr6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="WaterBush" type="StaticBody2D"]
+script = ExtResource("1_1jlhk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rtusq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_j2pcn")
+animation = &"idle"
+
+[node name="ActionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActionArea"]
+shape = SubResource("CircleShape2D_pna5x")
+
+[node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
+position = Vector2(13, -16)
+sprite_frames = SubResource("SpriteFrames_r6ave")
+
+[connection signal="body_entered" from="ActionArea" to="." method="_on_action_area_body_entered"]
+[connection signal="body_exited" from="ActionArea" to="." method="_on_action_area_body_exited"]

@@ -1,9 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://umnauojref6t"]
+[gd_scene load_steps=25 format=3 uid="uid://umnauojref6t"]
 
 [ext_resource type="Texture2D" uid="uid://dhv7t7cuweh5l" path="res://assets/sprites/objects/throwables/fire/Fire-Mango-Throwable-Sheet.png" id="1_0cdmn"]
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/fire/fire.gd" id="1_kilkr"]
 [ext_resource type="Texture2D" uid="uid://bv0gim0eo5bye" path="res://assets/sprites/objects/throwables/fire/Mango.png" id="2_xumqc"]
-[ext_resource type="Texture2D" uid="uid://b1t233x8g3awa" path="res://assets/sprites/objects/throwables/fire/FireMangoRingBurn.png" id="3_qsw80"]
+[ext_resource type="Texture2D" uid="uid://bw5qe0da848r4" path="res://assets/sprites/objects/throwables/fire/Fire-Throwable.png" id="4_wwqvh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1y4gr"]
 atlas = ExtResource("1_0cdmn")
@@ -37,17 +37,41 @@ region = Rect2(96, 0, 16, 16)
 atlas = ExtResource("1_0cdmn")
 region = Rect2(112, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ccp6p"]
-atlas = ExtResource("3_qsw80")
+[sub_resource type="AtlasTexture" id="AtlasTexture_rltp1"]
+atlas = ExtResource("4_wwqvh")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x2lym"]
-atlas = ExtResource("3_qsw80")
+[sub_resource type="AtlasTexture" id="AtlasTexture_de56j"]
+atlas = ExtResource("4_wwqvh")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1sdgp"]
-atlas = ExtResource("3_qsw80")
+[sub_resource type="AtlasTexture" id="AtlasTexture_tsljw"]
+atlas = ExtResource("4_wwqvh")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngul3"]
+atlas = ExtResource("4_wwqvh")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10inv"]
+atlas = ExtResource("4_wwqvh")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mfkr"]
+atlas = ExtResource("4_wwqvh")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4ccq"]
+atlas = ExtResource("4_wwqvh")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7rpt"]
+atlas = ExtResource("4_wwqvh")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6x01"]
+atlas = ExtResource("4_wwqvh")
+region = Rect2(256, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_r7cee"]
 animations = [{
@@ -90,15 +114,33 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ccp6p")
+"texture": SubResource("AtlasTexture_rltp1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_x2lym")
+"texture": SubResource("AtlasTexture_de56j")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1sdgp")
+"texture": SubResource("AtlasTexture_tsljw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngul3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10inv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mfkr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4ccq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7rpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6x01")
 }],
-"loop": true,
+"loop": false,
 "name": &"land",
 "speed": 5.0
 }]
@@ -110,24 +152,24 @@ radius = 2.0
 radius = 16.0
 
 [node name="FireMango" type="CharacterBody2D"]
+z_index = 2
 collision_layer = 128
-collision_mask = 128
+collision_mask = 0
 script = ExtResource("1_kilkr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["throwables"]]
 sprite_frames = SubResource("SpriteFrames_r7cee")
 animation = &"land"
-frame = 1
-frame_progress = 0.990625
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_mul82")
 
-[node name="FireArea" type="Area2D" parent="." groups=["burn"]]
+[node name="FireArea" type="Area2D" parent="." groups=["burn", "throwables"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FireArea"]
 visible = false
 shape = SubResource("CircleShape2D_d70w1")
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="FireArea" to="." method="_on_fire_area_area_entered"]

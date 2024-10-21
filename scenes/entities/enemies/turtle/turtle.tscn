@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/turtle/turtle.gd" id="1_1fxvc"]
 [ext_resource type="Texture2D" uid="uid://pmrgbxp12km" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Left.png" id="2_a700b"]
-[ext_resource type="PackedScene" uid="uid://dcwfimqxg27wv" path="res://scenes/entities/enemies/wander.tscn" id="2_gm0cl"]
 [ext_resource type="Texture2D" uid="uid://cvaqb8p2gm87o" path="res://assets/sprites/enemies/turtel/walk/Turtle-Walk-Left.png" id="4_3blme"]
 [ext_resource type="AudioStream" uid="uid://dki5tcy6h2mla" path="res://assets/soundeffects/Eat.wav" id="4_y46p0"]
 [ext_resource type="Texture2D" uid="uid://d3dotr4af58er" path="res://assets/sprites/enemies/turtel/idle/Turtle-Idle-Left.png" id="5_1rg4p"]
@@ -684,6 +683,23 @@ tracks/5/keys = {
 "update": 0,
 "values": [-18.0, -18.0]
 }
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shake_screen"
+}, {
+"args": [],
+"method": &"shake_screen"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_fns7b"]
 resource_name = "walk_right"
@@ -760,6 +776,23 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [-18.0, -18.0]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shake_screen"
+}, {
+"args": [],
+"method": &"shake_screen"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rr4hs"]
@@ -906,6 +939,10 @@ advance_condition = &"is_walking"
 advance_mode = 2
 advance_condition = &"is_idle"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4q87x"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_d8c0n"]
 states/End/position = Vector2(1003, 62)
 states/Shell/node = SubResource("AnimationNodeBlendSpace2D_sw8yr")
@@ -913,13 +950,13 @@ states/Shell/position = Vector2(655, 139)
 states/eat/node = SubResource("AnimationNodeBlendSpace2D_ixxb7")
 states/eat/position = Vector2(807, -42)
 states/hungry/node = SubResource("AnimationNodeBlendSpace2D_jdyg1")
-states/hungry/position = Vector2(655, 36)
+states/hungry/position = Vector2(882, 62)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_amcfy")
 states/idle/position = Vector2(396, 100)
 states/walk/node = SubResource("AnimationNodeBlendSpace2D_737rd")
 states/walk/position = Vector2(396, -42)
-transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransition_njxco"), "hungry", "eat", SubResource("AnimationNodeStateMachineTransition_avrna"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_d6xjh"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_sv086"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kr72v"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_uxo76"), "idle", "hungry", SubResource("AnimationNodeStateMachineTransition_8vgqf"), "walk", "eat", SubResource("AnimationNodeStateMachineTransition_p0ajb"), "hungry", "walk", SubResource("AnimationNodeStateMachineTransition_bai71"), "hungry", "idle", SubResource("AnimationNodeStateMachineTransition_k02vk"), "walk", "Shell", SubResource("AnimationNodeStateMachineTransition_144lh"), "hungry", "Shell", SubResource("AnimationNodeStateMachineTransition_lrv7n"), "idle", "Shell", SubResource("AnimationNodeStateMachineTransition_3cfh8"), "eat", "Shell", SubResource("AnimationNodeStateMachineTransition_2y0xt"), "Shell", "walk", SubResource("AnimationNodeStateMachineTransition_5twsa"), "Shell", "idle", SubResource("AnimationNodeStateMachineTransition_xjq53")]
-graph_offset = Vector2(-31, -83)
+transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransition_njxco"), "hungry", "eat", SubResource("AnimationNodeStateMachineTransition_avrna"), "eat", "walk", SubResource("AnimationNodeStateMachineTransition_d6xjh"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_sv086"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_kr72v"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_uxo76"), "idle", "hungry", SubResource("AnimationNodeStateMachineTransition_8vgqf"), "walk", "eat", SubResource("AnimationNodeStateMachineTransition_p0ajb"), "hungry", "walk", SubResource("AnimationNodeStateMachineTransition_bai71"), "hungry", "idle", SubResource("AnimationNodeStateMachineTransition_k02vk"), "walk", "Shell", SubResource("AnimationNodeStateMachineTransition_144lh"), "hungry", "Shell", SubResource("AnimationNodeStateMachineTransition_lrv7n"), "idle", "Shell", SubResource("AnimationNodeStateMachineTransition_3cfh8"), "eat", "Shell", SubResource("AnimationNodeStateMachineTransition_2y0xt"), "Shell", "walk", SubResource("AnimationNodeStateMachineTransition_5twsa"), "Shell", "idle", SubResource("AnimationNodeStateMachineTransition_xjq53"), "eat", "idle", SubResource("AnimationNodeStateMachineTransition_4q87x")]
+graph_offset = Vector2(54.5906, -83)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e6vdn"]
 radius = 28.0
@@ -936,12 +973,15 @@ position = Vector2(5, 0)
 texture = ExtResource("2_a700b")
 hframes = 21
 
+[node name="TurtleNav" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+target_desired_distance = 5.0
+avoidance_enabled = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_38uif")
-
-[node name="Wander" parent="." instance=ExtResource("2_gm0cl")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -959,9 +999,9 @@ parameters/conditions/is_hungry = false
 parameters/conditions/is_idle = false
 parameters/conditions/is_scared = false
 parameters/conditions/is_walking = false
-parameters/Shell/blend_position = Vector2(0.0249768, -0.00529099)
-parameters/eat/blend_position = Vector2(0.00643086, 0)
-parameters/hungry/blend_position = Vector2(0.012026, 0.00529099)
+parameters/Shell/blend_position = Vector2(0.0676379, -0.00529099)
+parameters/eat/blend_position = Vector2(0.0447451, -0.00529099)
+parameters/hungry/blend_position = Vector2(0.0260146, -0.026455)
 parameters/idle/blend_position = Vector2(0.0147784, -0.00529099)
 parameters/walk/blend_position = Vector2(0.0112541, 0.00581396)
 
@@ -981,5 +1021,6 @@ rotation = 1.5708
 position = Vector2(1, -5)
 shape = SubResource("CapsuleShape2D_e6vdn")
 
+[connection signal="velocity_computed" from="TurtleNav" to="." method="_on_turtle_nav_velocity_computed"]
 [connection signal="body_entered" from="ScaredArea" to="." method="_on_scared_area_body_entered"]
 [connection signal="body_exited" from="ScaredArea" to="." method="_on_scared_area_body_exited"]

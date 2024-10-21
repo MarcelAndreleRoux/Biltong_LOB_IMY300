@@ -1,10 +1,10 @@
-[gd_scene load_steps=46 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=47 format=3 uid="uid://tm7km3x2t64"]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_o3fq4"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="1_qoat8"]
 [ext_resource type="Texture2D" uid="uid://lmep00vlmn16" path="res://assets/sprites/world/Floor-Tileset.png" id="2_c1uv8"]
 [ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="2_t02x3"]
-[ext_resource type="Texture2D" uid="uid://bo2v667lemvkl" path="res://assets/sprites/Inside-Walls-Tileset.png" id="3_jsvtj"]
+[ext_resource type="Texture2D" uid="uid://bnlq1t6a783og" path="res://assets/sprites/Inside-Walls-Tileset.png" id="3_jsvtj"]
 [ext_resource type="Texture2D" uid="uid://dhjrs6u1jrxlc" path="res://assets/sprites/objects/static/wire/Wires-Tileset.png" id="4_hdatk"]
 [ext_resource type="Texture2D" uid="uid://bejigd635nrbl" path="res://assets/sprites/world/Decorations/Decor-Tileset.png" id="5_song7"]
 [ext_resource type="PackedScene" uid="uid://mgvermvy0d8e" path="res://scenes/entities/objects/static/door/door.tscn" id="5_w5hph"]
@@ -466,10 +466,16 @@ sources/5 = SubResource("TileSetAtlasSource_c3q73")
 sources/3 = SubResource("TileSetAtlasSource_imbrl")
 sources/4 = SubResource("TileSetAtlasSource_oe762")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_2wqwc"]
+vertices = PackedVector2Array(391, 48, 448, 48, 451, 76, 379, 76, 349, 72, 143, 71, 146, 105, 25, 105, 76, 87, 25, 72, 42, 53, 120, 50, 317, 76, 314, 49, 381, 105, 317, 106)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(9, 10, 8, 7), PackedInt32Array(5, 8, 11), PackedInt32Array(12, 5, 11, 13, 4), PackedInt32Array(4, 3, 14, 15, 12)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(15, 69, 15, 115, 157, 116, 154, 81, 307, 86, 307, 117, 393, 115, 390, 86, 463, 87, 458, 38, 388, 39, 349, 60, 316, 39, 117, 41, 77, 74, 42, 39)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1t8op"]
 size = Vector2(87, 43)
 
-[node name="World" type="Node2D"]
+[node name="Level1" type="Node2D"]
 script = ExtResource("1_o3fq4")
 
 [node name="TileMap" type="TileMap" parent="." groups=["walls"]]
@@ -482,10 +488,11 @@ layer_1/tile_data = PackedInt32Array(29, 1, 0, 28, 589825, 0, 27, 589825, 0, 26,
 layer_2/name = "Wires"
 layer_2/tile_data = PackedInt32Array(655384, 786434, 0, 655385, 983042, 0, 655386, 983042, 0, 655387, 983042, 0, 655388, 524290, 0, 720924, 1048578, 0, 786460, 1048578, 0, 851996, 1048578, 0, 327681, 1048578, 0, 393217, 1048578, 0, 458753, 786434, 0, 458754, 983042, 0, 458755, 983042, 0, 458756, 983042, 0, 458757, 983042, 0, 458758, 983042, 0, 458759, 983042, 0, 458760, 983042, 0, 458761, 524290, 0, 196612, 2490371, 1, 196613, 2490371, 1, 196632, 2359299, 1, 196611, 2686979, 1, 262148, 2686979, 1, 131076, 2686979, 1, 262168, 2686979, 1, 196633, 2686979, 1, 196631, 2490371, 1, 131096, 2424835, 1)
 
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_2wqwc")
+
 [node name="Player" parent="." instance=ExtResource("1_qoat8")]
 position = Vector2(326, 204)
-collision_layer = 13
-collision_mask = 27
 
 [node name="Mouse" type="Node2D" parent="Player"]
 position = Vector2(-299, -203)
@@ -512,6 +519,9 @@ default_color = Color(1, 1, 1, 0.447059)
 position = Vector2(252, 53)
 
 [node name="RayCast2D" type="RayCast2D" parent="Turtle"]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Turtle"]
+debug_enabled = true
 
 [node name="Marker2D" type="Marker2D" parent="." groups=["FirstEnemy"]]
 position = Vector2(392, 55)
@@ -630,7 +640,6 @@ stretch_mode = 2
 
 [node name="Box" parent="." instance=ExtResource("15_r4v23")]
 position = Vector2(402, 187)
-collision_layer = 36
 
 [node name="Inventory" parent="." instance=ExtResource("22_kde7e")]
 position = Vector2(245, 258)

@@ -11,6 +11,7 @@ enum HedgehogState {
 @export var fire_rate: float = 0.5  # Time between each shot when shooting
 @export var cone_angle_offset: float = 10.0  # Angle offset for side darts
 @export var angry_duration: float = 0.5  # Duration to stay angry before shooting
+@onready var shoot_sound = $shoot
 
 @onready var animation_tree = $AnimationTree
 
@@ -49,6 +50,7 @@ func _ready():
 func _set_state(new_state: HedgehogState):
 	if new_state == HedgehogState.SHOOTING and current_state != HedgehogState.ANGRY:
 		# Prevent transitioning directly to SHOOTING unless already ANGRY
+		shoot_sound.play()
 		return
 
 	current_state = new_state
@@ -143,3 +145,9 @@ func _spawn_dart(direction: Vector2):
 func _stop_all_timers():
 	angry_timer.stop()
 	shoot_timer.stop()
+
+func _on_area_2d_area_entered(area):
+	print(area)
+	if area.is_in_group("throwables"):
+		SharedSignals.distroy_throwable.emit()
+

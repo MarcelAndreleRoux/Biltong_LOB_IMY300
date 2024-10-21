@@ -5,9 +5,15 @@ class_name BaseWorld
 
 # Common Nodes
 @onready var player = $Player
+@onready var hedgehog = $Hedgehog
 @onready var turtle = $Turtle
-@onready var trajectory_line = $TrajectoryLine
+@onready var electric_lizard = $ElectricLizard
+@onready var trajectory_line = $Player/TrajectoryLine
 @onready var game_pause = $GamePause
+@onready var audio_paused_menu = $AudioPausedMenu
+@onready var game_music_player = GameMusicController
+@onready var food = $Food
+@onready var shake_camera = $ShakeCamera
 
 #Raycasts
 @onready var player_raycast = $Player/RayCast2D
@@ -18,8 +24,10 @@ class_name BaseWorld
 @onready var inventory = $Inventory
 
 #Sounds
-@onready var error = $Error
 @onready var death = $Death
+@onready var win_state = $WinState
+
+const FOOD = preload("res://scenes/entities/objects/throwables/mushroom/mushroom.tscn")
 
 # Common Variables
 var _main: Node2D
@@ -49,6 +57,8 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 func _ready():
+	MenuAudioController.stop_music()
+	GameMusicController.play_music()
 	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
@@ -57,27 +67,36 @@ func _ready():
 	SharedSignals.projectile_gone.connect(_remove_marker)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.death_finished.connect(_on_death_finsish)
-
+	GlobalValues.game_done.connect(_on_game_finished)
+	SharedSignals.shake_turtle.connect(_shake)
+	SharedSignals.dart_hit_wall.connect(_shake)
+	
 	player_raycast.enabled = true
-	GlobalValues.turtle_original_pos = turtle.global_position
-
+	
 	# Add all vines to the player's raycast exceptions
-	if GlobalValues.vinesSize == "small":
-		for vine in get_tree().get_nodes_in_group("vines"):
+	for vine in get_tree().get_nodes_in_group("vines"):
 			player_raycast.add_exception(vine)
+	
+	if hedgehog:
+		enemy_raycast.add_exception(hedgehog)
+
+func _on_game_finished():
+	win_state.win()
+
+func _shake():
+	shake_camera.apply_shake_semi_small()
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):
-		game_pause.game_over()
+		game_pause.game_exit()
 	
-	if player:
-		GlobalValues.update_player_position(player.global_position)
+	GlobalValues.update_player_position(player.global_position)
+	
+	trajectory_line.global_position = to_local(player.global_position)
 	
 	_update_hedgehog_raycast()
 	_check_inventory_swap()
 	_update_raycast_position()
-	_update_turtle_raycast()
-	change_scene()
 	
 	if GlobalValues.can_throw:
 		_handle_aiming_and_throwing()
@@ -105,43 +124,18 @@ func _update_hedgehog_raycast():
 		# Reset RayCast2D position to its original position for the next frame
 		enemy_raycast.global_position -= direction_to_player * offset_distance
 
-func _update_turtle_raycast():
-	if _turtle_target_marker and is_instance_valid(_turtle_target_marker):
-		turtle_raycast.global_position = turtle.global_position
-		var marker_position = _turtle_target_marker.global_position
-		turtle_raycast.target_position = marker_position - turtle_raycast.global_position
-
-		# If raycast is colliding with anything, it means the path is blocked
-		if turtle_raycast.is_colliding():
-			if GlobalValues.food_visible:
-				# Food just became invisible
-				GlobalValues.food_visible = false
-				SharedSignals.food_visibility_changed.emit(GlobalValues.food_visible)
-				print("Food is now hidden behind a wall.")
-		else:
-			if not GlobalValues.food_visible:
-				# Food just became visible
-				GlobalValues.food_visible = true
-				SharedSignals.food_visibility_changed.emit(GlobalValues.food_visible)
-				print("Food is now visible.")
-
-		# Emit the visibility change signal only when it changes
-		if GlobalValues.food_visible != previous_food_visible:
-			if GlobalValues.food_visible:
-				print("Food spotted, switching to food marker.")
-				SharedSignals.turtle_spotted_food.emit(_turtle_target_marker)
-			else:
-				print("Food hidden, turtle will ignore this marker.")
-				SharedSignals.food_not_visible.emit(_turtle_target_marker)
-
-		previous_food_visible = GlobalValues.food_visible  # Track the last known visibility
-
 func _update_raycast_position():
 	player_raycast.global_position = player.global_position
 	var mouse_position = get_global_mouse_position()
 	var relative_mouse_position = mouse_position - player_raycast.global_position
+	
+	# Clamp aim distance to a minimum of 10px
+	var distance_to_mouse = relative_mouse_position.length()
+	if distance_to_mouse < 10.0:
+		relative_mouse_position = relative_mouse_position.normalized() * 10.0
+	
 	player_raycast.target_position = relative_mouse_position
-	_end = get_global_mouse_position()
+	_end = player.global_position + relative_mouse_position  # Update target position
 
 func _handle_aiming_and_throwing():
 	if Input.is_action_pressed("aim") and not is_on_cooldown:
@@ -153,7 +147,6 @@ func _handle_aiming_and_throwing():
 
 	if _isAiming:
 		SharedSignals.show_throw.emit()
-		calculate_trajectory()
 		
 	# Check if the raycast is not colliding before allowing a throw
 	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
@@ -164,7 +157,9 @@ func _handle_aiming_and_throwing():
 			_throw_item()
 			_start_cooldown_timer()
 		else:
-			print("Cannot throw, something is in the way!")
+			AudioController.play_sfx("error")
+			if _isAiming:
+				_isAiming = false
 
 func _on_item_pickup():
 	GlobalValues.can_throw = true
@@ -187,17 +182,24 @@ func _throw_item():
 	var direction = (mousePosition - playerPosition).normalized()
 
 	instance.initialize(playerPosition, direction, 0, mousePosition)
-	_main.add_child(instance)
+	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
+		food.add_child(instance)
+	else:
+		_main.add_child(instance)
+	
+	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
+		# Add this line to add the instance to the "food_to_eat" group
+		instance.add_to_group("food_to_eat")
 	
 	# Add shadow for all projectiles
 	var shadow_sprite = Sprite2D.new()
 	shadow_sprite.texture = shadow_texture
+	shadow_sprite.name = "shadow_sprite"
 	shadow_sprite.global_position = throw_start_position
 	shadow_sprite.z_index = -1
 	instance.add_child(shadow_sprite)
 
-	SharedSignals.shadow_update.connect(_on_update_shadow)
-	SharedSignals.shadow_done.connect(_on_shadow_done)
+	SharedSignals.shadow_update.emit(throw_start_position)
 	shadow = shadow_sprite
 
 	if GlobalValues.inventory_select == GlobalValues.INVENTORY_SELECT.FOOD:
@@ -210,7 +212,7 @@ func _start_cooldown_timer():
 	
 	is_on_cooldown = true
 	var cooldown_timer = Timer.new()
-	cooldown_timer.wait_time = 10.0
+	cooldown_timer.wait_time = 0.3
 	cooldown_timer.one_shot = true
 	cooldown_timer.timeout.connect(_end_cooldown)
 	add_child(cooldown_timer)
@@ -225,7 +227,7 @@ func _check_inventory_swap():
 	if Input.is_action_just_pressed("one"):
 		# If player hasn't picked up food yet, play error
 		if not GlobalValues.can_swap_food:
-			error.play()
+			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
@@ -234,7 +236,7 @@ func _check_inventory_swap():
 	if Input.is_action_just_pressed("two"):
 		# If player hasn't picked up fire yet, play error
 		if not GlobalValues.can_swap_fire:
-			error.play()
+			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FIRE)
@@ -243,7 +245,7 @@ func _check_inventory_swap():
 	if Input.is_action_just_pressed("three"):
 		# If player hasn't picked up water yet, play error
 		if not GlobalValues.can_swap_water:
-			error.play()
+			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.WATER)
@@ -290,15 +292,9 @@ func calculate_trajectory():
 		var time = total_time * (float(point) / float(num_of_points))
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
-		points.append(player.position + Vector2(dx, dy))
+		points.append(player.global_position + Vector2(dx, dy))
 
 	trajectory_line.points = points
-
-func _on_update_shadow(direction: Vector2, distance: float):
-	shadow.global_position = throw_start_position + direction * distance
-
-func _on_shadow_done():
-	shadow.hide()
 
 func calculate_landing_position(start_position: Vector2, direction: Vector2, target_position: Vector2) -> Vector2:
 	var distance = start_position.distance_to(target_position)
@@ -326,6 +322,8 @@ func calculate_landing_position(start_position: Vector2, direction: Vector2, tar
 	return landing_position
 
 func place_marker_at_landing(landing_position: Vector2):
+	SharedSignals.food_thrown.emit(active_marker)
+	
 	if active_marker != null:
 		active_marker.queue_free()
 
@@ -341,11 +339,6 @@ func place_marker_at_landing(landing_position: Vector2):
 	SharedSignals.new_marker.emit(new_marker)
 	_start_marker_removal_timer()
 
-func _update_turtle_raycast_target(marker: Marker2D):
-	if _turtle_target_marker != marker:
-		turtle_raycast.enabled = true
-		_turtle_target_marker = marker
-
 func _start_marker_removal_timer():
 	var marker_removal_timer = Timer.new()
 	marker_removal_timer.wait_time = 9.0
@@ -356,23 +349,18 @@ func _start_marker_removal_timer():
 
 func _on_new_marker(marker: Marker2D):
 	print("Marker registered: ", marker.global_position)
-	_update_turtle_raycast_target(marker)
+	#_update_turtle_raycast_target(marker)
 
 func _remove_marker():
 	if active_marker != null:
 		print("Marker removed after timer")
+		SharedSignals.projectile_despawned.emit(active_marker)
 		active_marker.queue_free()
 		active_marker = null
 
 func _on_transition_body_entered(body):
 	if body.is_in_group("player"):
 		GlobalValues.transition_scene = true
-
-func change_scene():
-	if GlobalValues.transition_scene:
-		if GlobalValues.current_scene == "World":
-			get_tree().change_scene_to_file("res://scenes/world/level_2.tscn")
-			GlobalValues.finish_changingscene()
 
 func _on_death_finsish():
 	death.death_lose()

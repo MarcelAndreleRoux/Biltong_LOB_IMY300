@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://clinnhjr7vmtm"
+path="res://.godot/imported/12. Floating in the Abyss.wav-931e8d75ade85bcac653cfd6a3a9d174.sample"
+
+[deps]
+
+source_file="res://assets/music/12. Floating in the Abyss.wav"
+dest_files=["res://.godot/imported/12. Floating in the Abyss.wav-931e8d75ade85bcac653cfd6a3a9d174.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

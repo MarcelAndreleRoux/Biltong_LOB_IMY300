@@ -2,21 +2,27 @@ extends BaseThrowable
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var fire_area = $FireArea
+@onready var land = $land
+
+var landed: bool = false
 
 func _ready():
+	SharedSignals.distroy_throwable.connect(_remove_myself)
 	super()
-	SharedSignals.fire_mango_land.connect(impact_landing)
+	projectile_landed.connect(_play_death)
 	animated_sprite_2d.play("idle")
 
 func _physics_process(delta: float):
 	super(delta)
+	
+	if animated_sprite_2d.frame == 8:
+		self.queue_free()
 
-func impact_landing():
+func _play_death():
+	landed = true
+	AudioController.play_sfx("burn")
 	animated_sprite_2d.play("land")
 
-func _on_fire_area_area_entered(area):
-	if area.is_in_group("burn"):
-		pass
-		
-	if area.is_in_group("grow"):
-		pass
+func _remove_myself():
+	AudioController.play_sfx("burn")
+	animated_sprite_2d.play("land")

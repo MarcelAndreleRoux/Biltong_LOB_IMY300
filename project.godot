@@ -11,16 +11,21 @@ config_version=5
 [application]
 
 config/name="LOB_IMY300"
-run/main_scene="res://scenes/UI/main_menu.tscn"
+run/main_scene="res://scenes/world/main_start/godot_startupscreen.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+boot_splash/image="res://assets/sprites/UI/Title/splash/Godot_Splash_Big.png"
 config/icon="res://icon.svg"
 
 [autoload]
 
 SharedSignals="*res://scenes/Shared/SharedSignals.gd"
 GlobalValues="*res://scenes/Shared/GlobalValues.gd"
-GlobalAudioStreamPlayer="*res://scenes/world/audio_stream_player.tscn"
 State="*res://scenes/Shared/State.gd"
+LevelManager="*res://scenes/world/level_scripts/level_manager.gd"
+MenuAudioController="*res://scenes/Shared/main_menu_audio_controller.tscn"
+AudioController="*res://scenes/Shared/audio_controller.tscn"
+GameMusicController="*res://scenes/Shared/game_music_controller.tscn"
 
 [display]
 
@@ -88,7 +93,7 @@ aim={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
-DEBUG={
+test={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":76,"physical_keycode":0,"key_label":0,"unicode":108,"echo":false,"script":null)
 ]
@@ -116,6 +121,11 @@ two={
 three={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":51,"key_label":0,"unicode":51,"echo":false,"script":null)
+]
+}
+toggle_drag={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"echo":false,"script":null)
 ]
 }
 

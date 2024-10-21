@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
-@export var speed: float = 100.0
+@export var speed: float = 250.0
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var shake_camera = $ShakeCamera
 
 var target_position: Vector2
 
@@ -18,7 +19,9 @@ func _physics_process(delta):
 	if collision:
 		# Access the collider using `get_collider()`
 		var collider = collision.get_collider()
-
+		
+		SharedSignals.dart_hit_wall.emit()
+		
 		# Handle collision with the player or other objects
 		if collider.is_in_group("player"):
 			queue_free()
@@ -37,13 +40,12 @@ func update_rotation_and_velocity():
 
 	velocity = (target_position - global_position).normalized() * speed
 
-
 # Example function to set the target position dynamically
 func set_target_position(new_target_position: Vector2):
 	target_position = new_target_position
 	update_rotation_and_velocity()
 
-
 func _on_detection_area_body_entered(body):
 	if body.is_in_group("player"):
-		SharedSignals.player_killed.emit()
+		SharedSignals.dart_hit_wall.emit()
+		SharedSignals.player_killed.emit("peg")

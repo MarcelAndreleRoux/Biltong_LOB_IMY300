@@ -1,9 +1,7 @@
-[gd_scene load_steps=65 format=3 uid="uid://c80uy3ni7bgl4"]
+[gd_scene load_steps=64 format=3 uid="uid://c80uy3ni7bgl4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/lizard/electric_lizard.gd" id="1_i4f4n"]
 [ext_resource type="Texture2D" uid="uid://kqsruf5qtkkq" path="res://assets/sprites/enemies/electric lizzard/Idle/on/Lizard-On-Idle-Default-Left.png" id="2_3bmot"]
-[ext_resource type="PackedScene" uid="uid://12o22qh53ey4" path="res://scenes/Shared/electricity.tscn" id="2_i6ub5"]
-[ext_resource type="PackedScene" uid="uid://dx84ik10rs64a" path="res://scenes/entities/enemies/lizard/lizard_wander.tscn" id="3_mpxfq"]
 [ext_resource type="Texture2D" uid="uid://bi4fl54u6b3os" path="res://assets/sprites/enemies/electric lizzard/Idle/off/Lizard-Off-Idle-Default-Left.png" id="3_ypg2t"]
 [ext_resource type="Texture2D" uid="uid://dlooa4bvlphv1" path="res://assets/sprites/enemies/electric lizzard/Idle/on/Lizard-On-Idle-Default-Right.png" id="4_byw7i"]
 [ext_resource type="Texture2D" uid="uid://ceskedvdcgd6d" path="res://assets/sprites/enemies/electric lizzard/Idle/off/Lizard-Off-Idle-Default-Right.png" id="5_k3ovm"]
@@ -16,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://p4e7tv635fsa" path="res://assets/sprites/enemies/electric lizzard/run/on/Lizard-On-Walk-Right.png" id="8_yloi2"]
 [ext_resource type="Texture2D" uid="uid://1yo0c8x7qoa4" path="res://assets/sprites/enemies/electric lizzard/run/off/Lizard-Off-Walk-Right.png" id="9_sy3u7"]
 [ext_resource type="AudioStream" uid="uid://cf21mmncwxigh" path="res://assets/soundeffects/lizard_walk.wav" id="13_5ds80"]
+[ext_resource type="AudioStream" uid="uid://bqcj8b3ausmi0" path="res://assets/soundeffects/synth.wav" id="17_4juwg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_75p2i"]
 size = Vector2(21, 12)
@@ -82,6 +81,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("lick:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_pajqx"]
 resource_name = "idle_left_lick_off"
@@ -134,6 +145,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [5, 0, 1, 2, 3, 4, 5]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("lick:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_6klbo"]
 resource_name = "idle_left_lick_on"
@@ -185,6 +208,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [5, 0, 1, 2, 3, 4, 5]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("lick:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_amxm0"]
@@ -344,6 +379,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [5, 0, 1, 2, 3, 4, 5]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("lick:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_uci8t"]
 resource_name = "idle_right_lick_on"
@@ -395,6 +442,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [5, 0, 1, 2, 3, 4, 5]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("lick:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_vdm12"]
@@ -884,12 +943,10 @@ advance_mode = 2
 advance_condition = &"is_run_off"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2igfk"]
-switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_idle_on"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_31rch"]
-switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_idle_off"
 
@@ -934,19 +991,26 @@ states/run_off/position = Vector2(600, 210)
 states/run_on/node = SubResource("AnimationNodeBlendSpace2D_gacgd")
 states/run_on/position = Vector2(600, 122)
 transitions = ["Start", "idle_on", SubResource("AnimationNodeStateMachineTransition_aap77"), "idle_on", "idle_off", SubResource("AnimationNodeStateMachineTransition_lhgsr"), "idle_off", "idle_on", SubResource("AnimationNodeStateMachineTransition_yy7ui"), "idle_on", "run_on", SubResource("AnimationNodeStateMachineTransition_0lsr5"), "idle_off", "run_off", SubResource("AnimationNodeStateMachineTransition_cp7vq"), "run_on", "idle_on", SubResource("AnimationNodeStateMachineTransition_2igfk"), "run_off", "idle_off", SubResource("AnimationNodeStateMachineTransition_31rch"), "run_on", "run_off", SubResource("AnimationNodeStateMachineTransition_cabhf"), "run_off", "run_on", SubResource("AnimationNodeStateMachineTransition_gowuw"), "idle_on", "lick_on", SubResource("AnimationNodeStateMachineTransition_gar8l"), "idle_off", "lick_off", SubResource("AnimationNodeStateMachineTransition_8hnjo"), "lick_on", "idle_on", SubResource("AnimationNodeStateMachineTransition_1u4w8"), "lick_off", "idle_off", SubResource("AnimationNodeStateMachineTransition_vxss5")]
-graph_offset = Vector2(0, 1.99324)
+graph_offset = Vector2(0, 56.1572)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_solqv"]
 radius = 22.0
 height = 60.0
 
-[node name="ElectricLizard" type="CharacterBody2D"]
+[node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
+collision_layer = 16
+collision_mask = 65535
 script = ExtResource("1_i4f4n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_3bmot")
 offset = Vector2(0, -7)
 hframes = 6
+
+[node name="LizardNav" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+target_desired_distance = 5.0
+avoidance_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
@@ -976,21 +1040,24 @@ parameters/lick_on/blend_position = Vector2(0.025, 0.00414944)
 parameters/run_off/blend_position = Vector2(0.00961542, 0.00414944)
 parameters/run_on/blend_position = Vector2(0.0115385, 0.0124481)
 
-[node name="Electricity" parent="." instance=ExtResource("2_i6ub5")]
-
-[node name="LizardWander" parent="." instance=ExtResource("3_mpxfq")]
-
 [node name="walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_5ds80")
-volume_db = -12.0
-pitch_scale = 0.82
+volume_db = -23.0
+pitch_scale = 0.8
+
+[node name="lick" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_4juwg")
+volume_db = -8.0
 
 [node name="ElectricArea" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 65535
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElectricArea"]
 position = Vector2(0, -7)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_solqv")
 
+[connection signal="velocity_computed" from="LizardNav" to="." method="_on_lizard_nav_velocity_computed"]
+[connection signal="area_entered" from="ElectricArea" to="." method="_on_electric_area_area_entered"]
 [connection signal="body_entered" from="ElectricArea" to="." method="_on_electric_area_body_entered"]
-[connection signal="body_exited" from="ElectricArea" to="." method="_on_electric_area_body_exited"]
