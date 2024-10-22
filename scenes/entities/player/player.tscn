@@ -1498,7 +1498,7 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-46.217, 65.5414)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8y64"]
-size = Vector2(6.5, 6)
+size = Vector2(7, 7)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a8jf0"]
 radius = 20.0
@@ -1595,7 +1595,7 @@ bus = &"Sfx"
 position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoxMoveArea"]
-position = Vector2(-0.25, 2)
+position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_g8y64")
 
 [node name="SpeedArea" type="Area2D" parent="."]

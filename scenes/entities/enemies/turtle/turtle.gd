@@ -1,5 +1,3 @@
-class_name Turtle
-
 extends CharacterBody2D
 
 # --- Exported Variables ---
@@ -69,6 +67,9 @@ func _ready():
 	else:
 		state = State.IDLE
 
+func get_direction() -> Vector2:
+	return direction
+
 # --- Patrol Points Collection ---
 
 func _collect_patrol_points():
@@ -78,28 +79,33 @@ func _collect_patrol_points():
 		if target:
 			patrol_points.append(target.global_position)
 
-func get_direction() -> Vector2:
-	return direction
-
 # --- Physics Process ---
 
 func _physics_process(delta):
 	match state:
 		State.PATROL:
 			patrol_behavior()
+			print("PATROL STATE")
 		State.PATROL_WAIT:
+			print("PATROL_WAIT STATE")
 			pass  # Waiting at patrol point
 		State.HUNGRY:
+			print("HUNGRY STATE")
 			pass  # Playing hungry animation
 		State.GO_TO_FOOD:
+			print("GO_TO_FOOD STATE")
 			go_to_food_behavior()
 		State.EATING:
+			print("EATING STATE")
 			pass  # Eating food
 		State.IDLE:
+			print("IDLE STATE")
 			idle_behavior()
 		State.SCARED:
+			print("SCARED STATE")
 			scared_behavior()
 		State.SCARED_OUT:
+			print("SCARED STATE")
 			pass  # Scared out
 
 	# Update movement based on velocity
@@ -115,6 +121,23 @@ func _physics_process(delta):
 
 	_update_animation_parameters()
 	move_and_slide()
+
+# --- New Helper Function: Cancel OTHER Timers ---
+func _cancel_other_timers():
+	if patrol_wait_timer != null:
+		patrol_wait_timer.stop()
+		patrol_wait_timer.queue_free()
+		patrol_wait_timer = null
+
+	if hungry_timer != null:
+		hungry_timer.stop()
+		hungry_timer.queue_free()
+		hungry_timer = null
+
+	if eating_timer != null:
+		eating_timer.stop()
+		eating_timer.queue_free()
+		eating_timer = null
 
 # --- Flip Collision Polygon Based on Direction ---
 
@@ -295,14 +318,13 @@ func _on_scared_area_body_exited(body):
 		_start_scared_timeout()
 
 func _enter_scared_state():
+	print("Entering SCARED state")
+	_cancel_other_timers()  # Stop all timers when scared
 	state = State.SCARED
 	velocity = Vector2.ZERO
 	SharedSignals.is_scared_signal.emit(true)
+	navigation_agent_2d.target_position = global_position  # Stop any navigation
 	_update_animation_parameters()
-	
-	# Stop any existing scared_out_timer and reset the scared state
-	if scared_timer != null and scared_timer.is_stopped() == false:
-		scared_timer.stop()
 
 func _start_scared_timeout():
 	if scared_timer == null:

@@ -56,13 +56,12 @@ animations = [{
 }]
 
 [node name="Mouse" type="Node2D"]
-position = Vector2(-299, -203)
 script = ExtResource("1_mbck7")
 
 [node name="Aim" type="AnimatedSprite2D" parent="."]
-position = Vector2(332, 177)
+position = Vector2(31, -2)
 sprite_frames = SubResource("SpriteFrames_5yaye")
 
 [node name="Throw" type="AnimatedSprite2D" parent="."]
-position = Vector2(263, 177)
+position = Vector2(-34, -2)
 sprite_frames = SubResource("SpriteFrames_e4mki")
