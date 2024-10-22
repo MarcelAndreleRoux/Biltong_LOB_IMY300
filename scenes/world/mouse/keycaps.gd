@@ -52,7 +52,7 @@ func _display_keycaps_start():
 	played_once = true
 	var timer = Timer.new()
 	timer.name = "display_keycaps_timer"
-	timer.wait_time = 0.9
+	timer.wait_time = 1
 	timer.one_shot = true
 	timer.timeout.connect(_end_timer)
 	add_child(timer)
@@ -60,9 +60,7 @@ func _display_keycaps_start():
 
 func _end_timer():
 	check_mark.visible = false
-	done.stop()
 	w.visible = false
 	s.visible = false
 	a.visible = false
 	d.visible = false
-	$display_keycaps_timer.queue_free()

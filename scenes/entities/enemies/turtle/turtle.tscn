@@ -1142,12 +1142,14 @@ parameters/walk/blend_position = Vector2(0.0112541, 0.00581396)
 
 [node name="eat" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_y46p0")
+bus = &"Sfx"
 
 [node name="walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_lrg10")
 volume_db = -10.0
 max_distance = 525.0
 attenuation = 0.406126
+bus = &"Sfx"
 
 [node name="ScaredArea" type="Area2D" parent="."]
 rotation = 1.5708

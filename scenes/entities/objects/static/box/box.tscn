@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://3ybd1h5hqi4"]
+[gd_scene load_steps=22 format=3 uid="uid://3ybd1h5hqi4"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/box/box.gd" id="1_fdijp"]
 [ext_resource type="Texture2D" uid="uid://bgmachaejnlbs" path="res://assets/sprites/objects/static/box/Box.png" id="1_r7u5v"]
-[ext_resource type="Texture2D" uid="uid://bocxbuatv3htb" path="res://assets/sprites/UI/Keycaps/Keycaps-D.png" id="3_n4r40"]
+[ext_resource type="Texture2D" uid="uid://bnbkyu23uayje" path="res://assets/sprites/UI/Keycaps/check_mark.png" id="4_oerki"]
 [ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="4_rmtlj"]
+[ext_resource type="AudioStream" uid="uid://yiu86k814kgm" path="res://assets/soundeffects/Eveything_ui/checked.mp3" id="5_fgst4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j6ogj"]
 atlas = ExtResource("1_r7u5v")
@@ -92,6 +93,114 @@ animations = [{
 "speed": 4.0
 }]
 
+[sub_resource type="Animation" id="Animation_4uqye"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CheckMark:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(299, 199)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CheckMark:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CheckMark:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("4_oerki")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("checked:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_blti4"]
+resource_name = "check"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CheckMark:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -14)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CheckMark:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CheckMark:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("4_oerki")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("checked:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r66h4"]
+_data = {
+"RESET": SubResource("Animation_4uqye"),
+"check": SubResource("Animation_blti4")
+}
+
 [node name="Box" type="RigidBody2D" groups=["activation", "box", "object", "special_object"]]
 z_index = 1
 collision_layer = 36
@@ -147,13 +256,24 @@ shape = SubResource("RectangleShape2D_sx3ju")
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_sx3ju")
 
-[node name="MoveAction" type="Sprite2D" parent="."]
-position = Vector2(18, -25)
-texture = ExtResource("3_n4r40")
-
 [node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
 position = Vector2(13, -16)
 sprite_frames = SubResource("SpriteFrames_yd3f7")
+
+[node name="CheckMark" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(299, 199)
+texture = ExtResource("4_oerki")
+
+[node name="Done" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_r66h4")
+}
+
+[node name="checked" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -1)
+stream = ExtResource("5_fgst4")
+bus = &"Sfx"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="MoveArea" to="." method="_on_move_area_body_entered"]
