@@ -18,9 +18,15 @@ func _ready():
 func _integrate_forces(_state):
 	rotation = 0
 	angular_velocity = 0
+	
+@onready var done = $Done
 
 func _is_dragging(state: bool):
 	if state:
+		if not GlobalValues.box_pickup_once:
+			GlobalValues.box_pickup_once = true
+			done.play("check")
+		
 		animatedSprite.play("idle")
 	else:
 		animatedSprite.play("near_box")
@@ -49,7 +55,6 @@ func _some_waiting_timer():
 	grow_timer.start()
 
 func _show_timeout():
-	$show_timer.queue_free()
 	action_button_press.visible = false
 
 func _on_move_area_body_entered(body: Node2D):
@@ -60,10 +65,10 @@ func _on_move_area_body_entered(body: Node2D):
 				GlobalValues.has_pickeup_box_once = true
 				action_button_press.play("default")
 				action_button_press.visible = true
+				
+				_some_waiting_timer()
 			else:
 				action_button_press.visible = false
-				
-			_some_waiting_timer()
 		
 		player_in_area = true
 		SharedSignals.player_move.emit()
@@ -79,11 +84,3 @@ func _on_move_area_body_exited(body: Node2D):
 
 func _bounce_box(bounce_vector: Vector2):
 	global_position += bounce_vector
-
-func _on_push_area_body_entered(body):
-	if body.is_in_group("player"):
-		SharedSignals.player_push.emit()
-
-func _on_push_area_body_exited(body):
-	if player_in_area and body.is_in_group("player"):
-		SharedSignals.player_not_push.emit()

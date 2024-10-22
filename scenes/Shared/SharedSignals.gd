@@ -65,6 +65,7 @@ signal turtle_is_scared
 signal food_projectile_thrown(marker: Marker2D)
 signal projectile_despawned(marker: Marker2D)
 signal food_thrown
+signal is_scared_signal
 
 #Lizard Signals
 signal lizard_marker_reached

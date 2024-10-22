@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=31 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://ci7foj10sake0" path="res://assets/soundeffects/slime-splatter-6-220264.mp3" id="3_om823"]
 [ext_resource type="AudioStream" uid="uid://de8iugobo7j51" path="res://assets/soundeffects/vine-burn.mp3" id="4_2yeln"]
 [ext_resource type="AudioStream" uid="uid://cf21mmncwxigh" path="res://assets/soundeffects/lizard_walk.wav" id="4_yllhe"]
+[ext_resource type="AudioStream" uid="uid://dksuk1mg8fwhi" path="res://assets/soundeffects/thwop-91757.mp3" id="5_b70vo"]
 [ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="5_m4qxj"]
 [ext_resource type="AudioStream" uid="uid://c3n8vjyc5j3h3" path="res://assets/soundeffects/zap.mp3" id="6_8l2n3"]
 [ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="7_nbyvm"]
@@ -22,13 +23,24 @@
 [ext_resource type="AudioStream" uid="uid://b6khru067y4lq" path="res://assets/soundeffects/1154762.audio-Ui_Click_Bubble_04.wav" id="20_oabrp"]
 [ext_resource type="AudioStream" uid="uid://i7n6ja3av0mo" path="res://assets/soundeffects/throwing-clothes-on-the-floor-2-48133.mp3" id="21_1cfnj"]
 [ext_resource type="AudioStream" uid="uid://drbhc0rdkcet4" path="res://assets/soundeffects/ThrowHold.wav" id="22_24qkt"]
+[ext_resource type="AudioStream" uid="uid://bqhydi74j8ejx" path="res://assets/soundeffects/Eveything_ui/new-poly-ui1-101soundboards.mp3" id="24_kfdgi"]
+[ext_resource type="AudioStream" uid="uid://c1ep4n5tyfv8" path="res://assets/soundeffects/Eveything_ui/new-poly-ui2-101soundboards.mp3" id="25_lvuar"]
+[ext_resource type="AudioStream" uid="uid://dgxjm7nl2x0ou" path="res://assets/soundeffects/Eveything_ui/new-poly-ui3-101soundboards.mp3" id="26_v0g3n"]
+[ext_resource type="AudioStream" uid="uid://ean1at5xbx2c" path="res://assets/soundeffects/Eveything_ui/new-poly-ui4-101soundboards.mp3" id="27_ghyio"]
+[ext_resource type="AudioStream" uid="uid://bgkx6xptkpndj" path="res://assets/soundeffects/Eveything_ui/new-poly-ui5-101soundboards.mp3" id="28_xgfy3"]
+[ext_resource type="AudioStream" uid="uid://cgl8mjl38ndg2" path="res://assets/soundeffects/fireball-whoosh-1-179125.mp3" id="29_k5vyk"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r0d2o"]
 streams_count = 5
+stream_0/stream = ExtResource("24_kfdgi")
 stream_0/weight = 1.0
+stream_1/stream = ExtResource("25_lvuar")
 stream_1/weight = 1.0
+stream_2/stream = ExtResource("26_v0g3n")
 stream_2/weight = 1.0
+stream_3/stream = ExtResource("27_ghyio")
 stream_3/weight = 1.0
+stream_4/stream = ExtResource("28_xgfy3")
 stream_4/weight = 1.0
 
 [node name="AudioController" type="Node2D"]
@@ -53,6 +65,7 @@ pitch_scale = 0.8
 bus = &"Sfx"
 
 [node name="grow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_b70vo")
 bus = &"Sfx"
 
 [node name="player_walk" type="AudioStreamPlayer2D" parent="."]
@@ -148,6 +161,7 @@ stream = ExtResource("18_s37rq")
 
 [node name="food_pickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")
+bus = &"Sfx"
 
 [node name="TICKSOUND_MASTER" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("20_oabrp")
@@ -172,5 +186,10 @@ bus = &"Sfx"
 
 [node name="button_select_rand" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_r0d2o")
+bus = &"Sfx"
+
+[node name="fire_land" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("29_k5vyk")
+bus = &"Sfx"
 
 [connection signal="finished" from="button_select" to="." method="_on_button_select_finished"]

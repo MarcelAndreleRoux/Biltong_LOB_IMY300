@@ -17,11 +17,11 @@ func _ready():
 func _process(delta):
 	if GlobalValues.can_throw:
 		if not done_once:
-			aim.play("default")
-			
 			if not aimed_done_once:
+				aim.visible = true
+				aim.play("default")
+				
 				if Input.is_action_just_pressed("aim"):
-					aim.visible = true
 					throw.visible = true
 					is_aiming_click_hold = true
 					
@@ -57,7 +57,6 @@ func _aim_timeout():
 	aimed_done_once = true
 
 func _throw_timeout():
-	$aim_timer.queue_free()
 	aim.stop()
 	aim.visible = false
 	throw.visible = false

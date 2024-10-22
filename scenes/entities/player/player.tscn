@@ -34,7 +34,7 @@ shader_parameter/soft_max_distance = 180.0
 shader_parameter/hard_max_distance = 215.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jtfu5"]
-radius = 3.53553
+radius = 4.52769
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fmtvb"]
 size = Vector2(18, 24.5)
@@ -204,8 +204,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_xhcff"]
 resource_name = "death_pop_left"
-length = 0.4
-step = 0.05
+length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -249,7 +248,7 @@ tracks/3/path = NodePath("Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -261,7 +260,7 @@ tracks/4/path = NodePath("pop:playing")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.05),
+"times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -269,7 +268,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_kokgu"]
 resource_name = "death_pop_right"
-length = 0.4
+length = 0.8
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -314,7 +313,7 @@ tracks/3/path = NodePath("Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
@@ -1499,15 +1498,15 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-46.217, 65.5414)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8y64"]
-size = Vector2(11, 9)
+size = Vector2(7, 7)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a8jf0"]
 radius = 20.0
 
 [node name="Player" type="CharacterBody2D" groups=["activation", "player"]]
 z_index = 2
-collision_layer = 13
-collision_mask = 27
+collision_layer = 9
+collision_mask = 2075
 script = ExtResource("1_3avnw")
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
@@ -1596,8 +1595,7 @@ bus = &"Sfx"
 position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoxMoveArea"]
-visible = false
-position = Vector2(-0.5, 2.5)
+position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_g8y64")
 
 [node name="SpeedArea" type="Area2D" parent="."]
