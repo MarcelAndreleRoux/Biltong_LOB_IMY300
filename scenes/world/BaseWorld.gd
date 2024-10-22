@@ -74,6 +74,7 @@ func _ready():
 	SharedSignals.shake_turtle.connect(_shake)
 	SharedSignals.dart_hit_wall.connect(_shake_more)
 	SharedSignals.start_player_screen_shake.connect(_start_player_screen_shake)
+	SharedSignals.is_scared_signal.connect(_on_is_scared_signal)
 	
 	player_raycast.enabled = true
 	
@@ -88,6 +89,44 @@ func _ready():
 		player_raycast.add_exception(hedgehog)
 		enemy_raycast.add_exception(hedgehog)
 
+func _on_is_scared_signal(is_scared: bool):
+	if is_scared:
+		_spawn_blocking_collision_shape()
+	else:
+		_remove_blocking_collision_shape()
+
+var blocking_body: StaticBody2D = null
+
+func _spawn_blocking_collision_shape():
+	if blocking_body == null:
+		print("spawned body")
+		blocking_body = StaticBody2D.new()
+		var blocking_shape = CollisionShape2D.new()
+		var shape = CapsuleShape2D.new()
+		shape.radius = 12.0
+		shape.height = 40.0
+		
+		var turtle_position = to_local(turtle.global_position)
+		
+		if turtle.get_direction().x < 0:
+			blocking_body.position = turtle_position + Vector2(8, 0)
+		else:
+			blocking_body.position = turtle_position + Vector2(2, 0)
+		
+		blocking_shape.shape = shape
+		blocking_shape.set_rotation_degrees(90)
+		blocking_body.add_child(blocking_shape)
+		
+		blocking_body.collision_layer = 1 << (12 - 1)
+		blocking_body.collision_mask = 1 << (4 - 1)
+		
+		_main.add_child(blocking_body)
+
+func _remove_blocking_collision_shape():
+	if blocking_body != null:
+		blocking_body.queue_free()
+		blocking_body = null
+
 func _start_player_screen_shake(state: bool):
 	if state:
 		shake_camera.start_endless_shake_semi_small()
@@ -101,7 +140,7 @@ func _shake():
 	shake_camera.apply_shake_semi_small()
 
 func _shake_more():
-	shake_camera.apply_shake_smaller()
+	shake_camera.apply_shake_semi_small()
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("exit"):

@@ -18,11 +18,16 @@ extends CharacterBody2D
 @onready var animation_tree = $AnimationTree
 @onready var navigation_agent_2d = $TurtleNav
 @onready var scared_area = $ScaredArea
+@onready var collision_shape_2d = $CollisionShape2D
 
 # --- Internal Variables ---
 
 var direction: Vector2 = Vector2.ZERO
 var last_direction: Vector2 = Vector2.ZERO
+
+var is_frozen: bool = false  # Tracks if the turtle is immovable
+var frozen_position: Vector2 = Vector2.ZERO 
+
 
 var current_food_target: Node2D = null
 
@@ -73,6 +78,9 @@ func _collect_patrol_points():
 		if target:
 			patrol_points.append(target.global_position)
 
+func get_direction() -> Vector2:
+	return direction
+
 # --- Physics Process ---
 
 func _physics_process(delta):
@@ -80,36 +88,42 @@ func _physics_process(delta):
 		State.PATROL:
 			patrol_behavior()
 		State.PATROL_WAIT:
-			# Waiting at patrol point; timer will handle transition
-			pass
+			pass  # Waiting at patrol point
 		State.HUNGRY:
-			# Playing hungry animation; timer will handle transition
-			pass
+			pass  # Playing hungry animation
 		State.GO_TO_FOOD:
 			go_to_food_behavior()
 		State.EATING:
-			# Eating food; timer will handle transition
-			pass
+			pass  # Eating food
 		State.IDLE:
 			idle_behavior()
 		State.SCARED:
 			scared_behavior()
 		State.SCARED_OUT:
-			scared_out_behavior()
-	
+			pass  # Scared out
+
 	# Update movement based on velocity
 	velocity = direction * speed if state in [State.PATROL, State.GO_TO_FOOD] else Vector2.ZERO
-	
-	# Update direction for animations
+
+	# Update direction and check if it should flip the collision polygon
 	if velocity.length() > 0:
 		direction = velocity.normalized()
 		last_direction = direction
+		_flip_collision_polygon_based_on_direction()
 	else:
 		direction = last_direction
-	
+
 	_update_animation_parameters()
-	
 	move_and_slide()
+
+# --- Flip Collision Polygon Based on Direction ---
+
+func _flip_collision_polygon_based_on_direction():
+	# Flip the collision polygon if moving left
+	if direction.x < 0:
+		collision_shape_2d.position.x = 8
+	else:
+		collision_shape_2d.position.x = 2
 
 # --- Patrol Behavior ---
 
@@ -271,47 +285,68 @@ func _on_hungry_timeout():
 
 func _on_scared_area_body_entered(body):
 	if body.is_in_group("player"):
-		state = State.SCARED
-		velocity = Vector2.ZERO
-		_update_animation_parameters()
+		print("Player entered scared area")
+		# Always reset the scared state and timer when the player reenters
+		_enter_scared_state()
 
 func _on_scared_area_body_exited(body):
 	if body.is_in_group("player"):
-		if scared_timer == null:
-			scared_timer = Timer.new()
-			scared_timer.wait_time = 3.0
-			scared_timer.one_shot = true
-			scared_timer.timeout.connect(_on_scared_timeout)
-			add_child(scared_timer)
-			scared_timer.start()
+		print("Player exited scared area")
+		_start_scared_timeout()
+
+func _enter_scared_state():
+	state = State.SCARED
+	velocity = Vector2.ZERO
+	SharedSignals.is_scared_signal.emit(true)
+	_update_animation_parameters()
+	
+	# Stop any existing scared_out_timer and reset the scared state
+	if scared_timer != null and scared_timer.is_stopped() == false:
+		scared_timer.stop()
+
+func _start_scared_timeout():
+	if scared_timer == null:
+		scared_timer = Timer.new()
+		scared_timer.wait_time = 3.0  # Duration of being scared
+		scared_timer.one_shot = true
+		scared_timer.timeout.connect(_on_scared_timeout)
+		add_child(scared_timer)
+	scared_timer.start()
 
 func scared_behavior():
-	velocity = Vector2.ZERO
-	# Optionally, add logic to move away from the player
+	velocity = Vector2.ZERO  # Ensure turtle doesn't move
+	# Keep the turtle immovable while scared
 
 func _on_scared_timeout():
+	print("Scared timeout finished")
 	scared_timer.queue_free()
 	scared_timer = null
-	# After being scared, transition to SCARED_OUT state
+	_enter_scared_out_state()
+
+func _enter_scared_out_state():
 	state = State.SCARED_OUT
+	SharedSignals.is_scared_signal.emit(true)
+	_start_scared_out_timer()
 
-# --- SCARED_OUT Behavior ---
-
-func scared_out_behavior():
-	velocity = Vector2.ZERO  # Turtle remains stationary or you can set movement here
+func _start_scared_out_timer():
 	if scared_out_timer == null:
-		# Start a timer for the SCARED_OUT state duration
 		scared_out_timer = Timer.new()
 		scared_out_timer.wait_time = 0.5
 		scared_out_timer.one_shot = true
 		scared_out_timer.timeout.connect(_on_scared_out_timeout)
 		add_child(scared_out_timer)
-		scared_out_timer.start()
+	scared_out_timer.start()
+
+# --- SCARED_OUT Behavior ---
 
 func _on_scared_out_timeout():
 	scared_out_timer.queue_free()
 	scared_out_timer = null
-	# After SCARED_OUT, return to previous behavior
+	SharedSignals.is_scared_signal.emit(false)
+	# Return to previous behavior after SCARED_OUT state ends
+	_resume_behavior_after_scared()
+
+func _resume_behavior_after_scared():
 	if check_for_food():
 		if play_hungry_animation:
 			state = State.HUNGRY
@@ -319,12 +354,11 @@ func _on_scared_out_timeout():
 		else:
 			state = State.GO_TO_FOOD
 			navigation_agent_2d.target_position = current_food_target.global_position
+	elif patrol_points.size() > 0:
+		state = State.PATROL
+		navigation_agent_2d.target_position = patrol_points[patrol_index]
 	else:
-		if patrol_points.size() > 0:
-			state = State.PATROL
-			navigation_agent_2d.target_position = patrol_points[patrol_index]
-		else:
-			state = State.IDLE
+		state = State.IDLE
 
 # --- Food Detection Function ---
 
@@ -393,7 +427,7 @@ func _update_animation_parameters():
 	animation_tree.set("parameters/eat/blend_position", direction)
 	animation_tree.set("parameters/idle/blend_position", direction)
 	animation_tree.set("parameters/hungry/blend_position", direction)
-	animation_tree.set("parameters/scared/blend_position", direction)
+	animation_tree.set("parameters/Shell/blend_position", direction)
 	animation_tree.set("parameters/ShellOut/blend_position", direction)
 
 func shake_screen():

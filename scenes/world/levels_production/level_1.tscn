@@ -38,6 +38,7 @@ layer_2/tile_data = PackedInt32Array(655384, 786434, 0, 655385, 983042, 0, 65538
 
 [node name="Player" parent="." instance=ExtResource("7_i1ec7")]
 position = Vector2(326, 204)
+add_distance_blocker = true
 
 [node name="Mouse" parent="Player" instance=ExtResource("5_e2n7h")]
 

@@ -79,11 +79,3 @@ func _on_move_area_body_exited(body: Node2D):
 
 func _bounce_box(bounce_vector: Vector2):
 	global_position += bounce_vector
-
-func _on_push_area_body_entered(body):
-	if body.is_in_group("player"):
-		SharedSignals.player_push.emit()
-
-func _on_push_area_body_exited(body):
-	if player_in_area and body.is_in_group("player"):
-		SharedSignals.player_not_push.emit()

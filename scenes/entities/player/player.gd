@@ -11,6 +11,7 @@ signal drag_box(position: Vector2, direction: Vector2)
 @onready var trajectory_line = $TrajectoryLine
 @onready var base_world = get_parent()
 @onready var throwhold = $throwhold
+@onready var box_move_area_collider = $BoxMoveArea/CollisionShape2D
 
 # Sounds
 @onready var error = $error
@@ -77,8 +78,7 @@ func _ready():
 	
 	SharedSignals.player_move.connect(_change_speed)
 	SharedSignals.player_exit.connect(_change_speed_back)
-	SharedSignals.player_push.connect(_is_push)
-	SharedSignals.player_not_push.connect(_is_not_push)
+	
 	SharedSignals.can_throw_projectile.connect(_on_can_throw)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
@@ -106,14 +106,6 @@ func _change_speed_back():
 	drag_toggle_mode = false
 	update_speed()
 
-func _is_push():
-	is_pushing = true
-	update_speed()
-
-func _is_not_push():
-	is_pushing = false
-	update_speed()
-
 func update_speed():
 	if is_dragging or is_pushing:
 		speed = 40
@@ -125,6 +117,8 @@ func _physics_process(delta):
 		_perform_dash(delta)
 	else:
 		_handle_movement_input()
+	
+	update_box_collider_position()
 	
 	# Get mouse position and calculate the direction to the mouse from the player
 	_end = get_local_mouse_position()
@@ -160,6 +154,22 @@ func _physics_process(delta):
 	if is_dragging and player_in_box_area:
 		var direction_to_mouse = (get_global_mouse_position() - global_position).normalized()
 		SharedSignals.drag_box.emit(global_position, direction_to_mouse)
+
+func update_box_collider_position():
+	var offset = Vector2.ZERO
+
+	if currentVelocity.x > 0:  # Moving right
+		offset.x = 5
+	elif currentVelocity.x < 0:  # Moving left
+		offset.x = -5
+
+	if currentVelocity.y > 0:  # Moving down
+		offset.y = 4
+	elif currentVelocity.y < 0:  # Moving up
+		offset.y = -4
+
+	box_move_area_collider.position = offset
+	
 
 func reset_aiming_state():
 	# Stop aiming
@@ -455,3 +465,13 @@ func _play_movement_animation():
 			animation_tree["parameters/conditions/is_run"] = true
 			animation_tree["parameters/conditions/idle"] = false
 			animation_tree["parameters/conditions/is_run_aim"] = false
+
+func _on_box_move_area_area_entered(area):
+	if area.is_in_group("box_collider"):
+		is_pushing = true
+		update_speed()
+
+func _on_box_move_area_area_exited(area):
+	if area.is_in_group("box_collider"):
+		is_pushing = false
+		update_speed()
