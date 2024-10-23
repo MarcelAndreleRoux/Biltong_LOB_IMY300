@@ -101,6 +101,7 @@ animation = &"idle"
 shape = SubResource("CircleShape2D_pna5x")
 
 [node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(13, -16)
 sprite_frames = SubResource("SpriteFrames_r6ave")
 

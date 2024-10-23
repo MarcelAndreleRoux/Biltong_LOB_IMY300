@@ -3,12 +3,14 @@ extends RigidBody2D
 @onready var Area = $MoveArea
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var action_button_press = $ActionButtonPress
+@onready var check_mark = $CheckMark
 
 var remove_box: bool = false
 var player_in_area: bool = false
 var shown_once: bool = false
 
 func _ready():
+	check_mark.visible = false
 	action_button_press.visible = false
 	animatedSprite.play("idle")
 	#SharedSignals.move_box.connect(move_in_direction)
@@ -25,7 +27,11 @@ func _is_dragging(state: bool):
 	if state:
 		if not GlobalValues.box_pickup_once:
 			GlobalValues.box_pickup_once = true
+			check_mark.visible = true
 			done.play("check")
+		else:
+			done.stop()
+			check_mark.visible = false
 		
 		animatedSprite.play("idle")
 	else:

@@ -21,11 +21,11 @@ func _physics_process(delta: float):
 
 func _play_death():
 	landed = true
-	AudioController.play_sfx("burn")
+	AudioController.play_sfx("fire_land")
 	animated_sprite_2d.play("land")
 
 func _remove_myself():
-	AudioController.play_sfx("burn")
+	AudioController.play_sfx("fire_land")
 	animated_sprite_2d.play("land")
 	remove = true
 

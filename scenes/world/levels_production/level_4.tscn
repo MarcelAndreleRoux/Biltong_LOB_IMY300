@@ -55,6 +55,7 @@ position = Vector2(264, 64)
 [node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
 
 [node name="Escape" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="Escape"]
 offset_left = 12.0

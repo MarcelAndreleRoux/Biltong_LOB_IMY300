@@ -1,23 +1,12 @@
 extends StaticBody2D
 
-@export var door_side: String
 @export var door_link_id: String
+@export var required_connections: int = 1
 
 @onready var animation_tree = $AnimationTree
 
 var doorState: bool = false
-
-var openString: String
-var closeString: String
-
-var closed: bool = true
-var closing_door: bool = false
-var opening_door: bool = false
-
-var player_present: bool = false
-var door_present: bool = false
-
-var closed_check: bool = true
+var received_signals: int = 0  # Track how many buttons are pressed
 
 func _ready():
 	SharedSignals.doorState.connect(_on_door_stateChange)
@@ -27,33 +16,34 @@ func _ready():
 func _on_door_stateChange(door_id: String, state: bool):
 	if door_id == door_link_id:
 		if state:
-			doorState = true
-			closed_check = false
-			AudioController.play_sfx("door_open")
-			opening_door = true
-			closing_door = false
-			closed = false
-			update_door_animation()
+			received_signals += 1
+			print("Received signals:", received_signals)
+			if received_signals >= required_connections:
+				open_door()
 		else:
-			doorState = false
-			AudioController.play_sfx("door_open")
-			closing_door = true
-			opening_door = false
-			closed = false
-			update_door_animation()
+			received_signals = max(received_signals - 1, 0)  # Decrement but prevent negative values
+			print("Signal removed. Current signals:", received_signals)
+			if received_signals < required_connections:
+				close_door()
+
+func open_door():
+	doorState = true
+	AudioController.play_sfx("door_open")
+	animation_tree.set("parameters/conditions/is_opening", true)
+	animation_tree.set("parameters/conditions/is_closing", false)
+
+func close_door():
+	doorState = false
+	AudioController.play_sfx("door_close")
+	animation_tree.set("parameters/conditions/is_opening", false)
+	animation_tree.set("parameters/conditions/is_closing", true)
 
 func update_door_animation():
-	if opening_door:
-		animation_tree.set("parameters/conditions/is_closed", false)
-		animation_tree.set("parameters/conditions/is_closing", false)
+	if doorState:
 		animation_tree.set("parameters/conditions/is_opening", true)
-	elif closing_door:
 		animation_tree.set("parameters/conditions/is_closed", false)
-		animation_tree.set("parameters/conditions/is_closing", true)
-		animation_tree.set("parameters/conditions/is_opening", false)
 	else:
 		animation_tree.set("parameters/conditions/is_closed", true)
-		animation_tree.set("parameters/conditions/is_closing", false)
 		animation_tree.set("parameters/conditions/is_opening", false)
 
 func _check_link(button: StaticBody2D, button_id: String):
@@ -62,7 +52,4 @@ func _check_link(button: StaticBody2D, button_id: String):
 
 func _on_animation_tree_animation_finished(anim_name):
 	if anim_name == "closing":
-		closed = true
-		closing_door = false
-		opening_door = false
-		update_door_animation()
+		animation_tree.set("parameters/conditions/is_closed", true)

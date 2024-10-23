@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=32 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
@@ -21,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://cjr6u5i655rvn" path="res://assets/soundeffects/click-234708.mp3" id="15_v332m"]
 [ext_resource type="AudioStream" uid="uid://c5irlygn28uyp" path="res://assets/soundeffects/box_drop.wav" id="18_s37rq"]
 [ext_resource type="AudioStream" uid="uid://b6khru067y4lq" path="res://assets/soundeffects/1154762.audio-Ui_Click_Bubble_04.wav" id="20_oabrp"]
+[ext_resource type="AudioStream" uid="uid://dwmt8j5fiflg7" path="res://assets/soundeffects/Everything_player/tap-notification-180637.mp3" id="21_0xnox"]
 [ext_resource type="AudioStream" uid="uid://i7n6ja3av0mo" path="res://assets/soundeffects/throwing-clothes-on-the-floor-2-48133.mp3" id="21_1cfnj"]
 [ext_resource type="AudioStream" uid="uid://drbhc0rdkcet4" path="res://assets/soundeffects/ThrowHold.wav" id="22_24qkt"]
 [ext_resource type="AudioStream" uid="uid://bqhydi74j8ejx" path="res://assets/soundeffects/Eveything_ui/new-poly-ui1-101soundboards.mp3" id="24_kfdgi"]
@@ -151,13 +152,16 @@ bus = &"Sfx"
 [node name="box_drop" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")
 
-[node name="fire_bush_idle" type="AudioStreamPlayer2D" parent="."]
-
 [node name="fire_pickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")
 
 [node name="water_pickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")
+
+[node name="hud_select" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("21_0xnox")
+volume_db = -5.0
+bus = &"Sfx"
 
 [node name="food_pickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_s37rq")

@@ -287,6 +287,7 @@ func _check_inventory_swap():
 			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
+			AudioController.play_sfx("hud_select")
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
 
 	# Handle pressing '2' for fire
@@ -296,6 +297,7 @@ func _check_inventory_swap():
 			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
+			AudioController.play_sfx("hud_select")
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FIRE)
 
 	# Handle pressing '3' for water
@@ -305,6 +307,7 @@ func _check_inventory_swap():
 			AudioController.play_sfx("error")
 			_shake_inventory()
 		else:
+			AudioController.play_sfx("hud_select")
 			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.WATER)
 
 func _shake_inventory():

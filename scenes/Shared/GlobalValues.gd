@@ -24,6 +24,7 @@ var has_pickeup_fire_once: bool = false
 var has_pickeup_food_once: bool = false
 var has_pickup_water_once: bool = false
 var box_pickup_once: bool = false
+var food_already_picked: bool = false
 
 var wire_on: bool = false
 var vinesSize: String

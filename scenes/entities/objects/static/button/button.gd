@@ -21,11 +21,11 @@ func _on_click_area_body_entered(body):
 
 	if body.is_in_group("activation"):
 		SharedSignals.check_link.emit(self, door_link_id)
-	
+
 		if found_link and door_link_id == door_link_found:
 			click.play()
 			animated_sprite_2d.play("click")
-			SharedSignals.doorState.emit(door_link_id, true)
+			SharedSignals.doorState.emit(door_link_id, true)  # Signal door to increment
 
 func _on_click_area_body_exited(body):
 	if area2d_active:
@@ -34,7 +34,7 @@ func _on_click_area_body_exited(body):
 	if body.is_in_group("activation"):
 		if found_link and door_link_id == door_link_found:
 			animated_sprite_2d.play_backwards("click")
-			SharedSignals.doorState.emit(door_link_id, false)
+			SharedSignals.doorState.emit(door_link_id, false)  # Signal door to decrement/reset
 
 func _full_link(button_id: String, door_id: String):
 	if button_id == door_link_id:
@@ -45,7 +45,7 @@ func _on_detect_box_area_entered(area: Area2D):
 	if area.name == "ButtonArea":
 		area2d_active = true
 		SharedSignals.check_link.emit(self, door_link_id)
-	
+
 		if found_link and door_link_id == door_link_found:
 			click.play()
 			animated_sprite_2d.play("click")

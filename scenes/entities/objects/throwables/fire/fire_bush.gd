@@ -3,6 +3,7 @@ extends StaticBody2D
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var action_button_press = $ActionButtonPress
+@onready var fire = $fire
 
 var already_picked: bool = false
 var player_in_area: bool = false
@@ -27,8 +28,13 @@ func _process(delta):
 		SharedSignals.item_pickup.emit()
 		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FIRE)
 		SharedSignals.inventory_changed.emit(GlobalValues.INVENTORY_SELECT.FIRE)
-		action_button_press.visible = false
-		animated_sprite_2d.play("pickup")
+		fire.stop()
+		
+		if already_picked:
+			fire.stop()
+			action_button_press.visible = false
+			animated_sprite_2d.play("pickup")
+		
 		AudioController.play_sfx("fire_pickup")
 
 func _on_action_area_body_entered(body):

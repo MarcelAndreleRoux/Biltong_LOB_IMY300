@@ -78,6 +78,7 @@ position = Vector2(64, 16)
 [node name="Door2" parent="." instance=ExtResource("18_kgv0f")]
 position = Vector2(64, 240)
 door_link_id = "a"
+required_connections = 2
 
 [node name="Button" parent="." instance=ExtResource("19_5qcd3")]
 position = Vector2(24, 88)

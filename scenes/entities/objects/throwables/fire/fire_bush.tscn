@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://djwrb4bfed3up"]
+[gd_scene load_steps=16 format=3 uid="uid://djwrb4bfed3up"]
 
 [ext_resource type="Texture2D" uid="uid://d2ii77wxwvry5" path="res://assets/sprites/objects/throwables/fire/Fire_Mango.png" id="1_f61ro"]
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/fire/fire_bush.gd" id="1_r3l62"]
 [ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="3_sa3t3"]
+[ext_resource type="AudioStream" uid="uid://ctg5sutwujra2" path="res://assets/soundeffects/Everything_fire/fire-looping-101soundboards.mp3" id="4_j4j2l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iakft"]
 size = Vector2(4, 4)
@@ -102,8 +103,15 @@ position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_kp0t5")
 
 [node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(13, -16)
 sprite_frames = SubResource("SpriteFrames_oskxl")
+
+[node name="fire" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_j4j2l")
+autoplay = true
+max_distance = 50.0
+bus = &"Sfx"
 
 [connection signal="body_entered" from="ActionArea" to="." method="_on_action_area_body_entered"]
 [connection signal="body_exited" from="ActionArea" to="." method="_on_action_area_body_exited"]

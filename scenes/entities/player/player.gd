@@ -22,6 +22,8 @@ signal drag_box(position: Vector2, direction: Vector2)
 
 @export var add_distance_blocker: bool = true
 
+var cooldown_timer: Timer = null
+
 # Dash variables
 var is_dashing: bool = false
 var dash_speed: float = 200.0  # Speed of the dash
@@ -136,9 +138,7 @@ func _physics_process(delta):
 				trajectory_line.default_color = Color(1, 1, 1, 0.3)  # Default color
 		elif not Input.is_action_pressed("aim"):
 			reset_aiming_state()
-			
-			if not throw_in_progress:
-				reset_throw_state()
+			reset_throw_state()
 	
 	_handle_action_input()
 	_play_movement_animation()
@@ -153,13 +153,40 @@ func _physics_process(delta):
 		SharedSignals.drag_box.emit(global_position, direction_to_mouse)
 
 func reset_throw_state():
-	# Reset throw-related states
-	throw_clicked = false
+	# Reset throw and aiming-related states
 	throw_in_progress = false
-	throw_animation_played = false
 	is_aiming = false
+
+	# Reset throw animation parameters
+	animation_tree["parameters/conditions/is_idle_throw"] = false
+	animation_tree["parameters/conditions/is_run_throw"] = false
+	
+	if is_aiming:
+		if currentVelocity == Vector2.ZERO:
+			# Play the idle aiming animation if the player is stationary
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run"] = false
+			animation_tree["parameters/conditions/is_idle_aim"] = true
+			animation_tree["parameters/conditions/is_run_aim"] = false
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
+		else:
+			# Play the running aiming animation if the player is moving
+			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_run"] = false
+			animation_tree["parameters/conditions/is_idle_aim"] = false
+			animation_tree["parameters/conditions/is_run_aim"] = true
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
+	else:
+		# Otherwise, return to idle or running animation based on player state
+		_play_movement_animation()
+
+	# Hide trajectory and reset its color
 	trajectory_line.visible = false
-	trajectory_line.default_color = Color(1, 1, 1)  # Reset color
+	trajectory_line.default_color = Color(1, 1, 1)
+
+	# Stop any ongoing shake or sound effects
 	SharedSignals.start_player_screen_shake.emit(false)
 	fade_out_audio(throwhold)
 
@@ -182,8 +209,7 @@ func reset_aiming_state():
 	# Stop aiming
 	is_aiming = false
 	trajectory_line.visible = false
-	throw_animation_played = false
-	
+
 	# Reset aim distance to minimum when aiming stops
 	var aim_direction = (_end - global_position).normalized() * MIN_AIM_DISTANCE
 	_end = global_position + aim_direction
@@ -197,8 +223,9 @@ func _on_throw_action():
 	if not is_on_cooldown:
 		throw_clicked = true
 		throw_in_progress = true
-		throw_direction = (get_global_mouse_position() - global_position).normalized()  # Lock direction at throw
-		direction = throw_direction  # Set the player facing direction to the throw direction
+		throw_animation_played = false  # Reset for the new throw
+		throw_direction = (get_global_mouse_position() - global_position).normalized()
+		direction = throw_direction  # Player faces the throw direction
 		_start_cooldown_timer()
 
 func stop_throwhold_sound():
@@ -277,20 +304,23 @@ func _handle_action_input():
 
 func _start_cooldown_timer():
 	is_on_cooldown = true
-	var cooldown_timer = Timer.new()
-	cooldown_timer.wait_time = 0.5
-	cooldown_timer.one_shot = true
-	cooldown_timer.timeout.connect(_end_cooldown)
-	add_child(cooldown_timer)
+	if cooldown_timer == null:
+		cooldown_timer = Timer.new()
+		cooldown_timer.wait_time = 0.5
+		cooldown_timer.one_shot = true
+		cooldown_timer.timeout.connect(_end_cooldown)
+		add_child(cooldown_timer)
+	else:
+		cooldown_timer.stop()
+		cooldown_timer.wait_time = 0.5  # Reset the wait time
 	cooldown_timer.start()
 
 func _end_cooldown():
 	# Reset cooldown and stop the throw animation
 	is_on_cooldown = false
-	throw_animation_played = false
 	throw_clicked = false
-	throw_in_progress = false  # Mark throw as complete
-
+	throw_in_progress = false
+	throw_animation_played = false
 	# Allow direction changes only after cooldown ends
 	direction = currentVelocity.normalized() if currentVelocity != Vector2.ZERO else direction
 	# Check if the player is still aiming after the throw
@@ -444,11 +474,7 @@ func apply_trajectory_shake():
 func _play_movement_animation():
 	if is_on_cooldown and throw_clicked:
 		if not throw_animation_played:
-			throw_animation_played = true  # Ensure the animation plays only once
-
-			# Use the locked throw_direction for the animation
-			animation_tree["parameters/idle_throw/blend_position"] = throw_direction
-			animation_tree["parameters/run_throw/blend_position"] = throw_direction
+			throw_animation_played = true
 			
 			if currentVelocity == Vector2.ZERO:
 				animation_tree["parameters/conditions/idle"] = false
@@ -473,20 +499,35 @@ func _play_movement_animation():
 			animation_tree["parameters/conditions/is_run_aim"] = false
 			animation_tree["parameters/conditions/idle"] = false
 			animation_tree["parameters/conditions/is_run"] = false
+			# Ensure throw animations are false
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
 		else:
 			animation_tree["parameters/conditions/idle"] = true
 			animation_tree["parameters/conditions/is_run"] = false
 			animation_tree["parameters/conditions/is_idle_aim"] = false
+			animation_tree["parameters/conditions/is_run_aim"] = false
+			# Ensure throw animations are false
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
 	else:
 		if is_aiming:
 			animation_tree["parameters/conditions/is_run_aim"] = true
 			animation_tree["parameters/conditions/is_idle_aim"] = false
 			animation_tree["parameters/conditions/idle"] = false
 			animation_tree["parameters/conditions/is_run"] = false
+			# Ensure throw animations are false
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
 		else:
 			animation_tree["parameters/conditions/is_run"] = true
 			animation_tree["parameters/conditions/idle"] = false
+			animation_tree["parameters/conditions/is_idle_aim"] = false
 			animation_tree["parameters/conditions/is_run_aim"] = false
+			# Ensure throw animations are false
+			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
+
 
 
 func _on_box_move_area_area_entered(area):
