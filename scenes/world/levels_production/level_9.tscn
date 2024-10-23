@@ -48,7 +48,7 @@ width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
 
 [node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("7_bfse0")]
-position = Vector2(328, 160)
+position = Vector2(312, 159)
 target_1 = NodePath("../LizardMarker")
 target_2 = NodePath("../LizardMarker2")
 
@@ -65,10 +65,10 @@ texture = ExtResource("13_eh8h2")
 stretch_mode = 2
 
 [node name="LizardMarker" type="Marker2D" parent="." groups=["SecondEnemy"]]
-position = Vector2(328, 160)
+position = Vector2(311, 159)
 
 [node name="LizardMarker2" type="Marker2D" parent="." groups=["SecondEnemy"]]
-position = Vector2(232, 48)
+position = Vector2(192, 88)
 
 [node name="Door" parent="." instance=ExtResource("21_3ygka")]
 position = Vector2(304, 96)

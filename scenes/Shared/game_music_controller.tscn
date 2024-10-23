@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctbl3sokmebn3"]
+[gd_scene load_steps=10 format=3 uid="uid://ctbl3sokmebn3"]
 
 [ext_resource type="Script" path="res://scenes/Shared/game_music_controller.gd" id="1_uxfob"]
 [ext_resource type="AudioStream" uid="uid://yn3jhtgbf6yx" path="res://assets/music/9. Space Debris.wav" id="2_3hlnb"]
@@ -8,10 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://bm7vqgy1mneli" path="res://assets/music/14. The Riff.wav" id="6_hb78v"]
 [ext_resource type="AudioStream" uid="uid://bilgd2iig787p" path="res://assets/music/17. New Morning, New Sun.wav" id="7_2o5y1"]
 [ext_resource type="AudioStream" uid="uid://cte414d6yfrtb" path="res://assets/music/18. A Fool's Affair.wav" id="8_egphi"]
-[ext_resource type="AudioStream" uid="uid://bxo10ssf6ujxe" path="res://assets/music/Fez - Original Game Soundtrack - Puzzle [HD].mp3" id="9_ryk57"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0avr3"]
-streams_count = 8
+playback_mode = 2
+streams_count = 7
 stream_0/stream = ExtResource("2_3hlnb")
 stream_0/weight = 1.0
 stream_1/stream = ExtResource("3_rya47")
@@ -26,8 +26,6 @@ stream_5/stream = ExtResource("7_2o5y1")
 stream_5/weight = 1.0
 stream_6/stream = ExtResource("8_egphi")
 stream_6/weight = 1.0
-stream_7/stream = ExtResource("9_ryk57")
-stream_7/weight = 1.0
 
 [node name="GameMusicControler" type="Node"]
 script = ExtResource("1_uxfob")

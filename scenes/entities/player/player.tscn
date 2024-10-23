@@ -33,8 +33,9 @@ shader_parameter/distance = null
 shader_parameter/soft_max_distance = 180.0
 shader_parameter/hard_max_distance = 215.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_jtfu5"]
-radius = 4.52769
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4vyh8"]
+radius = 3.5
+height = 9.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fmtvb"]
 size = Vector2(18, 24.5)
@@ -548,7 +549,6 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_346wx"]
 resource_name = "idle_left_throw"
 length = 0.6
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -679,7 +679,6 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_pi383"]
 resource_name = "idle_right_throw"
 length = 0.6
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -910,7 +909,6 @@ tracks/5/keys = {
 [sub_resource type="Animation" id="Animation_o7fm6"]
 resource_name = "run_left_throw"
 length = 0.7
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1129,7 +1127,6 @@ tracks/4/keys = {
 [sub_resource type="Animation" id="Animation_ew46e"]
 resource_name = "run_right_throw"
 length = 0.7
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1404,26 +1401,32 @@ advance_mode = 2
 advance_condition = &"is_run_throw"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f6q61"]
+switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_run"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4ibk3"]
+switch_mode = 2
 advance_mode = 2
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fgh4t"]
+switch_mode = 2
 advance_mode = 2
 advance_condition = &"idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0f6b7"]
+switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_run"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_84utv"]
+switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_idle_aim"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fvmwh"]
+switch_mode = 2
 advance_mode = 2
 advance_condition = &"is_run_aim"
 
@@ -1495,16 +1498,17 @@ states/run_aim/position = Vector2(390, 388)
 states/run_throw/node = SubResource("AnimationNodeBlendSpace2D_6s7m0")
 states/run_throw/position = Vector2(633, 388)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pcgw8"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_7obb7"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_8e435"), "idle_aim", "run_aim", SubResource("AnimationNodeStateMachineTransition_b8nng"), "run_aim", "idle_aim", SubResource("AnimationNodeStateMachineTransition_0w5i3"), "idle", "idle_aim", SubResource("AnimationNodeStateMachineTransition_6r02k"), "idle_aim", "idle", SubResource("AnimationNodeStateMachineTransition_fvqkp"), "run", "run_aim", SubResource("AnimationNodeStateMachineTransition_e7g8d"), "run_aim", "run", SubResource("AnimationNodeStateMachineTransition_4vojj"), "idle_aim", "idle_throw", SubResource("AnimationNodeStateMachineTransition_t3xt5"), "run_aim", "run_throw", SubResource("AnimationNodeStateMachineTransition_uccsp"), "run_throw", "run", SubResource("AnimationNodeStateMachineTransition_f6q61"), "run_throw", "idle", SubResource("AnimationNodeStateMachineTransition_4ibk3"), "idle_throw", "idle", SubResource("AnimationNodeStateMachineTransition_fgh4t"), "idle_throw", "run", SubResource("AnimationNodeStateMachineTransition_0f6b7"), "idle_throw", "idle_aim", SubResource("AnimationNodeStateMachineTransition_84utv"), "run_throw", "run_aim", SubResource("AnimationNodeStateMachineTransition_fvmwh"), "idle_aim", "Death", SubResource("AnimationNodeStateMachineTransition_3my61"), "idle_throw", "Death", SubResource("AnimationNodeStateMachineTransition_602e7"), "idle", "Death", SubResource("AnimationNodeStateMachineTransition_ri6wv"), "run", "Death", SubResource("AnimationNodeStateMachineTransition_dybqg"), "run_throw", "Death", SubResource("AnimationNodeStateMachineTransition_6okve"), "run_aim", "Death", SubResource("AnimationNodeStateMachineTransition_1uvub"), "idle", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_w52kq"), "idle_aim", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_8dlbp"), "idle_throw", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_wuwv2"), "run", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_bkjxd"), "run_aim", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_rbs0f"), "run_throw", "Death_Pop", SubResource("AnimationNodeStateMachineTransition_jiwwb")]
-graph_offset = Vector2(-46.217, 65.5414)
+graph_offset = Vector2(-11.217, -33.4586)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8y64"]
-size = Vector2(7, 7)
+size = Vector2(5, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a8jf0"]
 radius = 20.0
 
 [node name="Player" type="CharacterBody2D" groups=["activation", "player"]]
 z_index = 2
+y_sort_enabled = true
 collision_layer = 9
 collision_mask = 2075
 script = ExtResource("1_3avnw")
@@ -1522,7 +1526,7 @@ hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -2.5)
-shape = SubResource("CircleShape2D_jtfu5")
+shape = SubResource("CapsuleShape2D_4vyh8")
 
 [node name="PickupArea" type="Area2D" parent="."]
 position = Vector2(0, 1)
@@ -1595,7 +1599,7 @@ bus = &"Sfx"
 position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoxMoveArea"]
-position = Vector2(-0.5, 1.5)
+position = Vector2(-0.5, 3)
 shape = SubResource("RectangleShape2D_g8y64")
 
 [node name="SpeedArea" type="Area2D" parent="."]
@@ -1611,6 +1615,7 @@ bus = &"Sfx"
 
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="finished" from="pickup" to="." method="_on_pickup_finished"]
 [connection signal="area_entered" from="BoxMoveArea" to="." method="_on_box_move_area_area_entered"]
 [connection signal="area_exited" from="BoxMoveArea" to="." method="_on_box_move_area_area_exited"]

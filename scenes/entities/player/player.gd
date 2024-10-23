@@ -66,6 +66,10 @@ var min_db = -80  # Minimum volume in decibels (silence)
 var max_db = 0    # Maximum volume in decibels (full volume)
 var fade_speed = 0.1  # Speed of volume fade in and out
 
+var throw_in_progress: bool = false
+var throw_animation_played: bool = false  # Track if the throw animation was triggered
+var throw_direction: Vector2 = Vector2.ZERO  # Store the direction of the throw
+
 var _end
 var my_local_pos
 
@@ -83,13 +87,6 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
 	SharedSignals.push_player_forward.connect(start_dash)
-
-func _on_throw_action():
-	# Ensure that the throw animation only triggers once
-	if not is_on_cooldown:
-		throw_clicked = true
-		_play_movement_animation()
-		_start_cooldown_timer()
 
 func _on_item_pickup():
 	can_aim_throw = true
@@ -117,43 +114,54 @@ func _physics_process(delta):
 		_perform_dash(delta)
 	else:
 		_handle_movement_input()
-	
+
 	update_box_collider_position()
-	
+
 	# Get mouse position and calculate the direction to the mouse from the player
 	_end = get_local_mouse_position()
 	my_local_pos = to_local(global_position)
 	var aim_direction = _end - global_position
 	var distance_to_mouse = aim_direction.length()
 
-	if can_aim_throw: 
+	if can_aim_throw:
 		if Input.is_action_pressed("aim"):
 			is_aiming = true
 			trajectory_line.visible = true
 			calculate_trajectory()
 
-			# Check if the raycast is colliding, and change the color accordingly
+			# Change the trajectory line color based on collision
 			if $RayCast2D.is_colliding():
-				trajectory_line.default_color = Color(1, 0, 0, 0.2)
+				trajectory_line.default_color = Color(1, 0, 0, 0.2)  # Red when colliding
 			else:
-				trajectory_line.default_color = Color(1, 1, 1, 0.3)
-			
+				trajectory_line.default_color = Color(1, 1, 1, 0.3)  # Default color
 		elif not Input.is_action_pressed("aim"):
 			reset_aiming_state()
+			
+			if not throw_in_progress:
+				reset_throw_state()
 	
-	if not is_bouncing_back:
-		_handle_action_input()
-		_play_movement_animation()
-		_update_animation_parameters()
+	_handle_action_input()
+	_play_movement_animation()
+	_update_animation_parameters()
 
 	# Apply the calculated velocity
 	velocity = currentVelocity
 	move_and_slide()
 
-	# Emit the player's position and the direction toward the mouse (adjusted for minimum distance)
 	if is_dragging and player_in_box_area:
 		var direction_to_mouse = (get_global_mouse_position() - global_position).normalized()
 		SharedSignals.drag_box.emit(global_position, direction_to_mouse)
+
+func reset_throw_state():
+	# Reset throw-related states
+	throw_clicked = false
+	throw_in_progress = false
+	throw_animation_played = false
+	is_aiming = false
+	trajectory_line.visible = false
+	trajectory_line.default_color = Color(1, 1, 1)  # Reset color
+	SharedSignals.start_player_screen_shake.emit(false)
+	fade_out_audio(throwhold)
 
 func update_box_collider_position():
 	var offset = Vector2.ZERO
@@ -169,12 +177,12 @@ func update_box_collider_position():
 		offset.y = -4
 
 	box_move_area_collider.position = offset
-	
 
 func reset_aiming_state():
 	# Stop aiming
 	is_aiming = false
 	trajectory_line.visible = false
+	throw_animation_played = false
 	
 	# Reset aim distance to minimum when aiming stops
 	var aim_direction = (_end - global_position).normalized() * MIN_AIM_DISTANCE
@@ -184,6 +192,14 @@ func reset_aiming_state():
 	# Stop the shake and fade out the sound when aiming is released
 	SharedSignals.start_player_screen_shake.emit(false)
 	fade_out_audio(throwhold)
+
+func _on_throw_action():
+	if not is_on_cooldown:
+		throw_clicked = true
+		throw_in_progress = true
+		throw_direction = (get_global_mouse_position() - global_position).normalized()  # Lock direction at throw
+		direction = throw_direction  # Set the player facing direction to the throw direction
+		_start_cooldown_timer()
 
 func stop_throwhold_sound():
 	# Fade out the throwhold sound and stop it
@@ -271,8 +287,12 @@ func _start_cooldown_timer():
 func _end_cooldown():
 	# Reset cooldown and stop the throw animation
 	is_on_cooldown = false
+	throw_animation_played = false
 	throw_clicked = false
-	
+	throw_in_progress = false  # Mark throw as complete
+
+	# Allow direction changes only after cooldown ends
+	direction = currentVelocity.normalized() if currentVelocity != Vector2.ZERO else direction
 	# Check if the player is still aiming after the throw
 	if is_aiming:
 		if currentVelocity == Vector2.ZERO:
@@ -281,16 +301,16 @@ func _end_cooldown():
 			animation_tree["parameters/conditions/is_run"] = false
 			animation_tree["parameters/conditions/is_idle_aim"] = true
 			animation_tree["parameters/conditions/is_run_aim"] = false
-			animation_tree["parameters/conditions/is_run_throw"] = false
 			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
 		else:
 			# Play the running aiming animation if the player is moving
 			animation_tree["parameters/conditions/idle"] = false
 			animation_tree["parameters/conditions/is_run"] = false
 			animation_tree["parameters/conditions/is_idle_aim"] = false
 			animation_tree["parameters/conditions/is_run_aim"] = true
-			animation_tree["parameters/conditions/is_run_throw"] = false
 			animation_tree["parameters/conditions/is_idle_throw"] = false
+			animation_tree["parameters/conditions/is_run_throw"] = false
 	else:
 		# Otherwise, return to idle or running animation based on player state
 		_play_movement_animation()
@@ -300,10 +320,10 @@ func _update_animation_parameters():
 	if direction != Vector2.ZERO:
 		animation_tree["parameters/idle/blend_position"] = direction
 		animation_tree["parameters/idle_aim/blend_position"] = direction
-		animation_tree["parameters/idle_throw/blend_position"] = direction
+		animation_tree["parameters/idle_throw/blend_position"] = throw_direction
 		animation_tree["parameters/run/blend_position"] = direction
 		animation_tree["parameters/run_aim/blend_position"] = direction
-		animation_tree["parameters/run_throw/blend_position"] = direction
+		animation_tree["parameters/run_throw/blend_position"] = throw_direction
 		animation_tree["parameters/Death/blend_position"] = direction
 		animation_tree["parameters/Death_Pop/blend_position"] = direction
 
@@ -422,29 +442,31 @@ func apply_trajectory_shake():
 	trajectory_line.points = points
 
 func _play_movement_animation():
-	# Handle throw animation during cooldown
 	if is_on_cooldown and throw_clicked:
-		if currentVelocity == Vector2.ZERO:
-			# Play idle throw animation if the player is stationary
-			animation_tree["parameters/conditions/idle"] = false
-			animation_tree["parameters/conditions/is_run"] = false
-			animation_tree["parameters/conditions/is_idle_aim"] = false
-			animation_tree["parameters/conditions/is_run_aim"] = false
-			animation_tree["parameters/conditions/is_run_throw"] = false
-			animation_tree["parameters/conditions/is_idle_throw"] = true
-		else:
-			# Play running throw animation if the player is moving
-			animation_tree["parameters/conditions/idle"] = false
-			animation_tree["parameters/conditions/is_run"] = false
-			animation_tree["parameters/conditions/is_run_aim"] = false
-			animation_tree["parameters/conditions/is_idle_aim"] = false
-			animation_tree["parameters/conditions/is_idle_throw"] = false
-			animation_tree["parameters/conditions/is_run_throw"] = true
-		
-		# Return here to ensure no other animations play during the throw
-		return
-	
-	# Normal movement and aiming animations when not in cooldown
+		if not throw_animation_played:
+			throw_animation_played = true  # Ensure the animation plays only once
+
+			# Use the locked throw_direction for the animation
+			animation_tree["parameters/idle_throw/blend_position"] = throw_direction
+			animation_tree["parameters/run_throw/blend_position"] = throw_direction
+			
+			if currentVelocity == Vector2.ZERO:
+				animation_tree["parameters/conditions/idle"] = false
+				animation_tree["parameters/conditions/is_run"] = false
+				animation_tree["parameters/conditions/is_idle_aim"] = false
+				animation_tree["parameters/conditions/is_run_aim"] = false
+				animation_tree["parameters/conditions/is_run_throw"] = false
+				animation_tree["parameters/conditions/is_idle_throw"] = true
+			else:
+				animation_tree["parameters/conditions/idle"] = false
+				animation_tree["parameters/conditions/is_run"] = false
+				animation_tree["parameters/conditions/is_run_aim"] = false
+				animation_tree["parameters/conditions/is_idle_aim"] = false
+				animation_tree["parameters/conditions/is_idle_throw"] = false
+				animation_tree["parameters/conditions/is_run_throw"] = true
+		return  # Ensure no other animations play during cooldown
+
+	# Normal movement and aiming animations after cooldown
 	if currentVelocity == Vector2.ZERO:
 		if is_aiming:
 			animation_tree["parameters/conditions/is_idle_aim"] = true
@@ -465,6 +487,7 @@ func _play_movement_animation():
 			animation_tree["parameters/conditions/is_run"] = true
 			animation_tree["parameters/conditions/idle"] = false
 			animation_tree["parameters/conditions/is_run_aim"] = false
+
 
 func _on_box_move_area_area_entered(area):
 	if area.is_in_group("box_collider"):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://c80uy3ni7bgl4"]
+[gd_scene load_steps=71 format=3 uid="uid://c80uy3ni7bgl4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/lizard/electric_lizard.gd" id="1_i4f4n"]
 [ext_resource type="Texture2D" uid="uid://kqsruf5qtkkq" path="res://assets/sprites/enemies/electric lizzard/Idle/on/Lizard-On-Idle-Default-Left.png" id="2_3bmot"]
@@ -17,7 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://eyfs4nyt0dgu" path="res://assets/soundeffects/wet_walk.mp3" id="16_rf7ao"]
 [ext_resource type="Texture2D" uid="uid://utno5reguta4" path="res://assets/sprites/enemies/electric lizzard/field/Sprite-0002.png" id="17_1cxfp"]
 [ext_resource type="AudioStream" uid="uid://bqcj8b3ausmi0" path="res://assets/soundeffects/synth.wav" id="17_4juwg"]
-[ext_resource type="Texture2D" uid="uid://bpj2npgjbkqlh" path="res://assets/sprites/enemies/electric lizzard/field/Sprite-0002-sheet.png" id="18_fk3wa"]
+[ext_resource type="Shader" path="res://scenes/entities/enemies/lizard/electric_lizard.gdshader" id="17_p8jse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_75p2i"]
 size = Vector2(20, 12)
@@ -996,53 +996,9 @@ states/run_on/position = Vector2(600, 122)
 transitions = ["Start", "idle_on", SubResource("AnimationNodeStateMachineTransition_aap77"), "idle_on", "idle_off", SubResource("AnimationNodeStateMachineTransition_lhgsr"), "idle_off", "idle_on", SubResource("AnimationNodeStateMachineTransition_yy7ui"), "idle_on", "run_on", SubResource("AnimationNodeStateMachineTransition_0lsr5"), "idle_off", "run_off", SubResource("AnimationNodeStateMachineTransition_cp7vq"), "run_on", "idle_on", SubResource("AnimationNodeStateMachineTransition_2igfk"), "run_off", "idle_off", SubResource("AnimationNodeStateMachineTransition_31rch"), "run_on", "run_off", SubResource("AnimationNodeStateMachineTransition_cabhf"), "run_off", "run_on", SubResource("AnimationNodeStateMachineTransition_gowuw"), "idle_on", "lick_on", SubResource("AnimationNodeStateMachineTransition_gar8l"), "idle_off", "lick_off", SubResource("AnimationNodeStateMachineTransition_8hnjo"), "lick_on", "idle_on", SubResource("AnimationNodeStateMachineTransition_1u4w8"), "lick_off", "idle_off", SubResource("AnimationNodeStateMachineTransition_vxss5")]
 graph_offset = Vector2(0, 56.1572)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tn3kh"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a7ifh"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gdeuh"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hew35"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_abh1n"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hxhtj"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sumx3"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(384, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6b5on"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(448, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hkvib"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(512, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gxuu5"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(576, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bblon"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(640, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iepkf"]
-atlas = ExtResource("18_fk3wa")
-region = Rect2(704, 0, 64, 64)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wyyaa"]
+shader = ExtResource("17_p8jse")
+shader_parameter/collision_rect = null
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k6r55"]
 atlas = ExtResource("17_1cxfp")
@@ -1050,46 +1006,10 @@ region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gcd5s"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tn3kh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a7ifh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gdeuh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hew35")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_abh1n")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hxhtj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sumx3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6b5on")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hkvib")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gxuu5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bblon")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iepkf")
-}],
+"frames": [],
 "loop": true,
 "name": &"activate",
-"speed": 12.0
+"speed": 5.0
 }, {
 "frames": [],
 "loop": true,
@@ -1180,9 +1100,9 @@ collision_mask = 65535
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ElectricArea"]
 z_index = -1
+material = SubResource("ShaderMaterial_wyyaa")
 sprite_frames = SubResource("SpriteFrames_gcd5s")
-animation = &"activate"
-frame_progress = 0.180996
+animation = &"idle"
 offset = Vector2(1, -6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElectricArea"]

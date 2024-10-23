@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b4ywwlrgg4dso"]
+[gd_scene load_steps=20 format=3 uid="uid://b4ywwlrgg4dso"]
 
 [ext_resource type="Script" path="res://scenes/world/level_scripts/level_1.gd" id="1_ypnr2"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_apglj"]
@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="21_srmgi"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="22_gq6qw"]
 [ext_resource type="PackedScene" uid="uid://85307446xv20" path="res://scenes/entities/objects/static/door/broken_door.tscn" id="23_hc28w"]
-[ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="24_2o77r"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="24_6nyao"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="25_dc2e1"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="26_smm4u"]
@@ -45,7 +44,6 @@ position = Vector2(0, -19)
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
-current = true
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
 width = 2.0
@@ -138,6 +136,3 @@ door_link_id = "2"
 [node name="Button3" parent="." instance=ExtResource("14_3o1o2")]
 position = Vector2(296, 56)
 door_link_id = "2"
-
-[node name="AudioPausedMenu" parent="." instance=ExtResource("24_2o77r")]
-visible = false

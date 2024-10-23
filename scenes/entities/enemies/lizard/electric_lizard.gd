@@ -15,6 +15,7 @@ extends CharacterBody2D
 @onready var navigation_agent_2d = $LizardNav
 @onready var animation_tree = $AnimationTree
 @onready var wet_walk = $wet_walk
+@onready var animated_sprite_2d = $ElectricArea/AnimatedSprite2D
 
 var direction: Vector2 = Vector2.ZERO
 var was_water: bool = false
@@ -41,6 +42,8 @@ var nearby_objects = []
 
 func _ready():
 	print("Lizard ready")
+	
+	animated_sprite_2d.visible = false
 	
 	SharedSignals.lizard_connection.connect(_play_zap)
 	
@@ -158,18 +161,27 @@ func _update_animation_parameters():
 	if is_on:
 		match state:
 			State.PATROL:
+				animated_sprite_2d.visible = false
 				animation_tree["parameters/conditions/is_run_on"] = true
 			State.PATROL_WAIT:
+				animated_sprite_2d.play("activate")
+				animated_sprite_2d.visible = true
 				animation_tree["parameters/conditions/is_idle_on"] = true
 			State.LICK_EYE:
+				animated_sprite_2d.play("activate")
+				animated_sprite_2d.visible = true
 				animation_tree["parameters/conditions/is_lick_on"] = true
 	else:
 		match state:
 			State.PATROL:
+				animated_sprite_2d.visible = false
 				animation_tree["parameters/conditions/is_run_off"] = true
 			State.PATROL_WAIT:
+				animated_sprite_2d.stop()
+				animated_sprite_2d.visible = false
 				animation_tree["parameters/conditions/is_idle_off"] = true
 			State.LICK_EYE:
+				animated_sprite_2d.visible = false
 				animation_tree["parameters/conditions/is_lick_off"] = true
 	
 	# Update blend positions for animations

@@ -261,6 +261,7 @@ position = Vector2(13, -16)
 sprite_frames = SubResource("SpriteFrames_yd3f7")
 
 [node name="CheckMark" type="Sprite2D" parent="."]
+visible = false
 z_index = 1
 position = Vector2(299, 199)
 texture = ExtResource("4_oerki")

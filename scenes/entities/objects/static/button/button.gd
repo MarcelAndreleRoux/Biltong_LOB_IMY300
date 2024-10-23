@@ -1,6 +1,5 @@
 extends StaticBody2D
 
-@export var wire: NodePath
 @export var door_link_id: String
 
 var found_link: bool = false
