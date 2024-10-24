@@ -85,27 +85,19 @@ func _physics_process(delta):
 	match state:
 		State.PATROL:
 			patrol_behavior()
-			print("PATROL STATE")
 		State.PATROL_WAIT:
-			print("PATROL_WAIT STATE")
 			pass  # Waiting at patrol point
 		State.HUNGRY:
-			print("HUNGRY STATE")
 			pass  # Playing hungry animation
 		State.GO_TO_FOOD:
-			print("GO_TO_FOOD STATE")
 			go_to_food_behavior()
 		State.EATING:
-			print("EATING STATE")
 			pass  # Eating food
 		State.IDLE:
-			print("IDLE STATE")
 			idle_behavior()
 		State.SCARED:
-			print("SCARED STATE")
 			scared_behavior()
 		State.SCARED_OUT:
-			print("SCARED STATE")
 			pass  # Scared out
 
 	# Update movement based on velocity
