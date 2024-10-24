@@ -24,7 +24,7 @@ signal shadow_update
 signal shadow_done
 
 # Door Signals
-signal doorState
+signal doorState(door_id: String, state: bool, button_instance_id: int)
 signal check_link
 signal found_link
 signal full_link

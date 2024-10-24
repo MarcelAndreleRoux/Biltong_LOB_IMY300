@@ -228,10 +228,14 @@ func go_to_food_behavior():
 
 	# If the turtle has reached the food, transition to eating
 	if navigation_agent_2d.is_navigation_finished():
+		# Store the current food target before clearing it
+		var food_to_eat = current_food_target
+		current_food_target = null  # Clear it so we don't pick up new food while eating
+		
 		# Mark the food as eaten
-		current_food_target.remove_from_group("food_to_eat")
-		current_food_target.mark_as_eaten()
-		current_food_target = null
+		food_to_eat.remove_from_group("food_to_eat")
+		food_to_eat.mark_as_eaten()
+		
 		state = State.EATING
 		start_eating_timer()
 	else:
@@ -243,21 +247,25 @@ func go_to_food_behavior():
 
 func start_eating_timer():
 	if eating_timer != null:
-		return  # Eating timer is already running, do not reset it
-	# Start a timer to simulate eating duration
+		eating_timer.stop()  # Stop any existing timer
+		eating_timer.queue_free()
+		eating_timer = null
+	
+	# Start a new eating timer
 	eating_timer = Timer.new()
 	eating_timer.wait_time = 3.0  # Wait 3 seconds
 	eating_timer.one_shot = true
-	# Connect the signal correctly
 	eating_timer.timeout.connect(_on_eating_timeout)
 	add_child(eating_timer)
 	eating_timer.start()
 
 func _on_eating_timeout():
-	eating_timer.queue_free()
-	eating_timer = null
-	# After eating, check for more food
-	if check_for_food() and eating_timer == null:
+	if eating_timer:
+		eating_timer.queue_free()
+		eating_timer = null
+	
+	# After eating is complete, check for more food
+	if check_for_food():
 		if play_hungry_animation:
 			state = State.HUNGRY
 			start_hungry_timer()
@@ -377,6 +385,10 @@ func _resume_behavior_after_scared():
 # --- Food Detection Function ---
 
 func check_for_food():
+	# Don't check for new food if we're currently eating
+	if state == State.EATING:
+		return false
+		
 	var food_nodes = get_tree().get_nodes_in_group("food_to_eat")
 
 	if food_nodes.size() > 0:
@@ -391,19 +403,19 @@ func check_for_food():
 			if distance < closest_distance:
 				closest_distance = distance
 				closest_food = food
+				
 		if closest_food != null:
-			if state not in [State.EATING]:
-				current_food_target = closest_food
-				# Update direction based on the position of the food
-				direction = (current_food_target.global_position - global_position).normalized()
-				# Update the blend position for the animation
-				_update_animation_parameters()
-				navigation_agent_2d.target_position = current_food_target.global_position
+			current_food_target = closest_food
+			# Update direction based on the position of the food
+			direction = (current_food_target.global_position - global_position).normalized()
+			# Update the blend position for the animation
+			_update_animation_parameters()
+			navigation_agent_2d.target_position = current_food_target.global_position
 			return true
-	else:
-		# No food found, clear current food target and return false
-		current_food_target = null
-		return false
+	
+	# No food found, clear current food target and return false
+	current_food_target = null
+	return false
 
 # --- Animation Handling ---
 

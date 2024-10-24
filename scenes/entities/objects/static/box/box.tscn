@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://3ybd1h5hqi4"]
+[gd_scene load_steps=21 format=3 uid="uid://3ybd1h5hqi4"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/box/box.gd" id="1_fdijp"]
 [ext_resource type="Texture2D" uid="uid://bgmachaejnlbs" path="res://assets/sprites/objects/static/box/Box.png" id="1_r7u5v"]
@@ -53,9 +53,6 @@ size = Vector2(12, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2tsi"]
 size = Vector2(52, 50)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sx3ju"]
-size = Vector2(12, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ci0o"]
 atlas = ExtResource("4_rmtlj")
@@ -229,33 +226,6 @@ shape = SubResource("RectangleShape2D_bpty4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveArea"]
 shape = SubResource("RectangleShape2D_y2tsi")
 
-[node name="WallDetectionDown" type="Area2D" parent="."]
-position = Vector2(1, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetectionDown"]
-position = Vector2(-1, 0)
-shape = SubResource("RectangleShape2D_sx3ju")
-
-[node name="WallDetectionUp" type="Area2D" parent="."]
-position = Vector2(1, -1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetectionUp"]
-position = Vector2(-1, 0)
-shape = SubResource("RectangleShape2D_sx3ju")
-
-[node name="WallDetectionRight" type="Area2D" parent="."]
-position = Vector2(2, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetectionRight"]
-position = Vector2(-1, 0)
-shape = SubResource("RectangleShape2D_sx3ju")
-
-[node name="WallDetectionLeft" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetectionLeft"]
-position = Vector2(-1, 0)
-shape = SubResource("RectangleShape2D_sx3ju")
-
 [node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
 position = Vector2(13, -16)
 sprite_frames = SubResource("SpriteFrames_yd3f7")
@@ -279,11 +249,3 @@ bus = &"Sfx"
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="MoveArea" to="." method="_on_move_area_body_entered"]
 [connection signal="body_exited" from="MoveArea" to="." method="_on_move_area_body_exited"]
-[connection signal="body_entered" from="WallDetectionDown" to="." method="_on_wall_detection_down_body_entered"]
-[connection signal="body_exited" from="WallDetectionDown" to="." method="_on_wall_detection_down_body_exited"]
-[connection signal="body_entered" from="WallDetectionUp" to="." method="_on_wall_detection_up_body_entered"]
-[connection signal="body_exited" from="WallDetectionUp" to="." method="_on_wall_detection_up_body_exited"]
-[connection signal="body_entered" from="WallDetectionRight" to="." method="_on_wall_detection_right_body_entered"]
-[connection signal="body_exited" from="WallDetectionRight" to="." method="_on_wall_detection_right_body_exited"]
-[connection signal="body_entered" from="WallDetectionLeft" to="." method="_on_wall_detection_left_body_entered"]
-[connection signal="body_exited" from="WallDetectionLeft" to="." method="_on_wall_detection_left_body_exited"]

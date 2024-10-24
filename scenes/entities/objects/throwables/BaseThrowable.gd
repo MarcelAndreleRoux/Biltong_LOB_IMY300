@@ -20,11 +20,8 @@ var shadow_sprite: Sprite2D
 var shadow_offset: float = 10.0
 var projectile_landed_boolean: bool = false
 
-var MIN_AIM_DISTANCE: float = 20.0
-var MAX_AIM_DISTANCE: float = 215.0
-
-var MIN_POINTS: int = 15
-var MAX_POINTS: int = 50
+var MIN_POINTS: int = ProjectileConstants.MIN_POINTS
+var MAX_POINTS: int = ProjectileConstants.MAX_POINTS
 
 var time: float = 0.0
 var time_mult: float = 6.0
@@ -95,46 +92,38 @@ func initialize(position: Vector2, direction: Vector2, rotation: float, end_posi
 	time = 0.0
 
 func calculate_number_of_points(aim_distance: float) -> int:
-	# Ensure the aim_distance is clamped between MIN_AIM_DISTANCE and MAX_AIM_DISTANCE
-	aim_distance = clamp(aim_distance, MIN_AIM_DISTANCE, MAX_AIM_DISTANCE)
-
-	# Linear interpolation between MIN_POINTS and MAX_POINTS based on aim distance
-	return int(lerp(MIN_POINTS, MAX_POINTS, (aim_distance - MIN_AIM_DISTANCE) / (MAX_AIM_DISTANCE - MIN_AIM_DISTANCE)))
+	# Use ProjectileConstants
+	aim_distance = clamp(aim_distance, ProjectileConstants.MIN_AIM_DISTANCE, ProjectileConstants.HARD_MAX_DISTANCE)
+	return int(lerp(MIN_POINTS, MAX_POINTS, 
+		(aim_distance - ProjectileConstants.MIN_AIM_DISTANCE) / 
+		(ProjectileConstants.HARD_MAX_DISTANCE - ProjectileConstants.MIN_AIM_DISTANCE)))
 
 func calculate_trajectory(_End: Vector2) -> Array:
 	var aim_direction = _End - _spawnPosition
 	var aim_distance = aim_direction.length()
-
-	# Track whether the projectile has reached max distance
 	var is_at_max_distance = false
 	
-	# Apply distance blocking and progressive stretching
 	if add_distance_blocker:
-		if aim_distance < MIN_AIM_DISTANCE:
-			aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
+		if aim_distance < ProjectileConstants.MIN_AIM_DISTANCE:
+			aim_direction = aim_direction.normalized() * ProjectileConstants.MIN_AIM_DISTANCE
 			_End = _spawnPosition + aim_direction
-			aim_distance = MIN_AIM_DISTANCE
-		elif aim_distance > soft_max_distance:
-			# Gradually slow down the progress towards hard_max_distance
-			var extra_distance = aim_distance - soft_max_distance
-
-			# Progressive slow-down logic as we approach the hard max
-			var stretch_factor = (hard_max_distance - soft_max_distance) / (extra_distance + (hard_max_distance - soft_max_distance))
-			aim_distance = soft_max_distance + extra_distance * stretch_factor
-
-			# Ensure that we never exceed hard_max_distance
-			aim_distance = min(aim_distance, hard_max_distance)
-
+			aim_distance = ProjectileConstants.MIN_AIM_DISTANCE
+		elif aim_distance > ProjectileConstants.SOFT_MAX_DISTANCE:
+			var extra_distance = aim_distance - ProjectileConstants.SOFT_MAX_DISTANCE
+			
+			var stretch_factor = (ProjectileConstants.HARD_MAX_DISTANCE - ProjectileConstants.SOFT_MAX_DISTANCE) / (extra_distance + (ProjectileConstants.HARD_MAX_DISTANCE - ProjectileConstants.SOFT_MAX_DISTANCE))
+			aim_distance = ProjectileConstants.SOFT_MAX_DISTANCE + extra_distance * stretch_factor
+			
+			aim_distance = min(aim_distance, ProjectileConstants.HARD_MAX_DISTANCE)
 			aim_direction = aim_direction.normalized() * aim_distance
 			_End = _spawnPosition + aim_direction
 			is_at_max_distance = true
 		else:
 			is_at_max_distance = false
 
-	# Determine number of trajectory points based on the adjusted aim distance
+	# Rest of your trajectory calculation code...
 	var num_of_points = calculate_number_of_points(aim_distance)
-
-	# Proceed with trajectory calculations
+	
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 	

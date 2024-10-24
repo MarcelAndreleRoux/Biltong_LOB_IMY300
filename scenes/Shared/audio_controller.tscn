@@ -196,4 +196,8 @@ bus = &"Sfx"
 stream = ExtResource("29_k5vyk")
 bus = &"Sfx"
 
+[node name="door_close" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_0jao3")
+bus = &"Sfx"
+
 [connection signal="finished" from="button_select" to="." method="_on_button_select_finished"]

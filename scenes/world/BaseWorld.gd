@@ -10,15 +10,18 @@ class_name BaseWorld
 @onready var electric_lizard = $ElectricLizard
 @onready var trajectory_line = $Player/TrajectoryLine
 @onready var game_pause = $GamePause
+@onready var player_raycast = $Player/PlayerRaycast
 @onready var audio_paused_menu = $AudioPausedMenu
 @onready var game_music_player = GameMusicController
 @onready var food = $Food
 @onready var shake_camera = $ShakeCamera
 
 # Raycasts
-@onready var player_raycast = $Player/RayCast2D
 @onready var turtle_raycast = $Turtle/RayCast2D
 @onready var enemy_raycast = $Hedgehog/RayCast2D
+
+var player_raycast_collision: bool = false
+var trajectory_has_collision: bool = false
 
 # Signal 
 signal throw_action
@@ -38,11 +41,18 @@ var _end: Vector2
 var _projectileScene: PackedScene
 var shadow_texture: Texture
 var shadow: Sprite2D
+
 var points: Array = []
 var throw_start_position: Vector2
 var previous_food_visible: bool = false
 
 var original_inv_position: Vector2
+
+var MIN_AIM_DISTANCE: float = ProjectileConstants.MIN_AIM_DISTANCE
+var soft_max_distance: float = ProjectileConstants.SOFT_MAX_DISTANCE
+var hard_max_distance: float = ProjectileConstants.HARD_MAX_DISTANCE
+
+signal trajectory_collision_state(is_colliding: bool)
 
 # Marker
 var _turtle_target_marker: Marker2D
@@ -60,12 +70,14 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 func _ready():
+	# Keep your existing ready code but remove raycast setup
 	MenuAudioController.stop_music()
 	GameMusicController.play_music()
-	# Initialize common functionality
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
 	original_inv_position = inventory.position
+	
+	# Connect signals
 	SharedSignals.new_marker.connect(_on_new_marker)
 	SharedSignals.projectile_gone.connect(_remove_marker)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
@@ -75,19 +87,23 @@ func _ready():
 	SharedSignals.dart_hit_wall.connect(_shake_more)
 	SharedSignals.start_player_screen_shake.connect(_start_player_screen_shake)
 	SharedSignals.is_scared_signal.connect(_on_is_scared_signal)
+	trajectory_collision_state.connect(_on_trajectory_collision)
 	
-	player_raycast.enabled = true
-	
-	# Add all vines to the player's raycast exceptions
-	for vine in get_tree().get_nodes_in_group("vines"):
+	if player_raycast:
+		# Add exceptions for the straight raycast
+		if turtle:
+			player_raycast.add_exception(turtle)
+		if hedgehog:
+			player_raycast.add_exception(hedgehog)
+		# Add any vines to exceptions
+		for vine in get_tree().get_nodes_in_group("vines"):
 			player_raycast.add_exception(vine)
 	
-	if turtle:
-		player_raycast.add_exception(turtle)
-	
 	if hedgehog:
-		player_raycast.add_exception(hedgehog)
 		enemy_raycast.add_exception(hedgehog)
+
+func _on_trajectory_collision(is_colliding: bool):
+	trajectory_has_collision = is_colliding
 
 func _on_is_scared_signal(is_scared: bool):
 	if is_scared:
@@ -143,19 +159,33 @@ func _shake_more():
 	shake_camera.apply_shake_semi_small()
 
 func _physics_process(_delta):
+	if player_raycast:
+		_update_player_raycast()
+	
 	if Input.is_action_just_pressed("exit"):
 		game_pause.game_pause()
 	
 	GlobalValues.update_player_position(player.global_position)
-	
 	trajectory_line.global_position = to_local(player.global_position)
 	
 	_update_hedgehog_raycast()
 	_check_inventory_swap()
-	_update_raycast_position()
 	
 	if GlobalValues.can_throw:
 		_handle_aiming_and_throwing()
+
+func _update_player_raycast():
+	# Update player raycast position and target
+	player_raycast.global_position = player.global_position
+	var mouse_position = get_global_mouse_position()
+	var direction = (mouse_position - player_raycast.global_position).normalized()
+	var distance = player_raycast.global_position.distance_to(mouse_position)
+	
+	player_raycast.target_position = direction * distance
+	player_raycast.force_raycast_update()
+	
+	# Store collision state
+	player_raycast_collision = player_raycast.is_colliding()
 
 func _update_hedgehog_raycast():
 	if player and enemy_raycast:
@@ -180,33 +210,30 @@ func _update_hedgehog_raycast():
 		# Reset RayCast2D position to its original position for the next frame
 		enemy_raycast.global_position -= direction_to_player * offset_distance
 
-func _update_raycast_position():
-	player_raycast.global_position = player.global_position
-	var mouse_position = get_global_mouse_position()
-	var relative_mouse_position = mouse_position - player_raycast.global_position
-	
-	# Clamp aim distance to a minimum of 10px
-	var distance_to_mouse = relative_mouse_position.length()
-	if distance_to_mouse < 10.0:
-		relative_mouse_position = relative_mouse_position.normalized() * 10.0
-	
-	player_raycast.target_position = relative_mouse_position
-	_end = player.global_position + relative_mouse_position  # Update target position
-
 func _handle_aiming_and_throwing():
 	if Input.is_action_pressed("aim") and not is_on_cooldown:
 		_isAiming = true
+		_end = get_global_mouse_position()
+		calculate_trajectory()
 	elif Input.is_action_just_released("aim"):
 		_isAiming = false
+		SharedSignals.start_player_screen_shake.emit(false)
 	
 	trajectory_line.visible = _isAiming
 
 	if _isAiming:
 		SharedSignals.show_throw.emit()
 		
-	# Check if the raycast is not colliding before allowing a throw
 	if Input.is_action_just_pressed("throw") and _isAiming and not is_on_cooldown:
-		if not player_raycast.is_colliding():
+		var can_throw = false
+		
+		# Allow throw if either:
+		# 1. No trajectory collision
+		# 2. Trajectory has collision but player raycast is clear
+		if not trajectory_has_collision or not player_raycast_collision:
+			can_throw = true
+		
+		if can_throw:
 			throw_action.emit()
 			SharedSignals.can_throw_projectile.emit()
 			_isAiming = false
@@ -215,8 +242,7 @@ func _handle_aiming_and_throwing():
 			_start_cooldown_timer()
 		else:
 			AudioController.play_sfx("error")
-			if _isAiming:
-				_isAiming = false
+			shake_camera.apply_shake_semi_small()
 
 func _on_item_pickup():
 	GlobalValues.can_throw = true
@@ -332,9 +358,30 @@ func _shake_inventory():
 	inventory.position = original_inv_position
 	timer.queue_free()
 
-
 func calculate_trajectory():
-	var DOT = Vector2(1.0, 0.0).dot((_end - player.position).normalized())
+	var aim_direction = _end - player.position
+	var aim_distance = aim_direction.length()
+	
+	# Handle distance limits
+	if aim_distance < MIN_AIM_DISTANCE:
+		aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
+		_end = player.position + aim_direction
+		aim_distance = MIN_AIM_DISTANCE
+	elif aim_distance > soft_max_distance:
+		# Start stretching beyond soft_max_distance towards hard_max_distance
+		var extra_distance = aim_distance - soft_max_distance
+		var stretch_factor = (hard_max_distance - soft_max_distance) / (extra_distance + (hard_max_distance - soft_max_distance))
+		aim_distance = soft_max_distance + extra_distance * stretch_factor
+		aim_distance = min(aim_distance, hard_max_distance)
+		aim_direction = aim_direction.normalized() * aim_distance
+		_end = player.position + aim_direction
+		
+		# Add screen shake when at max distance
+		SharedSignals.start_player_screen_shake.emit(true)
+	else:
+		SharedSignals.start_player_screen_shake.emit(false)
+	
+	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 
 	var x_dis = _end.x - player.position.x
@@ -352,7 +399,7 @@ func calculate_trajectory():
 		var time = total_time * (float(point) / float(num_of_points))
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
-		points.append(player.global_position + Vector2(dx, dy))
+		points.append(player.position + Vector2(dx, dy))
 
 	trajectory_line.points = points
 

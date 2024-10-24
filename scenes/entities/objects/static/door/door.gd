@@ -6,33 +6,42 @@ extends StaticBody2D
 @onready var animation_tree = $AnimationTree
 
 var doorState: bool = false
-var received_signals: int = 0  # Track how many buttons are pressed
+# Keep track of which buttons are currently pressed using a dictionary
+var active_buttons: Dictionary = {}
 
 func _ready():
 	SharedSignals.doorState.connect(_on_door_stateChange)
 	SharedSignals.check_link.connect(_check_link)
 	update_door_animation()
 
-func _on_door_stateChange(door_id: String, state: bool):
-	if door_id == door_link_id:
-		if state:
-			received_signals += 1
-			print("Received signals:", received_signals)
-			if received_signals >= required_connections:
-				open_door()
-		else:
-			received_signals = max(received_signals - 1, 0)  # Decrement but prevent negative values
-			print("Signal removed. Current signals:", received_signals)
-			if received_signals < required_connections:
-				close_door()
+func _on_door_stateChange(door_id: String, state: bool, button_instance_id: int):
+	if door_id != door_link_id:
+		return
+		
+	if state:
+		# Add button to active buttons
+		active_buttons[button_instance_id] = true
+	else:
+		# Remove button from active buttons
+		active_buttons.erase(button_instance_id)
+	
+	# Check if we have enough active buttons
+	if active_buttons.size() >= required_connections:
+		open_door()
+	else:
+		close_door()
 
 func open_door():
+	if doorState:
+		return
 	doorState = true
 	AudioController.play_sfx("door_open")
 	animation_tree.set("parameters/conditions/is_opening", true)
 	animation_tree.set("parameters/conditions/is_closing", false)
 
 func close_door():
+	if !doorState:
+		return
 	doorState = false
 	AudioController.play_sfx("door_close")
 	animation_tree.set("parameters/conditions/is_opening", false)

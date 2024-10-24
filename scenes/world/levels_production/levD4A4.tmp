@@ -41,8 +41,6 @@ position = Vector2(326, 204)
 [node name="Mouse" parent="Player" instance=ExtResource("5_e2n7h")]
 position = Vector2(0, -19)
 
-[node name="PlayerRaycast" type="RayCast2D" parent="Player"]
-
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 
 [node name="TrajectoryLine" type="Line2D" parent="."]

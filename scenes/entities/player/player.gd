@@ -44,12 +44,10 @@ var throw_clicked: bool = false
 var is_on_cooldown: bool = false
 var can_throw_proj: bool = false
 var can_aim_throw: bool = false
-var MIN_AIM_DISTANCE: float = 20.0
-var MAX_AIM_DISTANCE: float = 200.0
 
-# Define the soft maximum distance where pulling becomes harder and the hard max distance
-var soft_max_distance = 180.0
-var hard_max_distance = 215.0  # Hard max distance where pulling is almost impossible
+var MIN_AIM_DISTANCE: float = ProjectileConstants.MIN_AIM_DISTANCE
+var soft_max_distance: float = ProjectileConstants.SOFT_MAX_DISTANCE
+var hard_max_distance: float = ProjectileConstants.HARD_MAX_DISTANCE
 
 # Box
 var is_dragging: bool = false
@@ -63,6 +61,8 @@ var drag_toggle_mode: bool = false
 
 # Trajectory Line
 var points: Array = []
+var trajectory_raycasts: Array[RayCast2D] = []
+var first_collision_point: Vector2 = Vector2.ZERO
 
 var min_db = -80  # Minimum volume in decibels (silence)
 var max_db = 0    # Maximum volume in decibels (full volume)
@@ -130,12 +130,6 @@ func _physics_process(delta):
 			is_aiming = true
 			trajectory_line.visible = true
 			calculate_trajectory()
-
-			# Change the trajectory line color based on collision
-			if $RayCast2D.is_colliding():
-				trajectory_line.default_color = Color(1, 0, 0, 0.2)  # Red when colliding
-			else:
-				trajectory_line.default_color = Color(1, 1, 1, 0.3)  # Default color
 		elif not Input.is_action_pressed("aim"):
 			reset_aiming_state()
 			reset_throw_state()
@@ -204,20 +198,6 @@ func update_box_collider_position():
 		offset.y = -4
 
 	box_move_area_collider.position = offset
-
-func reset_aiming_state():
-	# Stop aiming
-	is_aiming = false
-	trajectory_line.visible = false
-
-	# Reset aim distance to minimum when aiming stops
-	var aim_direction = (_end - global_position).normalized() * MIN_AIM_DISTANCE
-	_end = global_position + aim_direction
-	trajectory_line.default_color = Color(1, 1, 1)  # Reset color when not aiming
-
-	# Stop the shake and fade out the sound when aiming is released
-	SharedSignals.start_player_screen_shake.emit(false)
-	fade_out_audio(throwhold)
 
 func _on_throw_action():
 	if not is_on_cooldown:
@@ -369,94 +349,194 @@ func fade_out_audio(audio_player: AudioStreamPlayer2D):
 		if audio_player.volume_db <= float(min_db) + 0.01:
 			audio_player.stop()
 
+func update_trajectory_raycasts():
+	# Clear old raycasts
+	for raycast in trajectory_raycasts:
+		raycast.queue_free()
+	trajectory_raycasts.clear()
+	first_collision_point = Vector2.ZERO
+	
+	# No points to check
+	if points.size() < 2:
+		return
+		
+	var has_collision = false
+	
+	# Create raycasts between consecutive points
+	for i in range(points.size() - 1):
+		var raycast = RayCast2D.new()
+		add_child(raycast)
+		raycast.collision_mask = 1  # Adjust this to match your collision layers
+		raycast.exclude_parent = true
+		
+		# Check if entities exist in the base world before adding exceptions
+		if base_world.has_node("Turtle") and base_world.turtle != null:
+			raycast.add_exception(base_world.turtle)
+		
+		if base_world.has_node("Hedgehog") and base_world.hedgehog != null:
+			raycast.add_exception(base_world.hedgehog)
+			
+		# Optional: Check for vines group
+		for vine in get_tree().get_nodes_in_group("vines"):
+			raycast.add_exception(vine)
+		
+		trajectory_raycasts.append(raycast)
+		
+		# Get current point and next point
+		var current_point = points[i]
+		var next_point = points[i + 1]
+		
+		# Calculate direction and distance between points
+		var direction = next_point - current_point
+		var distance = direction.length()
+		
+		# Position raycast at the current point and point it towards the next point
+		raycast.global_position = to_global(current_point)
+		raycast.target_position = direction
+		raycast.force_raycast_update()
+		
+		if raycast.is_colliding():
+			has_collision = true
+			if first_collision_point == Vector2.ZERO:
+				first_collision_point = raycast.get_collision_point()
+				points = points.slice(0, i + 2)
+				points[-1] = to_local(first_collision_point)
+				break
+	
+	get_parent().trajectory_collision_state.emit(has_collision)
+	trajectory_line.points = points
+
 func calculate_trajectory():
 	var aim_direction = _end - my_local_pos
 	var aim_distance = aim_direction.length()
-
-	# Track whether the player is at the max distance
 	var is_at_max_distance = false
-
-	# Clamp the aim distance between MIN_AIM_DISTANCE and hard_max_distance
+	
+	var collision_found = false
+	var collision_point = Vector2.ZERO
+	var collision_index = -1
+	var original_points = []
+	
+	# Initial shader parameter update
+	if trajectory_line.material is ShaderMaterial:
+		trajectory_line.material.set_shader_parameter("distance", aim_distance)
+	
+	# Handle distance constraints
 	if add_distance_blocker:
 		if is_aiming:
 			if aim_distance < MIN_AIM_DISTANCE:
-				# Ensure the distance doesn't go below the minimum
 				aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
 				_end = my_local_pos + aim_direction
 				aim_distance = MIN_AIM_DISTANCE
 			elif aim_distance > soft_max_distance:
-				# Start stretching beyond soft_max_distance towards hard_max_distance
 				var extra_distance = aim_distance - soft_max_distance
-
-				# Progressive slow-down logic as we approach the hard max
 				var stretch_factor = (hard_max_distance - soft_max_distance) / (extra_distance + (hard_max_distance - soft_max_distance))
 				aim_distance = soft_max_distance + extra_distance * stretch_factor
-
-				# Ensure that we never exceed hard_max_distance
 				aim_distance = min(aim_distance, hard_max_distance)
-
 				aim_direction = aim_direction.normalized() * aim_distance
 				_end = my_local_pos + aim_direction
-
-				print("aim_distance", aim_distance)
-
-				trajectory_line.default_color = Color(1, 0.5, 0)  # Orange color to indicate max distance
-				is_at_max_distance = true  # Player is at max distance
-
-				# Start shaking and fade in the sound when reaching max distance
+				is_at_max_distance = true
 				SharedSignals.start_player_screen_shake.emit(true)
 				fade_in_audio(throwhold)
 			else:
-				# Normal trajectory and color if under soft max distance
-				trajectory_line.default_color = Color(1, 1, 1)  # White color if not at max distance
 				is_at_max_distance = false
-
-			# Calculate the volume based on aim distance (scaled between min and max aim distance)
+			
+			# Update audio based on aim distance
 			var aim_volume = (aim_distance - MIN_AIM_DISTANCE) / (hard_max_distance - MIN_AIM_DISTANCE)
-			aim_volume = clamp(aim_volume, 0.0, 1.0)  # Ensure it stays between 0.0 and 1.0
-
-			# Map aim_volume (0.0 to 1.0) to decibels (-80.0 to 0.0 dB)
+			aim_volume = clamp(aim_volume, 0.0, 1.0)
 			var volume_db = lerp(float(min_db), float(max_db), aim_volume)
-
-			# Adjust the throwhold sound's volume based on the aim distance
 			throwhold.volume_db = lerp(throwhold.volume_db, volume_db, fade_speed)
-
-			# Update the shader uniform for the trajectory line
-			if trajectory_line.material is ShaderMaterial:
-				trajectory_line.material.set("shader_param/distance", aim_distance)
 		else:
-			# Reset aiming state and fade out the sound when aim action is released
 			reset_aiming_state()
-
-	# Stop the shake and fade out the sound if no longer at max distance
+			return
+	
 	if not is_at_max_distance:
 		SharedSignals.start_player_screen_shake.emit(false)
 		fade_out_audio(throwhold)
-
-	# Proceed with the original trajectory calculations using the adjusted _end
+	
+	# Calculate trajectory points
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 	var gravity = -9.8
 	var num_of_points = 50
-
+	
 	var x_dis = _end.x - my_local_pos.x
 	var y_dis = -1.0 * (_end.y - my_local_pos.y)
-
+	
 	var speed = sqrt((0.5 * gravity * x_dis * x_dis) / pow(cos(deg_to_rad(angle)), 2.0) / (y_dis - (tan(deg_to_rad(angle)) * x_dis)))
-
+	
 	var x_component = cos(deg_to_rad(angle)) * speed
 	var y_component = sin(deg_to_rad(angle)) * speed
-
+	
 	var total_time = x_dis / x_component
-
+	
+	# Generate trajectory points
 	points.clear()
 	for point in range(num_of_points):
 		var time = total_time * (float(point) / float(num_of_points))
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
-		points.append(my_local_pos + Vector2(dx, dy))
-
+		var new_point = my_local_pos + Vector2(dx, dy)
+		points.append(new_point)
+		original_points.append(new_point)  # Keep a copy of the full trajectory
+	
+	# Update raycasts and check for collisions
+	update_trajectory_raycasts()
+	
+	# Process raycast collisions
+	for i in range(trajectory_raycasts.size()):
+		if trajectory_raycasts[i].is_colliding():
+			collision_found = true
+			collision_point = trajectory_raycasts[i].get_collision_point()
+			collision_index = i
+			break
+	
+	# Get baseworld reference
+	var baseworld = get_parent()
+	
+	# Only truncate the trajectory if both systems detect a collision
+	if collision_found and baseworld.player_raycast_collision:
+		# Convert collision point to local coordinates
+		var local_collision_point = to_local(collision_point)
+		
+		# Truncate trajectory at collision
+		points = points.slice(0, collision_index + 2)
+		points[-1] = local_collision_point
+	else:
+		# Use full trajectory
+		points = original_points
+	
+	# Update trajectory line
 	trajectory_line.points = points
+	
+	# Update shader parameters
+	if trajectory_line.material is ShaderMaterial:
+		var both_colliding = collision_found and baseworld.player_raycast_collision
+		trajectory_line.material.set_shader_parameter("is_colliding", both_colliding)
+		trajectory_line.material.set_shader_parameter("distance", aim_distance)
+	
+	# Emit collision state to BaseWorld
+	get_parent().trajectory_collision_state.emit(collision_found)
+
+# Add this function to clean up raycasts when needed
+func clear_trajectory_raycasts():
+	for raycast in trajectory_raycasts:
+		raycast.queue_free()
+	trajectory_raycasts.clear()
+	first_collision_point = Vector2.ZERO
+
+# Modify your reset_aiming_state function to include raycast cleanup:
+func reset_aiming_state():
+	clear_trajectory_raycasts()
+	is_aiming = false
+	trajectory_line.visible = false
+	get_parent().trajectory_collision_state.emit(false)  # Reset collision state
+	
+	var aim_direction = (_end - global_position).normalized() * MIN_AIM_DISTANCE
+	_end = global_position + aim_direction
+	trajectory_line.default_color = Color(1, 1, 1)
+	
+	SharedSignals.start_player_screen_shake.emit(false)
+	fade_out_audio(throwhold)
 
 # New function to apply shaking effect to trajectory line
 func apply_trajectory_shake():

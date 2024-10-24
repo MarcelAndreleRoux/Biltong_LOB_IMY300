@@ -26,6 +26,7 @@ LevelManager="*res://scenes/world/level_scripts/level_manager.gd"
 MenuAudioController="*res://scenes/Shared/main_menu_audio_controller.tscn"
 AudioController="*res://scenes/Shared/audio_controller.tscn"
 GameMusicController="*res://scenes/Shared/game_music_controller.tscn"
+ProjectileConstants="*res://scenes/entities/objects/throwables/ProjectileConstants.gd"
 
 [display]
 
