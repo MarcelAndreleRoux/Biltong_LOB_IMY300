@@ -20,15 +20,17 @@ var shadow_sprite: Sprite2D
 var shadow_offset: float = 10.0
 var projectile_landed_boolean: bool = false
 
+# Add references to collision areas
+@onready var effect_area: Area2D = $EffectArea
+
 var MIN_POINTS: int = ProjectileConstants.MIN_POINTS
 var MAX_POINTS: int = ProjectileConstants.MAX_POINTS
 
 var time: float = 0.0
 var time_mult: float = 6.0
 
-# Define the soft maximum distance where pulling becomes harder and the hard max distance
 var soft_max_distance = 180.0
-var hard_max_distance = 215.0  # Hard max distance where pulling is almost impossible
+var hard_max_distance = 215.0
 
 var I_landed: bool = false
 var start_place: Vector2 = Vector2.ZERO
@@ -42,6 +44,11 @@ func _ready():
 	global_position = _spawnPosition
 	global_rotation = _spawnRotation
 	SharedSignals.shadow_update.connect(_player_gp)
+	
+	# Disable the effect area until landing
+	if effect_area:
+		effect_area.monitoring = false
+		effect_area.monitorable = false
 
 func _player_gp(player_global_pos):
 	start_place = player_global_pos
@@ -62,7 +69,8 @@ func _physics_process(delta: float):
 		rotation += (2 * PI / rotation_time) * delta
 
 		var distance_travelled = (global_position - _spawnPosition).length()
-		$shadow_sprite.global_position = start_place + (_direction * distance_travelled)
+		if has_node("shadow_sprite"):
+			$shadow_sprite.global_position = start_place + (_direction * distance_travelled)
 
 		if global_position.distance_to(target) < 1.0:
 			_currentPointIndex += 1
@@ -70,15 +78,26 @@ func _physics_process(delta: float):
 		I_landed = _currentPointIndex >= _trajectoryPoints.size() - 10
 		
 		if _currentPointIndex >= _trajectoryPoints.size():
-			rotation = 0.0
-			can_be_eaten = true
-			I_landed = true
-			projectile_landed.emit()
-			$shadow_sprite.queue_free()
-			_start_despawn_timer()
+			_on_projectile_landed()
 	else:
 		if _trajectoryPoints == null:
 			print("Error: Trajectory points are null")
+
+func _on_projectile_landed():
+	rotation = 0.0
+	can_be_eaten = true
+	I_landed = true
+	
+	# Enable the effect area when landed
+	if effect_area:
+		effect_area.monitoring = true
+		effect_area.monitorable = true
+	
+	if has_node("shadow_sprite"):
+		$shadow_sprite.queue_free()
+	
+	projectile_landed.emit()
+	_start_despawn_timer()
 
 func get_landed_state():
 	return I_landed

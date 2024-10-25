@@ -36,10 +36,10 @@ position = Vector2(245, 258)
 [node name="Player" parent="." instance=ExtResource("4_af3kr")]
 position = Vector2(111, 37)
 
+[node name="PlayerRaycast" type="RayCast2D" parent="Player"]
+
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 current = true
-
-[node name="PlayerRaycast" type="RayCast2D" parent="Player"]
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
 position = Vector2(90, 136)
@@ -52,6 +52,7 @@ position = Vector2(215, 50)
 [node name="RayCast2D" type="RayCast2D" parent="Turtle"]
 
 [node name="Escape" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="Escape"]
 offset_left = 12.0

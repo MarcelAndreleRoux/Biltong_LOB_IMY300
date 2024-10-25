@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bh6flmufkyjat"]
+[gd_scene load_steps=44 format=3 uid="uid://bh6flmufkyjat"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/hedgehog/hedgehog.gd" id="1_h4pte"]
 [ext_resource type="Texture2D" uid="uid://bgi3b1klmhiro" path="res://assets/sprites/enemies/hedgehog/idle/Porcupine-Idle-Left.png" id="2_3eopg"]
@@ -633,11 +633,15 @@ graph_offset = Vector2(-41.3829, -38.2131)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_numq4"]
 radius = 17.0
-height = 46.0
+height = 52.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xkfsv"]
+radius = 32.0
+height = 96.0
 
 [node name="Hedgehog" type="StaticBody2D" groups=["enemy"]]
 collision_layer = 16
-collision_mask = 905
+collision_mask = 459209
 script = ExtResource("1_h4pte")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -673,14 +677,26 @@ stream = ExtResource("8_6tbxl")
 volume_db = -8.0
 pitch_scale = 1.36
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="." groups=["hedgehog_area"]]
 z_index = 1
-collision_layer = 0
-collision_mask = 905
+collision_layer = 64
+collision_mask = 459721
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 position = Vector2(1, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_numq4")
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 536870912
+collision_mask = 3758096256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xkfsv")
+
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

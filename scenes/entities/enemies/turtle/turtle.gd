@@ -26,11 +26,15 @@ var last_direction: Vector2 = Vector2.ZERO
 var is_frozen: bool = false  # Tracks if the turtle is immovable
 var frozen_position: Vector2 = Vector2.ZERO 
 
+const SCARED_DURATION: float = 3.0  # Time to stay in shell when scared
+const SCARED_OUT_DURATION: float = 2.0  # Time to stay in shell-out animation
 
 var current_food_target: Node2D = null
 
 var patrol_points: Array = []
 var patrol_index: int = 0
+
+var player_in_scared_area: bool = false
 
 # Define the turtle's possible states
 enum State {
@@ -246,14 +250,16 @@ func go_to_food_behavior():
 # --- Eating Timer ---
 
 func start_eating_timer():
+	# If already eating, don't restart the timer
+	if state == State.EATING and eating_timer != null:
+		return
+		
 	if eating_timer != null:
-		eating_timer.stop()  # Stop any existing timer
 		eating_timer.queue_free()
 		eating_timer = null
 	
-	# Start a new eating timer
 	eating_timer = Timer.new()
-	eating_timer.wait_time = 3.0  # Wait 3 seconds
+	eating_timer.wait_time = 3.0
 	eating_timer.one_shot = true
 	eating_timer.timeout.connect(_on_eating_timeout)
 	add_child(eating_timer)
@@ -285,7 +291,7 @@ func _on_eating_timeout():
 func start_hungry_timer():
 	# Start a timer to simulate being hungry before moving to food
 	hungry_timer = Timer.new()
-	hungry_timer.wait_time = 3.0
+	hungry_timer.wait_time = 1.0
 	hungry_timer.one_shot = true
 	hungry_timer.timeout.connect(_on_hungry_timeout)
 	add_child(hungry_timer)
@@ -308,42 +314,67 @@ func _on_hungry_timeout():
 
 func _on_scared_area_body_entered(body):
 	if body.is_in_group("player"):
-		print("Player entered scared area")
-		# Always reset the scared state and timer when the player reenters
+		player_in_scared_area = true
+		
+		# Cancel any existing timers
+		if scared_timer:
+			scared_timer.stop()
+			scared_timer.queue_free()
+			scared_timer = null
+		if scared_out_timer:
+			scared_out_timer.stop()
+			scared_out_timer.queue_free()
+			scared_out_timer = null
+		
+		# Always enter scared state when player enters area
 		_enter_scared_state()
 
 func _on_scared_area_body_exited(body):
 	if body.is_in_group("player"):
-		print("Player exited scared area")
-		_start_scared_timeout()
+		player_in_scared_area = false
+		
+		# Only start the exit timeout if we're in the SCARED state
+		if state == State.SCARED:
+			_start_scared_timeout()
 
 func _enter_scared_state():
-	print("Entering SCARED state")
-	_cancel_other_timers()  # Stop all timers when scared
+	# Cancel other timers but preserve the state we were in
+	_cancel_other_timers()
 	state = State.SCARED
 	velocity = Vector2.ZERO
 	SharedSignals.is_scared_signal.emit(true)
-	navigation_agent_2d.target_position = global_position  # Stop any navigation
+	navigation_agent_2d.target_position = global_position
 	_update_animation_parameters()
 
 func _start_scared_timeout():
-	if scared_timer == null:
-		scared_timer = Timer.new()
-		scared_timer.wait_time = 3.0  # Duration of being scared
-		scared_timer.one_shot = true
-		scared_timer.timeout.connect(_on_scared_timeout)
-		add_child(scared_timer)
+	# Clean up existing timer if it exists
+	if scared_timer != null:
+		scared_timer.stop()
+		scared_timer.queue_free()
+		scared_timer = null
+	
+	scared_timer = Timer.new()
+	scared_timer.wait_time = SCARED_DURATION
+	scared_timer.one_shot = true
+	scared_timer.timeout.connect(_on_scared_timeout)
+	add_child(scared_timer)
 	scared_timer.start()
 
 func scared_behavior():
-	velocity = Vector2.ZERO  # Ensure turtle doesn't move
-	# Keep the turtle immovable while scared
+	velocity = Vector2.ZERO
 
 func _on_scared_timeout():
-	print("Scared timeout finished")
-	scared_timer.queue_free()
-	scared_timer = null
-	_enter_scared_out_state()
+	if scared_timer:
+		scared_timer.queue_free()
+		scared_timer = null
+	
+	# Only transition to scared_out if we're still in scared state AND player is not in area
+	if state == State.SCARED and not player_in_scared_area:
+		_enter_scared_out_state()
+	else:
+		# If player is still in area, stay scared
+		if player_in_scared_area:
+			state = State.SCARED
 
 func _enter_scared_out_state():
 	state = State.SCARED_OUT
@@ -351,12 +382,16 @@ func _enter_scared_out_state():
 	_start_scared_out_timer()
 
 func _start_scared_out_timer():
-	if scared_out_timer == null:
-		scared_out_timer = Timer.new()
-		scared_out_timer.wait_time = 0.5
-		scared_out_timer.one_shot = true
-		scared_out_timer.timeout.connect(_on_scared_out_timeout)
-		add_child(scared_out_timer)
+	if scared_out_timer != null:
+		scared_out_timer.stop()
+		scared_out_timer.queue_free()
+		scared_out_timer = null
+	
+	scared_out_timer = Timer.new()
+	scared_out_timer.wait_time = SCARED_OUT_DURATION
+	scared_out_timer.one_shot = true
+	scared_out_timer.timeout.connect(_on_scared_out_timeout)
+	add_child(scared_out_timer)
 	scared_out_timer.start()
 
 # --- SCARED_OUT Behavior ---
@@ -369,36 +404,38 @@ func _on_scared_out_timeout():
 	_resume_behavior_after_scared()
 
 func _resume_behavior_after_scared():
+	# First check for food targets
 	if check_for_food():
-		if play_hungry_animation:
-			state = State.HUNGRY
-			start_hungry_timer()
-		else:
-			state = State.GO_TO_FOOD
-			navigation_agent_2d.target_position = current_food_target.global_position
+		# Set state to GO_TO_FOOD immediately after finding food
+		state = State.GO_TO_FOOD
+		navigation_agent_2d.target_position = current_food_target.global_position
+	# If no food, resume patrol if points exist
 	elif patrol_points.size() > 0:
 		state = State.PATROL
+		patrol_index = (patrol_index + 1) % patrol_points.size()
 		navigation_agent_2d.target_position = patrol_points[patrol_index]
+	# Otherwise go straight to idle
 	else:
 		state = State.IDLE
 
 # --- Food Detection Function ---
 
 func check_for_food():
-	# Don't check for new food if we're currently eating
-	if state == State.EATING:
+	# Don't check for new food if already eating or scared
+	if state in [State.EATING, State.SCARED, State.SCARED_OUT]:
 		return false
 		
 	var food_nodes = get_tree().get_nodes_in_group("food_to_eat")
-
+	
 	if food_nodes.size() > 0:
-		# Find the closest food
+		# Find the closest LANDED food
 		var closest_food: Node2D = null
 		var closest_distance: float = INF
 		for food in food_nodes:
-			# Skip food that's queued for deletion
-			if food.is_queued_for_deletion():
+			# Skip food that's not ready to be eaten
+			if food.is_queued_for_deletion() or not food.get_landed_state():
 				continue
+				
 			var distance = global_position.distance_to(food.global_position)
 			if distance < closest_distance:
 				closest_distance = distance
@@ -406,15 +443,11 @@ func check_for_food():
 				
 		if closest_food != null:
 			current_food_target = closest_food
-			# Update direction based on the position of the food
 			direction = (current_food_target.global_position - global_position).normalized()
-			# Update the blend position for the animation
 			_update_animation_parameters()
 			navigation_agent_2d.target_position = current_food_target.global_position
 			return true
 	
-	# No food found, clear current food target and return false
-	current_food_target = null
 	return false
 
 # --- Animation Handling ---

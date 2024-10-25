@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://6cf7oc3th3bh"]
+[gd_scene load_steps=20 format=3 uid="uid://6cf7oc3th3bh"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_0vski"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_pw6my"]
@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="15_ctqtj"]
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="16_3pgxk"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="17_rxdsx"]
+[ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_bush.tscn" id="18_lpx28"]
+[ext_resource type="PackedScene" uid="uid://cm3vb8x5ang4d" path="res://scenes/entities/objects/shoot/dart.tscn" id="18_te834"]
 
 [node name="BaseLevel3" type="Node2D"]
 script = ExtResource("1_0vski")
@@ -106,3 +108,9 @@ position = Vector2(385, 221)
 visible = false
 
 [node name="ShakeCamera" parent="." instance=ExtResource("17_rxdsx")]
+
+[node name="dart_test" parent="." instance=ExtResource("18_te834")]
+position = Vector2(79, 116)
+
+[node name="WaterBush" parent="." instance=ExtResource("18_lpx28")]
+position = Vector2(123, 132)

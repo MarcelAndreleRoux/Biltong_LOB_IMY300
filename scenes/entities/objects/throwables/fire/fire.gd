@@ -10,6 +10,13 @@ var remove: bool = false
 func _ready():
 	SharedSignals.distroy_throwable.connect(_remove_myself)
 	super()
+	
+	add_to_group("burn")
+	if has_node("EffectArea"):
+		$EffectArea.add_to_group("burn")
+		$EffectArea.collision_layer = 128
+		$EffectArea.collision_mask = 1
+	
 	projectile_landed.connect(_play_death)
 	animated_sprite_2d.play("idle")
 
@@ -32,3 +39,26 @@ func _remove_myself():
 func _on_animated_sprite_2d_animation_finished():
 	if remove:
 		_delete_throwable()
+
+func _on_projectile_landed():
+	if has_node("EffectArea"):
+		$EffectArea.monitoring = true
+		$EffectArea.monitorable = true
+		# Add the burn group to the effect area
+		$EffectArea.add_to_group("burn")
+	super._on_projectile_landed()
+
+func _on_effect_area_area_entered(area):
+	if area.is_in_group("dart"):
+		_remove_myself()
+	
+	if not I_landed:
+		return
+		
+	var parent = area.get_parent()
+	if parent is StaticBody2D and "plant_type" in parent:  # Check if it's a vine
+		print("Fire hit vine, notifying vine to burn")
+		parent._on_burn()  # Call new method on vine
+
+func _on_effect_area_body_entered(body):
+	print("body found", body)

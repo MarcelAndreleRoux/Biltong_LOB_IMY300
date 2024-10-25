@@ -15,17 +15,47 @@ var default_collision_shape: Vector2 = Vector2.ZERO
 var default_collision_size: Vector2 = Vector2.ZERO
 
 func _ready():
+	if has_node("Area2D"):
+		$Area2D.collision_layer = 1
+		$Area2D.collision_mask = 128  # Only look for layer 7 (fire effect area)
+	
 	if plant_type == "small":
 		animated_sprite_2d.play("small_plant_idle")
 		collision_shape_2d.disabled = true
+		already_grown = false
 	else:
 		animated_sprite_2d.play("large_plant_idle")
 		collision_shape_2d.disabled = false
+		already_grown = true
 	
 	GlobalValues.vinesSize = plant_type
 
 func _on_area_2d_area_entered(area):
-	if area.is_in_group("burn") and not already_burned:
+	if area.get_parent():
+		var parent = area.get_parent()
+		if parent.is_in_group("burn") and parent.has_method("get_landed_state") and parent.get_landed_state():
+			_on_burn()
+		elif parent.is_in_group("grow") and parent.has_method("get_landed_state") and parent.get_landed_state():
+			_on_grow()
+
+func _on_grow():
+	if not already_grown:
+		already_burned = false
+		already_grown = true
+		AudioController.play_sfx("grow")
+		was_grown = true
+		
+		# Delay enabling the collision shape slightly to ensure the growth animation updates first
+		await get_tree().create_timer(0.3).timeout
+		_update_collision_shape_size()
+		
+		if was_burned:
+			animated_sprite_2d.play("grow_burn")
+		else:
+			animated_sprite_2d.play("grow_no_burn")
+
+func _on_burn():
+	if not already_burned:
 		already_burned = true
 		already_grown = false
 		AudioController.play_sfx("burn")
@@ -35,20 +65,6 @@ func _on_area_2d_area_entered(area):
 			animated_sprite_2d.play("burn_large")
 		else:
 			animated_sprite_2d.play("burn_small")
-	
-	if area.is_in_group("grow") and not already_grown:
-		already_burned = false
-		already_grown = true
-		AudioController.play_sfx("grow")
-		was_grown = true
-		# Delay enabling the collision shape slightly to ensure the growth animation updates first
-		await get_tree().create_timer(0.5).timeout
-		_update_collision_shape_size()
-		
-		if was_burned:
-			animated_sprite_2d.play("grow_burn")
-		else:
-			animated_sprite_2d.play("grow_no_burn")
 
 func _update_collision_shape_size():
 	# Example: Adjust the collision shape size based on growth

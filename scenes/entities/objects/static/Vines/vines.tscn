@@ -181,10 +181,9 @@ script = ExtResource("1_epfxr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nkc6s")
-animation = &"grow_burn"
+animation = &"burn_large"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_ssynb")
 
@@ -192,7 +191,6 @@ shape = SubResource("RectangleShape2D_ssynb")
 collision_mask = 897
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_n5tjw")
 

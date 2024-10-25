@@ -78,15 +78,15 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_72ge8"]
-radius = 2.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_m45rm"]
 radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sri3r"]
+radius = 4.0
 
 [node name="Mushroom" type="CharacterBody2D" groups=["food", "throwables"]]
 z_index = 1
-collision_layer = 256
-collision_mask = 0
+collision_layer = 131328
+collision_mask = 536870912
 script = ExtResource("1_56ddq")
 
 [node name="MushroomSprite" type="AnimatedSprite2D" parent="."]
@@ -96,10 +96,13 @@ animation = &"land"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_72ge8")
 
-[node name="EatingArea" type="Area2D" parent="." groups=["food", "throwables"]]
+[node name="EffectArea" type="Area2D" parent="." groups=["throwable_area"]]
+collision_layer = 131072
+collision_mask = 536870976
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EatingArea"]
-shape = SubResource("CircleShape2D_m45rm")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EffectArea"]
+shape = SubResource("CircleShape2D_sri3r")
 
 [connection signal="animation_finished" from="MushroomSprite" to="." method="_on_mushroom_sprite_animation_finished"]
-[connection signal="body_entered" from="EatingArea" to="." method="_on_eating_area_body_entered"]
+[connection signal="area_entered" from="EffectArea" to="." method="_on_effect_area_area_entered"]
+[connection signal="body_entered" from="EffectArea" to="." method="_on_effect_area_body_entered"]
