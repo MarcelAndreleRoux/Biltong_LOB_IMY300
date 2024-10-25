@@ -49,8 +49,8 @@ var previous_food_visible: bool = false
 var original_inv_position: Vector2
 
 var MIN_AIM_DISTANCE: float = ProjectileConstants.MIN_AIM_DISTANCE
-var soft_max_distance: float = ProjectileConstants.SOFT_MAX_DISTANCE
-var hard_max_distance: float = ProjectileConstants.HARD_MAX_DISTANCE
+var SOFT_MAX_DISTANCE: float = ProjectileConstants.SOFT_MAX_DISTANCE
+var HARD_MAX_DISTANCE: float = ProjectileConstants.HARD_MAX_DISTANCE
 
 signal trajectory_collision_state(is_colliding: bool)
 
@@ -62,7 +62,7 @@ var is_on_cooldown: bool = false
 var active_marker: Marker2D = null
 
 var num_of_points: int = 50
-var gravity: float = -9.8
+var gravity = ProjectileConstants.GRAVITY
 var marker_count: int = 0
 var food_visible: bool = false
 
@@ -367,16 +367,13 @@ func calculate_trajectory():
 		aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
 		_end = player.position + aim_direction
 		aim_distance = MIN_AIM_DISTANCE
-	elif aim_distance > soft_max_distance:
-		# Start stretching beyond soft_max_distance towards hard_max_distance
-		var extra_distance = aim_distance - soft_max_distance
-		var stretch_factor = (hard_max_distance - soft_max_distance) / (extra_distance + (hard_max_distance - soft_max_distance))
-		aim_distance = soft_max_distance + extra_distance * stretch_factor
-		aim_distance = min(aim_distance, hard_max_distance)
+	elif aim_distance > SOFT_MAX_DISTANCE:
+		var extra_distance = aim_distance - SOFT_MAX_DISTANCE
+		var stretch_factor = (HARD_MAX_DISTANCE - SOFT_MAX_DISTANCE) / (extra_distance + (HARD_MAX_DISTANCE - SOFT_MAX_DISTANCE))
+		aim_distance = SOFT_MAX_DISTANCE + extra_distance * stretch_factor
+		aim_distance = min(aim_distance, HARD_MAX_DISTANCE)
 		aim_direction = aim_direction.normalized() * aim_distance
 		_end = player.position + aim_direction
-		
-		# Add screen shake when at max distance
 		SharedSignals.start_player_screen_shake.emit(true)
 	else:
 		SharedSignals.start_player_screen_shake.emit(false)
@@ -387,7 +384,7 @@ func calculate_trajectory():
 	var x_dis = _end.x - player.position.x
 	var y_dis = -1.0 * (_end.y - player.position.y)
 
-	var speed = sqrt((0.5 * gravity * x_dis * x_dis) / pow(cos(deg_to_rad(angle)), 2.0) / (y_dis - (tan(deg_to_rad(angle)) * x_dis)))
+	var speed = sqrt((0.5 * gravity * x_dis * x_dis) / (pow(cos(deg_to_rad(angle)), 2.0) / (y_dis - tan(deg_to_rad(angle)) * x_dis)))
 	
 	var x_component = cos(deg_to_rad(angle)) * speed
 	var y_component = sin(deg_to_rad(angle)) * speed
@@ -395,17 +392,17 @@ func calculate_trajectory():
 	var total_time = x_dis / x_component
 
 	points.clear()
+	var num_of_points = 50  # Ensure same number of points
 	for point in range(num_of_points):
 		var time = total_time * (float(point) / float(num_of_points))
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
 		points.append(player.position + Vector2(dx, dy))
-
+	
 	trajectory_line.points = points
 
 func calculate_landing_position(start_position: Vector2, direction: Vector2, target_position: Vector2) -> Vector2:
 	var distance = start_position.distance_to(target_position)
-	var gravity = 9.8
 	var angle = direction.angle()
 	
 	# Ensure the angle is not too close to 0 or 180 degrees

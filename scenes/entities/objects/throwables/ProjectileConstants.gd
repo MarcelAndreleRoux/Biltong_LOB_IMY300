@@ -8,3 +8,5 @@ const HARD_MAX_DISTANCE: float = 215.0
 # Trajectory Point Constants
 const MIN_POINTS: int = 15
 const MAX_POINTS: int = 50
+
+var GRAVITY = -9.8

@@ -49,6 +49,11 @@ var MIN_AIM_DISTANCE: float = ProjectileConstants.MIN_AIM_DISTANCE
 var soft_max_distance: float = ProjectileConstants.SOFT_MAX_DISTANCE
 var hard_max_distance: float = ProjectileConstants.HARD_MAX_DISTANCE
 
+var MIN_POINTS: int = ProjectileConstants.MIN_POINTS
+var MAX_POINTS: int = ProjectileConstants.MAX_POINTS
+
+var gravity = ProjectileConstants.GRAVITY
+
 # Box
 var is_dragging: bool = false
 var is_pushing: bool = false
@@ -406,6 +411,13 @@ func update_trajectory_raycasts():
 	get_parent().trajectory_collision_state.emit(has_collision)
 	trajectory_line.points = points
 
+func calculate_number_of_points(aim_distance: float) -> int:
+	# Use ProjectileConstants
+	aim_distance = clamp(aim_distance, ProjectileConstants.MIN_AIM_DISTANCE, ProjectileConstants.HARD_MAX_DISTANCE)
+	return int(lerp(MIN_POINTS, MAX_POINTS, 
+		(aim_distance - ProjectileConstants.MIN_AIM_DISTANCE) / 
+		(ProjectileConstants.HARD_MAX_DISTANCE - ProjectileConstants.MIN_AIM_DISTANCE)))
+
 func calculate_trajectory():
 	var aim_direction = _end - my_local_pos
 	var aim_distance = aim_direction.length()
@@ -456,14 +468,12 @@ func calculate_trajectory():
 	# Calculate trajectory points
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
-	var gravity = -9.8
 	var num_of_points = 50
 	
 	var x_dis = _end.x - my_local_pos.x
 	var y_dis = -1.0 * (_end.y - my_local_pos.y)
 	
 	var speed = sqrt((0.5 * gravity * x_dis * x_dis) / pow(cos(deg_to_rad(angle)), 2.0) / (y_dis - (tan(deg_to_rad(angle)) * x_dis)))
-	
 	var x_component = cos(deg_to_rad(angle)) * speed
 	var y_component = sin(deg_to_rad(angle)) * speed
 	
@@ -607,8 +617,6 @@ func _play_movement_animation():
 			# Ensure throw animations are false
 			animation_tree["parameters/conditions/is_idle_throw"] = false
 			animation_tree["parameters/conditions/is_run_throw"] = false
-
-
 
 func _on_box_move_area_area_entered(area):
 	if area.is_in_group("box_collider"):

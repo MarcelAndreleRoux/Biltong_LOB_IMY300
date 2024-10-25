@@ -9,7 +9,6 @@ class_name BaseThrowable
 
 signal projectile_landed
 
-var gravity: float = -9.8
 var _direction: Vector2
 var _spawnPosition: Vector2
 var _spawnRotation: float
@@ -26,11 +25,14 @@ var projectile_landed_boolean: bool = false
 var MIN_POINTS: int = ProjectileConstants.MIN_POINTS
 var MAX_POINTS: int = ProjectileConstants.MAX_POINTS
 
+var MIN_AIM_DISTANCE: float = ProjectileConstants.MIN_AIM_DISTANCE
+var SOFT_MAX_DISTANCE: float = ProjectileConstants.SOFT_MAX_DISTANCE
+var HARD_MAX_DISTANCE: float = ProjectileConstants.HARD_MAX_DISTANCE
+
+var gravity: float = ProjectileConstants.GRAVITY
+
 var time: float = 0.0
 var time_mult: float = 6.0
-
-var soft_max_distance = 180.0
-var hard_max_distance = 215.0
 
 var I_landed: bool = false
 var start_place: Vector2 = Vector2.ZERO
@@ -78,6 +80,12 @@ func _physics_process(delta: float):
 		I_landed = _currentPointIndex >= _trajectoryPoints.size() - 10
 		
 		if _currentPointIndex >= _trajectoryPoints.size():
+			var actual_landing = global_position
+			var intended_landing = _trajectoryPoints[_trajectoryPoints.size() - 1]
+			print("\nThrowable Landing Debug:")
+			print("Actual Landing Position: ", actual_landing)
+			print("Intended Landing Position: ", intended_landing)
+			print("Landing Difference: ", actual_landing.distance_to(intended_landing))
 			_on_projectile_landed()
 	else:
 		if _trajectoryPoints == null:
@@ -106,6 +114,11 @@ func initialize(position: Vector2, direction: Vector2, rotation: float, end_posi
 	_spawnPosition = position
 	_direction = direction
 	_spawnRotation = rotation
+	print("\nThrowable Initialize Debug:")
+	print("Spawn Position: ", _spawnPosition)
+	print("Target Position: ", end_position)
+	print("Intended Distance: ", _spawnPosition.distance_to(end_position))
+	
 	_trajectoryPoints = calculate_trajectory(end_position)
 	_currentPointIndex = 0
 	time = 0.0
@@ -120,36 +133,28 @@ func calculate_number_of_points(aim_distance: float) -> int:
 func calculate_trajectory(_End: Vector2) -> Array:
 	var aim_direction = _End - _spawnPosition
 	var aim_distance = aim_direction.length()
-	var is_at_max_distance = false
 	
 	if add_distance_blocker:
-		if aim_distance < ProjectileConstants.MIN_AIM_DISTANCE:
-			aim_direction = aim_direction.normalized() * ProjectileConstants.MIN_AIM_DISTANCE
+		if aim_distance < MIN_AIM_DISTANCE:
+			aim_direction = aim_direction.normalized() * MIN_AIM_DISTANCE
 			_End = _spawnPosition + aim_direction
-			aim_distance = ProjectileConstants.MIN_AIM_DISTANCE
-		elif aim_distance > ProjectileConstants.SOFT_MAX_DISTANCE:
-			var extra_distance = aim_distance - ProjectileConstants.SOFT_MAX_DISTANCE
-			
-			var stretch_factor = (ProjectileConstants.HARD_MAX_DISTANCE - ProjectileConstants.SOFT_MAX_DISTANCE) / (extra_distance + (ProjectileConstants.HARD_MAX_DISTANCE - ProjectileConstants.SOFT_MAX_DISTANCE))
-			aim_distance = ProjectileConstants.SOFT_MAX_DISTANCE + extra_distance * stretch_factor
-			
-			aim_distance = min(aim_distance, ProjectileConstants.HARD_MAX_DISTANCE)
+			aim_distance = MIN_AIM_DISTANCE
+		elif aim_distance > SOFT_MAX_DISTANCE:
+			var extra_distance = aim_distance - SOFT_MAX_DISTANCE
+			var stretch_factor = (HARD_MAX_DISTANCE - SOFT_MAX_DISTANCE) / (extra_distance + (HARD_MAX_DISTANCE - SOFT_MAX_DISTANCE))
+			aim_distance = SOFT_MAX_DISTANCE + extra_distance * stretch_factor
+			aim_distance = min(aim_distance, HARD_MAX_DISTANCE)
 			aim_direction = aim_direction.normalized() * aim_distance
 			_End = _spawnPosition + aim_direction
-			is_at_max_distance = true
-		else:
-			is_at_max_distance = false
 
-	# Rest of your trajectory calculation code...
 	var num_of_points = calculate_number_of_points(aim_distance)
-	
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
 	
 	var x_dis = _End.x - _spawnPosition.x
 	var y_dis = -1.0 * (_End.y - _spawnPosition.y)
 	
-	var speed = sqrt((0.5 * gravity * x_dis * x_dis) / pow(cos(deg_to_rad(angle)), 2.0) / (y_dis - (tan(deg_to_rad(angle)) * x_dis)))
+	var speed = sqrt((0.5 * gravity * x_dis * x_dis) / (pow(cos(deg_to_rad(angle)), 2.0) / (y_dis - tan(deg_to_rad(angle)) * x_dis)))
 	
 	var x_component = cos(deg_to_rad(angle)) * speed
 	var y_component = sin(deg_to_rad(angle)) * speed
@@ -162,6 +167,17 @@ func calculate_trajectory(_End: Vector2) -> Array:
 		var dx = time * x_component
 		var dy = -1.0 * (time * y_component + 0.5 * gravity * time * time)
 		points.append(_spawnPosition + Vector2(dx, dy))
+	
+	var actual_distance = (_End - _spawnPosition).length()
+	var final_point = points[points.size() - 1]
+	var trajectory_distance = (final_point - _spawnPosition).length()
+	
+	print("\nThrowable Trajectory Debug:")
+	print("Target Distance: ", actual_distance)
+	print("Final Point Distance: ", trajectory_distance)
+	print("Difference: ", abs(actual_distance - trajectory_distance))
+	print("Final Point Position: ", final_point)
+	print("Target Position: ", _End)
 	
 	return points
 
