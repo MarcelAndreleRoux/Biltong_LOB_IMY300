@@ -33,9 +33,9 @@ func _ready():
 func _on_area_2d_area_entered(area):
 	if area.get_parent():
 		var parent = area.get_parent()
-		if parent.is_in_group("burn") and parent.has_method("get_landed_state") and parent.get_landed_state():
+		if parent.is_in_group("burn") and parent.has_method("get_landed_state") and parent.get_vines_landed_state():
 			_on_burn()
-		elif parent.is_in_group("grow") and parent.has_method("get_landed_state") and parent.get_landed_state():
+		elif parent.is_in_group("grow") and parent.has_method("get_landed_state") and parent.get_vines_landed_state():
 			_on_grow()
 
 func _on_grow():

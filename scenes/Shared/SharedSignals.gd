@@ -38,6 +38,9 @@ signal button_active
 # Throw
 signal throw_direction
 
+# Hedgehog
+signal shake_hedgehog
+
 # C_box
 signal lizard_connection
 signal conductor_connection

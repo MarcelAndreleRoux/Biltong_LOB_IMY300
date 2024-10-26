@@ -14,6 +14,7 @@ var play: bool = false
 var confirm_exit: bool = false
 
 func _ready():
+	get_tree().paused = false
 	confirm_quit.visible = false
 	animation_player.play("fade_in_white")
 	GameMusicController.stop_music()
@@ -48,7 +49,16 @@ func _on_cancel_pressed():
 
 func _on_confirm_pressed():
 	AudioController.play_sfx("button_select")
-	confirm_exit = true
+	# Stop any running animations
+	animation_player.stop()
+	# Optional: Play a fade out animation before quitting
+	if animation_player.has_animation("fade_out"):
+		animation_player.play("fade_out")
+		# Wait for animation to finish before quitting
+		await animation_player.animation_finished
+	# Cleanup before quitting
+	MenuAudioController.stop_music()
+	get_tree().quit()
 
 func _on_exit_pressed():
 	AudioController.play_sfx("button_select")
@@ -70,8 +80,6 @@ func _on_select_finished():
 		MenuAudioController.stop_music()
 		GameMusicController.play_music()
 		get_tree().change_scene_to_file("res://scenes/world/levels_production/level_1.tscn")
-	elif confirm_exit:
-		get_tree().quit()
 	else:
 		margin_container.visible = true
 		lob.visible = true

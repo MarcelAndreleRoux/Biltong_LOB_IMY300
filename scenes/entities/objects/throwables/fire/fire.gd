@@ -50,7 +50,7 @@ func _on_projectile_landed():
 
 func _on_effect_area_area_entered(area):
 	if area.is_in_group("dart"):
-		_remove_myself()
+		_delete_throwable()
 	
 	if not I_landed:
 		return
@@ -59,6 +59,3 @@ func _on_effect_area_area_entered(area):
 	if parent is StaticBody2D and "plant_type" in parent:  # Check if it's a vine
 		print("Fire hit vine, notifying vine to burn")
 		parent._on_burn()  # Call new method on vine
-
-func _on_effect_area_body_entered(body):
-	print("body found", body)

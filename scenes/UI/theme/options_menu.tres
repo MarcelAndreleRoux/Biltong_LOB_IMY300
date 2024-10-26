@@ -8,3 +8,6 @@ Label/colors/font_outline_color = Color(1, 1, 1, 0)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
 Label/font_sizes/font_size = 20
 Label/fonts/font = ExtResource("1_3egw8")
+OptionButton/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+OptionButton/font_sizes/font_size = 20
+OptionButton/fonts/font = ExtResource("1_3egw8")

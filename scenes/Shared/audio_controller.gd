@@ -6,6 +6,9 @@ var fade_speed = 0.1
 var min_db = -80  # Minimum volume in decibels (silence)
 var max_db = 0    # Maximum volume in decibels (full volume)
 
+func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
 func play_sfx(song_name: String):
 	var audio_player = get_node(song_name)
 	if audio_player and audio_player is AudioStreamPlayer2D:

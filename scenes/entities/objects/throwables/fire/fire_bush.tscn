@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://djwrb4bfed3up"]
+[gd_scene load_steps=30 format=3 uid="uid://djwrb4bfed3up"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/fire/fire_bush.gd" id="1_r3l62"]
 [ext_resource type="Texture2D" uid="uid://ccglwb7yftcqm" path="res://assets/sprites/objects/throwables/fire/Firebush_idle_inarea.png" id="2_t0cdg"]
@@ -158,6 +158,14 @@ animations = [{
 "speed": 4.0
 }]
 
+[sub_resource type="Curve" id="Curve_ijqcm"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.496269, 0.87), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_m3n6w"]
+offsets = PackedFloat32Array(0, 0.245833, 0.445833, 0.7875, 1)
+colors = PackedColorArray(1, 0.803922, 0, 1, 1, 0.435294, 0, 1, 1, 0.231373, 0, 1, 0.41, 0.41, 0.41, 1, 0.411765, 0.411765, 0.411765, 0)
+
 [node name="FireBush" type="StaticBody2D"]
 script = ExtResource("1_r3l62")
 
@@ -166,8 +174,9 @@ shape = SubResource("RectangleShape2D_iakft")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kjper")
-animation = &"pickup"
-frame_progress = 0.0709027
+animation = &"idle"
+frame = 5
+frame_progress = 0.493698
 
 [node name="ActionArea" type="Area2D" parent="."]
 
@@ -186,6 +195,36 @@ stream = ExtResource("4_j4j2l")
 autoplay = true
 max_distance = 50.0
 bus = &"Sfx"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(0, 2)
+emitting = false
+amount = 20
+lifetime = 1.5
+one_shot = true
+speed_scale = 0.79
+explosiveness = 1.0
+randomness = 0.12
+lifetime_randomness = 0.12
+direction = Vector2(30, 40)
+spread = 120.0
+gravity = Vector2(0, -70)
+initial_velocity_min = 6.95
+initial_velocity_max = 27.78
+angular_velocity_min = -290.0
+angular_velocity_max = -10.0
+damping_min = 25.694
+damping_max = 48.436
+angle_min = -270.0
+angle_max = 210.0
+scale_amount_min = 0.5
+scale_amount_max = 1.5
+scale_amount_curve = SubResource("Curve_ijqcm")
+split_scale = true
+scale_curve_x = null
+scale_curve_y = null
+color_ramp = SubResource("Gradient_m3n6w")
 
 [connection signal="body_entered" from="ActionArea" to="." method="_on_action_area_body_entered"]
 [connection signal="body_exited" from="ActionArea" to="." method="_on_action_area_body_exited"]

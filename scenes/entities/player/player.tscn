@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://wdw24tbqrqxv"]
+[gd_scene load_steps=105 format=3 uid="uid://wdw24tbqrqxv"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_3avnw"]
 [ext_resource type="Shader" path="res://scenes/entities/player/trajectory_line.gdshader" id="2_64tba"]
@@ -1501,6 +1501,9 @@ size = Vector2(5, 4)
 [sub_resource type="CircleShape2D" id="CircleShape2D_a8jf0"]
 radius = 20.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdspv"]
+size = Vector2(10, 15)
+
 [node name="Player" type="CharacterBody2D" groups=["activation", "player"]]
 z_index = 2
 y_sort_enabled = true
@@ -1607,6 +1610,14 @@ shape = SubResource("CircleShape2D_a8jf0")
 [node name="throwhold" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("25_3qtaa")
 bus = &"Sfx"
+
+[node name="DeathArea" type="Area2D" parent="." groups=["death_area"]]
+collision_layer = 524288
+collision_mask = 65
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathArea"]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_mdspv")
 
 [connection signal="area_entered" from="PickupArea" to="." method="_on_pickup_area_area_entered"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]

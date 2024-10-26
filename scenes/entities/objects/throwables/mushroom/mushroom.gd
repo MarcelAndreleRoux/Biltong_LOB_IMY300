@@ -28,17 +28,14 @@ func _remove_myself():
 	remove_food = true
 	mushroom_sprite.play("land")
 
-func _remove_myself_gone():
-	_delete_throwable()
-
 func _on_mushroom_sprite_animation_finished():
 	if remove_food:
 		_delete_throwable()
 
 func _on_effect_area_area_entered(area):
+	if area.is_in_group("dart"):
+		queue_free()
+	
 	if area.is_in_group("hedgehog_area"):
 		if landed:
 			_remove_myself()
-	
-	if area.is_in_group("dart"):
-		_remove_myself_gone()

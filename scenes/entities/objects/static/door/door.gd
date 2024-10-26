@@ -4,6 +4,8 @@ extends StaticBody2D
 @export var required_connections: int = 1
 
 @onready var animation_tree = $AnimationTree
+@onready var door_close = $door_close
+@onready var door_open = $door_open
 
 var doorState: bool = false
 # Keep track of which buttons are currently pressed using a dictionary
@@ -35,7 +37,7 @@ func open_door():
 	if doorState:
 		return
 	doorState = true
-	AudioController.play_sfx("door_open")
+	door_open.play()
 	animation_tree.set("parameters/conditions/is_opening", true)
 	animation_tree.set("parameters/conditions/is_closing", false)
 
@@ -43,7 +45,7 @@ func close_door():
 	if !doorState:
 		return
 	doorState = false
-	AudioController.play_sfx("door_close")
+	door_close.play()
 	animation_tree.set("parameters/conditions/is_opening", false)
 	animation_tree.set("parameters/conditions/is_closing", true)
 

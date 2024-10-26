@@ -4,6 +4,7 @@ extends StaticBody2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var action_button_press = $ActionButtonPress
 @onready var fire = $fire
+@onready var cpu_particles_2d = $CPUParticles2D
 
 var already_picked: bool = false
 var player_in_area: bool = false
@@ -26,6 +27,7 @@ func _process(delta):
 		already_picked = true
 		GlobalValues.can_swap_fire = true  # Set global flag to track item
 		SharedSignals.item_pickup.emit()
+		cpu_particles_2d.emitting = true
 		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FIRE)
 		SharedSignals.inventory_changed.emit(GlobalValues.INVENTORY_SELECT.FIRE)
 		fire.stop()

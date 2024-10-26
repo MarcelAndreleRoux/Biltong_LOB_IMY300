@@ -77,7 +77,9 @@ shape = SubResource("CapsuleShape2D_howdr")
 
 [node name="click" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_tuskx")
-volume_db = -19.066
+volume_db = -15.0
+max_distance = 400.0
+bus = &"Sfx"
 
 [node name="DetectBox" type="Area2D" parent="."]
 

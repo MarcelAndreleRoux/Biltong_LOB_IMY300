@@ -22,6 +22,8 @@
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_wh5ws")
 
+[node name="ShakeCamera" parent="." instance=ExtResource("15_bh8rl")]
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_bc261")
 format = 2
@@ -38,7 +40,7 @@ position = Vector2(245, 258)
 [node name="Player" parent="." instance=ExtResource("4_vugwu")]
 position = Vector2(352, 37)
 
-[node name="RayCast2D" type="RayCast2D" parent="Player"]
+[node name="PlayerRaycast" type="RayCast2D" parent="Player"]
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 current = true
@@ -93,8 +95,6 @@ position = Vector2(193, 268)
 
 [node name="AudioPausedMenu" parent="." instance=ExtResource("14_yj5w4")]
 visible = false
-
-[node name="ShakeCamera" parent="." instance=ExtResource("15_bh8rl")]
 
 [node name="WaterBush" parent="." instance=ExtResource("17_hg6e6")]
 position = Vector2(395, 44)

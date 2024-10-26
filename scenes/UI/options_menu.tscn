@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://pjr0tdqacf2g"]
+[gd_scene load_steps=8 format=3 uid="uid://pjr0tdqacf2g"]
 
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_grbyv"]
 [ext_resource type="Script" path="res://scenes/UI/options_menu.gd" id="2_akspg"]
 [ext_resource type="Script" path="res://scenes/UI/music_volume_slider.gd" id="3_iifh5"]
 [ext_resource type="Theme" uid="uid://cuucoj82fet30" path="res://scenes/UI/theme/options_menu.tres" id="3_jk5jw"]
 [ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="4_sulik"]
+[ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="6_edrlq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ftji"]
 bg_color = Color(0.129412, 0.129412, 0.129412, 0.831373)
@@ -20,40 +21,48 @@ theme = ExtResource("1_grbyv")
 script = ExtResource("2_akspg")
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 480.0
-offset_bottom = 270.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_6ftji")
 
-[node name="Options_Label" type="Label" parent="."]
+[node name="Options_Label" type="Label" parent="." groups=["has_description"]]
 layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 177.0
-offset_right = 303.0
-offset_bottom = 37.0
+offset_right = -177.0
+offset_bottom = -233.0
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 40
 text = "Options"
+autowrap_mode = 2
 
 [node name="Back" type="Button" parent="."]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 116.0
 offset_top = 244.0
-offset_right = 366.0
-offset_bottom = 261.0
+offset_right = -114.0
+offset_bottom = -9.0
 size_flags_horizontal = 4
 text = "Back"
 
 [node name="AudioSettings" type="VBoxContainer" parent="."]
 layout_direction = 1
 layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 7.0
 offset_top = 40.0
-offset_right = 198.0
-offset_bottom = 145.0
+offset_right = -282.0
+offset_bottom = -125.0
 theme = ExtResource("3_jk5jw")
 
-[node name="Label" type="Label" parent="AudioSettings"]
+[node name="AudioLabel" type="Label" parent="AudioSettings" groups=["has_description"]]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_sulik")
 theme_override_font_sizes/font_size = 17
@@ -65,7 +74,7 @@ size_flags_vertical = 4
 theme = ExtResource("3_jk5jw")
 theme_override_constants/separation = -5
 
-[node name="MasterVolume" type="Label" parent="AudioSettings/VBoxContainer"]
+[node name="MasterVolume" type="Label" parent="AudioSettings/VBoxContainer" groups=["has_description"]]
 layout_mode = 2
 text = "Master Volume"
 
@@ -77,7 +86,7 @@ value = 1.0
 script = ExtResource("3_iifh5")
 bus_name = "Master"
 
-[node name="MusicVolume" type="Label" parent="AudioSettings/VBoxContainer"]
+[node name="MusicVolume" type="Label" parent="AudioSettings/VBoxContainer" groups=["has_description"]]
 layout_mode = 2
 text = "Music Volume"
 
@@ -89,7 +98,7 @@ value = 1.0
 script = ExtResource("3_iifh5")
 bus_name = "Music"
 
-[node name="SFXVolume" type="Label" parent="AudioSettings/VBoxContainer"]
+[node name="SFXVolume" type="Label" parent="AudioSettings/VBoxContainer" groups=["has_description"]]
 layout_mode = 2
 text = "SFX Volume"
 
@@ -101,36 +110,153 @@ value = 1.0
 script = ExtResource("3_iifh5")
 bus_name = "Sfx"
 
-[node name="GameQuality" type="VBoxContainer" parent="."]
+[node name="DisplaySettings" type="VBoxContainer" parent="."]
 layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 252.0
 offset_top = 40.0
-offset_right = 322.0
-offset_bottom = 54.0
+offset_right = -158.0
+offset_bottom = -216.0
 theme = ExtResource("3_jk5jw")
 
-[node name="Label" type="Label" parent="GameQuality"]
+[node name="DisplayLabel" type="Label" parent="DisplaySettings" groups=["has_description"]]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_sulik")
 theme_override_font_sizes/font_size = 17
-text = "Display"
+text = "Display Settings
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DisplaySettings"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DisplaySettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer" groups=["has_description"]]
+layout_mode = 2
+text = "Resolution:"
+
+[node name="ResolutionOption" type="OptionButton" parent="DisplaySettings/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="DisplaySettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="WindowLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer2" groups=["has_description"]]
+layout_mode = 2
+text = "Window Mode:"
+
+[node name="WindowMode" type="OptionButton" parent="DisplaySettings/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="DisplaySettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="VLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer3" groups=["has_description"]]
+layout_mode = 2
+text = "VSync:
+"
+
+[node name="VsyncToggle" type="CheckButton" parent="DisplaySettings/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="DisplaySettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="FpsLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer4" groups=["has_description"]]
+layout_mode = 2
+text = "FPS:"
+
+[node name="FPSLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "0"
 
 [node name="Other" type="VBoxContainer" parent="."]
 layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 152.0
-offset_right = 68.0
-offset_bottom = 166.0
+offset_right = -412.0
+offset_bottom = -104.0
 theme = ExtResource("3_jk5jw")
 
-[node name="Label" type="Label" parent="Other"]
+[node name="GameplayLabel" type="Label" parent="Other" groups=["has_description"]]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_sulik")
 theme_override_font_sizes/font_size = 17
 text = "Gameplay"
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="Other"]
+layout_mode = 2
+
+[node name="CensorshipLabel" type="Label" parent="Other/HBoxContainer3" groups=["has_description"]]
+layout_mode = 2
+text = "Censored Content"
+
+[node name="CensorCheckBox" type="CheckBox" parent="Other/HBoxContainer3"]
+layout_mode = 2
+button_pressed = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Other"]
+layout_mode = 2
+
+[node name="ShakeLabel" type="Label" parent="Other/HBoxContainer" groups=["has_description"]]
+layout_mode = 2
+text = "Screen Shake"
+
+[node name="ShakeCheckBox" type="CheckBox" parent="Other/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+
+[node name="Descrpition" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 250.0
+offset_top = 161.0
+offset_right = -35.0
+offset_bottom = -33.0
+theme = ExtResource("3_jk5jw")
+
+[node name="DescriptionLabel" type="Label" parent="Descrpition" groups=["has_description"]]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_sulik")
+theme_override_font_sizes/font_size = 17
+text = "Description"
+
+[node name="Description" type="Label" parent="Descrpition"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+autowrap_mode = 3
+
+[node name="ButtonSelectOptions" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_edrlq")
+bus = &"Sfx"
+
+[connection signal="mouse_entered" from="Options_Label" to="." method="_on_options_label_mouse_entered"]
+[connection signal="mouse_entered" from="Back" to="." method="_on_back_mouse_entered"]
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="mouse_entered" from="AudioSettings/AudioLabel" to="." method="_on_audio_label_mouse_entered"]
+[connection signal="mouse_entered" from="AudioSettings/VBoxContainer/MasterVolume" to="." method="_on_master_volume_mouse_entered"]
 [connection signal="changed" from="AudioSettings/VBoxContainer/volume_slider3" to="." method="_on_volume_slider_3_changed"]
 [connection signal="value_changed" from="AudioSettings/VBoxContainer/volume_slider3" to="." method="_on_volume_slider_3_value_changed"]
+[connection signal="mouse_entered" from="AudioSettings/VBoxContainer/MusicVolume" to="." method="_on_music_volume_mouse_entered"]
 [connection signal="value_changed" from="AudioSettings/VBoxContainer/volume_slider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="mouse_entered" from="AudioSettings/VBoxContainer/SFXVolume" to="." method="_on_sfx_volume_mouse_entered"]
 [connection signal="value_changed" from="AudioSettings/VBoxContainer/volume_slider2" to="." method="_on_volume_slider_2_value_changed"]
+[connection signal="mouse_entered" from="DisplaySettings/DisplayLabel" to="." method="_on_display_label_mouse_entered"]
+[connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer/ResLabel" to="." method="_on_res_label_mouse_entered"]
+[connection signal="item_selected" from="DisplaySettings/VBoxContainer/HBoxContainer/ResolutionOption" to="." method="_on_resolution_option_item_selected"]
+[connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer2/WindowLabel" to="." method="_on_window_label_mouse_entered"]
+[connection signal="item_selected" from="DisplaySettings/VBoxContainer/HBoxContainer2/WindowMode" to="." method="_on_window_mode_item_selected"]
+[connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer3/VLabel" to="." method="_on_v_label_mouse_entered"]
+[connection signal="toggled" from="DisplaySettings/VBoxContainer/HBoxContainer3/VsyncToggle" to="." method="_on_vsync_toggle_toggled"]
+[connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer4/FpsLabel" to="." method="_on_fps_label_mouse_entered"]
+[connection signal="mouse_entered" from="Other/GameplayLabel" to="." method="_on_gameplay_label_mouse_entered"]
+[connection signal="mouse_entered" from="Other/HBoxContainer3/CensorshipLabel" to="." method="_on_censorship_label_mouse_entered"]
+[connection signal="mouse_entered" from="Other/HBoxContainer/ShakeLabel" to="." method="_on_shake_label_mouse_entered"]
+[connection signal="toggled" from="Other/HBoxContainer/ShakeCheckBox" to="." method="_on_shake_check_box_toggled"]
+[connection signal="finished" from="ButtonSelectOptions" to="." method="_on_button_select_options_finished"]

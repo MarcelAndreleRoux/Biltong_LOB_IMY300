@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjksoqqo2olnc"]
+[gd_scene load_steps=7 format=3 uid="uid://cjksoqqo2olnc"]
 
 [ext_resource type="Texture2D" uid="uid://dhjrs6u1jrxlc" path="res://assets/sprites/objects/static/wire/Wires-Tileset.png" id="1_8dreu"]
 [ext_resource type="Script" path="res://scenes/world/wires/wire_horizontal.gd" id="1_vs71v"]
@@ -33,22 +33,16 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tut27"]
 size = Vector2(16, 2)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uxgje"]
-size = Vector2(30, 6)
-
-[node name="Horizontal" type="StaticBody2D" groups=["wires"]]
+[node name="WireHorizontal" type="StaticBody2D" groups=["wires"]]
 collision_layer = 2048
 collision_mask = 2048
 script = ExtResource("1_vs71v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dve5d")
-animation = &"on"
+animation = &"off"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_tut27")
-
-[node name="connection_area" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="connection_area"]
-shape = SubResource("RectangleShape2D_uxgje")
+disabled = true

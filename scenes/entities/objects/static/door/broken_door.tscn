@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://85307446xv20"]
+[gd_scene load_steps=17 format=3 uid="uid://85307446xv20"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/door/broken_door.gd" id="1_4aq5k"]
 [ext_resource type="Texture2D" uid="uid://b2llov2emibqp" path="res://assets/sprites/objects/static/door/Broken-Door.png" id="1_usg6a"]
+[ext_resource type="AudioStream" uid="uid://b24uekxnlub6q" path="res://assets/soundeffects/Everything_door/electricity-sound-6066.mp3" id="4_0l36c"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k2ea3"]
 atlas = ExtResource("1_usg6a")
@@ -75,7 +76,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 10.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -89,14 +90,69 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ovo6w"]
 size = Vector2(32, 32)
 
+[sub_resource type="Curve" id="Curve_isbkj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [node name="BrokenDoor" type="StaticBody2D"]
 script = ExtResource("1_4aq5k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q2to1")
-animation = &"start"
+frame_progress = 0.590679
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_ovo6w")
+
+[node name="disconnect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0l36c")
+max_distance = 200.0
+attenuation = 1.93187
+bus = &"Sfx"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(-6, 5)
+amount = 4
+lifetime = 0.5
+speed_scale = 0.8
+explosiveness = 1.0
+randomness = 0.12
+direction = Vector2(10, 100)
+spread = 180.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 6.95
+initial_velocity_max = 27.78
+angle_min = 100.0
+angle_max = 100.0
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_isbkj")
+split_scale = true
+scale_curve_x = null
+scale_curve_y = null
+color = Color(1, 0.803922, 0, 1)
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(6, -7)
+amount = 4
+lifetime = 0.5
+speed_scale = 0.8
+explosiveness = 1.0
+randomness = 0.12
+direction = Vector2(10, 100)
+spread = 180.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 6.95
+initial_velocity_max = 27.78
+angle_min = 100.0
+angle_max = 100.0
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_isbkj")
+split_scale = true
+scale_curve_x = null
+scale_curve_y = null
+color = Color(1, 0.803922, 0, 1)

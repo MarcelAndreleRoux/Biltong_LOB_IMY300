@@ -5,7 +5,8 @@ enum HedgehogState {
 	IDLE,
 	ANGRY,
 	SHOOTING,
-	ANGRY_UP
+	ANGRY_UP,
+	STOMP
 }
 
 @export var dart_scene: PackedScene
@@ -21,21 +22,33 @@ enum HedgehogState {
 var current_state: HedgehogState = HedgehogState.IDLE
 var direction: Vector2 = Vector2.ZERO  # Direction the hedgehog is facing
 
+var can_kill_player: bool = false
+
+var tracked_projectiles: Array = []
+var should_despawn: bool = false
+
 # Throwable
-var tracked_projectile: BaseThrowable = null
-var can_shoot_at_throwable: bool = true
+var can_spike_throwable: bool = true
 
 # Timers
 var angry_timer: Timer
 var shoot_timer: Timer
 var angry_up_timer: Timer
-var throwable_shoot_timer: Timer
+var throwable_spike_timer: Timer
 
-var player_visible: bool = false  # Track player visibility
-var shoot: bool = false  # Fail-safe to ensure shooting only when allowed
+var player_visible: bool = false
+var shoot: bool = false
 var projectile: BaseThrowable = null
 
+var has_throwable_to_stomp: bool = false
+var can_stomp: bool = true
+
+var pending_stomp_projectile: BaseThrowable = null
+var stomp: bool = false
+
 func _ready():
+	animation_tree.active = true
+	
 	# Initialize timers
 	angry_timer = Timer.new()
 	angry_timer.wait_time = angry_duration
@@ -54,11 +67,11 @@ func _ready():
 	angry_up_timer.timeout.connect(_on_angry_up_timer_timeout)
 	add_child(angry_up_timer)
 	
-	throwable_shoot_timer = Timer.new()
-	throwable_shoot_timer.wait_time = 0.5
-	throwable_shoot_timer.one_shot = true
-	throwable_shoot_timer.timeout.connect(_on_throwable_shoot_timer_timeout)
-	add_child(throwable_shoot_timer)
+	throwable_spike_timer = Timer.new()
+	throwable_spike_timer.wait_time = 0.3
+	throwable_spike_timer.one_shot = true
+	throwable_spike_timer.timeout.connect(_on_throwable_spike_timer_timeout)
+	add_child(throwable_spike_timer)
 	
 	# Connect to global signals
 	SharedSignals.player_spotted.connect(_on_player_spotted)
@@ -77,7 +90,6 @@ func _on_angry_up_timer_timeout():
 
 # Set the state of the hedgehog
 func _set_state(new_state: HedgehogState):
-	
 	if new_state == HedgehogState.SHOOTING and current_state != HedgehogState.ANGRY:
 		shoot_sound.play()
 		return
@@ -89,6 +101,8 @@ func _set_state(new_state: HedgehogState):
 			shoot = false
 			_stop_all_timers()
 			_update_animation_parameters()
+			# Check for throwables to stomp
+			_check_for_throwables_to_stomp()
 		HedgehogState.ANGRY:
 			shoot = false
 			_stop_all_timers()
@@ -104,55 +118,80 @@ func _set_state(new_state: HedgehogState):
 			_stop_all_timers()
 			if not angry_up_timer.is_stopped():
 				angry_up_timer.stop()
-			angry_up_timer.start()  # Start the timer for transitioning back to IDLE
+			angry_up_timer.start()
 			_update_animation_parameters()
+		HedgehogState.STOMP:
+			stomp = true
+			shoot = false
+			_stop_all_timers()
+			_update_animation_parameters()
+			await get_tree().create_timer(0.9).timeout
+			has_throwable_to_stomp = false
+			_set_state(HedgehogState.IDLE)
 
-func _start_tracking_projectile(projectile: BaseThrowable):
-	tracked_projectile = projectile
-	set_physics_process(true)
-	# Only shoot if we can
-	if can_shoot_at_throwable:
-		_shoot_at_throwable(projectile.global_position)
+func _physics_process(_delta):
+	if current_state == HedgehogState.IDLE:
+		_check_for_throwables_to_stomp()
+	
+	# Check all tracked projectiles
+	if not shoot:
+		var i = tracked_projectiles.size() - 1
+		while i >= 0:
+			var projectile = tracked_projectiles[i]
+			if is_instance_valid(projectile):
+				if projectile.get_landed_state():
+					projectile._remove_myself()
+					tracked_projectiles.remove_at(i)
+			else:
+				# Remove invalid projectiles
+				tracked_projectiles.remove_at(i)
+			i -= 1
 
-func _physics_process(delta):
-	if tracked_projectile and is_instance_valid(tracked_projectile):
-		# Only track if projectile hasn't landed
-		if tracked_projectile.has_method("get_landed_state") and !tracked_projectile.get_landed_state():
-			direction = (tracked_projectile.global_position - global_position).normalized()
-			# Only shoot if the timer allows it
-			if can_shoot_at_throwable:
-				_shoot_at_throwable(tracked_projectile.global_position)
-		else:
-			tracked_projectile = null
-			if current_state == HedgehogState.SHOOTING:
-				_set_state(HedgehogState.IDLE)
+func _check_for_throwables_to_stomp():
+	# Check for any landed throwables in the detection area
+	has_throwable_to_stomp = false
+	for projectile in tracked_projectiles:
+		if projectile.get_landed_state():
+			has_throwable_to_stomp = true
+			break
+	
+	if has_throwable_to_stomp and can_stomp:
+		_set_state(HedgehogState.STOMP)
 
 # Update animation parameters based on current direction and state
 func _update_animation_parameters():
 	direction = (GlobalValues.player_position - global_position).normalized()
 
 	# Reset all conditions
-	animation_tree["parameters/conditions/is_idle"] = false
-	animation_tree["parameters/conditions/is_angry"] = false
-	animation_tree["parameters/conditions/is_shooting"] = false
-	animation_tree["parameters/conditions/is_angry_up"] = false
+	animation_tree.set("parameters/conditions/is_idle", false)
+	animation_tree.set("parameters/conditions/is_stomp", false)
+	animation_tree.set("parameters/conditions/is_angry", false)
+	animation_tree.set("parameters/conditions/is_shooting", false)
+	animation_tree.set("parameters/conditions/is_angry_up", false)
 
 	# Set animation conditions based on the current state
 	match current_state:
+		HedgehogState.STOMP:
+			animation_tree.set("parameters/conditions/is_stomp", true)
+			var playback = animation_tree.get("parameters/playback")
+			if playback:
+				playback.travel("stomp")
 		HedgehogState.IDLE:
-			animation_tree["parameters/conditions/is_idle"] = true
+			animation_tree.set("parameters/conditions/is_idle", true)
 		HedgehogState.ANGRY:
-			animation_tree["parameters/conditions/is_angry"] = true
+			animation_tree.set("parameters/conditions/is_angry", true)
 		HedgehogState.SHOOTING:
-			animation_tree["parameters/conditions/is_shooting"] = true
+			animation_tree.set("parameters/conditions/is_shooting", true)
 		HedgehogState.ANGRY_UP:
-			animation_tree["parameters/conditions/is_angry_up"] = true
+			animation_tree.set("parameters/conditions/is_angry_up", true)
 
-	# Update blend positions
-	animation_tree["parameters/idle/blend_position"] = direction
-	animation_tree["parameters/angry/blend_position"] = direction
-	animation_tree["parameters/shoot/blend_position"] = direction
-	animation_tree["parameters/angry_up/blend_position"] = direction
+	_update_blend_positions(direction)
+
+func _update_blend_positions(dir: Vector2):
+	var blend_nodes = ["idle", "angry", "shoot", "angry_up", "stomp"]
+	for node in blend_nodes:
+		var path = "parameters/" + node + "/blend_position"
+		animation_tree.set(path, dir)
 
 # Handle player spotted
 func _on_player_spotted():
@@ -202,8 +241,11 @@ func _shoot_at_player():
 func _spawn_dart(direction: Vector2):
 	var dart_instance = dart_scene.instantiate()
 	dart_instance.global_position = global_position
-	dart_instance.target_position = GlobalValues.player_position  # Set the target position to the player's position
+	dart_instance.target_position = GlobalValues.player_position
 	get_tree().current_scene.add_child(dart_instance)
+
+func shake_camera_call():
+	SharedSignals.shake_hedgehog.emit()
 
 # Stop all active timers
 func _stop_all_timers():
@@ -214,39 +256,27 @@ func _stop_all_timers():
 func _change_state():
 	projectile._remove_myself()
 
-func _shoot_at_throwable(target_pos: Vector2):
-	if dart_scene == null or !can_shoot_at_throwable:
-		return
-	
-	var dart_instance = dart_scene.instantiate()
-	dart_instance.global_position = global_position
-	dart_instance.target_position = target_pos
-	dart_instance.speed = 400.0
-	
-	get_tree().current_scene.add_child(dart_instance)
-	shoot_sound.play()
-	
-	# Start the cooldown
-	can_shoot_at_throwable = false
-	throwable_shoot_timer.start()
+func _on_throwable_spike_timer_timeout():
+	can_spike_throwable = true
 
-func _on_throwable_shoot_timer_timeout():
-	can_shoot_at_throwable = true
-
-func _on_detection_area_area_entered(area: Area2D):
-	var parent = area.get_parent()
-	
-	if area.is_in_group("throwable_area"):
-		if parent and parent.has_method("get_landed_state"):
-			if not parent.get_landed_state():
-				_start_tracking_projectile(parent)
+func check_player_kill():
+	if can_kill_player:
+		SharedSignals.player_killed.emit("peg")
 
 func _on_area_2d_body_entered(body):
+	if body.is_in_group("player"):
+		can_kill_player = true
+		_set_state(HedgehogState.STOMP)
+	else:
+		can_kill_player = false
+	
 	if body.is_in_group("throwables"):
-		var target_pos = body.global_position
-		# Set direction towards throwable
-		direction = (target_pos - global_position).normalized()
-		# Shoot at the throwable
-		_shoot_at_throwable(target_pos)
-		# Start tracking the projectile
-		_start_tracking_projectile(body)
+		if not tracked_projectiles.has(body):
+			tracked_projectiles.append(body)
+
+func _on_area_2d_body_exited(body):
+	tracked_projectiles.erase(body)
+
+func _on_animation_tree_animation_finished(anim_name: StringName):
+	if stomp:
+		_set_state(HedgehogState.IDLE)

@@ -87,6 +87,7 @@ func _ready():
 	SharedSignals.dart_hit_wall.connect(_shake_more)
 	SharedSignals.start_player_screen_shake.connect(_start_player_screen_shake)
 	SharedSignals.is_scared_signal.connect(_on_is_scared_signal)
+	SharedSignals.shake_hedgehog.connect(_shake_shake)
 	trajectory_collision_state.connect(_on_trajectory_collision)
 	
 	if player_raycast:
@@ -152,11 +153,14 @@ func _start_player_screen_shake(state: bool):
 func _on_game_finished():
 	win_state.win()
 
+func _shake_shake():
+	shake_camera.apply_shake_jump()
+
 func _shake():
 	shake_camera.apply_shake_semi_small()
 
 func _shake_more():
-	shake_camera.apply_shake_semi_small()
+	shake_camera.apply_shake_smaller()
 
 func _physics_process(_delta):
 	if player_raycast:

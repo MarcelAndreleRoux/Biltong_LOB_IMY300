@@ -24,6 +24,7 @@ func _physics_process(delta):
 		
 		# Handle collision with the player or other objects
 		if collider.is_in_group("player"):
+			SharedSignals.player_killed.emit("peg")
 			queue_free()
 		else:
 			queue_free()
@@ -45,7 +46,8 @@ func set_target_position(new_target_position: Vector2):
 	target_position = new_target_position
 	update_rotation_and_velocity()
 
-func _on_detection_area_body_entered(body):
-	if body.is_in_group("player"):
-		SharedSignals.dart_hit_wall.emit()
+func _on_detection_area_area_entered(area):
+	if area.is_in_group("death_area"):
 		SharedSignals.player_killed.emit("peg")
+		SharedSignals.dart_hit_wall.emit()
+		queue_free()

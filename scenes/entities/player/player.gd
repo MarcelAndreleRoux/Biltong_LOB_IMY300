@@ -468,7 +468,7 @@ func calculate_trajectory():
 	# Calculate trajectory points
 	var DOT = Vector2(1.0, 0.0).dot(aim_direction.normalized())
 	var angle = 90 - 45 * DOT
-	var num_of_points = 50
+	var num_of_points = calculate_number_of_points(aim_distance)
 	
 	var x_dis = _end.x - my_local_pos.x
 	var y_dis = -1.0 * (_end.y - my_local_pos.y)

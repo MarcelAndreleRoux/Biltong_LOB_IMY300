@@ -39,11 +39,8 @@ func _on_animated_sprite_2d_animation_finished():
 		_delete_throwable()
 
 func _on_effect_area_area_entered(area):
-	if area.is_in_group("hedgehog_area"):
-		print("Found hedgehog")
-	
 	if area.is_in_group("dart"):
-		_remove_myself()
+		_delete_throwable()
 	
 	if not I_landed:
 		return
@@ -52,7 +49,3 @@ func _on_effect_area_area_entered(area):
 	if parent is StaticBody2D and "plant_type" in parent:  # Check if it's a vine
 		print("Water hit vine, notifying vine to grow")
 		parent._on_grow()  # Call new method on vine
-
-
-func _on_effect_area_body_entered(body):
-	print("body found", body)
