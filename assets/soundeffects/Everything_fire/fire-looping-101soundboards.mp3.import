@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/fire-looping-101soundboards.mp3-a35a8108290db
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

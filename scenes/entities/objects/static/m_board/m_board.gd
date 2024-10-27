@@ -19,6 +19,7 @@ var found_link: bool = false
 var door_link_found: String
 
 func _ready():
+	add_to_group("m_board")
 	if connector_name == "one":
 		animation_name = "one_connector"
 		animated_sprite_2d.play("one_connector_off")
@@ -60,7 +61,7 @@ func _on_connection_check(state: bool):
 		if animation_name == "one_connector":
 			animated_sprite_2d.play("one_connector_on")
 			if found_link and door_link_id == door_link_found:
-				SharedSignals.doorState.emit(door_link_id, true)
+				SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
 			connected_sound.play()
 		elif animation_name == "two_connector":
 			connected_bodies += 1
@@ -70,14 +71,14 @@ func _on_connection_check(state: bool):
 			elif connected_bodies >= 2:
 				animated_sprite_2d.play("two_connector_on")
 				if found_link and door_link_id == door_link_found:
-					SharedSignals.doorState.emit(door_link_id, true)
+					SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
 				connected_sound.play()
 	else:
 		is_conductor_charged = false
 		if animation_name == "one_connector":
 			animated_sprite_2d.play("one_connector_off")
 			if found_link and door_link_id == door_link_found:
-				SharedSignals.doorState.emit(door_link_id, false)
+				SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 			disconnect_sound.play()
 		elif animation_name == "two_connector":
 			connected_bodies -= 1
@@ -85,91 +86,92 @@ func _on_connection_check(state: bool):
 				connected_bodies = 0
 				animated_sprite_2d.play("two_connector_off")
 				if found_link and door_link_id == door_link_found:
-					SharedSignals.doorState.emit(door_link_id, false)
+					SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 				disconnect_sound.play()
 			elif connected_bodies == 1:
 				animated_sprite_2d.play("two_connector_semi")
+				if found_link and door_link_id == door_link_found:
+					SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 				disconnect_sound.play()
 
+# In m_board.gd, update the receive_electricity function:
 func receive_electricity():
-	is_conductor_charged = true
-	SharedSignals.lizard_connection.emit(self)
-	if animation_name == "one_connector":
-		animated_sprite_2d.play("one_connector_on")
-		if found_link and door_link_id == door_link_found:
-			SharedSignals.doorState.emit(door_link_id, true)
-		connected_sound.play()
-	elif animation_name == "two_connector":
-		connected_bodies += 1
-		if connected_bodies == 1:
-			animated_sprite_2d.play("two_connector_semi")
-			connect_sound.play()
-		elif connected_bodies >= 2:
-			animated_sprite_2d.play("two_connector_on")
+	if not is_conductor_charged:
+		is_conductor_charged = true
+		SharedSignals.lizard_connection.emit(self)
+		if animation_name == "one_connector":
+			animated_sprite_2d.play("one_connector_on")
 			if found_link and door_link_id == door_link_found:
-				SharedSignals.doorState.emit(door_link_id, true)
+				SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
 			connected_sound.play()
+		elif animation_name == "two_connector":
+			connected_bodies += 1
+			if connected_bodies == 1:
+				animated_sprite_2d.play("two_connector_semi")
+				connect_sound.play()
+			elif connected_bodies >= 2:
+				animated_sprite_2d.play("two_connector_on")
+				if found_link and door_link_id == door_link_found:
+					SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
+				connected_sound.play()
 
 func stop_electricity():
 	is_conductor_charged = false
 	if animation_name == "one_connector":
 		animated_sprite_2d.play("one_connector_off")
 		if found_link and door_link_id == door_link_found:
-			SharedSignals.doorState.emit(door_link_id, false)
+			SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 		disconnect_sound.play()
 	elif animation_name == "two_connector":
 		connected_bodies -= 1
 		if connected_bodies <= 0:
 			connected_bodies = 0
 			animated_sprite_2d.play("two_connector_off")
+			if found_link and door_link_id == door_link_found:
+				SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 			disconnect_sound.play()
 		elif connected_bodies == 1:
 			animated_sprite_2d.play("two_connector_semi")
+			if found_link and door_link_id == door_link_found:
+				SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 			disconnect_sound.play()
 
 func _on_connection_area_body_entered(body):
 	if body.is_in_group("conductor"):
 		has_conductor_box = true
+		# Check if conductor is already charged
+		if body.charged_state:
+			receive_electricity()
 	
-	if body.is_in_group("electrical"):
-		var lizard_state = body.get_electrical_state()
-		if lizard_state:
-			is_conductor_charged = true
-			SharedSignals.lizard_connection.emit(self)
-			if animation_name == "one_connector":
-				animated_sprite_2d.play("one_connector_on")
-				if found_link and door_link_id == door_link_found:
-					SharedSignals.doorState.emit(door_link_id, true)
-				connected_sound.play()
-			elif animation_name == "two_connector":
-				connected_bodies += 1
-				if connected_bodies == 1:
-					animated_sprite_2d.play("two_connector_semi")
-					connect_sound.play()
-				elif connected_bodies >= 2:
-					animated_sprite_2d.play("two_connector_on")
-					if found_link and door_link_id == door_link_found:
-						SharedSignals.doorState.emit(door_link_id, true)
-					connected_sound.play()
+	elif body.is_in_group("electrical"):
+		if body.get_electrical_state():
+			receive_electricity()
 
 func _on_connection_area_body_exited(body):
 	if body.is_in_group("conductor"):
 		has_conductor_box = false
 		is_conductor_charged = false
+		if animation_name != "default":
+			if found_link and door_link_id == door_link_found:
+				SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 	
 	if body.is_in_group("electrical"):
 		is_conductor_charged = false
 		if animation_name == "one_connector":
 			animated_sprite_2d.play("one_connector_off")
 			if found_link and door_link_id == door_link_found:
-				SharedSignals.doorState.emit(door_link_id, false)
+				SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 			disconnect_sound.play()
 		elif animation_name == "two_connector":
 			connected_bodies -= 1
 			if connected_bodies <= 0:
 				connected_bodies = 0
 				animated_sprite_2d.play("two_connector_off")
+				if found_link and door_link_id == door_link_found:
+					SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 				disconnect_sound.play()
 			elif connected_bodies == 1:
 				animated_sprite_2d.play("two_connector_semi")
+				if found_link and door_link_id == door_link_found:
+					SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 				disconnect_sound.play()

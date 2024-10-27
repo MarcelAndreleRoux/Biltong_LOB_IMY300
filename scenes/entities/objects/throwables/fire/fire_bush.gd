@@ -16,6 +16,7 @@ func _ready():
 		collision_shape_2d.disabled = true
 		already_picked = true
 		animated_sprite_2d.play("pickup")
+		fire.stop()
 		return
 	
 	collision_shape_2d.disabled = true

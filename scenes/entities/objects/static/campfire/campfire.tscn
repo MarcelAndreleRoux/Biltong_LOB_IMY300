@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://cvepijo572tly"]
+
+[ext_resource type="Texture2D" uid="uid://gdkolyyffiss" path="res://assets/sprites/objects/static/Campfire/Campfire.png" id="1_h6wai"]
+[ext_resource type="Script" path="res://scenes/entities/objects/static/campfire/campfire.gd" id="1_vebbf"]
+[ext_resource type="AudioStream" uid="uid://ctg5sutwujra2" path="res://assets/soundeffects/Everything_fire/fire-looping-101soundboards.mp3" id="3_7roxb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbp3a"]
+atlas = ExtResource("1_h6wai")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3246d"]
+atlas = ExtResource("1_h6wai")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxm7c"]
+atlas = ExtResource("1_h6wai")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iiw2c"]
+atlas = ExtResource("1_h6wai")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jv4st"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbp3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3246d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxm7c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iiw2c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04iee"]
+size = Vector2(12, 6)
+
+[node name="Campfire" type="StaticBody2D" groups=["environment", "fire"]]
+z_index = 1
+y_sort_enabled = true
+collision_layer = 3145728
+collision_mask = 0
+script = ExtResource("1_vebbf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_jv4st")
+frame_progress = 0.380298
+offset = Vector2(0, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_04iee")
+disabled = true
+
+[node name="FirePlace" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_7roxb")
+volume_db = 10.0
+max_distance = 50.0
+bus = &"Sfx"

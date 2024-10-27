@@ -25,6 +25,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6ftji")
 
 [node name="Options_Label" type="Label" parent="." groups=["has_description"]]
@@ -219,6 +221,8 @@ offset_left = 250.0
 offset_top = 161.0
 offset_right = -35.0
 offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("3_jk5jw")
 
 [node name="DescriptionLabel" type="Label" parent="Descrpition" groups=["has_description"]]
@@ -257,6 +261,7 @@ bus = &"Sfx"
 [connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer4/FpsLabel" to="." method="_on_fps_label_mouse_entered"]
 [connection signal="mouse_entered" from="Other/GameplayLabel" to="." method="_on_gameplay_label_mouse_entered"]
 [connection signal="mouse_entered" from="Other/HBoxContainer3/CensorshipLabel" to="." method="_on_censorship_label_mouse_entered"]
+[connection signal="toggled" from="Other/HBoxContainer3/CensorCheckBox" to="." method="_on_censor_check_box_toggled"]
 [connection signal="mouse_entered" from="Other/HBoxContainer/ShakeLabel" to="." method="_on_shake_label_mouse_entered"]
 [connection signal="toggled" from="Other/HBoxContainer/ShakeCheckBox" to="." method="_on_shake_check_box_toggled"]
 [connection signal="finished" from="ButtonSelectOptions" to="." method="_on_button_select_options_finished"]

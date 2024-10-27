@@ -8,6 +8,8 @@ signal drag_box(position: Vector2, direction: Vector2)
 
 # Nodes
 @onready var animation_tree = $AnimationTree
+@onready var censored_animation_tree = $CensoredNudeAnimationTree
+@onready var nude_animation_tree = $NudeAnimationTree
 @onready var trajectory_line = $TrajectoryLine
 @onready var base_world = get_parent()
 @onready var throwhold = $throwhold
@@ -21,6 +23,19 @@ signal drag_box(position: Vector2, direction: Vector2)
 @onready var death_sound = $death_sound
 
 @export var add_distance_blocker: bool = true
+
+# Add these to your existing signals
+signal skin_changed(skin_type: String)
+
+# Add these to your existing enums/constants
+enum PlayerSkin {
+	NUDE,
+	CENSORED_NUDE,
+	HAZMAT
+}
+
+var current_skin: int = PlayerSkin.NUDE
+var has_hazmat: bool = false
 
 var cooldown_timer: Timer = null
 
@@ -81,7 +96,21 @@ var _end
 var my_local_pos
 
 func _ready():
-	animation_tree.active = true
+	animation_tree.active = false
+	nude_animation_tree.active = false
+	censored_animation_tree.active = false
+	
+	GlobalValues.censorship_changed.connect(_on_censorship_changed)
+	
+	# First check if hazmat is picked up
+	if GlobalValues.hazmat_picked_up:
+		current_skin = PlayerSkin.HAZMAT
+	else:
+		var censorship_enabled = GlobalValues.get_censorship_enabled()
+		current_skin = PlayerSkin.CENSORED_NUDE if censorship_enabled else PlayerSkin.NUDE
+	
+	_update_active_animation_tree()
+	
 	can_throw_proj = GlobalValues.can_throw
 	can_aim_throw = GlobalValues.can_throw
 	
@@ -94,6 +123,11 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
 	SharedSignals.push_player_forward.connect(start_dash)
+
+func _on_censorship_changed():
+	if not GlobalValues.hazmat_picked_up:
+		current_skin = PlayerSkin.CENSORED_NUDE if GlobalValues.get_censorship_enabled() else PlayerSkin.NUDE
+		_update_active_animation_tree()
 
 func _on_item_pickup():
 	can_aim_throw = true
@@ -115,6 +149,29 @@ func update_speed():
 		speed = 40
 	else:
 		speed = 100
+
+func _update_active_animation_tree():
+	# Deactivate all animation trees
+	animation_tree.active = false
+	nude_animation_tree.active = false
+	censored_animation_tree.active = false
+	
+	# Activate the appropriate animation tree
+	match current_skin:
+		PlayerSkin.NUDE:
+			nude_animation_tree.active = true
+		PlayerSkin.CENSORED_NUDE:
+			censored_animation_tree.active = true
+		PlayerSkin.HAZMAT:
+			animation_tree.active = true
+
+func acquire_hazmat():
+	if not has_hazmat:
+		has_hazmat = true
+		GlobalValues.hazmat_picked_up = true
+		current_skin = PlayerSkin.HAZMAT
+		_update_active_animation_tree()
+		skin_changed.emit("hazmat")
 
 func _physics_process(delta):
 	if is_dashing:
@@ -222,13 +279,21 @@ func stop_throwhold_sound():
 			throwhold.stop()
 
 func _handle_movement_input():
+	# Modify your existing _handle_movement_input function
 	currentVelocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-
+	
 	if currentVelocity != Vector2.ZERO:
 		direction = currentVelocity.normalized()
 		currentVelocity *= speed
 	else:
 		currentVelocity = Vector2.ZERO
+	
+	# Update animations based on current skin
+	match current_skin:
+		PlayerSkin.NUDE, PlayerSkin.CENSORED_NUDE:
+			_play_nude_movement_animation()
+		PlayerSkin.HAZMAT:
+			_play_movement_animation()
 
 func start_dash():
 	is_dashing = true
@@ -272,20 +337,18 @@ func _handle_action_input():
 	# Toggle dragging mode when 'E' is pressed
 	if player_in_box_area:
 		if Input.is_action_just_pressed("toggle_drag"):
-			drag_toggle_mode = !drag_toggle_mode  # Toggle the drag mode on/off
+			drag_toggle_mode = !drag_toggle_mode
 			
 			# If we're in the area and toggled on, start dragging
 			if drag_toggle_mode and player_in_box_area:
 				is_dragging = true
 				pickup.play()
 				SharedSignals.is_dragging_box.emit(true)
-				print("Dragging started")
 			else:
 				is_dragging = false
 				box_drop.play()
 				SharedSignals.is_dragging_box.emit(false)
-				print("Dragging stopped")
-			update_speed()  # Update speed when is_dragging changes
+			update_speed()
 
 func _start_cooldown_timer():
 	is_on_cooldown = true
@@ -560,6 +623,21 @@ func apply_trajectory_shake():
 
 	# Update the trajectory line with shaken points
 	trajectory_line.points = points
+
+func _play_nude_movement_animation():
+	var animation_tree_to_use = nude_animation_tree if current_skin == PlayerSkin.NUDE else censored_animation_tree
+	
+	if currentVelocity == Vector2.ZERO:
+		animation_tree_to_use["parameters/conditions/is_nude_idle"] = true
+		animation_tree_to_use["parameters/conditions/is_nude_run"] = false
+	else:
+		animation_tree_to_use["parameters/conditions/is_nude_idle"] = false
+		animation_tree_to_use["parameters/conditions/is_nude_run"] = true
+		
+	# Update blend positions
+	if direction != Vector2.ZERO:
+		animation_tree_to_use["parameters/nude_idle/blend_position"] = direction
+		animation_tree_to_use["parameters/nude_run/blend_position"] = direction
 
 func _play_movement_animation():
 	if is_on_cooldown and throw_clicked:

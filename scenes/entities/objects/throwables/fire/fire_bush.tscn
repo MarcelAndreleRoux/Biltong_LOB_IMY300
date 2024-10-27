@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://ctg5sutwujra2" path="res://assets/soundeffects/Everything_fire/fire-looping-101soundboards.mp3" id="4_j4j2l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iakft"]
-size = Vector2(4, 4)
+size = Vector2(10, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ng5wi"]
 atlas = ExtResource("2_t0cdg")
@@ -167,16 +167,20 @@ offsets = PackedFloat32Array(0, 0.245833, 0.445833, 0.7875, 1)
 colors = PackedColorArray(1, 0.803922, 0, 1, 1, 0.435294, 0, 1, 1, 0.231373, 0, 1, 0.41, 0.41, 0.41, 1, 0.411765, 0.411765, 0.411765, 0)
 
 [node name="FireBush" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_r3l62")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_iakft")
+disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kjper")
 animation = &"idle"
 frame = 5
 frame_progress = 0.493698
+offset = Vector2(0, -1)
 
 [node name="ActionArea" type="Area2D" parent="."]
 

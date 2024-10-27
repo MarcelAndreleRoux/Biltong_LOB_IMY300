@@ -7,6 +7,10 @@ extends Control
 @onready var lob = $Lob
 @onready var shake_camera = $ShakeCamera
 @onready var confirm_quit = $MarginContainer/TextureRect2/ConfirmQuit
+@onready var new_game = $MarginContainer/TextureRect2/VBoxContainer/NewGame
+@onready var load_saves = $MarginContainer/TextureRect2/VBoxContainer/LoadSaves
+@onready var continue_button = $MarginContainer/TextureRect2/VBoxContainer/Continue
+@onready var play_button = $MarginContainer/TextureRect2/VBoxContainer/Play
 
 var exit: bool = false
 var options: bool = false
@@ -102,3 +106,13 @@ func _on_cancel_mouse_entered():
 
 func _on_confirm_mouse_entered():
 	AudioController.play_sfx("button_hover")
+
+
+func _on_continue_pressed():
+	pass # Replace with function body.
+
+func _on_new_game_pressed():
+	pass # Replace with function body.
+
+func _on_load_saves_pressed():
+	pass # Replace with function body.

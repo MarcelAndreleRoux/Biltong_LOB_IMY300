@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var animation_player = $AnimationPlayer
 @onready var change_scene = $ChangeScene
+@onready var camera_2d = $Camera2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

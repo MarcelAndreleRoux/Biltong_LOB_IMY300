@@ -1109,19 +1109,19 @@ animations = [{
 radius = 14.0
 height = 58.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ilvfv"]
-radius = 9.125
-height = 27.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7onox"]
+size = Vector2(24.125, 44)
 
 [node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
 z_index = 1
+y_sort_enabled = true
 collision_layer = 16
 collision_mask = 62524
 script = ExtResource("1_i4f4n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_3bmot")
-offset = Vector2(0, -7)
+offset = Vector2(0, -8)
 hframes = 6
 
 [node name="LizardNav" type="NavigationAgent2D" parent="."]
@@ -1130,7 +1130,6 @@ target_desired_distance = 5.0
 avoidance_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(1, -3)
 shape = SubResource("RectangleShape2D_75p2i")
 
@@ -1176,9 +1175,10 @@ bus = &"Sfx"
 
 [node name="ElectricArea" type="Area2D" parent="."]
 collision_layer = 1024
-collision_mask = 65535
+collision_mask = 3211263
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ElectricArea"]
+visible = false
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_gcd5s")
 animation = &"activate"
@@ -1193,16 +1193,17 @@ shape = SubResource("CapsuleShape2D_solqv")
 debug_color = Color(1, 1, 1, 0.419608)
 
 [node name="ThrowCheckArea" type="Area2D" parent="."]
-collision_mask = 897
+collision_mask = 3146625
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ThrowCheckArea"]
 visible = false
-position = Vector2(-2.5, -5.125)
+position = Vector2(0.999994, -3.06249)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_ilvfv")
+shape = SubResource("RectangleShape2D_7onox")
 
 [connection signal="velocity_computed" from="LizardNav" to="." method="_on_lizard_nav_velocity_computed"]
 [connection signal="area_entered" from="ElectricArea" to="." method="_on_electric_area_area_entered"]
 [connection signal="body_entered" from="ElectricArea" to="." method="_on_electric_area_body_entered"]
 [connection signal="body_exited" from="ElectricArea" to="." method="_on_electric_area_body_exited"]
 [connection signal="area_entered" from="ThrowCheckArea" to="." method="_on_throw_check_area_area_entered"]
+[connection signal="body_entered" from="ThrowCheckArea" to="." method="_on_throw_check_area_body_entered"]

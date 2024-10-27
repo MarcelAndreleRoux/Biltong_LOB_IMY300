@@ -9,6 +9,7 @@ extends Control
 @onready var vsync_toggle = $DisplaySettings/VBoxContainer/HBoxContainer3/VsyncToggle
 @onready var fps_label = $DisplaySettings/VBoxContainer/HBoxContainer4/FPSLabel
 @onready var screen_shake_toggle = $Other/HBoxContainer3/ShakeCheckBox
+@onready var shake_check_box = $Other/HBoxContainer/ShakeCheckBox
 
 @onready var description = $Descrpition/Description
 
@@ -69,6 +70,11 @@ func _ready():
 	setup_display_options()
 	load_current_settings()
 	setup_label_mouse_properties()
+	
+	if CameraManager.is_screen_shake_enabled():
+		shake_check_box.button_pressed = true
+	else:
+		shake_check_box.button_pressed = false
 	
 	if has_node("/root/AudioController"):
 		get_node("/root/AudioController").process_mode = Node.PROCESS_MODE_ALWAYS
@@ -249,3 +255,6 @@ func _on_back_mouse_entered():
 func _on_shake_check_box_toggled(button_pressed: bool):
 	print("toggle shake:", button_pressed)
 	CameraManager.toggle_screen_shake(button_pressed)
+
+func _on_censor_check_box_toggled(toggled_on: bool):
+	GlobalValues.set_censorship_enabled(toggled_on)

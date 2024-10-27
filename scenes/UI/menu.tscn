@@ -259,13 +259,11 @@ layout_mode = 2
 text = "Play"
 
 [node name="Continue" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "Continue
 "
 
 [node name="NewGame" type="Button" parent="MarginContainer/TextureRect2/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "New Game"
 
@@ -377,7 +375,10 @@ libraries = {
 
 [connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/Play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/LoadSaves" to="." method="_on_levels_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/LoadSaves" to="." method="_on_load_saves_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/Option" to="." method="_on_option_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/TextureRect2/VBoxContainer/Option" to="." method="_on_option_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/TextureRect2/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]

@@ -32,6 +32,20 @@ var vinesSize: String
 var turtle_original_pos: Vector2
 var player_position: Vector2
 
+var hazmat_picked_up: bool = false
+
+# Censorship
+signal censorship_changed
+var censorship_enabled: bool = false
+
+func get_censorship_enabled() -> bool:
+	return censorship_enabled
+
+func set_censorship_enabled(enabled: bool):
+	censorship_enabled = enabled
+	censorship_changed.emit()
+
+# Player
 func update_player_position(new_position: Vector2):
 	player_position = new_position
 

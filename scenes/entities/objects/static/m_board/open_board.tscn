@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://cdvjn8f7lqufc"]
+
+[ext_resource type="Script" path="res://scenes/entities/objects/static/m_board/open_board.gd" id="1_uvann"]
+[ext_resource type="Texture2D" uid="uid://cme1jvaq5gi74" path="res://assets/sprites/objects/electricity/conductors/OpenBoard.png" id="1_ybfj3"]
+[ext_resource type="AudioStream" uid="uid://t7t4mqdbaio2" path="res://assets/soundeffects/electrical/Electricity Sounds [1 HOUR].mp3" id="3_t62je"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7q4ig"]
+size = Vector2(10, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5lkn0"]
+size = Vector2(44, 27)
+
+[sub_resource type="Curve" id="Curve_2d8xp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_uoqjn"]
+colors = PackedColorArray(1, 0.882353, 0, 1, 1, 1, 1, 0)
+
+[node name="OpenBoard" type="StaticBody2D"]
+z_index = 1
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_uvann")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_7q4ig")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ybfj3")
+
+[node name="DetectionAreaOpenBoard" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 65535
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionAreaOpenBoard"]
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_5lkn0")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(-5, 3)
+emitting = false
+amount = 5
+lifetime = 0.6
+speed_scale = 0.6
+explosiveness = 1.0
+randomness = 0.12
+spread = 180.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+linear_accel_min = 6.85
+linear_accel_max = 21.92
+radial_accel_min = -35.62
+radial_accel_max = 19.18
+tangential_accel_min = -43.84
+tangential_accel_max = 31.51
+damping_min = 5.48
+damping_max = 10.959
+angle_min = -329.2
+angle_max = 198.6
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_2d8xp")
+split_scale = true
+scale_curve_x = null
+scale_curve_y = null
+color = Color(1, 0.803922, 0, 1)
+color_ramp = SubResource("Gradient_uoqjn")
+
+[node name="StaticSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_t62je")
+volume_db = 10.0
+max_distance = 50.0
+bus = &"Sfx"
+
+[connection signal="body_entered" from="DetectionAreaOpenBoard" to="." method="_on_detection_area_open_board_body_entered"]
+[connection signal="body_exited" from="DetectionAreaOpenBoard" to="." method="_on_detection_area_open_board_body_exited"]

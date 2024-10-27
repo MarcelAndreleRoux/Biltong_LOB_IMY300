@@ -10,6 +10,8 @@ var shown_once: bool = false
 
 var charged_state: bool = false
 
+var charge_timer: Timer
+
 func _ready():
 	action_button_press.visible = false
 	animatedSprite.play("idle_off")
@@ -45,20 +47,32 @@ func _some_waiting_timer():
 	add_child(grow_timer)
 	grow_timer.start()
 
+func _show_timeout():
+	action_button_press.visible = false
+
 func receive_electricity():
-	charged_state = true
-	animatedSprite.play("turn_on")
-	SharedSignals.lizard_connection.emit(self)
-	SharedSignals.lizard_connection_made.emit(true)
+	if not charged_state:  # Prevent double triggers
+		charged_state = true
+		animatedSprite.play("turn_on")
+		SharedSignals.lizard_connection.emit(self)
+		SharedSignals.lizard_connection_made.emit(true)
 
 func stop_electricity():
+	if charge_timer:
+		charge_timer.queue_free()
+	charge_timer = Timer.new()
+	charge_timer.wait_time = 1.5  # 1.5 second delay
+	charge_timer.one_shot = true
+	charge_timer.timeout.connect(_on_charge_timer_timeout)
+	add_child(charge_timer)
+	charge_timer.start()
+
+func _on_charge_timer_timeout():
 	charged_state = false
 	animatedSprite.play("idle_off")
 	SharedSignals.lizard_connection_made.emit(false)
-
-func _show_timeout():
-	$show_timer.queue_free()
-	action_button_press.visible = false
+	charge_timer.queue_free()
+	charge_timer = null
 
 func _is_dragging(state: bool):
 	if state and charged_state:

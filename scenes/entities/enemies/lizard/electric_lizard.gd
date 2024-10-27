@@ -24,7 +24,8 @@ var was_water: bool = false
 enum State {
 	PATROL,
 	PATROL_WAIT,
-	LICK_EYE
+	LICK_EYE,
+	POST_LICK_IDLE
 }
 
 var state = State.PATROL  # Initialize to PATROL by default
@@ -133,18 +134,31 @@ func _on_patrol_wait_timeout():
 		state = State.PATROL
 
 func start_lick_eye_timer():
-	# Play 'lick_eye' animation for 2 seconds
 	_update_animation_parameters()
 	
 	var lick_timer = Timer.new()
-	lick_timer.wait_time = 2.0  # 2 seconds for 'lick_eye' animation
+	lick_timer.wait_time = 1.0
 	lick_timer.one_shot = true
 	lick_timer.timeout.connect(_on_lick_eye_timeout)
 	add_child(lick_timer)
 	lick_timer.start()
 
 func _on_lick_eye_timeout():
-	# After 'lick_eye' animation, proceed to next patrol point
+	# Instead of going directly to patrol, transition to post-lick idle
+	state = State.POST_LICK_IDLE
+	start_post_lick_idle_timer()
+
+func start_post_lick_idle_timer():
+	# Add a short idle period after licking
+	var post_lick_timer = Timer.new()
+	post_lick_timer.wait_time = 0.5  # Half second idle after licking
+	post_lick_timer.one_shot = true
+	post_lick_timer.timeout.connect(_on_post_lick_idle_timeout)
+	add_child(post_lick_timer)
+	post_lick_timer.start()
+
+func _on_post_lick_idle_timeout():
+	# Now proceed to next patrol point
 	patrol_index = (patrol_index + 1) % patrol_points.size()
 	navigation_agent_2d.target_position = patrol_points[patrol_index]
 	state = State.PATROL
@@ -163,7 +177,7 @@ func _update_animation_parameters():
 			State.PATROL:
 				animated_sprite_2d.visible = false
 				animation_tree["parameters/conditions/is_run_on"] = true
-			State.PATROL_WAIT:
+			State.PATROL_WAIT, State.POST_LICK_IDLE:
 				animated_sprite_2d.play("activate")
 				animated_sprite_2d.visible = true
 				animation_tree["parameters/conditions/is_idle_on"] = true
@@ -176,7 +190,7 @@ func _update_animation_parameters():
 			State.PATROL:
 				animated_sprite_2d.visible = false
 				animation_tree["parameters/conditions/is_run_off"] = true
-			State.PATROL_WAIT:
+			State.PATROL_WAIT, State.POST_LICK_IDLE:
 				animated_sprite_2d.stop()
 				animated_sprite_2d.visible = false
 				animation_tree["parameters/conditions/is_idle_off"] = true
@@ -197,10 +211,10 @@ func _on_electric_area_body_entered(body):
 		SharedSignals.player_killed.emit("pop")
 		_player_zap(body)
 	
-	if body.is_in_group("conductor") or body.is_in_group("m_board"):
-		nearby_objects.append(body)
-		if is_on:
-			body.receive_electricity() 
+	if (body.is_in_group("conductor") or body.is_in_group("m_board")) and is_on:
+		if not body in nearby_objects:
+			nearby_objects.append(body)
+			body.receive_electricity()
 
 func _on_electric_area_body_exited(body):
 	if body in nearby_objects:
@@ -257,21 +271,33 @@ func _on_throw_check_area_area_entered(area):
 		
 		projectile = area.get_parent()
 		
-		if projectile and projectile.get_landed_state():
+		if projectile and projectile.get_vines_landed_state():
 			projectile.projectile_landed.connect(_change_state)
 
+func _on_throw_check_area_body_entered(body):
+	if body.is_in_group("environment"):
+		if body.is_in_group("fire"):
+			was_water = false
+			_change_state()
+		if body.is_in_group("water"):
+			wet_walk.play()
+			was_water = true
+			_change_state()
+
 func _change_state():
+	var previous_state = is_on
 	if was_water:
 		is_on = false
 	else:
 		is_on = true
 	
-	SharedSignals.lizard_state_change.emit(is_on)
-	
-	# Immediately handle the connection/disconnection of nearby objects
-	if is_on:
-		for obj in nearby_objects:
-			obj.receive_electricity()
-	else:
-		for obj in nearby_objects:
-			obj.stop_electricity()
+	if previous_state != is_on:
+		SharedSignals.lizard_state_change.emit(is_on)
+		
+		# Handle existing connections
+		if is_on:
+			for obj in nearby_objects:
+				obj.receive_electricity()
+		else:
+			for obj in nearby_objects:
+				obj.stop_electricity()

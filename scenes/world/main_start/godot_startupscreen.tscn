@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://djx7wt3s0yqf2"]
 
 [ext_resource type="Script" path="res://scenes/world/main_start/godot_startupscreen.gd" id="1_3eng2"]
-[ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_fdbcf"]
+[ext_resource type="Script" path="res://scenes/world/main_start/Camera2D.gd" id="2_82l0x"]
 [ext_resource type="Texture2D" uid="uid://cmvij47ylbdr7" path="res://assets/sprites/UI/Title/splash/Godot_other1-sheet.png" id="3_pgktt"]
 [ext_resource type="FontFile" uid="uid://b4koppylwngvs" path="res://assets/sprites/UI/Font/PressStart2P-Regular.ttf" id="4_06yyd"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="5_dlcvl"]
@@ -141,18 +141,42 @@ tracks/3/path = NodePath("Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.6, 1.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.6, 1.4, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [0, 1, 2]
+"values": [0, 1, 2, 1]
 }
-tracks/4/type = "method"
+tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("ShakeCamera")
+tracks/4/path = NodePath("CanvasLayer:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"times": PackedFloat32Array(2.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(2.4, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Camera2D")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(1.2, 2.4),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -162,30 +186,6 @@ tracks/4/keys = {
 "args": [],
 "method": &"apply_shake_smaller"
 }]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("CanvasLayer:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(2.4),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("CanvasLayer/ColorRect:color")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(2.4, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x43jy"]
@@ -197,7 +197,9 @@ _data = {
 [node name="GodotStartupscreen" type="Node2D"]
 script = ExtResource("1_3eng2")
 
-[node name="ShakeCamera" parent="." instance=ExtResource("2_fdbcf")]
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(241, 134)
+script = ExtResource("2_82l0x")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_g8wac")

@@ -200,6 +200,7 @@ _data = {
 
 [node name="Box" type="RigidBody2D" groups=["activation", "box", "object", "special_object"]]
 z_index = 1
+y_sort_enabled = true
 collision_layer = 36
 collision_mask = 31
 gravity_scale = 0.0

@@ -39,14 +39,14 @@ func _physics_process(_delta: float) -> void:
 			
 			# Check if movement aligns with allowed direction
 			if move_direction == "horizontal":
-				# For horizontal, we care more about x movement than y
-				if abs(normalized_dir.x) > abs(normalized_dir.y):
-					transition_direction = Vector2(normalized_dir.x, 0).normalized()
+				# For horizontal transitions, check if there's significant horizontal movement
+				if abs(normalized_dir.x) > 0.1:  # Lower threshold to catch diagonal movement
+					transition_direction = Vector2(sign(normalized_dir.x), 0).normalized()
 					handle_transition()
 			else: # vertical
-				# For vertical, we care more about y movement than x
-				if abs(normalized_dir.y) > abs(normalized_dir.x):
-					transition_direction = Vector2(0, normalized_dir.y).normalized()
+				# For vertical transitions, check if there's significant vertical movement
+				if abs(normalized_dir.y) > 0.1:  # Lower threshold to catch diagonal movement
+					transition_direction = Vector2(0, sign(normalized_dir.y)).normalized()
 					handle_transition()
 	
 	if is_instance_valid(player_body):
