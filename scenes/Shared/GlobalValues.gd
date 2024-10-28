@@ -71,20 +71,12 @@ func set_inventory_select(value: int):
 		SharedSignals.inventory_changed.emit(value)
 
 const LEVEL_PATHS = [
-	"res://scenes/world/levels_production/level_1.tscn",
-	"res://scenes/world/levels_production/level_2.tscn",
-	"res://scenes/world/levels_production/level_3.tscn",
-	"res://scenes/world/levels_production/level_4.tscn",
-	"res://scenes/world/levels_production/level_5.tscn",
-	"res://scenes/world/levels_production/level_6.tscn",
-	"res://scenes/world/levels_production/level_7.tscn",
-	"res://scenes/world/levels_production/level_8.tscn",
-	"res://scenes/world/levels_production/level_9.tscn",
-	"res://scenes/world/levels_production/level_10.tscn"
+	"res://scenes/world/levels_new/level_0.tscn",
+	"res://scenes/world/levels_new/level_1.tscn",
 ]
 
 func change_scene_to_next_level():
-	if LevelManager.current_level == 9:  # If we are at the last level (level 10)
+	if LevelManager.current_level == LEVEL_PATHS.size() - 1:  # If we are at the last level (level 10)
 		game_done.emit()
 	else:
 		LevelManager.current_level += 1  # Increment the level counter

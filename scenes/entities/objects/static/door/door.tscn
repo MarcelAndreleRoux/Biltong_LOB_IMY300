@@ -470,6 +470,8 @@ states/open_normal/position = Vector2(589, 183)
 transitions = ["Start", "closed_normal", SubResource("AnimationNodeStateMachineTransition_073os"), "closed_normal", "open_normal", SubResource("AnimationNodeStateMachineTransition_qn27u"), "open_normal", "close_normal", SubResource("AnimationNodeStateMachineTransition_h4lwl"), "close_normal", "open_normal", SubResource("AnimationNodeStateMachineTransition_r0qrq"), "close_normal", "closed_normal", SubResource("AnimationNodeStateMachineTransition_npd3c")]
 
 [node name="Door" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_c253f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

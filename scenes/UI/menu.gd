@@ -83,7 +83,7 @@ func _on_select_finished():
 		GlobalValues.playing_game = true
 		MenuAudioController.stop_music()
 		GameMusicController.play_music()
-		get_tree().change_scene_to_file("res://scenes/world/levels_production/level_1.tscn")
+		get_tree().change_scene_to_file("res://scenes/world/levels_new/level_0.tscn")
 	else:
 		margin_container.visible = true
 		lob.visible = true

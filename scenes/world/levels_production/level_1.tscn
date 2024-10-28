@@ -103,9 +103,6 @@ position = Vector2(326, 204)
 [node name="Box" parent="." instance=ExtResource("25_dc2e1")]
 position = Vector2(402, 187)
 
-[node name="Inventory" parent="." instance=ExtResource("26_smm4u")]
-position = Vector2(245, 258)
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(241, 135)
 
@@ -137,3 +134,8 @@ door_link_id = "2"
 [node name="Button3" parent="." instance=ExtResource("14_3o1o2")]
 position = Vector2(296, 56)
 door_link_id = "2"
+
+[node name="InventoryCanvas" type="CanvasLayer" parent="."]
+
+[node name="Inventory" parent="InventoryCanvas" instance=ExtResource("26_smm4u")]
+position = Vector2(245, 258)
