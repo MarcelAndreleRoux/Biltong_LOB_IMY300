@@ -10,4 +10,4 @@ func _ready():
 	animation_player.play("splash")
 
 func _on_change_scene_timeout():
-	get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/world/main_start/godot_warning_scene.tscn")

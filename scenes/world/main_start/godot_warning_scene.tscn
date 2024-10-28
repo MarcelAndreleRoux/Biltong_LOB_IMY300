@@ -1,0 +1,117 @@
+[gd_scene load_steps=7 format=3 uid="uid://bbbx8k8lm1feg"]
+
+[ext_resource type="Script" path="res://scenes/world/main_start/godot_warning_scene.gd" id="1_5em41"]
+[ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="1_nymqo"]
+[ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="2_xq3ql"]
+
+[sub_resource type="Animation" id="Animation_qlyyl"]
+resource_name = "fade_in"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"change_scene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_jvb6d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_satdf"]
+_data = {
+"RESET": SubResource("Animation_jvb6d"),
+"fade_in": SubResource("Animation_qlyyl")
+}
+
+[node name="GodotWarningScene" type="Node2D"]
+script = ExtResource("1_5em41")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -41.0
+offset_top = -35.0
+offset_right = 528.0
+offset_bottom = 299.0
+color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -69.5
+offset_bottom = -10.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.776471, 0.247059, 0.243137, 1)
+theme_override_fonts/font = ExtResource("1_nymqo")
+theme_override_font_sizes/font_size = 64
+text = "WARNING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 121.0
+offset_right = 418.0
+offset_bottom = 198.0
+theme_override_colors/font_color = Color(0.956863, 0.956863, 0.952941, 1)
+theme_override_fonts/font = ExtResource("2_xq3ql")
+theme_override_font_sizes/font_size = 30
+text = "THIS GAME CONTAINS GRAFICAL CONTENT AND NUDITY"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_satdf")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -36.0
+offset_top = -28.0
+offset_right = 523.0
+offset_bottom = 293.0
+color = Color(0, 0, 0, 1)

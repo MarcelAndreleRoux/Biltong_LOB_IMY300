@@ -37,6 +37,7 @@ offset_left = 177.0
 offset_right = -177.0
 offset_bottom = -233.0
 size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 40
 text = "Options"
 autowrap_mode = 2
