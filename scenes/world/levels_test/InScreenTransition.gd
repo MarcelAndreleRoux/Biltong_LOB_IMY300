@@ -11,6 +11,9 @@ const BUFFER_SIZE = 5
 var is_transitioning: bool = false
 var transition_direction: Vector2 = Vector2.ZERO
 
+const MOVEMENT_THRESHOLD: float = 0.5  # Reduced from 1.0
+const DIRECTION_THRESHOLD: float = 0.1  # Keep this for diagonal movement detection
+
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
@@ -23,7 +26,7 @@ func _physics_process(_delta: float) -> void:
 	if is_instance_valid(player_body):
 		direction = player_body.position - last_position
 		
-	if direction.length() > 0.1:
+	if direction.length() > 0.1:  # Keep small movements for smoothness
 		movement_buffer.push_back(direction)
 		if movement_buffer.size() > BUFFER_SIZE:
 			movement_buffer.pop_front()
@@ -33,19 +36,17 @@ func _physics_process(_delta: float) -> void:
 			avg_direction += dir
 		avg_direction /= movement_buffer.size()
 		
-		# Only process movement if it's primarily in the correct direction
-		if avg_direction.length() > 1.0:
+		# Check movement with lower threshold
+		if avg_direction.length() > MOVEMENT_THRESHOLD:
 			var normalized_dir = avg_direction.normalized()
 			
 			# Check if movement aligns with allowed direction
 			if move_direction == "horizontal":
-				# For horizontal transitions, check if there's significant horizontal movement
-				if abs(normalized_dir.x) > 0.1:  # Lower threshold to catch diagonal movement
+				if abs(normalized_dir.x) > DIRECTION_THRESHOLD:
 					transition_direction = Vector2(sign(normalized_dir.x), 0).normalized()
 					handle_transition()
 			else: # vertical
-				# For vertical transitions, check if there's significant vertical movement
-				if abs(normalized_dir.y) > 0.1:  # Lower threshold to catch diagonal movement
+				if abs(normalized_dir.y) > DIRECTION_THRESHOLD:
 					transition_direction = Vector2(0, sign(normalized_dir.y)).normalized()
 					handle_transition()
 	
