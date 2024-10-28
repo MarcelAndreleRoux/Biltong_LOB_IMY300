@@ -2,11 +2,13 @@ extends StaticBody2D
 
 @export var door_link_id: String
 @export_enum("Normal", "Toggle") var button_mode: String = "Normal"
+@export var start_pressed: bool = false  # Add this to set initial state
 
 var found_link: bool = false
 var area2d_active: bool = false
 var is_toggled: bool = false
-var last_activator = null  # Track what activated the button last
+var last_activator = null
+var shader_material: ShaderMaterial
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var click_area = $ClickArea
@@ -16,7 +18,25 @@ var door_link_found: String
 
 func _ready():
 	SharedSignals.full_link.connect(_full_link)
-	animated_sprite_2d.play("idle")
+	
+	# Setup shader
+	shader_material = ShaderMaterial.new()
+	shader_material.shader = preload("res://scenes/entities/objects/static/button/button.gdshader")
+	animated_sprite_2d.material = shader_material
+	
+	# Initialize button state
+	if button_mode == "Toggle":
+		is_toggled = start_pressed
+		if start_pressed:
+			animated_sprite_2d.play("click")
+			SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
+		else:
+			animated_sprite_2d.play("idle")
+	else:
+		animated_sprite_2d.play("idle")
+	
+	# Update shader state
+	update_shader_toggle()
 
 func _on_click_area_body_entered(body):
 	if area2d_active:
@@ -32,6 +52,10 @@ func _on_click_area_body_entered(body):
 		
 		if found_link and door_link_id == door_link_found:
 			handle_button_press(body)
+
+func update_shader_toggle():
+	if shader_material:
+		shader_material.set_shader_parameter("should_be_blue", button_mode == "Toggle")
 
 func handle_button_press(activator):
 	last_activator = activator

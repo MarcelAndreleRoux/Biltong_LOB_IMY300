@@ -131,7 +131,7 @@ position = Vector2(456, 88)
 [node name="EatingFood" parent="TurtleMarker1" instance=ExtResource("10_m8gi6")]
 
 [node name="Box" parent="." instance=ExtResource("11_3n5qk")]
-position = Vector2(360, 176)
+position = Vector2(432, 58)
 
 [node name="Vines20" parent="." instance=ExtResource("12_q3x2m")]
 position = Vector2(312, 192)
