@@ -49,13 +49,9 @@ func _on_button_change(state: bool, button_id: String):
 	if animation_name == "default" and found_link and door_link_id == door_link_found and button_id == door_link_id:
 		if state:
 			animated_sprite_2d.play("default_on")
-			if found_link and door_link_id == door_link_found:
-				SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
 			connected_sound.play()
 		else:
 			animated_sprite_2d.play("default_off")
-			if found_link and door_link_id == door_link_found:
-				SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 			disconnect_sound.play()
 
 func _on_connection_check(state: bool):
