@@ -1177,8 +1177,8 @@ bus = &"Sfx"
 
 [node name="electrical_field" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("17_yjiql")
-volume_db = 15.0
-max_distance = 40.0
+volume_db = 10.0
+max_distance = 70.0
 
 [node name="ElectricArea" type="Area2D" parent="."]
 collision_layer = 1024

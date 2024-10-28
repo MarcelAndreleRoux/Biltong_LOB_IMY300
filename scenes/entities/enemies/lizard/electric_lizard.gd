@@ -52,7 +52,7 @@ func _ready():
 	# Seed the random number generator for randomness in animations
 	randomize()
 	
-	electrical_field.play()
+	_update_electrical_field_sound()
 	
 	# Collect patrol points
 	if target_1:
@@ -73,7 +73,13 @@ func _ready():
 		set_physics_process(true)
 	else:
 		set_physics_process(false)
-		print("No patrol points set for lizard.")
+
+func _update_electrical_field_sound():
+	if is_on:
+		if not electrical_field.playing:
+			electrical_field.play()
+	else:
+		electrical_field.stop()
 
 func _physics_process(delta):
 	match state:
@@ -267,11 +273,11 @@ func _play_zap(object):
 func _turn_lizard_off():
 	is_on = false
 	wet_walk.play()
-	electrical_field.stop()
+	_update_electrical_field_sound()
 
 func _turn_lizard_on():
 	is_on = true
-	electrical_field.play()
+	_update_electrical_field_sound()
 
 func _on_throw_check_area_area_entered(area):
 	if area.is_in_group("throwables"):
@@ -309,13 +315,12 @@ func _change_state():
 	var previous_state = is_on
 	if was_water:
 		is_on = false
-		electrical_field.stop()
 	else:
 		is_on = true
-		electrical_field.play()
 	
 	if previous_state != is_on:
 		SharedSignals.lizard_state_change.emit(is_on)
+		_update_electrical_field_sound()
 		
 		# Handle existing connections
 		if is_on:
