@@ -29,15 +29,6 @@
 y_sort_enabled = true
 script = ExtResource("1_f083f")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_left = -7.0
-offset_top = -9.0
-offset_right = 489.0
-offset_bottom = 280.0
-color = Color(0, 0, 0, 0.6)
-
 [node name="ShakeCamera" parent="." instance=ExtResource("2_dtsal")]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -119,7 +110,7 @@ position = Vector2(152, 104)
 door_link_id = "a"
 
 [node name="Button3" parent="." instance=ExtResource("9_8krhe")]
-position = Vector2(215, 106)
+position = Vector2(234, 51)
 door_link_id = "a"
 button_mode = "Toggle"
 

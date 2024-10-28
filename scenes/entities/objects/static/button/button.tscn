@@ -1,8 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://gocvqvrsvfso"]
+[gd_scene load_steps=14 format=3 uid="uid://gocvqvrsvfso"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/button/button.gd" id="1_hwqma"]
+[ext_resource type="Shader" path="res://scenes/entities/objects/static/button/button.gdshader" id="1_k6nhy"]
 [ext_resource type="Texture2D" uid="uid://cy0waipdsut21" path="res://assets/sprites/objects/static/pressure_plate/Presure-Plate.png" id="2_2oktm"]
 [ext_resource type="AudioStream" uid="uid://v0lsvvnheulk" path="res://assets/soundeffects/Button.wav" id="3_tuskx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_locke"]
+shader = ExtResource("1_k6nhy")
+shader_parameter/should_be_blue = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bt5y0"]
 atlas = ExtResource("2_2oktm")
@@ -57,6 +62,7 @@ radius = 7.0
 height = 14.0
 
 [node name="Button" type="StaticBody2D"]
+material = SubResource("ShaderMaterial_locke")
 collision_layer = 32
 collision_mask = 31
 script = ExtResource("1_hwqma")
@@ -72,6 +78,7 @@ shape = SubResource("CircleShape2D_7arkk")
 [node name="ClickArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+visible = false
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_howdr")
 
@@ -84,6 +91,7 @@ bus = &"Sfx"
 [node name="DetectBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectBox"]
+visible = false
 shape = SubResource("CapsuleShape2D_g13ac")
 
 [connection signal="body_entered" from="ClickArea" to="." method="_on_click_area_body_entered"]
