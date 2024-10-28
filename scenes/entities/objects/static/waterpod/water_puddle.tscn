@@ -90,6 +90,7 @@ sprite_frames = SubResource("SpriteFrames_ncdqb")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-1, 1)
 shape = SubResource("CircleShape2D_7f7kl")
 disabled = true
@@ -99,6 +100,7 @@ collision_layer = 4194304
 collision_mask = 459672
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActivivationArea"]
+visible = false
 position = Vector2(0, 2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_wxacc")

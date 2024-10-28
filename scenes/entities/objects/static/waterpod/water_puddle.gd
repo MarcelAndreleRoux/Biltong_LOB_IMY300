@@ -4,7 +4,7 @@ extends StaticBody2D
 @onready var activivation_area = $ActivivationArea
 
 var water_dead: bool = false
-const DESPAWN_TIME: float = 10.0
+const DESPAWN_TIME: float = 20.0
 
 func _ready():
 	animated_sprite_2d.play("idle")

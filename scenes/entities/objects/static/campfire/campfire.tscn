@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cvepijo572tly"]
+[gd_scene load_steps=23 format=3 uid="uid://cvepijo572tly"]
 
 [ext_resource type="Texture2D" uid="uid://gdkolyyffiss" path="res://assets/sprites/objects/static/Campfire/Campfire.png" id="1_h6wai"]
 [ext_resource type="Script" path="res://scenes/entities/objects/static/campfire/campfire.gd" id="1_vebbf"]
 [ext_resource type="AudioStream" uid="uid://ctg5sutwujra2" path="res://assets/soundeffects/Everything_fire/fire-looping-101soundboards.mp3" id="3_7roxb"]
+[ext_resource type="Texture2D" uid="uid://c0shk2s0cfxmw" path="res://assets/sprites/objects/static/Campfire/campfire_out.png" id="3_bpoi8"]
+[ext_resource type="Texture2D" uid="uid://bkeislxu48jxx" path="res://assets/sprites/objects/static/Campfire/campfire_on.png" id="4_jkfbi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bbp3a"]
 atlas = ExtResource("1_h6wai")
@@ -19,6 +21,46 @@ region = Rect2(64, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_iiw2c"]
 atlas = ExtResource("1_h6wai")
 region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38u06"]
+atlas = ExtResource("3_bpoi8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omt1y"]
+atlas = ExtResource("3_bpoi8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rg2q"]
+atlas = ExtResource("3_bpoi8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngp7n"]
+atlas = ExtResource("3_bpoi8")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qcf26"]
+atlas = ExtResource("3_bpoi8")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ih15y"]
+atlas = ExtResource("4_jkfbi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uccp"]
+atlas = ExtResource("4_jkfbi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78lql"]
+atlas = ExtResource("4_jkfbi")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0f7v"]
+atlas = ExtResource("4_jkfbi")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a82og"]
+atlas = ExtResource("4_jkfbi")
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jv4st"]
 animations = [{
@@ -37,7 +79,47 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38u06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omt1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rg2q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngp7n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qcf26")
+}],
+"loop": false,
+"name": &"turn_off",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ih15y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3uccp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78lql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0f7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a82og")
+}],
+"loop": false,
+"name": &"turn_on",
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_04iee"]
@@ -57,7 +139,7 @@ script = ExtResource("1_vebbf")
 z_index = 1
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_jv4st")
-frame_progress = 0.380298
+animation = &"turn_off"
 offset = Vector2(0, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -70,13 +152,13 @@ collision_layer = 0
 collision_mask = 459672
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationArea"]
+visible = false
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_grgrj")
 
 [node name="FirePlace" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_7roxb")
 volume_db = 5.0
-stream_paused = true
 max_distance = 50.0
 bus = &"Sfx"
 

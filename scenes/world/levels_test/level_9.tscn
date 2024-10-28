@@ -29,6 +29,15 @@
 y_sort_enabled = true
 script = ExtResource("1_f083f")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -7.0
+offset_top = -9.0
+offset_right = 489.0
+offset_bottom = 280.0
+color = Color(0, 0, 0, 0.6)
+
 [node name="ShakeCamera" parent="." instance=ExtResource("2_dtsal")]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -51,7 +60,7 @@ layer_2/tile_data = PackedInt32Array(458761, 1048578, 0, 524297, 1048578, 0, 589
 position = Vector2(245, 258)
 
 [node name="Player" parent="." instance=ExtResource("4_tcx08")]
-position = Vector2(117, 86)
+position = Vector2(127, 83)
 collision_mask = 3147803
 
 [node name="PlayerRaycast" type="RayCast2D" parent="Player"]
@@ -109,6 +118,11 @@ door_link_id = "a"
 position = Vector2(152, 104)
 door_link_id = "a"
 
+[node name="Button3" parent="." instance=ExtResource("9_8krhe")]
+position = Vector2(215, 106)
+door_link_id = "a"
+button_mode = "Toggle"
+
 [node name="Box" parent="." instance=ExtResource("10_k5i6k")]
 position = Vector2(296, 56)
 
@@ -155,7 +169,7 @@ position = Vector2(97, 22)
 position = Vector2(152, 22)
 
 [node name="MBoard2" parent="." instance=ExtResource("8_he8ve")]
-position = Vector2(371, 94)
+position = Vector2(366, 97)
 connector_name = "two"
 door_link_id = "12345"
 

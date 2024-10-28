@@ -106,6 +106,8 @@ size = Vector2(12, 12)
 size = Vector2(52, 33)
 
 [node name="MBoard" type="StaticBody2D" groups=["m_board"]]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 8192
 collision_mask = 65535
 script = ExtResource("1_wiw61")
