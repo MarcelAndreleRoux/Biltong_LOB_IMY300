@@ -3,7 +3,6 @@ extends Node
 @onready var track_1 = $Track1
 @onready var track_2 = $Track2
 @onready var track_3 = $Track3
-@onready var track_4 = $Track4
 
 @export var fade_in_out_time: float = 2.0
 
@@ -17,7 +16,7 @@ var playing_vol: float = 5.0
 
 func _ready():
 	# Initialize available tracks
-	available_tracks = [track_1, track_2, track_3, track_4]
+	available_tracks = [track_1, track_2, track_3]
 	# Shuffle initial playlist
 	available_tracks.shuffle()
 	

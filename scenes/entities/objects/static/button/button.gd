@@ -4,6 +4,8 @@ extends StaticBody2D
 @export_enum("Normal", "Toggle") var button_mode: String = "Normal"
 @export var start_pressed: bool = false  # Add this to set initial state
 
+signal hazmat_warning
+
 var found_link: bool = false
 var area2d_active: bool = false
 var is_toggled: bool = false
@@ -44,8 +46,8 @@ func _on_click_area_body_entered(body):
 		
 	if body.is_in_group("activation"):
 		if body.is_in_group("player") and not GlobalValues.hazmat_picked_up:
-			# Player needs hazmat suit
-			AudioController.play_sfx("error")  # Optional: Play error sound
+			hazmat_warning.emit()
+			AudioController.play_sfx("error")
 			return
 			
 		SharedSignals.check_link.emit(self, door_link_id)

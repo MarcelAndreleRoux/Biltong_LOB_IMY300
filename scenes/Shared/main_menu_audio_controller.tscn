@@ -1,30 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://btevp77vj1a2o"]
+[gd_scene load_steps=5 format=3 uid="uid://btevp77vj1a2o"]
 
 [ext_resource type="Script" path="res://scenes/Shared/main_menu_audio_controller.gd" id="1_ad78n"]
-[ext_resource type="AudioStream" uid="uid://csgtqob5n3k4p" path="res://assets/music/19. Race Track Chimes.wav" id="2_mqq01"]
-[ext_resource type="AudioStream" uid="uid://cq20wvt87j5tc" path="res://assets/music/7. Strange.wav" id="2_nnx4y"]
 [ext_resource type="AudioStream" uid="uid://bw83mylw3yj71" path="res://assets/music/night-detective-226857.mp3" id="3_ossex"]
 [ext_resource type="AudioStream" uid="uid://c4h276mhl3aji" path="res://assets/music/nightfall-future-bass-music-228100.mp3" id="4_c8kbc"]
+[ext_resource type="AudioStream" uid="uid://cte414d6yfrtb" path="res://assets/music/18. A Fool's Affair.wav" id="4_i82wb"]
 
 [node name="MenuAudioController" type="Node"]
 script = ExtResource("1_ad78n")
 
 [node name="Track1" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_mqq01")
-volume_db = 14.0
+stream = ExtResource("4_i82wb")
 bus = &"Music"
 
 [node name="Track2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ossex")
-volume_db = 8.0
+volume_db = 3.0
 bus = &"Music"
 
 [node name="Track3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_c8kbc")
-volume_db = 5.0
-bus = &"Music"
-
-[node name="Track4" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_nnx4y")
-volume_db = 10.0
 bus = &"Music"

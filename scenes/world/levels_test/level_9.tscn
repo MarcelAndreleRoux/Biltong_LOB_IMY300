@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://dw2e4mb408fdj"]
+[gd_scene load_steps=26 format=3 uid="uid://dw2e4mb408fdj"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_f083f"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_6ptgj"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_dtsal"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="3_rinrm"]
+[ext_resource type="PackedScene" uid="uid://cnr0xxphhoibg" path="res://scenes/UI/popup/popup_manager.tscn" id="4_lxw0c"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="4_tcx08"]
 [ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="5_oi3oa"]
 [ext_resource type="PackedScene" uid="uid://cpwmwdbljcnru" path="res://scenes/entities/objects/static/conductor_box/conductor_box.tscn" id="5_vgcg0"]
@@ -46,6 +47,10 @@ layer_2/name = "Wires"
 layer_2/y_sort_enabled = true
 layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array(458761, 1048578, 0, 524297, 1048578, 0, 589833, 1048578, 0, 655369, 786434, 0, 655370, 524290, 0)
+
+[node name="PopupManager" parent="." instance=ExtResource("4_lxw0c")]
+offset_top = 0.454998
+offset_bottom = 0.454998
 
 [node name="Inventory" parent="." instance=ExtResource("3_rinrm")]
 position = Vector2(245, 258)
@@ -92,6 +97,10 @@ position = Vector2(270, 101)
 connector_name = "one"
 door_link_id = "123"
 
+[node name="MBoard3" parent="." instance=ExtResource("8_he8ve")]
+position = Vector2(319, 105)
+door_link_id = "123"
+
 [node name="Door" parent="." instance=ExtResource("8_5doce")]
 position = Vector2(304, 96)
 door_link_id = "123"
@@ -105,11 +114,11 @@ position = Vector2(192, 16)
 position = Vector2(192, 192)
 door_link_id = "a"
 
-[node name="Button" parent="." instance=ExtResource("9_8krhe")]
+[node name="Button" parent="." groups=["buttons"] instance=ExtResource("9_8krhe")]
 position = Vector2(152, 104)
 door_link_id = "a"
 
-[node name="Button3" parent="." instance=ExtResource("9_8krhe")]
+[node name="Button3" parent="." groups=["buttons"] instance=ExtResource("9_8krhe")]
 position = Vector2(234, 51)
 door_link_id = "a"
 button_mode = "Toggle"
@@ -169,7 +178,7 @@ position = Vector2(415, 55)
 door_link_id = "12345"
 required_connections = 2
 
-[node name="Button2" parent="." instance=ExtResource("9_8krhe")]
+[node name="Button2" parent="." groups=["buttons"] instance=ExtResource("9_8krhe")]
 position = Vector2(433, 133)
 door_link_id = "12345"
 

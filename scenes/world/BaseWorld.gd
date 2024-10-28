@@ -16,6 +16,9 @@ class_name BaseWorld
 @onready var food = $Food
 @onready var shake_camera = $ShakeCamera
 
+# Manager
+@onready var popup_manager = $PopupManager
+
 # Raycasts
 @onready var turtle_raycast = $Turtle/RayCast2D
 @onready var enemy_raycast = $Hedgehog/RayCast2D
@@ -67,6 +70,16 @@ var food_visible: bool = false
 # Inventory
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
+const HELPFUL_MESSAGES = {
+	"level1": "Cannot enter test cambers without a hazmat suit",
+	"level2": "You have spotted a lizard, throw it with water"
+}
+
+const WARNING_MESSAGES = {
+	"hazmat": "Cannot enter test cambers without a hazmat suit",
+	"new_lizard": "You have spotted a lizard, throw it with water"
+}
+
 func _ready():
 	# Keep your existing ready code but remove raycast setup
 	MenuAudioController.stop_music()
@@ -87,6 +100,8 @@ func _ready():
 	SharedSignals.is_scared_signal.connect(_on_is_scared_signal)
 	SharedSignals.shake_hedgehog.connect(_shake_shake)
 	trajectory_collision_state.connect(_on_trajectory_collision)
+	
+	connect_button_signals()
 	
 	if player_raycast:
 		# Add exceptions for the straight raycast
@@ -111,6 +126,17 @@ func _on_is_scared_signal(is_scared: bool):
 		_remove_blocking_collision_shape()
 
 var blocking_body: StaticBody2D = null
+
+func connect_button_signals():
+	# Connect to all buttons in the scene
+	for button in get_tree().get_nodes_in_group("buttons"):
+		if not button.hazmat_warning.is_connected(show_hazmat_warning):
+			button.hazmat_warning.connect(show_hazmat_warning)
+
+func show_hazmat_warning():
+	var success = popup_manager.create_popup(WARNING_MESSAGES.hazmat)
+	if not success:
+		pass
 
 func _spawn_blocking_collision_shape():
 	if blocking_body == null:
