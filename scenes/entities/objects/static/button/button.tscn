@@ -61,7 +61,7 @@ height = 16.0
 radius = 7.0
 height = 14.0
 
-[node name="Button" type="StaticBody2D"]
+[node name="Button" type="StaticBody2D" groups=["buttons"]]
 material = SubResource("ShaderMaterial_locke")
 collision_layer = 32
 collision_mask = 31

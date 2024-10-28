@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bab22tyvvhbvh"]
+
+[ext_resource type="PackedScene" uid="uid://cnr0xxphhoibg" path="res://scenes/UI/popup/popup_manager.tscn" id="1_etigc"]
+
+[node name="PopupCanvasLayer" type="CanvasLayer"]
+
+[node name="PopupManager" parent="." instance=ExtResource("1_etigc")]
