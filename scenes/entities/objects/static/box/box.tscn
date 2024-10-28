@@ -228,6 +228,7 @@ shape = SubResource("RectangleShape2D_bpty4")
 shape = SubResource("RectangleShape2D_y2tsi")
 
 [node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
+z_index = 1
 position = Vector2(13, -16)
 sprite_frames = SubResource("SpriteFrames_yd3f7")
 
