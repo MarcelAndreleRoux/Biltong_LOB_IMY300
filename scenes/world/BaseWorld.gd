@@ -27,7 +27,7 @@ var trajectory_has_collision: bool = false
 signal throw_action
 
 #Inventory
-@onready var inventory = $Inventory
+@onready var inventory = $InventoryCanvas/Inventory
 
 #Sounds
 @onready var death = $Death
