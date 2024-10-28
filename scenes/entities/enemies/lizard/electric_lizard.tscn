@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://c80uy3ni7bgl4"]
+[gd_scene load_steps=83 format=3 uid="uid://c80uy3ni7bgl4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/lizard/electric_lizard.gd" id="1_i4f4n"]
 [ext_resource type="Texture2D" uid="uid://kqsruf5qtkkq" path="res://assets/sprites/enemies/electric lizzard/Idle/on/Lizard-On-Idle-Default-Left.png" id="2_3bmot"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://eyfs4nyt0dgu" path="res://assets/soundeffects/wet_walk.mp3" id="16_rf7ao"]
 [ext_resource type="Texture2D" uid="uid://utno5reguta4" path="res://assets/sprites/enemies/electric lizzard/field/Sprite-0002.png" id="17_1cxfp"]
 [ext_resource type="AudioStream" uid="uid://bqcj8b3ausmi0" path="res://assets/soundeffects/synth.wav" id="17_4juwg"]
+[ext_resource type="AudioStream" uid="uid://t7t4mqdbaio2" path="res://assets/soundeffects/electrical/Electricity Sounds [1 HOUR].mp3" id="17_yjiql"]
 [ext_resource type="Texture2D" uid="uid://bpj2npgjbkqlh" path="res://assets/sprites/enemies/electric lizzard/field/Sprite-0002-sheet.png" id="18_fk3wa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_75p2i"]
@@ -1109,8 +1110,9 @@ animations = [{
 radius = 14.0
 height = 58.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7onox"]
-size = Vector2(24.125, 44)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pxbwh"]
+radius = 17.0
+height = 54.0
 
 [node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
 z_index = 1
@@ -1173,6 +1175,11 @@ stream = ExtResource("17_4juwg")
 volume_db = -8.0
 bus = &"Sfx"
 
+[node name="electrical_field" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_yjiql")
+volume_db = 10.0
+max_distance = 70.0
+
 [node name="ElectricArea" type="Area2D" parent="."]
 collision_layer = 1024
 collision_mask = 3211263
@@ -1193,13 +1200,12 @@ shape = SubResource("CapsuleShape2D_solqv")
 debug_color = Color(1, 1, 1, 0.419608)
 
 [node name="ThrowCheckArea" type="Area2D" parent="."]
-collision_mask = 3146625
+collision_mask = 3605377
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ThrowCheckArea"]
-visible = false
-position = Vector2(0.999994, -3.06249)
+position = Vector2(1, -7)
 rotation = 1.5708
-shape = SubResource("RectangleShape2D_7onox")
+shape = SubResource("CapsuleShape2D_pxbwh")
 
 [connection signal="velocity_computed" from="LizardNav" to="." method="_on_lizard_nav_velocity_computed"]
 [connection signal="area_entered" from="ElectricArea" to="." method="_on_electric_area_area_entered"]

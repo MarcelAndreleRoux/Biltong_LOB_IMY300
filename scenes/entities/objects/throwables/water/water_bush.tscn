@@ -1,10 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://ds2p76qsyb33l"]
+[gd_scene load_steps=28 format=3 uid="uid://ds2p76qsyb33l"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/water/water_bush.gd" id="1_1jlhk"]
 [ext_resource type="Texture2D" uid="uid://3cffibg3i4ns" path="res://assets/sprites/objects/throwables/water/Water-Sheet.png" id="2_4koa6"]
 [ext_resource type="Texture2D" uid="uid://cc85auy65bwxo" path="res://assets/sprites/objects/throwables/water/Water-Bush-Idle-Inarea.png" id="2_prnbu"]
 [ext_resource type="Texture2D" uid="uid://beb45im8ilqo1" path="res://assets/sprites/objects/throwables/water/Water-Bush-Idle-Drip.png" id="3_5k3wh"]
 [ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="3_phyi4"]
+[ext_resource type="AudioStream" uid="uid://bjmd2tbfu8f5g" path="res://assets/soundeffects/Everything_water/water-dripping-on-wateraif-14581.mp3" id="6_ljtvi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a76k7"]
 atlas = ExtResource("2_prnbu")
@@ -166,7 +167,6 @@ script = ExtResource("1_1jlhk")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_j2pcn")
 animation = &"close"
-frame_progress = 0.979585
 offset = Vector2(0, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -186,6 +186,9 @@ position = Vector2(13, -16)
 sprite_frames = SubResource("SpriteFrames_r6ave")
 
 [node name="WaterStreamSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ljtvi")
+volume_db = 20.0
+max_distance = 70.0
 
 [connection signal="body_entered" from="ActionArea" to="." method="_on_action_area_body_entered"]
 [connection signal="body_exited" from="ActionArea" to="." method="_on_action_area_body_exited"]

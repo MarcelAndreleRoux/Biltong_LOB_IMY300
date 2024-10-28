@@ -31,6 +31,8 @@ signal full_link
 
 # Lizard
 signal sent_input_charge
+signal lizard_in_water_puddle
+signal lizard_in_camp_fire
 
 # Button
 signal button_active

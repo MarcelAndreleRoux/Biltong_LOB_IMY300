@@ -3,6 +3,7 @@ extends StaticBody2D
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var action_button_press = $ActionButtonPress
+@onready var water_stream_sound = $WaterStreamSound
 
 var already_picked: bool = false
 var player_in_area: bool = false
@@ -17,9 +18,14 @@ func _ready():
 
 	collision_shape_2d.disabled = true
 	action_button_press.visible = false
+	
 	animated_sprite_2d.play("idle")
+	water_stream_sound.play()
 
 func _process(delta):
+	if already_picked:
+		animated_sprite_2d.play("pickup")
+		water_stream_sound.stop()
 	if player_in_area and Input.is_action_just_pressed("pickup") and not already_picked:
 		already_picked = true
 		GlobalValues.can_swap_water = true

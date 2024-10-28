@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://umnauojref6t"]
+[gd_scene load_steps=26 format=3 uid="uid://umnauojref6t"]
 
 [ext_resource type="Texture2D" uid="uid://dhv7t7cuweh5l" path="res://assets/sprites/objects/throwables/fire/Fire-Mango-Throwable-Sheet.png" id="1_0cdmn"]
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/fire/fire.gd" id="1_kilkr"]
 [ext_resource type="Texture2D" uid="uid://bv0gim0eo5bye" path="res://assets/sprites/objects/throwables/fire/Mango.png" id="2_xumqc"]
 [ext_resource type="Texture2D" uid="uid://bw5qe0da848r4" path="res://assets/sprites/objects/throwables/fire/Fire-Throwable.png" id="4_wwqvh"]
+[ext_resource type="AudioStream" uid="uid://cgl8mjl38ndg2" path="res://assets/soundeffects/fireball-whoosh-1-179125.mp3" id="5_qp6b4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1y4gr"]
 atlas = ExtResource("1_0cdmn")
@@ -151,9 +152,10 @@ radius = 6.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_kl6y7"]
 radius = 13.0
 
-[node name="FireMango" type="CharacterBody2D" groups=["throwables"]]
-z_index = 2
-collision_layer = 131328
+[node name="FireMango" type="CharacterBody2D" groups=["fire", "throwables"]]
+z_index = 1
+y_sort_enabled = true
+collision_layer = 512
 collision_mask = 536870912
 script = ExtResource("1_kilkr")
 
@@ -164,12 +166,17 @@ animation = &"land"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_mul82")
 
-[node name="EffectArea" type="Area2D" parent="." groups=["burn", "throwable_area"]]
-collision_layer = 65536
+[node name="EffectArea" type="Area2D" parent="." groups=["burn", "fire", "throwable_area"]]
+collision_layer = 262656
 collision_mask = 536870976
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EffectArea"]
 shape = SubResource("CircleShape2D_kl6y7")
+
+[node name="fire_land" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_qp6b4")
+max_distance = 200.0
+bus = &"Sfx"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="EffectArea" to="." method="_on_effect_area_area_entered"]

@@ -2,6 +2,7 @@
 extends Node2D
 
 @onready var animated_sprite_2d: AnimatedSprite2D  # Declare as onready so it initializes when ready
+@onready var zap = $zap
 
 func _ready():
 	# Get the reference to animated_sprite_2d after the scene is added
@@ -21,6 +22,7 @@ func output_charge(direction: Vector2):
 	
 	# Play the zap animation
 	animated_sprite_2d.play("zap")
+	zap.play()
 	animated_sprite_2d.visible = true
 
 func _on_animated_sprite_2d_animation_finished():

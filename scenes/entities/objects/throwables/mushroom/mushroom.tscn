@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://dcrd5kpbngnaq"]
+[gd_scene load_steps=15 format=3 uid="uid://dcrd5kpbngnaq"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/throwables/mushroom/mushroom.gd" id="1_56ddq"]
 [ext_resource type="Texture2D" uid="uid://ddqmemhdx8cr2" path="res://assets/sprites/objects/throwables/food/Food-Throwablet.png" id="2_opxoc"]
+[ext_resource type="AudioStream" uid="uid://ci7foj10sake0" path="res://assets/soundeffects/slime-splatter-6-220264.mp3" id="3_urhsf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ns5w"]
 atlas = ExtResource("2_opxoc")
@@ -85,7 +86,8 @@ radius = 4.0
 
 [node name="Mushroom" type="CharacterBody2D" groups=["food", "throwables"]]
 z_index = 1
-collision_layer = 131328
+y_sort_enabled = true
+collision_layer = 256
 collision_mask = 536870912
 script = ExtResource("1_56ddq")
 
@@ -96,12 +98,17 @@ animation = &"land"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_72ge8")
 
-[node name="EffectArea" type="Area2D" parent="." groups=["throwable_area"]]
-collision_layer = 131072
+[node name="EffectArea" type="Area2D" parent="." groups=["food", "throwable_area"]]
+collision_layer = 262400
 collision_mask = 536870976
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EffectArea"]
 shape = SubResource("CircleShape2D_sri3r")
+
+[node name="food_land" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_urhsf")
+max_distance = 200.0
+bus = &"Sfx"
 
 [connection signal="animation_finished" from="MushroomSprite" to="." method="_on_mushroom_sprite_animation_finished"]
 [connection signal="area_entered" from="EffectArea" to="." method="_on_effect_area_area_entered"]

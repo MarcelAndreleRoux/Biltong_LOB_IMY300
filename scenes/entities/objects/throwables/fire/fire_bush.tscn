@@ -197,7 +197,7 @@ sprite_frames = SubResource("SpriteFrames_oskxl")
 [node name="fire" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_j4j2l")
 autoplay = true
-max_distance = 50.0
+max_distance = 70.0
 bus = &"Sfx"
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
