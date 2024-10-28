@@ -28,7 +28,8 @@ func turn_on_fire():
 
 func _on_activation_area_body_entered(body):
 	if body.is_in_group("lizard"):
-		SharedSignals.lizard_in_camp_fire.emit()
+		if on_state:
+			SharedSignals.lizard_in_camp_fire.emit()
 	
 	if body.is_in_group("throwables"):
 		if body.is_in_group("fire") and not on_state and body.get_vines_landed_state():

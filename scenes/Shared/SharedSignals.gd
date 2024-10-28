@@ -24,7 +24,7 @@ signal shadow_update
 signal shadow_done
 
 # Door Signals
-signal doorState(door_id: String, state: bool, button_instance_id: int)
+signal doorState
 signal check_link
 signal found_link
 signal full_link
@@ -67,8 +67,8 @@ signal food_not_visible
 signal food_was_eaten
 signal marker_removed
 signal turtle_is_scared
-signal food_projectile_thrown(marker: Marker2D)
-signal projectile_despawned(marker: Marker2D)
+signal food_projectile_thrown
+signal projectile_despawned
 signal food_thrown
 signal is_scared_signal
 

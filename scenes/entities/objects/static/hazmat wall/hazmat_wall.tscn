@@ -48,7 +48,7 @@ animations = [{
 size = Vector2(40, 19)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d4erk"]
-size = Vector2(43, 38.5)
+size = Vector2(43, 21)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ci0o"]
 atlas = ExtResource("3_ea42q")
@@ -102,7 +102,7 @@ disabled = true
 [node name="PickupArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
-position = Vector2(0.5, 20.75)
+position = Vector2(0.5, 12)
 shape = SubResource("RectangleShape2D_d4erk")
 
 [node name="pickup_sound" type="AudioStreamPlayer2D" parent="."]

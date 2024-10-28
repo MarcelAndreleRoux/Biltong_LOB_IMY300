@@ -45,8 +45,8 @@ func _check_link(button: StaticBody2D, button_id: String):
 	if door_link_id == button_id:
 		SharedSignals.full_link.emit(button_id, door_link_id)
 
-func _on_button_change(state: bool):
-	if animation_name == "default":
+func _on_button_change(state: bool, button_id: String):
+	if animation_name == "default" and found_link and door_link_id == door_link_found and button_id == door_link_id:
 		if state:
 			animated_sprite_2d.play("default_on")
 			connected_sound.play()
