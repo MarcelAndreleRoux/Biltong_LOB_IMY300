@@ -16,6 +16,7 @@ extends CharacterBody2D
 @onready var animation_tree = $AnimationTree
 @onready var wet_walk = $wet_walk
 @onready var animated_sprite_2d = $ElectricArea/AnimatedSprite2D
+@onready var electrical_field = $electrical_field
 
 var direction: Vector2 = Vector2.ZERO
 var was_water: bool = false
@@ -38,7 +39,6 @@ var patrol_index = 0
 var patrol_wait_timer = null
 
 # projectile
-var projectile: BaseThrowable = null
 var nearby_objects = []
 
 func _ready():
@@ -47,9 +47,12 @@ func _ready():
 	animated_sprite_2d.visible = false
 	
 	SharedSignals.lizard_connection.connect(_play_zap)
-	
+	SharedSignals.lizard_in_water_puddle.connect(_turn_lizard_off)
+	SharedSignals.lizard_in_camp_fire.connect(_turn_lizard_on)
 	# Seed the random number generator for randomness in animations
 	randomize()
+	
+	electrical_field.play()
 	
 	# Collect patrol points
 	if target_1:
@@ -261,18 +264,24 @@ func _play_zap(object):
 		# Now that it's added to the scene, call the charge
 		electrical_zap.output_charge(direction)
 
+func _turn_lizard_off():
+	is_on = false
+	wet_walk.play()
+	electrical_field.stop()
+
+func _turn_lizard_on():
+	is_on = true
+	electrical_field.play()
+
 func _on_throw_check_area_area_entered(area):
 	if area.is_in_group("throwables"):
 		if area.is_in_group("fire"):
 			was_water = false
+			_change_state()
 		if area.is_in_group("water"):
 			wet_walk.play()
 			was_water = true
-		
-		projectile = area.get_parent()
-		
-		if projectile and projectile.get_vines_landed_state():
-			projectile.projectile_landed.connect(_change_state)
+			_change_state()
 
 func _on_throw_check_area_body_entered(body):
 	if body.is_in_group("environment"):
@@ -283,13 +292,27 @@ func _on_throw_check_area_body_entered(body):
 			wet_walk.play()
 			was_water = true
 			_change_state()
+	
+	if body.is_in_group("throwables"):
+		print("found me as a throwable: ", body)
+		
+		if body.is_in_group("fire"):
+			was_water = false
+		if body.is_in_group("water"):
+			wet_walk.play()
+			was_water = true
+		
+		if body and body.get_vines_landed_state():
+			body.projectile_landed.connect(_change_state)
 
 func _change_state():
 	var previous_state = is_on
 	if was_water:
 		is_on = false
+		electrical_field.stop()
 	else:
 		is_on = true
+		electrical_field.play()
 	
 	if previous_state != is_on:
 		SharedSignals.lizard_state_change.emit(is_on)

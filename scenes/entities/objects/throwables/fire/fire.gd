@@ -2,9 +2,10 @@ extends BaseThrowable
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var fire_area = $FireArea
-@onready var land = $land
+@onready var fire_land = $fire_land
 
 var landed: bool = false
+var played_once: bool = false
 var remove: bool = false
 
 func _ready():
@@ -23,16 +24,18 @@ func _ready():
 func _physics_process(delta: float):
 	super(delta)
 	
-	if animated_sprite_2d.frame == 8:
-		self.queue_free()
+	if I_landed and animated_sprite_2d.frame == 8 and not played_once:
+		played_once = true
+		# Apply any final effects here if needed
+		queue_free()
 
 func _play_death():
-	landed = true
-	AudioController.play_sfx("fire_land")
+	fire_land.play()
 	animated_sprite_2d.play("land")
+	landed = true
 
 func _remove_myself():
-	AudioController.play_sfx("fire_land")
+	fire_land.play()
 	animated_sprite_2d.play("land")
 	remove = true
 
@@ -49,13 +52,9 @@ func _on_projectile_landed():
 	super._on_projectile_landed()
 
 func _on_effect_area_area_entered(area):
-	if area.is_in_group("dart"):
-		_delete_throwable()
-	
 	if not I_landed:
 		return
 		
 	var parent = area.get_parent()
-	if parent is StaticBody2D and "plant_type" in parent:  # Check if it's a vine
-		print("Fire hit vine, notifying vine to burn")
-		parent._on_burn()  # Call new method on vine
+	if parent is StaticBody2D and "plant_type" in parent:
+		parent._on_burn()

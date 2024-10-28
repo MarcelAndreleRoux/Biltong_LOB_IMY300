@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/m_board/open_board.gd" id="1_uvann"]
 [ext_resource type="Texture2D" uid="uid://cme1jvaq5gi74" path="res://assets/sprites/objects/electricity/conductors/OpenBoard.png" id="1_ybfj3"]
-[ext_resource type="AudioStream" uid="uid://t7t4mqdbaio2" path="res://assets/soundeffects/electrical/Electricity Sounds [1 HOUR].mp3" id="3_t62je"]
+[ext_resource type="AudioStream" uid="uid://dalk4rqlu858f" path="res://assets/soundeffects/electrical/electricity-sound-6066 (1).mp3" id="3_n4b0c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7q4ig"]
 size = Vector2(10, 11)
@@ -71,7 +71,7 @@ color = Color(1, 0.803922, 0, 1)
 color_ramp = SubResource("Gradient_uoqjn")
 
 [node name="StaticSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_t62je")
+stream = ExtResource("3_n4b0c")
 volume_db = 10.0
 max_distance = 50.0
 bus = &"Sfx"

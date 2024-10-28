@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvepijo572tly"]
+[gd_scene load_steps=11 format=3 uid="uid://cvepijo572tly"]
 
 [ext_resource type="Texture2D" uid="uid://gdkolyyffiss" path="res://assets/sprites/objects/static/Campfire/Campfire.png" id="1_h6wai"]
 [ext_resource type="Script" path="res://scenes/entities/objects/static/campfire/campfire.gd" id="1_vebbf"]
@@ -43,10 +43,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_04iee"]
 size = Vector2(12, 6)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_grgrj"]
+radius = 9.05539
+
 [node name="Campfire" type="StaticBody2D" groups=["environment", "fire"]]
 z_index = 1
 y_sort_enabled = true
-collision_layer = 3145728
+collision_layer = 1048576
 collision_mask = 0
 script = ExtResource("1_vebbf")
 
@@ -62,8 +65,19 @@ position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_04iee")
 disabled = true
 
+[node name="ActivationArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 459672
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationArea"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_grgrj")
+
 [node name="FirePlace" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_7roxb")
-volume_db = 10.0
+volume_db = 5.0
+stream_paused = true
 max_distance = 50.0
 bus = &"Sfx"
+
+[connection signal="body_entered" from="ActivationArea" to="." method="_on_activation_area_body_entered"]

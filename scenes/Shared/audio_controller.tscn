@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cijrkxe11vkjx"]
+[gd_scene load_steps=31 format=3 uid="uid://cijrkxe11vkjx"]
 
 [ext_resource type="Script" path="res://scenes/Shared/audio_controller.gd" id="1_bde8u"]
 [ext_resource type="AudioStream" uid="uid://f4ayeiuhiyp2" path="res://assets/soundeffects/water_drop.mp3" id="2_ptnl1"]
@@ -8,7 +8,6 @@
 [ext_resource type="AudioStream" uid="uid://cf21mmncwxigh" path="res://assets/soundeffects/lizard_walk.wav" id="4_yllhe"]
 [ext_resource type="AudioStream" uid="uid://dksuk1mg8fwhi" path="res://assets/soundeffects/thwop-91757.mp3" id="5_b70vo"]
 [ext_resource type="AudioStream" uid="uid://ivjneffajjff" path="res://assets/soundeffects/Monster-Run.wav" id="5_m4qxj"]
-[ext_resource type="AudioStream" uid="uid://c3n8vjyc5j3h3" path="res://assets/soundeffects/zap.mp3" id="6_8l2n3"]
 [ext_resource type="AudioStream" uid="uid://bf38qhprh18n8" path="res://assets/soundeffects/box_action.wav" id="7_nbyvm"]
 [ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="9_0nwto"]
 [ext_resource type="AudioStream" uid="uid://bd0q8s3v81vsv" path="res://assets/soundeffects/video-game-menu-click-sounds-148373.mp3" id="10_4ktbp"]
@@ -48,7 +47,6 @@ stream_4/weight = 1.0
 script = ExtResource("1_bde8u")
 
 [node name="water_land" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(0, -1)
 stream = ExtResource("2_ptnl1")
 volume_db = -10.736
 pitch_scale = 1.8
@@ -98,12 +96,6 @@ volume_db = -14.623
 max_distance = 400.0
 bus = &"Sfx"
 
-[node name="zap" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_8l2n3")
-volume_db = -20.735
-max_distance = 400.0
-bus = &"Sfx"
-
 [node name="box_action" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_nbyvm")
 bus = &"Sfx"
@@ -116,7 +108,6 @@ bus = &"Sfx"
 [node name="error" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_0nwto")
 volume_db = -17.0
-max_distance = 400.0
 bus = &"Sfx"
 
 [node name="win" type="AudioStreamPlayer2D" parent="."]

@@ -1,6 +1,7 @@
 extends BaseThrowable
 
 @onready var mushroom_sprite = $MushroomSprite
+@onready var food_land = $food_land
 
 var landed: bool = false
 var remove: bool = false
@@ -20,7 +21,7 @@ func _physics_process(delta: float):
 
 func _play_death():
 	if not landed:
-		AudioController.play_sfx("food_land")
+		food_land.play()
 		mushroom_sprite.play("land")
 		landed = true
 
@@ -33,9 +34,6 @@ func _on_mushroom_sprite_animation_finished():
 		_delete_throwable()
 
 func _on_effect_area_area_entered(area):
-	if area.is_in_group("dart"):
-		queue_free()
-	
 	if area.is_in_group("hedgehog_area"):
 		if landed:
 			_remove_myself()

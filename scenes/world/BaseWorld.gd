@@ -28,8 +28,6 @@ signal throw_action
 
 #Inventory
 @onready var inventory = $Inventory
-
-#Sounds
 @onready var death = $Death
 @onready var win_state = $WinState
 
