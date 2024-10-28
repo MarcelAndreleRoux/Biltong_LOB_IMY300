@@ -77,7 +77,6 @@ position = Vector2(387, 69)
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
-current = true
 
 [node name="Turtle" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("5_kyj18")]
 position = Vector2(250, 55)
