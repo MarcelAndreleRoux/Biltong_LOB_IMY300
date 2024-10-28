@@ -17,7 +17,7 @@ class_name BaseWorld
 @onready var shake_camera = $ShakeCamera
 
 # Manager
-@onready var popup_manager = $PopupManager
+@onready var popup_manager = $PopupCanvasLayer/PopupManager
 
 # Raycasts
 @onready var turtle_raycast = $Turtle/RayCast2D
@@ -30,7 +30,9 @@ var trajectory_has_collision: bool = false
 signal throw_action
 
 #Inventory
-@onready var inventory = $Inventory
+@onready var inventory = $InventoryCanvas/Inventory
+
+#Sounds
 @onready var death = $Death
 @onready var win_state = $WinState
 
@@ -76,7 +78,7 @@ const HELPFUL_MESSAGES = {
 }
 
 const WARNING_MESSAGES = {
-	"hazmat": "Cannot enter test cambers without a hazmat suit",
+	"hazmat": "Cannot enter cambers without a hazmat suit",
 	"new_lizard": "You have spotted a lizard, throw it with water"
 }
 

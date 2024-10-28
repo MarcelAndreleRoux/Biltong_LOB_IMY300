@@ -95,6 +95,8 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="BrokenDoor" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_4aq5k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
