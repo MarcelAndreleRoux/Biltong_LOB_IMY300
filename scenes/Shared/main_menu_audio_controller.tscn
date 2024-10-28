@@ -10,13 +10,15 @@ script = ExtResource("1_ad78n")
 
 [node name="Track1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_i82wb")
+volume_db = -20.0
 bus = &"Music"
 
 [node name="Track2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ossex")
-volume_db = 3.0
+volume_db = -5.0
 bus = &"Music"
 
 [node name="Track3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_c8kbc")
+volume_db = -13.0
 bus = &"Music"

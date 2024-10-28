@@ -3,44 +3,55 @@ extends Node
 @onready var track_1 = $Track1
 @onready var track_2 = $Track2
 @onready var track_3 = $Track3
-
 @export var fade_in_out_time: float = 2.0
 
 var available_tracks: Array[AudioStreamPlayer] = []
 var played_tracks: Array[AudioStreamPlayer] = []
 var current_track: AudioStreamPlayer = null
 var is_playing: bool = false
-
 var min_volume: float = -50.0
-var playing_vol: float = 5.0
+
+# Dictionary to store original volumes
+var original_volumes: Dictionary = {}
 
 func _ready():
 	# Initialize available tracks
 	available_tracks = [track_1, track_2, track_3]
-	# Shuffle initial playlist
-	available_tracks.shuffle()
+	
+	# Store original volumes
+	for track in available_tracks:
+		original_volumes[track] = track.volume_db
 	
 	# Connect finished signals for all tracks
 	for track in available_tracks:
 		track.finished.connect(_on_track_finished)
 
-func play_music():
-	if is_playing:
-		return
-	
+func get_random_track() -> AudioStreamPlayer:
 	if available_tracks.is_empty():
 		# Reset and reshuffle if all tracks have been played
 		available_tracks = played_tracks.duplicate()
 		played_tracks.clear()
-		available_tracks.shuffle()
+	
+	# Get a random index
+	var random_index = randi() % available_tracks.size()
+	var selected_track = available_tracks[random_index]
+	
+	# Remove the selected track from available_tracks
+	available_tracks.remove_at(random_index)
+	played_tracks.append(selected_track)
+	
+	return selected_track
+
+func play_music():
+	if is_playing:
+		return
 	
 	# Stop current track if one is playing
 	if current_track and current_track.playing:
 		current_track.stop()
 	
 	# Get next random track
-	current_track = available_tracks.pop_back()
-	played_tracks.append(current_track)
+	current_track = get_random_track()
 	
 	fade_in_music()
 	is_playing = true
@@ -54,19 +65,13 @@ func _on_track_finished():
 		fade_out_tween.tween_property(prev_track, "volume_db", min_volume, fade_in_out_time)
 		
 		# Start next track
-		if available_tracks.is_empty():
-			available_tracks = played_tracks.duplicate()
-			played_tracks.clear()
-			available_tracks.shuffle()
-		
-		current_track = available_tracks.pop_back()
-		played_tracks.append(current_track)
+		current_track = get_random_track()
 		
 		# Start new track at low volume and fade in
 		current_track.volume_db = min_volume
 		current_track.play()
 		var fade_in_tween = create_tween()
-		fade_in_tween.tween_property(current_track, "volume_db", playing_vol, fade_in_out_time)
+		fade_in_tween.tween_property(current_track, "volume_db", original_volumes[current_track], fade_in_out_time)
 		
 		# Stop the previous track after fade out
 		fade_out_tween.tween_callback(func(): prev_track.stop())
@@ -78,7 +83,7 @@ func fade_in_music(duration: float = fade_in_out_time):
 	current_track.volume_db = min_volume
 	current_track.play()
 	var tween = create_tween()
-	tween.tween_property(current_track, "volume_db", playing_vol, duration)
+	tween.tween_property(current_track, "volume_db", original_volumes[current_track], duration)
 
 func stop_music():
 	fade_out_music()
