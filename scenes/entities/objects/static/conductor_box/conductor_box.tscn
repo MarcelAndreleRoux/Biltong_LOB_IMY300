@@ -204,7 +204,7 @@ visible = false
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_ivthk")
 
-[node name="ButtonArea" type="Area2D" parent="." groups=["box_pickup_area"]]
+[node name="ButtonArea" type="Area2D" parent="." groups=["box_collider", "box_pickup_area"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea"]
 visible = false
@@ -212,6 +212,7 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_trk4s")
 
 [node name="MoveArea" type="Area2D" parent="." groups=["speed_area"]]
+collision_mask = 4294967295
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveArea"]
 shape = SubResource("RectangleShape2D_2cc4n")

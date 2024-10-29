@@ -112,3 +112,7 @@ signal move_box
 signal drag_box
 signal wall_detected
 signal is_dragging_box
+
+signal box_entered_area
+signal box_exited_area
+signal drop_current_box

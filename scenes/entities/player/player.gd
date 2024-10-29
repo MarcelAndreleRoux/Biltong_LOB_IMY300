@@ -84,6 +84,10 @@ var points: Array = []
 var trajectory_raycasts: Array[RayCast2D] = []
 var first_collision_point: Vector2 = Vector2.ZERO
 
+# Box 
+var current_box: Node2D = null
+var boxes_in_range: Array[Node2D] = []
+
 var min_db = -80  # Minimum volume in decibels (silence)
 var max_db = 0    # Maximum volume in decibels (full volume)
 var fade_speed = 0.1  # Speed of volume fade in and out
@@ -123,6 +127,28 @@ func _ready():
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
 	SharedSignals.push_player_forward.connect(start_dash)
+	
+	SharedSignals.box_entered_area.connect(_on_box_entered_area)
+	SharedSignals.box_exited_area.connect(_on_box_exited_area)
+
+func _on_box_entered_area(box: Node2D):
+	if not boxes_in_range.has(box):
+		boxes_in_range.append(box)
+	
+	# Only enable movement changes if this is the active box
+	if current_box == box:
+		player_in_box_area = true
+		update_speed()
+
+func _on_box_exited_area(box: Node2D):
+	boxes_in_range.erase(box)
+	
+	if current_box == box:
+		current_box = null
+		is_dragging = false
+		drag_toggle_mode = false
+		player_in_box_area = false
+		update_speed()
 
 func _on_censorship_changed():
 	if not GlobalValues.hazmat_picked_up:
@@ -136,13 +162,13 @@ func _on_can_throw():
 	can_throw_proj = true
 
 func _change_speed():
-	player_in_box_area = true
+	update_speed()
 
 func _change_speed_back():
-	player_in_box_area = false
-	is_dragging = false
-	drag_toggle_mode = false
-	update_speed()
+	if current_box == null:
+		is_dragging = false
+		drag_toggle_mode = false
+		update_speed()
 
 func update_speed():
 	if is_dragging or is_pushing:
@@ -204,9 +230,9 @@ func _physics_process(delta):
 	velocity = currentVelocity
 	move_and_slide()
 
-	if is_dragging and player_in_box_area:
+	if is_dragging and player_in_box_area and current_box:
 		var direction_to_mouse = (get_global_mouse_position() - global_position).normalized()
-		SharedSignals.drag_box.emit(global_position, direction_to_mouse)
+		SharedSignals.drag_box.emit(global_position, direction_to_mouse, current_box.box_id)
 
 func reset_throw_state():
 	# Reset throw and aiming-related states
@@ -334,21 +360,53 @@ func _death_finished():
 	SharedSignals.death_finished.emit()
 
 func _handle_action_input():
-	# Toggle dragging mode when 'E' is pressed
-	if player_in_box_area:
+	if not boxes_in_range.is_empty():
 		if Input.is_action_just_pressed("toggle_drag"):
-			drag_toggle_mode = !drag_toggle_mode
-			
-			# If we're in the area and toggled on, start dragging
-			if drag_toggle_mode and player_in_box_area:
-				is_dragging = true
-				pickup.play()
-				SharedSignals.is_dragging_box.emit(true)
-			else:
+			if current_box and is_dragging:
+				# Drop current box
 				is_dragging = false
+				drag_toggle_mode = false
+				SharedSignals.is_dragging_box.emit(false, current_box.box_id)
 				box_drop.play()
-				SharedSignals.is_dragging_box.emit(false)
+				current_box = null
+			else:
+				# Pick up closest box
+				var closest_box = get_closest_box()
+				if closest_box:
+					# Drop any currently held box
+					if current_box:
+						SharedSignals.drop_current_box.emit()
+					
+					current_box = closest_box
+					is_dragging = true
+					drag_toggle_mode = true
+					player_in_box_area = true
+					SharedSignals.is_dragging_box.emit(true, closest_box.box_id)
+					pickup.play()
+			
 			update_speed()
+
+func get_closest_box() -> Node2D:
+	if boxes_in_range.is_empty():
+		return null
+	
+	# Update distances for all boxes in range first
+	for box in boxes_in_range:
+		# Calculate the actual current distance
+		box.distance_to_player = global_position.distance_to(box.global_position)
+	
+	var closest_box = boxes_in_range[0]
+	var closest_distance = closest_box.distance_to_player
+	
+	# Now compare the freshly calculated distances
+	for box in boxes_in_range:
+		# Calculate actual current distance each time
+		var current_distance = global_position.distance_to(box.global_position)
+		if current_distance < closest_distance:
+			closest_box = box
+			closest_distance = current_distance
+	
+	return closest_box
 
 func _start_cooldown_timer():
 	is_on_cooldown = true

@@ -4,7 +4,12 @@ extends RigidBody2D
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var action_button_press = $ActionButtonPress
 
+var is_being_dragged: bool = false
+var distance_to_player: float = 0.0
+
 @export var CHARGE_TIME: float = 7.5
+
+var box_id: int
 
 var remove_box: bool = false
 var player_in_area: bool = false
@@ -13,43 +18,58 @@ var charged_state: bool = false
 var charge_timer: Timer
 
 func _ready():
+	box_id = get_instance_id()  # Get unique identifier for this box
 	action_button_press.visible = false
-	animatedSprite.play("idle_off")
+	animatedSprite.play("idle_off")  # or "idle_off" for conductor
 	SharedSignals.drag_box.connect(_follow_player)
 	SharedSignals.is_dragging_box.connect(_is_dragging)
+	SharedSignals.drop_current_box.connect(_on_drop_box)
 	SharedSignals.conductor_connection.connect(_play_zap)
 
 func _integrate_forces(_state):
 	rotation = 0
 	angular_velocity = 0
 
-func _follow_player(position: Vector2, direction: Vector2):
+func _follow_player(position: Vector2, direction: Vector2, target_box_id: int):
+	if target_box_id != box_id:  # Ignore if not for this box
+		return
+		
 	if player_in_area:
-		# Define a fixed distance from the player to the box
-		var box_distance_from_player = 13  # Adjust this value for how far the box floats
-
-		# Calculate the new position of the box, offset by the direction toward the mouse
+		var box_distance_from_player = 13
 		var target_position = position + direction * box_distance_from_player
-
-		# Smoothly interpolate the box's position towards the target position
 		global_position = global_position.lerp(target_position, 0.1)
-
-		# Ensure the box does not rotate
 		rotation = 0
 
-func _is_dragging(state: bool):
-	if state and charged_state:
-		animatedSprite.play("idle_on")
-	elif state and not charged_state:
-		animatedSprite.play("idle_off")
-	elif not state and charged_state:
-		animatedSprite.play("near_on_box")
-	elif not state and not charged_state:
-		animatedSprite.play("near_off_box")
+func _on_drop_box():
+	if is_being_dragged:
+		is_being_dragged = false
+		animatedSprite.play("idle")
+
+func _is_dragging(state: bool, target_box_id: int):
+	if target_box_id != box_id:
+		return
+	
+	if state and player_in_area:
+		is_being_dragged = state
+		if charged_state:
+			animatedSprite.play("idle_on")
+		else:
+			animatedSprite.play("idle_off")
+	else:
+		is_being_dragged = false
+		if charged_state:
+			animatedSprite.play("near_on_box")
+		else:
+			animatedSprite.play("near_off_box")
 
 func _on_move_area_body_entered(body: Node2D):
 	# Ensure the body is the player
 	if body.is_in_group("player"):
+		player_in_area = true
+		# Calculate distance to player
+		distance_to_player = global_position.distance_to(body.global_position)
+		SharedSignals.box_entered_area.emit(self)
+		
 		if not shown_once:
 			if not GlobalValues.has_pickeup_c_box_once:
 				GlobalValues.has_pickeup_c_box_once = true
@@ -69,8 +89,9 @@ func _on_move_area_body_entered(body: Node2D):
 		shown_once = true
 
 func _on_move_area_body_exited(body: Node2D):
-	if player_in_area and body.is_in_group("player"):
+	if body.is_in_group("player"):
 		player_in_area = false
+		SharedSignals.box_exited_area.emit(self)
 		SharedSignals.player_exit.emit()
 		
 		if charged_state:

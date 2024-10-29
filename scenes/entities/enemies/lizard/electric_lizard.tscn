@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://c80uy3ni7bgl4"]
+[gd_scene load_steps=88 format=3 uid="uid://c80uy3ni7bgl4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/lizard/electric_lizard.gd" id="1_i4f4n"]
 [ext_resource type="Texture2D" uid="uid://kqsruf5qtkkq" path="res://assets/sprites/enemies/electric lizzard/Idle/on/Lizard-On-Idle-Default-Left.png" id="2_3bmot"]
@@ -1049,6 +1049,22 @@ region = Rect2(704, 0, 64, 64)
 atlas = ExtResource("17_1cxfp")
 region = Rect2(0, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkccl"]
+atlas = ExtResource("18_fk3wa")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlddm"]
+atlas = ExtResource("18_fk3wa")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2b0as"]
+atlas = ExtResource("18_fk3wa")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0n0bo"]
+atlas = ExtResource("18_fk3wa")
+region = Rect2(192, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_gcd5s"]
 animations = [{
 "frames": [{
@@ -1104,6 +1120,23 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkccl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlddm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2b0as")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0n0bo")
+}],
+"loop": true,
+"name": &"small_activation",
+"speed": 7.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_solqv"]
@@ -1113,6 +1146,10 @@ height = 58.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pxbwh"]
 radius = 17.0
 height = 54.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dco3s"]
+radius = 7.0
+height = 32.0
 
 [node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
 z_index = 1
@@ -1185,11 +1222,11 @@ collision_layer = 1024
 collision_mask = 3211263
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ElectricArea"]
-visible = false
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_gcd5s")
-animation = &"activate"
-frame_progress = 0.180996
+animation = &"small_activation"
+frame = 1
+frame_progress = 0.00729985
 offset = Vector2(1, -6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElectricArea"]
@@ -1203,9 +1240,17 @@ debug_color = Color(1, 1, 1, 0.419608)
 collision_mask = 3605377
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ThrowCheckArea"]
-position = Vector2(1, -7)
+position = Vector2(0, -7)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_pxbwh")
+
+[node name="PlayerKill" type="Area2D" parent="."]
+collision_mask = 524289
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerKill"]
+position = Vector2(1, -3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_dco3s")
 
 [connection signal="velocity_computed" from="LizardNav" to="." method="_on_lizard_nav_velocity_computed"]
 [connection signal="area_entered" from="ElectricArea" to="." method="_on_electric_area_area_entered"]
@@ -1213,3 +1258,4 @@ shape = SubResource("CapsuleShape2D_pxbwh")
 [connection signal="body_exited" from="ElectricArea" to="." method="_on_electric_area_body_exited"]
 [connection signal="area_entered" from="ThrowCheckArea" to="." method="_on_throw_check_area_area_entered"]
 [connection signal="body_entered" from="ThrowCheckArea" to="." method="_on_throw_check_area_body_entered"]
+[connection signal="area_entered" from="PlayerKill" to="." method="_on_player_kill_area_entered"]

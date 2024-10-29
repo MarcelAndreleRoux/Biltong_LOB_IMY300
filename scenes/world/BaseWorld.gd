@@ -15,6 +15,7 @@ class_name BaseWorld
 @onready var game_music_player = GameMusicController
 @onready var food = $Food
 @onready var shake_camera = $ShakeCamera
+@onready var audio_listener_2d = $Player/AudioListener2D
 
 # Manager
 @onready var popup_manager = $PopupCanvasLayer/PopupManager
@@ -84,6 +85,7 @@ const WARNING_MESSAGES = {
 }
 
 func _ready():
+	audio_listener_2d.current = true
 	inventory_canvas.visible = false
 	SaveManager.end_scene_transition()
 	

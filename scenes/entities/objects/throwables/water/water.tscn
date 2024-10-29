@@ -148,7 +148,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ly7p5"]
 
 [node name="Water" type="CharacterBody2D" groups=["throwables", "water"]]
-z_index = 1
+z_index = 2
 y_sort_enabled = true
 collision_layer = 128
 collision_mask = 536870912

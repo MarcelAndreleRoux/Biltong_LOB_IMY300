@@ -54,6 +54,7 @@ position = Vector2(241, 254)
 [node name="PlayerRaycast" type="RayCast2D" parent="Player"]
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
+current = true
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
 z_index = 3

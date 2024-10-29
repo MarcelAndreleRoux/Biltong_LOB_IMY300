@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bsv2rliqboptl"]
+[gd_scene load_steps=47 format=3 uid="uid://bsv2rliqboptl"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/Vines/vines.gd" id="1_epfxr"]
 [ext_resource type="Texture2D" uid="uid://uv0lnd4qp165" path="res://assets/sprites/objects/static/vines/Vines-Large-Burn.png" id="2_7uudt"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://ckiegbvbbun7b" path="res://assets/sprites/objects/static/vines/Vines-Grow.png" id="4_fcwdn"]
 [ext_resource type="Texture2D" uid="uid://bbbx73i4cjb3w" path="res://assets/sprites/objects/static/vines/Vines-Small.png" id="5_gbftg"]
 [ext_resource type="Texture2D" uid="uid://c5sgxpqewmsiu" path="res://assets/sprites/objects/static/vines/Vines-Large.png" id="6_hmpup"]
+[ext_resource type="AudioStream" uid="uid://dksuk1mg8fwhi" path="res://assets/soundeffects/thwop-91757.mp3" id="7_i1v47"]
+[ext_resource type="AudioStream" uid="uid://de8iugobo7j51" path="res://assets/soundeffects/vine-burn.mp3" id="8_qli27"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l0xcu"]
 atlas = ExtResource("2_7uudt")
@@ -311,6 +313,16 @@ collision_mask = 897
 visible = false
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_n5tjw")
+
+[node name="grow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_i1v47")
+max_distance = 70.0
+bus = &"Sfx"
+
+[node name="burn" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_qli27")
+max_distance = 70.0
+bus = &"Sfx"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

@@ -200,11 +200,12 @@ func _update_animation_parameters():
 				animated_sprite_2d.visible = false
 				animation_tree["parameters/conditions/is_run_off"] = true
 			State.PATROL_WAIT, State.POST_LICK_IDLE:
-				animated_sprite_2d.stop()
-				animated_sprite_2d.visible = false
+				animated_sprite_2d.play("small_activation")
+				animated_sprite_2d.visible = true
 				animation_tree["parameters/conditions/is_idle_off"] = true
 			State.LICK_EYE:
-				animated_sprite_2d.visible = false
+				animated_sprite_2d.play("small_activation")
+				animated_sprite_2d.visible = true
 				animation_tree["parameters/conditions/is_lick_off"] = true
 	
 	# Update blend positions for animations
@@ -329,3 +330,7 @@ func _change_state():
 		else:
 			for obj in nearby_objects:
 				obj.stop_electricity()
+
+func _on_player_kill_area_entered(area):
+	if area.is_in_group("death_area"):
+		SharedSignals.player_killed.emit("pop")

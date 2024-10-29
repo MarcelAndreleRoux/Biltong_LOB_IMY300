@@ -56,7 +56,7 @@ size = Vector2(5, 4)
 radius = 20.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mdspv"]
-size = Vector2(10, 15)
+size = Vector2(11, 14.5)
 
 [sub_resource type="Animation" id="Animation_1we70"]
 length = 0.001
@@ -2154,7 +2154,6 @@ offset = Vector2(0, -2)
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-0.5, -2.5)
 shape = SubResource("CapsuleShape2D_4vyh8")
 
@@ -2222,8 +2221,7 @@ collision_layer = 524288
 collision_mask = 65
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathArea"]
-visible = false
-position = Vector2(0, -4.5)
+position = Vector2(-0.5, -2.75)
 shape = SubResource("RectangleShape2D_mdspv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
