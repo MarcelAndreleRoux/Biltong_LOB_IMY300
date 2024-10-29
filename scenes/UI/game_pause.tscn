@@ -203,6 +203,7 @@ grow_horizontal = 2
 text = "Pause"
 
 [node name="ConfirmQuit" type="Panel" parent="Control"]
+visible = false
 layout_mode = 0
 offset_right = 481.0
 offset_bottom = 270.0

@@ -137,8 +137,10 @@ func _on_load_save_pressed(slot: int):
 		get_tree().change_scene_to_file(level_path)
 
 func _apply_save_data(save_data: Dictionary):
-	GlobalValues.player_position = save_data.player_position
+	# First set level and position
 	LevelManager.current_level = save_data.level
+
+	# Then set gameplay state
 	GlobalValues.can_throw = save_data.can_throw
 	GlobalValues.can_swap_food = save_data.can_swap_food
 	GlobalValues.can_swap_fire = save_data.can_swap_fire
@@ -151,6 +153,10 @@ func _apply_save_data(save_data: Dictionary):
 	GlobalValues.box_pickup_once = save_data.box_pickup_once
 	GlobalValues.food_already_picked = save_data.food_already_picked
 	GlobalValues.hazmat_picked_up = save_data.hazmat_picked_up
+	
+	# Restore inventory state
+	if save_data.has("inventory_select"):
+		GlobalValues.set_inventory_select(save_data.inventory_select)
 
 func _on_delete_pressed(slot: int):
 	# Store the slot number and show confirmation dialog

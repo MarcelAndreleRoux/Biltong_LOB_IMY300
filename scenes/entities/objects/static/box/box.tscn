@@ -212,14 +212,16 @@ script = ExtResource("1_fdijp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(4.17233e-07, 1.19209e-07)
 sprite_frames = SubResource("SpriteFrames_qbh86")
-animation = &"near_box"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_kwl1v")
 
 [node name="ButtonArea" type="Area2D" parent="." groups=["box_collider", "box_pickup_area"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea"]
+visible = false
 shape = SubResource("RectangleShape2D_bpty4")
 
 [node name="MoveArea" type="Area2D" parent="." groups=["speed_area"]]

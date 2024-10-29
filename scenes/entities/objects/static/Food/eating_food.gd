@@ -85,6 +85,7 @@ func _on_animated_sprite_2d_animation_finished():
 	if playing_grow:
 		eating = false
 		playing_grow = false
+		animated_sprite_2d.play("idle")
 	
 	if play_backwards:
 		_some_waiting_timer()

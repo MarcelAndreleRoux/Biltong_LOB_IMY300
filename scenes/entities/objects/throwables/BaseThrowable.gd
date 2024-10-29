@@ -90,6 +90,7 @@ func _on_projectile_landed():
 	can_be_eaten = true
 	I_landed = true
 	vines_I_landed = true
+	z_index = 0.0
 	
 	# Enable the effect area when landed
 	if effect_area:

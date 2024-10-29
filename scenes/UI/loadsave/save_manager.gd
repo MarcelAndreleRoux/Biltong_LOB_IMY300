@@ -16,6 +16,7 @@ var is_transitioning: bool = false
 var previous_save_data: Dictionary = {}
 
 var force_slot: int = -1 
+var is_new_instance: bool = false
 
 func _ready():
 	if not DirAccess.dir_exists_absolute(SAVE_DIR):
@@ -52,34 +53,31 @@ func initialize_new_save() -> int:
 	return slot
 
 func continue_game() -> int:
-	# Clear any forced slot
-	force_slot = -1
+	is_new_instance = true
 	
 	# Get the most recent save
 	var source_slot = get_most_recent_save()
 	if source_slot == -1:
 		return -1
-		
+	
 	# Get source save data
 	var source_save = load_game(source_slot)
 	if source_save.is_empty():
 		return -1
 	
-	# Find the oldest save slot to override or an empty slot
-	var target_slot = find_empty_slot()
-	if target_slot == -1:
-		target_slot = get_oldest_save_slot()
+	# Find the next available slot in sequence
+	var target_slot = get_next_sequential_slot(source_slot)
 	
 	# Set this as the new active slot and force saving to it
 	current_active_save_slot = target_slot
 	force_slot = target_slot
 	
-	# Copy the save data
+	# Copy the save data to new slot
 	var file = FileAccess.open(SAVE_DIR + str(target_slot) + SAVE_FILE_EXTENSION, FileAccess.WRITE)
 	if file:
 		file.store_var(source_save)
 	
-	# Copy the screenshot if it exists
+	# Copy screenshot
 	var source_screenshot = SCREENSHOT_DIR + str(source_slot) + SCREENSHOT_EXTENSION
 	var target_screenshot = SCREENSHOT_DIR + str(target_slot) + SCREENSHOT_EXTENSION
 	if FileAccess.file_exists(source_screenshot):
@@ -87,27 +85,41 @@ func continue_game() -> int:
 		if dir:
 			dir.copy(source_screenshot, target_screenshot)
 	
-	print("Continued game: copied save from slot ", source_slot, " to new slot ", target_slot)
+	print("Created new instance in slot ", target_slot, " from source slot ", source_slot)
 	return target_slot
+
+func _log_save_state(context: String):
+	print("=== Save State [%s] ===" % context)
+	print("Current active slot: ", current_active_save_slot)
+	print("Force slot: ", force_slot)
+	print("Last loaded slot: ", last_loaded_slot)
+	print("Is transitioning: ", is_transitioning)
+	print("====================")
 
 func load_specific_save(slot: int) -> bool:
 	var save_data = load_game(slot)
 	if save_data.is_empty():
 		return false
 	
-	# Force all future saves to use this slot until cleared
+	# When loading specific save, we don't create new instance
+	is_new_instance = false
 	force_slot = slot
 	current_active_save_slot = slot
 	last_loaded_slot = slot
-	print("Loaded and forcing saves to slot: ", slot)
+	
+	print("Loading existing save slot: ", slot)
 	return true
 
 func update_current_save() -> bool:
-	if current_active_save_slot == -1 and force_slot == -1:
-		return false
-		
-	var slot_to_use = force_slot if force_slot != -1 else current_active_save_slot
-	return await save_game(slot_to_use)
+	_log_save_state("Before Update")
+	
+	# Always use current_active_save_slot during transitions
+	if current_active_save_slot != -1:
+		print("Updating current save slot: ", current_active_save_slot)
+		return await save_game(current_active_save_slot)
+	
+	print("No active save slot to update")
+	return false
 
 func set_active_save_slot(slot: int) -> void:
 	current_active_save_slot = slot
@@ -285,27 +297,11 @@ func take_screenshot(slot: int) -> bool:
 	
 	return true
 
-# Save game with screenshot
-func save_game(slot: int) -> bool:
-	# If we have a forced slot, use it instead
-	if force_slot != -1:
-		slot = force_slot
-		print("Using forced save slot: ", slot)
-	
-	if slot < 0 or slot >= MAX_SAVES:
-		return false
-	
-	# Store previous save data for comparison
-	previous_save_data = load_game(slot)
-	
+func _perform_save(slot: int) -> bool:
 	# Take screenshot first
 	await take_screenshot(slot)
 	
-	# Ensure we have the latest player position
-	var current_player_position = GlobalValues.player_position
-	print("Saving player position: ", current_player_position)
-	
-	var save_path = SAVE_DIR + str(slot) + SAVE_FILE_EXTENSION
+	# Get current time info
 	var current_time = Time.get_datetime_dict_from_system()
 	var time_string = "%02d:%02d:%02d" % [current_time.hour, current_time.minute, current_time.second]
 	
@@ -314,8 +310,6 @@ func save_game(slot: int) -> bool:
 		"timestamp": Time.get_unix_time_from_system(),
 		"save_time": time_string,
 		"screenshot_path": SCREENSHOT_DIR + str(slot) + SCREENSHOT_EXTENSION,
-		"player_position": current_player_position,
-		"spawn_position": current_player_position,
 		# Global values
 		"can_throw": GlobalValues.can_throw,
 		"can_swap_food": GlobalValues.can_swap_food,
@@ -328,11 +322,15 @@ func save_game(slot: int) -> bool:
 		"has_pickup_water_once": GlobalValues.has_pickup_water_once,
 		"box_pickup_once": GlobalValues.box_pickup_once,
 		"food_already_picked": GlobalValues.food_already_picked,
-		"hazmat_picked_up": GlobalValues.hazmat_picked_up
+		"hazmat_picked_up": GlobalValues.hazmat_picked_up,
+		"inventory_select": GlobalValues.inventory_select,
+		"inventory_visible": GlobalValues.can_throw
 	}
 	
 	print("Saving game data to slot ", slot, ": ", save_data)
 	
+	# Save the data
+	var save_path = SAVE_DIR + str(slot) + SAVE_FILE_EXTENSION
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 	if file:
 		file.store_var(save_data)
@@ -341,16 +339,41 @@ func save_game(slot: int) -> bool:
 	print("Save failed")
 	return false
 
+func save_game(slot: int) -> bool:
+	_log_save_state("Before Save")
+	
+	if force_slot != -1:
+		print("Using forced save slot: ", force_slot)
+		slot = force_slot
+	elif current_active_save_slot != -1:
+		print("Using active save slot: ", current_active_save_slot)
+		slot = current_active_save_slot
+	
+	print("Final save slot: ", slot)
+	
+	if slot < 0 or slot >= MAX_SAVES:
+		print("Invalid save slot: ", slot)
+		return false
+	
+	var save_success = await _perform_save(slot)
+	_log_save_state("After Save")
+	return save_success
+
 func begin_scene_transition():
+	_log_save_state("Begin Transition")
 	is_transitioning = true
-	# Store the current save slot data before transition
+	
+	# Store the current data before transition
 	if current_active_save_slot != -1:
 		previous_save_data = load_game(current_active_save_slot)
+		print("Stored previous save data for slot: ", current_active_save_slot)
 
 func end_scene_transition():
+	_log_save_state("End Transition")
 	is_transitioning = false
-
-
+	# Maintain force_slot after transition
+	if force_slot != -1:
+		current_active_save_slot = force_slot
 
 func delete_all_saves() -> void:
 	for slot in range(MAX_SAVES):

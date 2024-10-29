@@ -30,6 +30,7 @@ var trajectory_has_collision: bool = false
 signal throw_action
 
 #Inventory
+@onready var inventory_canvas = $InventoryCanvas
 @onready var inventory = $InventoryCanvas/Inventory
 
 #Sounds
@@ -83,10 +84,11 @@ const WARNING_MESSAGES = {
 }
 
 func _ready():
+	inventory_canvas.visible = false
 	SaveManager.end_scene_transition()
 	
 	if SaveManager.current_active_save_slot != -1:
-		print("Continuing with active save slot: ", SaveManager.current_active_save_slot)
+		print("Using save slot ", SaveManager.current_active_save_slot, " (forced: ", SaveManager.force_slot != -1, ")")
 	# Keep existing ready code
 	MenuAudioController.stop_music()
 	GameMusicController.play_music()
@@ -126,39 +128,44 @@ func _ready():
 	if hedgehog:
 		enemy_raycast.add_exception(hedgehog)
 
+
 func _setup_player_position():
-	# Wait for two frames to ensure scene is fully loaded
+	# Wait for frames to ensure scene is fully loaded
 	await get_tree().process_frame
 	await get_tree().process_frame
 	
-	if player and GlobalValues.player_position != Vector2.ZERO:
-		print("Setting player position to: ", GlobalValues.player_position)
-		# Use global_position for consistent positioning
-		player.global_position = GlobalValues.player_position
-		# Ensure the position update is processed
+	if player:
+		var spawn_position: Vector2
+		
+		if GlobalValues.player_position != Vector2.ZERO:
+			# Use saved position if available
+			spawn_position = GlobalValues.player_position
+			print("Loading saved player position: ", spawn_position)
+		else:
+			# Use the position set in the editor as default
+			spawn_position = player.position
+			print("Using editor-set spawn position: ", spawn_position)
+		
+		# Set player position
+		player.global_position = spawn_position
 		await get_tree().process_frame
 		
-		# Verify position was set correctly
-		print("Player position after setting: ", player.global_position)
+		# Show/hide inventory based on can_throw state
+		if inventory_canvas and GlobalValues.can_throw:
+			inventory_canvas.visible = true
+			print("Restoring inventory visibility")
+		
+		print("Final player position: ", player.global_position)
 
 func _setup_autosave():
 	await get_tree().process_frame
 	await get_tree().process_frame
 	
+	SaveManager._log_save_state("Setup Autosave")
 	_update_global_values()
 	
-	# Only create a new save if:
-	# 1. This is level 0
-	# 2. We don't have an active save slot
-	# 3. We don't have any saves at all
-	if SaveManager.should_autosave() and SaveManager.current_active_save_slot == -1 and not SaveManager.has_any_saves():
-		print("First time loading level 0 - creating new save")
-		var save_slot = SaveManager.initialize_new_game()
-		if save_slot != -1:
-			if await SaveManager.save_game(save_slot):
-				print("Created initial save in slot ", save_slot)
-	else:
-		print("Using save slot: ", SaveManager.current_active_save_slot)
+	if SaveManager.current_active_save_slot != -1:
+		print("Continuing with save slot: ", SaveManager.current_active_save_slot)
 
 func _update_global_values():
 	# Update all relevant GlobalValues before saving
@@ -202,9 +209,9 @@ func _spawn_blocking_collision_shape():
 		var turtle_position = to_local(turtle.global_position)
 		
 		if turtle.get_direction().x < 0:
-			blocking_body.position = turtle_position + Vector2(3, -8)
+			blocking_body.position = turtle_position + Vector2(3, -3)
 		else:
-			blocking_body.position = turtle_position + Vector2(-3, -8)
+			blocking_body.position = turtle_position + Vector2(-3, -3)
 		
 		blocking_shape.shape = shape
 		blocking_shape.set_rotation_degrees(90)
@@ -326,6 +333,7 @@ func _handle_aiming_and_throwing():
 
 func _on_item_pickup():
 	GlobalValues.can_throw = true
+	inventory_canvas.visible = true
 
 func _throw_item():
 	# Determine which projectile to throw based on the current inventory selection
@@ -545,14 +553,15 @@ func _remove_marker():
 func _on_transition_body_entered(body):
 	if body.is_in_group("player"):
 		GlobalValues.transition_scene = true
+		print("Transitioning from level: ", LevelManager.current_level)
 		
-		# Begin transition and save current state
+		# Begin transition
 		SaveManager.begin_scene_transition()
 		
 		# Update the save in the current slot
 		if SaveManager.current_active_save_slot != -1:
 			await SaveManager.update_current_save()
-			print("Updated save slot ", SaveManager.current_active_save_slot, " before transition")
+			print("Updated save slot ", SaveManager.current_active_save_slot, " during transition")
 
 func _on_death_finsish():
 	death.death_lose()
