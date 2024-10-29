@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://4f80vyxt7mct"]
+[gd_scene load_steps=8 format=3 uid="uid://4f80vyxt7mct"]
 
 [ext_resource type="Theme" uid="uid://htqpgpsdageq" path="res://scenes/UI/loadsave/save_menu.tres" id="1_3l1kg"]
 [ext_resource type="Script" path="res://scenes/UI/loadsave/load_save.gd" id="1_grl3h"]
 [ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="2_moqmy"]
+[ext_resource type="Texture2D" uid="uid://caoky8a344oc5" path="res://assets/sprites/UI/save banner/save_background2.png" id="4_2jbf0"]
+[ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="5_kicxd"]
+[ext_resource type="Texture2D" uid="uid://cmnaummadqvmx" path="res://assets/sprites/UI/save banner/NoSave.png" id="5_srthd"]
+[ext_resource type="Texture2D" uid="uid://byh7wn3yigu52" path="res://assets/sprites/UI/save banner/save_background_no_save.png" id="6_empos"]
 
 [node name="LoadSave" type="Control"]
 layout_mode = 3
@@ -30,7 +34,209 @@ text = "GAME SAVES"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="SaveBackground" type="TextureRect" parent="."]
 layout_mode = 2
-offset_right = 481.0
-offset_bottom = 270.0
+offset_left = 166.0
+offset_top = 62.0
+offset_right = 310.0
+offset_bottom = 110.0
+texture = ExtResource("4_2jbf0")
+stretch_mode = 2
+
+[node name="ChamberLabel" type="Label" parent="SaveBackground"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 1.0
+offset_right = 104.0
+offset_bottom = 17.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Chamber 1"
+
+[node name="TimeLabel" type="Label" parent="SaveBackground"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 14.0
+offset_right = 113.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0.317647, 0.317647, 0.317647, 1)
+text = "Saved: 12:00"
+
+[node name="SavePicture" type="TextureRect" parent="SaveBackground"]
+layout_mode = 2
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 44.0
+texture = ExtResource("5_srthd")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="SaveBackground/SavePicture"]
+layout_mode = 0
+offset_right = 56.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "No Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadSaveButton" type="TextureButton" parent="SaveBackground"]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 28.0
+offset_right = 140.0
+offset_bottom = 44.0
+
+[node name="LoadSaveText" type="Label" parent="SaveBackground/LoadSaveButton"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 43.0
+offset_bottom = 15.0
+text = "Load Save"
+
+[node name="SaveBackground2" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 166.0
+offset_top = 118.0
+offset_right = 310.0
+offset_bottom = 166.0
+texture = ExtResource("4_2jbf0")
+stretch_mode = 2
+
+[node name="ChamberLabel" type="Label" parent="SaveBackground2"]
+offset_left = 64.0
+offset_top = 1.0
+offset_right = 104.0
+offset_bottom = 17.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Chamber 2"
+
+[node name="TimeLabel" type="Label" parent="SaveBackground2"]
+offset_left = 64.0
+offset_top = 14.0
+offset_right = 113.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0.317647, 0.317647, 0.317647, 1)
+text = "Saved: 12:00"
+
+[node name="SavePicture" type="TextureRect" parent="SaveBackground2"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 44.0
+texture = ExtResource("5_srthd")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="SaveBackground2/SavePicture"]
+layout_mode = 0
+offset_right = 56.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "No Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadSaveButton" type="TextureButton" parent="SaveBackground2"]
+offset_left = 95.0
+offset_top = 28.0
+offset_right = 140.0
+offset_bottom = 44.0
+
+[node name="LoadSaveText" type="Label" parent="SaveBackground2/LoadSaveButton"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 43.0
+offset_bottom = 15.0
+text = "Load Save"
+
+[node name="SaveBackground3" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 166.0
+offset_top = 174.0
+offset_right = 310.0
+offset_bottom = 222.0
+texture = ExtResource("4_2jbf0")
+stretch_mode = 2
+
+[node name="CamberLabel" type="Label" parent="SaveBackground3"]
+offset_left = 64.0
+offset_top = 1.0
+offset_right = 104.0
+offset_bottom = 17.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Chamber 3"
+
+[node name="TimeLabel" type="Label" parent="SaveBackground3"]
+offset_left = 64.0
+offset_top = 14.0
+offset_right = 113.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0.317647, 0.317647, 0.317647, 1)
+text = "Saved: 12:00"
+
+[node name="SavePicture" type="TextureRect" parent="SaveBackground3"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 44.0
+texture = ExtResource("5_srthd")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="SaveBackground3/SavePicture"]
+layout_mode = 0
+offset_right = 56.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "No Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadSaveButton" type="TextureButton" parent="SaveBackground3"]
+offset_left = 95.0
+offset_top = 28.0
+offset_right = 140.0
+offset_bottom = 44.0
+
+[node name="LoadSaveText" type="Label" parent="SaveBackground3/LoadSaveButton"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 43.0
+offset_bottom = 15.0
+text = "Load Save"
+
+[node name="NoSaveBackground" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 174.0
+offset_right = 310.0
+offset_bottom = 222.0
+texture = ExtResource("6_empos")
+
+[node name="NoSaveLabel" type="Label" parent="NoSaveBackground"]
+layout_mode = 0
+offset_right = 144.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "No Save Made Here"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -30.0
+offset_right = 125.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme = ExtResource("5_kicxd")
+text = "Back"

@@ -543,7 +543,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
-"speed": 15.0
+"speed": 8.0
 }]
 
 [node name="Door" type="StaticBody2D"]

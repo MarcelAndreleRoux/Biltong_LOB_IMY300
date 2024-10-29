@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://cmtney0q41jbn"]
+
+[ext_resource type="Script" path="res://scenes/entities/objects/static/pod/player_pod.gd" id="1_1flem"]
+[ext_resource type="Texture2D" uid="uid://kfv74q3savhh" path="res://assets/sprites/objects/static/Pod/Pod-Broken.png" id="2_aigw5"]
+[ext_resource type="Texture2D" uid="uid://bjkyy82o2mpx" path="res://assets/sprites/objects/static/Pod/Pod-Human.png" id="3_euksu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10ea1"]
+atlas = ExtResource("2_aigw5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jj5nr"]
+atlas = ExtResource("3_euksu")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xqv8"]
+atlas = ExtResource("3_euksu")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4j1f"]
+atlas = ExtResource("3_euksu")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m67fd"]
+atlas = ExtResource("3_euksu")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlusg"]
+atlas = ExtResource("3_euksu")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1oyik"]
+atlas = ExtResource("3_euksu")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8nfn"]
+atlas = ExtResource("3_euksu")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ubcmr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10ea1")
+}],
+"loop": false,
+"name": &"broken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jj5nr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xqv8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4j1f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m67fd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlusg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1oyik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8nfn")
+}],
+"loop": true,
+"name": &"normal",
+"speed": 2.0
+}]
+
+[node name="PlayerPod" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_1flem")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ubcmr")
+animation = &"normal"
+offset = Vector2(0, -10)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(0, -10)
+polygon = PackedVector2Array(-12, 13, -7, 18, -4, 19, 4, 19, 6, 20, 7, 22, 9, 24, 13, 24, 14, 23, 15, 21, 15, 19, 15, 17, 14, 14, 14, 12, 14, 9, 13, 7, 12, 6, 10, 4, 4, 2, 0, 2, -5, 2, -10, 4, -12, 6)
