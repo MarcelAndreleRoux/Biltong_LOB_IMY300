@@ -4,6 +4,8 @@ extends RigidBody2D
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var action_button_press = $ActionButtonPress
 
+@export var CHARGE_TIME: float = 7.5
+
 var remove_box: bool = false
 var player_in_area: bool = false
 var shown_once: bool = false
@@ -61,7 +63,7 @@ func stop_electricity():
 	if charge_timer:
 		charge_timer.queue_free()
 	charge_timer = Timer.new()
-	charge_timer.wait_time = 1.5  # 1.5 second delay
+	charge_timer.wait_time = CHARGE_TIME  # 1.5 second delay
 	charge_timer.one_shot = true
 	charge_timer.timeout.connect(_on_charge_timer_timeout)
 	add_child(charge_timer)

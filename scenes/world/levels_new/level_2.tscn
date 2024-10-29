@@ -90,7 +90,7 @@ stretch_mode = 2
 visible = false
 
 [node name="Inventory" parent="InventoryCanvas" instance=ExtResource("12_da2li")]
-position = Vector2(245, 258)
+position = Vector2(448, 256)
 
 [node name="MBoard" parent="." instance=ExtResource("13_10oow")]
 position = Vector2(216, 48)

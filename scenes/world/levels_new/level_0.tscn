@@ -113,6 +113,7 @@ scale = Vector2(1.00072, 0.968581)
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
+current = true
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
 z_index = 3

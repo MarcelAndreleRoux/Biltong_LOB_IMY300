@@ -1,5 +1,6 @@
 extends StaticBody2D
-@export var plant_type = "big"
+
+@export_enum("big", "small") var plant_type: String = "big"
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
 
