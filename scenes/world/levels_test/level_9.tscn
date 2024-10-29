@@ -114,11 +114,11 @@ position = Vector2(192, 16)
 position = Vector2(192, 192)
 door_link_id = "a"
 
-[node name="Button" parent="." groups=["buttons"] instance=ExtResource("9_8krhe")]
+[node name="Button" parent="." instance=ExtResource("9_8krhe")]
 position = Vector2(152, 104)
 door_link_id = "a"
 
-[node name="Button3" parent="." groups=["buttons"] instance=ExtResource("9_8krhe")]
+[node name="Button3" parent="." instance=ExtResource("9_8krhe")]
 position = Vector2(234, 51)
 door_link_id = "a"
 button_mode = "Toggle"
@@ -178,7 +178,7 @@ position = Vector2(415, 55)
 door_link_id = "12345"
 required_connections = 2
 
-[node name="Button2" parent="." groups=["buttons"] instance=ExtResource("9_8krhe")]
+[node name="Button2" parent="." instance=ExtResource("9_8krhe")]
 position = Vector2(433, 133)
 door_link_id = "12345"
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://6cf7oc3th3bh"]
+[gd_scene load_steps=21 format=3 uid="uid://6cf7oc3th3bh"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_0vski"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_pw6my"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="17_rxdsx"]
 [ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_bush.tscn" id="18_lpx28"]
 [ext_resource type="PackedScene" uid="uid://cm3vb8x5ang4d" path="res://scenes/entities/objects/shoot/dart.tscn" id="18_te834"]
+[ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="20_q7hbd"]
 
 [node name="BaseLevel3" type="Node2D"]
 script = ExtResource("1_0vski")
@@ -35,9 +36,6 @@ layer_1/name = "Walls"
 layer_1/tile_data = PackedInt32Array(720899, 1245191, 0, 720900, 1310727, 0, 5, 589831, 0, 65541, 786439, 0, 720901, 1310727, 0, 720902, 1310727, 0, 720903, 1310727, 0, 8, 983047, 0, 65544, 1507335, 0, 720904, 1310727, 0, 9, 589831, 0, 65545, 1507335, 0, 720905, 1310727, 0, 10, 655367, 0, 65546, 786439, 0, 720906, 1310727, 0, 11, 589831, 0, 65547, 786439, 0, 327691, 2293767, 0, 393227, 196615, 0, 458763, 786439, 0, 720907, 1310727, 0, 12, 983047, 0, 65548, 1507335, 0, 327692, 1310727, 0, 393228, 655367, 0, 458764, 1507335, 0, 720908, 1310727, 0, 13, 983047, 0, 65549, 1507335, 0, 327693, 1310727, 0, 393229, 983047, 0, 458765, 1507335, 0, 720909, 1310727, 0, 14, 589831, 0, 65550, 1507335, 0, 327694, 1310727, 0, 393230, 589831, 0, 458766, 1507335, 0, 720910, 1310727, 0, 15, 983047, 0, 65551, 786439, 0, 327695, 1310727, 0, 393231, 655367, 0, 458767, 1507335, 0, 720911, 1310727, 0, 16, 655367, 0, 65552, 786439, 0, 327696, 1310727, 0, 393232, 983047, 0, 458768, 786439, 0, 720912, 1310727, 0, 17, 983047, 0, 65553, 1507335, 0, 327697, 1310727, 0, 393233, 589831, 0, 458769, 786439, 0, 720913, 1310727, 0, 18, 655367, 0, 65554, 786439, 0, 327698, 1310727, 0, 393234, 983047, 0, 458770, 1507335, 0, 720914, 1310727, 0, 19, 589831, 0, 65555, 786439, 0, 720915, 1310727, 0, 20, 983047, 0, 65556, 1507335, 0, 21, 983047, 0, 65557, 1507335, 0, 22, 589831, 0, 65558, 786439, 0, 720918, 1310727, 0, 23, 589831, 0, 65559, 786439, 0, 3, 131079, 0, 65539, 720903, 0, 131075, 1114119, 0, 196611, 1114119, 0, 262147, 1114119, 0, 327683, 1114119, 0, 393219, 1114119, 0, 458755, 1114119, 0, 524291, 1114119, 0, 589827, 1114119, 0, 655363, 1114119, 0, 4, 589831, 0, 65540, 1507335, 0, 327699, 1310727, 0, 393235, 655367, 0, 458771, 786439, 0, 327700, 1310727, 0, 393236, 983047, 0, 458772, 786439, 0, 720916, 1310727, 0, 327701, 2359303, 0, 393237, 65543, 0, 458773, 786439, 0, 720917, 1310727, 0, 24, 983047, 0, 65560, 1507335, 0, 25, 589831, 0, 65561, 1507335, 0, 720921, 1310727, 0, 26, 7, 0, 65562, 917511, 0, 131098, 1048583, 0, 196634, 1048583, 0, 262170, 1048583, 0, 327706, 1048583, 0, 393242, 1048583, 0, 458778, 1048583, 0, 524314, 1048583, 0, 589850, 1048583, 0, 655386, 1048583, 0, 720922, 1441799, 0)
 layer_2/name = "Wires"
 layer_2/tile_data = PackedInt32Array(196633, 524290, 0, 262169, 1048578, 0, 327705, 1048578, 0, 393241, 1048578, 0, 458777, 1048578, 0, 524313, 1048578, 0, 589849, 1048578, 0, 655385, 1048578, 0)
-
-[node name="Inventory" parent="." instance=ExtResource("3_ulc8o")]
-position = Vector2(245, 258)
 
 [node name="Player" parent="." instance=ExtResource("4_1pewe")]
 position = Vector2(112, 40)
@@ -95,6 +93,11 @@ position = Vector2(216, 56)
 
 [node name="Food" type="Node" parent="." groups=["food"]]
 
+[node name="InventoryCanvas" type="CanvasLayer" parent="."]
+
+[node name="Inventory" parent="InventoryCanvas" instance=ExtResource("3_ulc8o")]
+position = Vector2(245, 258)
+
 [node name="GamePause" parent="." instance=ExtResource("12_l2b40")]
 visible = false
 
@@ -115,3 +118,5 @@ position = Vector2(79, 116)
 
 [node name="WaterBush" parent="." instance=ExtResource("18_lpx28")]
 position = Vector2(123, 132)
+
+[node name="PopupCanvasLayer" parent="." instance=ExtResource("20_q7hbd")]

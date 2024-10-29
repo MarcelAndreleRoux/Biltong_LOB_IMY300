@@ -9,11 +9,14 @@ extends StaticBody2D
 @onready var disconnect = $disconnect
 @onready var cpu_particles_2d = $CPUParticles2D
 @onready var cpu_particles_2d_2 = $CPUParticles2D2
+@onready var leaves_fall = $leaves_fall
 
 var openString: String
 var closeString: String
 
 var closed_check: bool = true
+
+var played_once: bool = true
 
 var active_buttons: Dictionary = {}
 
@@ -42,6 +45,11 @@ func _on_door_stateChange(door_id: String, state: bool, button_instance_id: int)
 	if active_buttons.size() >= required_connections:
 		closed_check = false
 		disconnect.play()
+		
+		if not played_once:
+			played_once = true
+			leaves_fall.play("default")
+		
 		cpu_particles_2d.emitting = true
 		cpu_particles_2d_2.emitting = true
 		animated_sprite_2d.play("default")

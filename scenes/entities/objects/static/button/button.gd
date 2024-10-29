@@ -32,9 +32,12 @@ func _ready():
 		if start_pressed:
 			animated_sprite_2d.play("click")
 			SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
+			SharedSignals.button_active.emit(true)
 		else:
+			SharedSignals.button_active.emit(false)
 			animated_sprite_2d.play("idle")
 	else:
+		SharedSignals.button_active.emit(false)
 		animated_sprite_2d.play("idle")
 	
 	# Update shader state
@@ -68,13 +71,16 @@ func handle_button_press(activator):
 		if is_toggled:
 			animated_sprite_2d.play("click")
 			SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
+			SharedSignals.button_active.emit(true, door_link_id)
 		else:
 			animated_sprite_2d.play_backwards("click")
 			SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
+			SharedSignals.button_active.emit(false, door_link_id)
 	else:
 		# Normal mode behavior
 		animated_sprite_2d.play("click")
 		SharedSignals.doorState.emit(door_link_id, true, get_instance_id())
+		SharedSignals.button_active.emit(true, door_link_id)
 
 func _on_click_area_body_exited(body):
 	if area2d_active:
@@ -84,6 +90,7 @@ func _on_click_area_body_exited(body):
 		if button_mode == "Normal" and found_link and door_link_id == door_link_found:
 			animated_sprite_2d.play_backwards("click")
 			SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
+			SharedSignals.button_active.emit(false, door_link_id)
 		
 		if body == last_activator:
 			last_activator = null
@@ -107,6 +114,7 @@ func _on_detect_box_area_exited(area: Area2D):
 		if button_mode == "Normal" and found_link and door_link_id == door_link_found:
 			animated_sprite_2d.play_backwards("click")
 			SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
+			SharedSignals.button_active.emit(false)
 		
 		if area == last_activator:
 			last_activator = null

@@ -7,6 +7,9 @@ extends StaticBody2D
 @onready var door_close = $door_close
 @onready var door_open = $door_open
 
+@onready var leaves_fall = $leaves_fall
+
+var played_once: bool = false
 var doorState: bool = false
 
 # Keep track of which buttons and m_boards are currently pressed using a dictionary
@@ -14,6 +17,7 @@ var active_buttons: Dictionary = {}
 var active_electrical: Dictionary = {}
 
 func _ready():
+	leaves_fall.frame = 0
 	SharedSignals.doorState.connect(_on_door_stateChange)
 	SharedSignals.check_link.connect(_check_link)
 	update_door_animation()
@@ -63,6 +67,11 @@ func check_connections():
 func open_door():
 	if doorState:
 		return
+	
+	if not played_once:
+		played_once = true
+		leaves_fall.play("default")
+	
 	doorState = true
 	door_open.play()
 	animation_tree.set("parameters/conditions/is_opening", true)

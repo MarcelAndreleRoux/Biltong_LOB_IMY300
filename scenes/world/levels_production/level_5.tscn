@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cn37f77j3x1qa"]
+[gd_scene load_steps=20 format=3 uid="uid://cn37f77j3x1qa"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_4c3ar"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_40q0h"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="6_a1pdl"]
 [ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="7_d2hhb"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="14_6f6to"]
+[ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="14_ewoh3"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="16_ci0u3"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="17_0c8du"]
 [ext_resource type="PackedScene" uid="uid://cc2r5liu3fpf7" path="res://scenes/UI/audio_paused_menu.tscn" id="17_0m2kt"]
@@ -34,7 +35,9 @@ layer_1/tile_data = PackedInt32Array(0, 131079, 0, 65536, 720903, 0, 1, 655367, 
 layer_2/name = "Wires"
 layer_2/tile_data = PackedInt32Array(786447, 1048578, 0, 851983, 917506, 0, 851982, 983042, 0, 851981, 983042, 0, 851980, 983042, 0, 851979, 983042, 0, 851978, 983042, 0, 851977, 983042, 0, 851976, 983042, 0, 851975, 983042, 0, 851974, 983042, 0, 851973, 393218, 0, 851970, 524290, 0, 851969, 786434, 0, 786433, 1048578, 0, 720897, 1048578, 0, 655361, 1048578, 0, 589825, 1048578, 0, 524289, 1048578, 0, 458753, 1048578, 0, 393217, 1048578, 0)
 
-[node name="Inventory" parent="." instance=ExtResource("3_yov2x")]
+[node name="InventoryCanvas" type="CanvasLayer" parent="."]
+
+[node name="Inventory" parent="InventoryCanvas" instance=ExtResource("3_yov2x")]
 position = Vector2(245, 258)
 
 [node name="Player" parent="." instance=ExtResource("4_2ftdc")]
@@ -123,6 +126,8 @@ position = Vector2(184, 80)
 position = Vector2(184, 96)
 
 [node name="Food" type="Node" parent="." groups=["food"]]
+
+[node name="PopupCanvasLayer" parent="." instance=ExtResource("14_ewoh3")]
 
 [node name="GamePause" parent="." instance=ExtResource("20_yvv6y")]
 visible = false

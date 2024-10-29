@@ -1,46 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctbl3sokmebn3"]
+[gd_scene load_steps=3 format=3 uid="uid://ctbl3sokmebn3"]
 
 [ext_resource type="Script" path="res://scenes/Shared/game_music_controller.gd" id="1_uxfob"]
-[ext_resource type="AudioStream" uid="uid://yn3jhtgbf6yx" path="res://assets/music/9. Space Debris.wav" id="2_3hlnb"]
-[ext_resource type="AudioStream" uid="uid://bgkakg5gljh4h" path="res://assets/music/10. Boundless Slumber.wav" id="3_rya47"]
-[ext_resource type="AudioStream" uid="uid://c7thlidkl8koy" path="res://assets/music/11. Poseidon's Realm.wav" id="4_icxfx"]
-[ext_resource type="AudioStream" uid="uid://clinnhjr7vmtm" path="res://assets/music/12. Floating in the Abyss.wav" id="5_lkxd2"]
-[ext_resource type="AudioStream" uid="uid://bm7vqgy1mneli" path="res://assets/music/14. The Riff.wav" id="6_hb78v"]
-[ext_resource type="AudioStream" uid="uid://bilgd2iig787p" path="res://assets/music/17. New Morning, New Sun.wav" id="7_2o5y1"]
-[ext_resource type="AudioStream" uid="uid://cte414d6yfrtb" path="res://assets/music/18. A Fool's Affair.wav" id="8_egphi"]
 [ext_resource type="AudioStream" uid="uid://cxberfkeymu3l" path="res://assets/music/GameMusic.mp3" id="9_8c3pq"]
 
 [node name="GameMusicControler" type="Node"]
 script = ExtResource("1_uxfob")
 
 [node name="Track1" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_3hlnb")
-bus = &"Music"
-
-[node name="Track2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_rya47")
-bus = &"Music"
-
-[node name="Track3" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_icxfx")
-bus = &"Music"
-
-[node name="Track4" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_lkxd2")
-volume_db = -12.667
-bus = &"Music"
-
-[node name="Track5" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_hb78v")
-bus = &"Music"
-
-[node name="Track6" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_2o5y1")
-bus = &"Music"
-
-[node name="Track7" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_egphi")
-bus = &"Music"
-
-[node name="Track8" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_8c3pq")
+bus = &"Music"
