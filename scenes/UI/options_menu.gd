@@ -10,6 +10,10 @@ extends Control
 @onready var fps_label = $DisplaySettings/VBoxContainer/HBoxContainer4/FPSLabel
 @onready var screen_shake_toggle = $Other/HBoxContainer3/ShakeCheckBox
 @onready var shake_check_box = $Other/HBoxContainer/ShakeCheckBox
+@onready var volume_slider_3 = $AudioSettings/VBoxContainer/volume_slider3
+@onready var volume_slider = $AudioSettings/VBoxContainer/volume_slider
+@onready var volume_slider_2 = $AudioSettings/VBoxContainer/volume_slider2
+@onready var censor_check_box = $Other/HBoxContainer3/CensorCheckBox
 
 @onready var description = $Descrpition/Description
 
@@ -71,13 +75,70 @@ func _ready():
 	load_current_settings()
 	setup_label_mouse_properties()
 	
-	if CameraManager.is_screen_shake_enabled():
-		shake_check_box.button_pressed = true
-	else:
-		shake_check_box.button_pressed = false
+	# Check if shake_check_box exists before using it
+	if shake_check_box != null:
+		shake_check_box.button_pressed = CameraManager.is_screen_shake_enabled()
 	
 	if has_node("/root/AudioController"):
 		get_node("/root/AudioController").process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	if not FileAccess.file_exists("user://settings.save"):
+		GlobalValues.set_censorship_enabled(true)
+		if screen_shake_toggle != null:
+			screen_shake_toggle.button_pressed = true
+		SaveManager.save_settings()
+	else:
+		var settings = SaveManager.load_settings()
+		if not settings.is_empty():
+			apply_saved_settings(settings)
+	
+	var settings = SaveManager.load_settings()
+	if not settings.is_empty():
+		apply_saved_settings(settings)
+
+func apply_saved_settings(settings: Dictionary):
+	if settings.has("screen_shake"):
+		# Check for null before setting
+		if shake_check_box != null:
+			shake_check_box.button_pressed = settings.screen_shake
+	
+	if settings.has("censorship"):
+		# Check for null before setting
+		if censor_check_box != null:
+			censor_check_box.button_pressed = settings.censorship
+		else:
+			print("screen_shake_toggle is null")
+	
+	if settings.has("resolution"):
+		if resolution_option != null:
+			var res_index = RESOLUTIONS.find(settings.resolution)
+			if res_index >= 0:
+				resolution_option.selected = res_index
+		else:
+			print("resolution is null")
+	
+	if settings.has("window_mode"):
+		if window_mode != null:
+			var mode_index = WINDOW_MODES.values().find(settings.window_mode)
+			if mode_index >= 0:
+				window_mode.selected = mode_index
+		else:
+			print("window_mode is null")
+	
+	if settings.has("vsync"):
+		if vsync_toggle != null:
+			vsync_toggle.button_pressed = settings.vsync == DisplayServer.VSYNC_ENABLED
+		else:
+			print("vsync_toggle is null")
+	
+	if settings.has("master_volume"):
+		volume_slider_3.value = settings.master_volume
+	
+	if settings.has("music_volume"):
+		volume_slider.value = settings.music_volume
+	
+	if settings.has("sfx_volume"):
+		volume_slider_2.value = settings.sfx_volume
 
 func setup_label_mouse_properties():
 	# Get all nodes in the "has_description" group
@@ -125,30 +186,30 @@ func setup_display_options():
 
 func load_current_settings():
 	# Set current resolution option
-	var current_window_size = DisplayServer.window_get_size()
-	var current_res_index = 0
-	for i in range(RESOLUTIONS.size()):
-		if RESOLUTIONS[i] == current_window_size:
-			current_res_index = i
-			break
-	if resolution_option:
+	if resolution_option != null:
+		var current_window_size = DisplayServer.window_get_size()
+		var current_res_index = 0
+		for i in range(RESOLUTIONS.size()):
+			if RESOLUTIONS[i] == current_window_size:
+				current_res_index = i
+				break
 		resolution_option.selected = current_res_index
 	
 	# Set current window mode
-	var current_window_mode = DisplayServer.window_get_mode()
-	var mode_index = 0
-	for i in WINDOW_MODES.keys().size():
-		if WINDOW_MODES.values()[i] == current_window_mode:
-			mode_index = i
-			break
-	if window_mode:
+	if window_mode != null:
+		var current_window_mode = DisplayServer.window_get_mode()
+		var mode_index = 0
+		for i in WINDOW_MODES.keys().size():
+			if WINDOW_MODES.values()[i] == current_window_mode:
+				mode_index = i
+				break
 		window_mode.selected = mode_index
 	
 	# Set current VSync state
-	if vsync_toggle:
+	if vsync_toggle != null:
 		vsync_toggle.button_pressed = DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_ENABLED
 	
-	if screen_shake_toggle:
+	if screen_shake_toggle != null:
 		screen_shake_toggle.button_pressed = CameraManager.is_screen_shake_enabled()
 
 func _on_resolution_option_item_selected(index):
@@ -196,16 +257,21 @@ func _on_back_pressed():
 
 func _on_volume_slider_3_value_changed(value):
 	AudioController.play_sfx("TICKSOUND_MASTER")
+	AudioController.set_master_volume(value)
+	SaveManager.save_settings()
 
 func _on_volume_slider_value_changed(value):
 	AudioController.play_sfx("TICKSOUND_MUSIC")
+	AudioController.set_music_volume(value)
+	SaveManager.save_settings()
 
 func _on_volume_slider_2_value_changed(value):
 	AudioController.play_sfx("TICKSOUND_SFX")
+	AudioController.set_sfx_volume(value)
+	SaveManager.save_settings()
 
 func _on_button_select_options_finished():
 	exit_options_menu.emit()
-
 
 # --------------------------------- LABEL MOUSE ENTERED ---------------------------------------
 

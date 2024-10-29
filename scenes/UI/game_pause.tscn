@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://bnobf44t3wkei"]
+[gd_scene load_steps=18 format=3 uid="uid://bnobf44t3wkei"]
 
 [ext_resource type="Script" path="res://scenes/UI/game_pause.gd" id="1_wxb5x"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_8pyex"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="3_d13yp"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_ynmkg"]
 [ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="5_e0vfk"]
+[ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="6_e7y0c"]
 [ext_resource type="PackedScene" uid="uid://pjr0tdqacf2g" path="res://scenes/UI/options_menu.tscn" id="6_ymjmn"]
 [ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="7_ansnh"]
 
@@ -202,7 +203,6 @@ grow_horizontal = 2
 text = "Pause"
 
 [node name="ConfirmQuit" type="Panel" parent="Control"]
-visible = false
 layout_mode = 0
 offset_right = 481.0
 offset_bottom = 270.0
@@ -239,15 +239,16 @@ texture = ExtResource("4_ynmkg")
 
 [node name="Label" type="Label" parent="Control/ConfirmQuit/TextureRect2"]
 layout_mode = 0
-offset_left = 74.5
+offset_left = 58.0
 offset_top = 49.0
-offset_right = 257.5
+offset_right = 281.0
 offset_bottom = 132.0
 theme = SubResource("Theme_xnvxv")
-text = "Are You Sure You
-Want To Exit the Game?"
+theme_override_fonts/font = ExtResource("6_e7y0c")
+text = "Your Data will be saved when you quit."
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/ConfirmQuit/TextureRect2"]
 layout_direction = 1
