@@ -138,11 +138,11 @@ func _cancel_other_timers():
 # --- Flip Collision Polygon Based on Direction ---
 
 func _flip_collision_polygon_based_on_direction():
-	# Flip the collision polygon if moving left
+	# Move collision shape to the right when moving left, center when moving right
 	if direction.x < 0:
-		collision_shape_2d.position.x = 8
+		collision_shape_2d.position.x = 2  # Moved right
 	else:
-		collision_shape_2d.position.x = 2
+		collision_shape_2d.position.x = -4  # Centered
 
 # --- Patrol Behavior ---
 

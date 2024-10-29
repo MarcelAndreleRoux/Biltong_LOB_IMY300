@@ -17,8 +17,8 @@
 [ext_resource type="AudioStream" uid="uid://bmcmyompknd5f" path="res://assets/soundeffects/Everything_enemie/turtle_walk_sound.wav" id="15_qyp1c"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hpkkj"]
-radius = 8.0
-height = 20.0
+radius = 9.0
+height = 38.0
 
 [sub_resource type="Animation" id="Animation_7dtl7"]
 length = 0.001
@@ -1068,7 +1068,7 @@ script = ExtResource("1_1fxvc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_a700b")
-offset = Vector2(0, -8)
+offset = Vector2(0, -2)
 hframes = 21
 
 [node name="TurtleNav" type="NavigationAgent2D" parent="."]
@@ -1077,7 +1077,7 @@ target_desired_distance = 5.0
 avoidance_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, -8)
+position = Vector2(-3, -3)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_hpkkj")
 debug_color = Color(0.52549, 0.415686, 1, 0.419608)
@@ -1103,7 +1103,7 @@ parameters/Shell/blend_position = Vector2(0.0676379, -0.00529099)
 parameters/ShellOut/blend_position = Vector2(0.0114464, 0.015873)
 parameters/eat/blend_position = Vector2(0.0447451, -0.00529099)
 parameters/hungry/blend_position = Vector2(0.0260146, -0.026455)
-parameters/idle/blend_position = Vector2(0.0147784, -0.00529099)
+parameters/idle/blend_position = Vector2(0.0229446, 0.00529099)
 parameters/walk/blend_position = Vector2(0.0112541, 0.00581396)
 
 [node name="eat" type="AudioStreamPlayer2D" parent="."]
@@ -1120,6 +1120,7 @@ bus = &"Sfx"
 rotation = 1.5708
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScaredArea"]
+visible = false
 position = Vector2(-8, 2.86102e-05)
 shape = SubResource("CapsuleShape2D_e6vdn")
 

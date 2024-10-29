@@ -169,7 +169,6 @@ func _on_continue_pressed():
 		get_tree().change_scene_to_file(level_path)
 
 func _apply_save_data(save_data: Dictionary):
-	GlobalValues.player_position = save_data.player_position
 	LevelManager.current_level = save_data.level
 	GlobalValues.can_throw = save_data.can_throw
 	GlobalValues.can_swap_food = save_data.can_swap_food

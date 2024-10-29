@@ -2141,6 +2141,8 @@ collision_mask = 2075
 script = ExtResource("1_3avnw")
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
+z_index = 1
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_vpcv0")
 position = Vector2(90, 136)
 width = 2.0

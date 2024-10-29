@@ -866,6 +866,8 @@ radius = 22.0
 height = 68.0
 
 [node name="Hedgehog" type="StaticBody2D" groups=["enemy"]]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 16
 collision_mask = 459209
 script = ExtResource("1_h4pte")
