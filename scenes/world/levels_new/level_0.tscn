@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_6c0nw"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_xcw0c"]
-[ext_resource type="TileSet" uid="uid://t322bb5420cb" path="res://scenes/world/level_tileset/new-look.tres" id="3_xico5"]
+[ext_resource type="TileSet" uid="uid://e1rr68u31ypo" path="res://scenes/world/level_tileset/new-look.tres" id="3_xico5"]
 [ext_resource type="PackedScene" uid="uid://xa40w1v8vj2c" path="res://scenes/world/transitions/level_transition.tscn" id="4_1y7ad"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="5_gm4u4"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="6_h3gq3"]
-[ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="6_m2e6a"]
+[ext_resource type="PackedScene" uid="uid://bab22tyvvhbvh" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="6_m2e6a"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="7_karj3"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="8_243j4"]
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="9_l2at4"]
@@ -64,6 +64,7 @@ scale = Vector2(1.00072, 0.968581)
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 
 [node name="TrajectoryLine" type="Line2D" parent="."]
+z_index = 3
 position = Vector2(90, 136)
 width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
@@ -101,7 +102,7 @@ position = Vector2(245, 258)
 position = Vector2(40, 96)
 
 [node name="InScreenTransition" type="Area2D" parent="." groups=["transition_areas"]]
-position = Vector2(128, 128)
+position = Vector2(112, 128)
 script = ExtResource("12_r4a4w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InScreenTransition"]

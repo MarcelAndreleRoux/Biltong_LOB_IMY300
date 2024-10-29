@@ -152,9 +152,9 @@ func _spawn_blocking_collision_shape():
 		var turtle_position = to_local(turtle.global_position)
 		
 		if turtle.get_direction().x < 0:
-			blocking_body.position = turtle_position + Vector2(8, 0)
+			blocking_body.position = turtle_position + Vector2(3, -8)
 		else:
-			blocking_body.position = turtle_position + Vector2(2, 0)
+			blocking_body.position = turtle_position + Vector2(-3, -8)
 		
 		blocking_shape.shape = shape
 		blocking_shape.set_rotation_degrees(90)
