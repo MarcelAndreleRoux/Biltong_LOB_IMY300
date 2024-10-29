@@ -96,7 +96,7 @@ door_link_id = "a"
 [node name="Food" type="Node" parent="." groups=["food"]]
 
 [node name="LevelTransition" parent="." instance=ExtResource("18_ts8ut")]
-position = Vector2(240, 32)
+position = Vector2(240, 24)
 
 [node name="Button" parent="." instance=ExtResource("14_7k2ni")]
 position = Vector2(176, 136)

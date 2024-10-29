@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi6ng0nucel8h"
-path="res://.godot/imported/Potion.png-c3be629f34ab0d9f6ea6165a8dd7fb89.ctex"
+uid="uid://dvdxeerrtoi6f"
+path="res://.godot/imported/Paper.png-2a99570ac633ed94242a514c2443ebff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/static/Potions/Potion.png"
-dest_files=["res://.godot/imported/Potion.png-c3be629f34ab0d9f6ea6165a8dd7fb89.ctex"]
+source_file="res://assets/sprites/objects/static/Table_stuff/Paper.png"
+dest_files=["res://.godot/imported/Paper.png-2a99570ac633ed94242a514c2443ebff.ctex"]
 
 [params]
 
