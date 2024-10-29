@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctlj543sqertb"
-path="res://.godot/imported/Body-Pegged-Left.png-7bd323a0124bd96ea6dd8b051775e5a6.ctex"
+uid="uid://dvdxeerrtoi6f"
+path="res://.godot/imported/Paper.png-2a99570ac633ed94242a514c2443ebff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/static/Body/Body-Pegged-Left.png"
-dest_files=["res://.godot/imported/Body-Pegged-Left.png-7bd323a0124bd96ea6dd8b051775e5a6.ctex"]
+source_file="res://assets/sprites/objects/static/Table_stuff/Paper.png"
+dest_files=["res://.godot/imported/Paper.png-2a99570ac633ed94242a514c2443ebff.ctex"]
 
 [params]
 

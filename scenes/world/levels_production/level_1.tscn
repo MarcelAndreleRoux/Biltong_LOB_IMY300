@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://br8slsw26xc0v" path="res://assets/sprites/UI/Keycaps/Keycaps-Esc.png" id="24_6nyao"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="25_dc2e1"]
 [ext_resource type="PackedScene" uid="uid://bp7ivp7c0j0tp" path="res://scenes/UI/inventory.tscn" id="26_smm4u"]
-[ext_resource type="PackedScene" uid="uid://cswcb0d1r6f1d" path="res://scenes/world/pod.tscn" id="28_ew5oq"]
+[ext_resource type="PackedScene" uid="uid://cmtney0q41jbn" path="res://scenes/entities/objects/static/pod/player_pod.tscn" id="28_ew5oq"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_ypnr2")
@@ -111,7 +111,6 @@ position = Vector2(278, 161)
 
 [node name="pod6" parent="." instance=ExtResource("28_ew5oq")]
 position = Vector2(278, 191)
-SpriteName = "1"
 
 [node name="pod2" parent="." instance=ExtResource("28_ew5oq")]
 position = Vector2(278, 219)

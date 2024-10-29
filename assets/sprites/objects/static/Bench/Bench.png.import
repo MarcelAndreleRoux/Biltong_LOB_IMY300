@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://365p6crxju53"
-path="res://.godot/imported/Animal-Pod-Lizard.png-ee4eb0ccbf830e8fc0bccbb86808e31d.ctex"
+uid="uid://5svd10ubwxnr"
+path="res://.godot/imported/Bench.png-2e79fd5b32b80fad672e7af739dcfbfe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/static/Pod/Animal-Pod-Lizard.png"
-dest_files=["res://.godot/imported/Animal-Pod-Lizard.png-ee4eb0ccbf830e8fc0bccbb86808e31d.ctex"]
+source_file="res://assets/sprites/objects/static/Bench/Bench.png"
+dest_files=["res://.godot/imported/Bench.png-2e79fd5b32b80fad672e7af739dcfbfe.ctex"]
 
 [params]
 

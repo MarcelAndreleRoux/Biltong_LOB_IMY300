@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpmo1s72pv34p"
-path="res://.godot/imported/Animal-Pod-Broken.png-f8109988072facf9582bd213f7d48232.ctex"
+uid="uid://dht6wvwxoftr1"
+path="res://.godot/imported/Stain.png-10e2f8f0823fe5a1682b90ff9c9d06d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/static/Pod/Animal-Pod-Broken.png"
-dest_files=["res://.godot/imported/Animal-Pod-Broken.png-f8109988072facf9582bd213f7d48232.ctex"]
+source_file="res://assets/sprites/objects/static/Stains/Stain.png"
+dest_files=["res://.godot/imported/Stain.png-10e2f8f0823fe5a1682b90ff9c9d06d5.ctex"]
 
 [params]
 

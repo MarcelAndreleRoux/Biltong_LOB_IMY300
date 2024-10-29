@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh78atl44xeca"]
+
+[ext_resource type="Theme" uid="uid://cuucoj82fet30" path="res://scenes/UI/theme/options_menu.tres" id="1_uax5e"]
+
+[node name="ChamberNumber" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("1_uax5e")
+theme_override_colors/font_color = Color(1, 1, 1, 0.513726)
+theme_override_font_sizes/font_size = 48
+text = "0"

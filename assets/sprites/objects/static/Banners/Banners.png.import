@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gl5hgojw3div"
-path="res://.godot/imported/Animal-Pod-Porcupine.png-4d69fe2aeb453edcac60dd1dfe4e7fdc.ctex"
+uid="uid://cpo2a6olmquwk"
+path="res://.godot/imported/Banners.png-255b70564e74a7827f5c8d60e4ca9f4c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/static/Pod/Animal-Pod-Porcupine.png"
-dest_files=["res://.godot/imported/Animal-Pod-Porcupine.png-4d69fe2aeb453edcac60dd1dfe4e7fdc.ctex"]
+source_file="res://assets/sprites/objects/static/Banners/Banners.png"
+dest_files=["res://.godot/imported/Banners.png-255b70564e74a7827f5c8d60e4ca9f4c.ctex"]
 
 [params]
 

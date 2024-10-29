@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtq0webiwedbs"
-path="res://.godot/imported/Animal-Pod-Turtle.png-8491c92db6ff12db77ed0df5421fd264.ctex"
+uid="uid://cf7sjwdjfxlvn"
+path="res://.godot/imported/Book.png-4920a14ff4c22e8dc6e39576d67e823a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/static/Pod/Animal-Pod-Turtle.png"
-dest_files=["res://.godot/imported/Animal-Pod-Turtle.png-8491c92db6ff12db77ed0df5421fd264.ctex"]
+source_file="res://assets/sprites/objects/static/Table_stuff/Book.png"
+dest_files=["res://.godot/imported/Book.png-4920a14ff4c22e8dc6e39576d67e823a.ctex"]
 
 [params]
 
