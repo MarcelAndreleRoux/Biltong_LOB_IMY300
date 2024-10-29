@@ -28,6 +28,7 @@ AudioController="*res://scenes/Shared/audio_controller.tscn"
 GameMusicController="*res://scenes/Shared/game_music_controller.tscn"
 ProjectileConstants="*res://scenes/entities/objects/throwables/ProjectileConstants.gd"
 CameraManager="*res://scenes/world/transitions/CameraManager.gd"
+SaveManager="*res://scenes/UI/loadsave/save_manager.gd"
 
 [display]
 

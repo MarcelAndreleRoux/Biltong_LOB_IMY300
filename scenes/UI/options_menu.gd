@@ -169,10 +169,13 @@ func _on_resolution_option_item_selected(index):
 	# Center the window
 	var centered_position = (screen_size - new_resolution) / 2
 	DisplayServer.window_set_position(centered_position)
+	
+	SaveManager.save_settings()
 
 func _on_window_mode_item_selected(index):
 	var mode = WINDOW_MODES.values()[index]
 	DisplayServer.window_set_mode(mode)
+	SaveManager.save_settings()
 
 func _on_vsync_toggle_toggled(button_pressed):
 	if button_pressed:
@@ -185,6 +188,8 @@ func _on_vsync_toggle_toggled(button_pressed):
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 		# Optional: Set a high max FPS when VSync is off
 		Engine.max_fps = 0  # 0 means unlimited
+	
+	SaveManager.save_settings()
 
 func _on_back_pressed():
 	button_select_options.play()
@@ -255,6 +260,8 @@ func _on_back_mouse_entered():
 func _on_shake_check_box_toggled(button_pressed: bool):
 	print("toggle shake:", button_pressed)
 	CameraManager.toggle_screen_shake(button_pressed)
+	SaveManager.save_settings()
 
 func _on_censor_check_box_toggled(toggled_on: bool):
 	GlobalValues.set_censorship_enabled(toggled_on)
+	SaveManager.save_settings()

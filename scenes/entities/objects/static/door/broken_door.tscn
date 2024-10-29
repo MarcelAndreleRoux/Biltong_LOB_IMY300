@@ -149,7 +149,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
-"speed": 15.0
+"speed": 8.0
 }]
 
 [node name="BrokenDoor" type="StaticBody2D"]
@@ -219,3 +219,5 @@ color = Color(1, 0.803922, 0, 1)
 
 [node name="leaves_fall" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_820nv")
+frame = 7
+frame_progress = 1.0

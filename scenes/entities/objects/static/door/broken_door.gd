@@ -16,11 +16,12 @@ var closeString: String
 
 var closed_check: bool = true
 
-var played_once: bool = true
+var played_once: bool = false
 
 var active_buttons: Dictionary = {}
 
 func _ready():
+	leaves_fall.frame = 1
 	cpu_particles_2d.emitting = false
 	cpu_particles_2d_2.emitting = false
 	SharedSignals.doorState.connect(_on_door_stateChange)
