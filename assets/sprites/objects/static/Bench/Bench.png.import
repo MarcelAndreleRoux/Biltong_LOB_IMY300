@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctlj543sqertb"
-path="res://.godot/imported/Body-Pegged-Left.png-7bd323a0124bd96ea6dd8b051775e5a6.ctex"
+uid="uid://5svd10ubwxnr"
+path="res://.godot/imported/Bench.png-2e79fd5b32b80fad672e7af739dcfbfe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/static/Body/Body-Pegged-Left.png"
-dest_files=["res://.godot/imported/Body-Pegged-Left.png-7bd323a0124bd96ea6dd8b051775e5a6.ctex"]
+source_file="res://assets/sprites/objects/static/Bench/Bench.png"
+dest_files=["res://.godot/imported/Bench.png-2e79fd5b32b80fad672e7af739dcfbfe.ctex"]
 
 [params]
 

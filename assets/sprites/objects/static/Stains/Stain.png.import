@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4030t5fjfars"
-path="res://.godot/imported/Body-Pegged-Right.png-e31d61507b670a63bc57c8d2448ea2f5.ctex"
+uid="uid://dht6wvwxoftr1"
+path="res://.godot/imported/Stain.png-10e2f8f0823fe5a1682b90ff9c9d06d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/static/Body/Body-Pegged-Right.png"
-dest_files=["res://.godot/imported/Body-Pegged-Right.png-e31d61507b670a63bc57c8d2448ea2f5.ctex"]
+source_file="res://assets/sprites/objects/static/Stains/Stain.png"
+dest_files=["res://.godot/imported/Stain.png-10e2f8f0823fe5a1682b90ff9c9d06d5.ctex"]
 
 [params]
 
