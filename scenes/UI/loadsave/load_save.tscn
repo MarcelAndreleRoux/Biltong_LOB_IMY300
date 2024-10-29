@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://4f80vyxt7mct"]
+[gd_scene load_steps=19 format=3 uid="uid://4f80vyxt7mct"]
 
 [ext_resource type="Theme" uid="uid://htqpgpsdageq" path="res://scenes/UI/loadsave/save_menu.tres" id="1_3l1kg"]
 [ext_resource type="Script" path="res://scenes/UI/loadsave/load_save.gd" id="1_grl3h"]
@@ -7,6 +7,122 @@
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="5_kicxd"]
 [ext_resource type="Texture2D" uid="uid://cmnaummadqvmx" path="res://assets/sprites/UI/save banner/NoSave.png" id="5_srthd"]
 [ext_resource type="Texture2D" uid="uid://byh7wn3yigu52" path="res://assets/sprites/UI/save banner/save_background_no_save.png" id="6_empos"]
+[ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="8_0l40j"]
+[ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="9_t4huy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6jqu"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 0.772549)
+
+[sub_resource type="Theme" id="Theme_ka28p"]
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(1, 1, 1, 0)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/font_sizes/font_size = 19
+Label/fonts/font = ExtResource("2_moqmy")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dsfd8"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0.223529, 0.290196, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0823529, 0.113725, 0.156863, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t5t4o"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0.223529, 0.290196, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.870588, 0.619608, 0.254902, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etnnt"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0.223529, 0.290196, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.870588, 0.619608, 0.254902, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8car1"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0.223529, 0.290196, 0.313726, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.870588, 0.619608, 0.254902, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4jia"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0, 0.505882, 0.92549, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.372549, 0.694118, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujwfn"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0, 0.376471, 0.87451, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.505882, 0.92549, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ibwj"]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color(0, 0.376471, 0.87451, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.505882, 0.92549, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
 
 [node name="LoadSave" type="Control"]
 layout_mode = 3
@@ -68,9 +184,10 @@ offset_top = 4.0
 offset_right = 60.0
 offset_bottom = 44.0
 texture = ExtResource("5_srthd")
-stretch_mode = 2
+expand_mode = 1
 
 [node name="Label" type="Label" parent="SaveBackground/SavePicture"]
+visible = false
 layout_mode = 0
 offset_right = 56.0
 offset_bottom = 40.0
@@ -93,6 +210,28 @@ offset_top = -1.0
 offset_right = 43.0
 offset_bottom = 15.0
 text = "Load Save"
+
+[node name="DeleteButton" type="TextureButton" parent="SaveBackground"]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 4.0
+offset_right = 140.0
+offset_bottom = 14.0
+
+[node name="NoSaveBackground" type="TextureRect" parent="SaveBackground"]
+visible = false
+offset_right = 144.0
+offset_bottom = 48.0
+texture = ExtResource("6_empos")
+
+[node name="NoSaveLabel" type="Label" parent="SaveBackground/NoSaveBackground"]
+layout_mode = 0
+offset_right = 144.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "No Save Made Here"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SaveBackground2" type="TextureRect" parent="."]
 layout_mode = 2
@@ -125,9 +264,10 @@ offset_top = 4.0
 offset_right = 60.0
 offset_bottom = 44.0
 texture = ExtResource("5_srthd")
-stretch_mode = 2
+expand_mode = 1
 
 [node name="Label" type="Label" parent="SaveBackground2/SavePicture"]
+visible = false
 layout_mode = 0
 offset_right = 56.0
 offset_bottom = 40.0
@@ -149,6 +289,27 @@ offset_top = -1.0
 offset_right = 43.0
 offset_bottom = 15.0
 text = "Load Save"
+
+[node name="DeleteButton" type="TextureButton" parent="SaveBackground2"]
+offset_left = 129.0
+offset_top = 4.0
+offset_right = 140.0
+offset_bottom = 14.0
+
+[node name="NoSaveBackground" type="TextureRect" parent="SaveBackground2"]
+visible = false
+offset_right = 144.0
+offset_bottom = 48.0
+texture = ExtResource("6_empos")
+
+[node name="NoSaveLabel" type="Label" parent="SaveBackground2/NoSaveBackground"]
+layout_mode = 0
+offset_right = 144.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "No Save Made Here"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SaveBackground3" type="TextureRect" parent="."]
 layout_mode = 2
@@ -181,9 +342,10 @@ offset_top = 4.0
 offset_right = 60.0
 offset_bottom = 44.0
 texture = ExtResource("5_srthd")
-stretch_mode = 2
+expand_mode = 1
 
 [node name="Label" type="Label" parent="SaveBackground3/SavePicture"]
+visible = false
 layout_mode = 0
 offset_right = 56.0
 offset_bottom = 40.0
@@ -206,15 +368,20 @@ offset_right = 43.0
 offset_bottom = 15.0
 text = "Load Save"
 
-[node name="NoSaveBackground" type="TextureRect" parent="."]
+[node name="DeleteButton" type="TextureButton" parent="SaveBackground3"]
+offset_left = 129.0
+offset_top = 4.0
+offset_right = 140.0
+offset_bottom = 14.0
+
+[node name="NoSaveBackground" type="TextureRect" parent="SaveBackground3"]
+visible = false
 layout_mode = 0
-offset_left = 166.0
-offset_top = 174.0
-offset_right = 310.0
-offset_bottom = 222.0
+offset_right = 144.0
+offset_bottom = 48.0
 texture = ExtResource("6_empos")
 
-[node name="NoSaveLabel" type="Label" parent="NoSaveBackground"]
+[node name="NoSaveLabel" type="Label" parent="SaveBackground3/NoSaveBackground"]
 layout_mode = 0
 offset_right = 144.0
 offset_bottom = 48.0
@@ -240,3 +407,85 @@ grow_vertical = 0
 size_flags_horizontal = 4
 theme = ExtResource("5_kicxd")
 text = "Back"
+
+[node name="ConfirmDelete" type="Panel" parent="."]
+visible = false
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 482.0
+offset_bottom = 271.0
+
+[node name="Panel" type="Panel" parent="ConfirmDelete"]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 89.0
+offset_right = 330.0
+offset_bottom = 182.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d6jqu")
+
+[node name="TextureRect2" type="TextureRect" parent="ConfirmDelete"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.5
+offset_top = -132.0
+offset_right = 154.5
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_0l40j")
+
+[node name="Label" type="Label" parent="ConfirmDelete/TextureRect2"]
+layout_mode = 0
+offset_left = 62.0
+offset_top = 41.0
+offset_right = 260.0
+offset_bottom = 124.0
+theme = SubResource("Theme_ka28p")
+theme_override_fonts/font = ExtResource("9_t4huy")
+text = "Are you sure you want delete this save, this action can't be undone"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmDelete/TextureRect2"]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = 17.5
+offset_right = 66.0
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="Cancel" type="Button" parent="ConfirmDelete/TextureRect2/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_moqmy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dsfd8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_t5t4o")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_etnnt")
+theme_override_styles/focus = SubResource("StyleBoxFlat_8car1")
+text = "Cancel
+"
+
+[node name="Confirm" type="Button" parent="ConfirmDelete/TextureRect2/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.894118, 0.894118, 0.894118, 1)
+theme_override_fonts/font = ExtResource("2_moqmy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_m4jia")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ujwfn")
+theme_override_styles/focus = SubResource("StyleBoxFlat_7ibwj")
+text = "COnfirm"
+
+[connection signal="mouse_entered" from="Back" to="." method="_on_back_mouse_entered"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="ConfirmDelete/TextureRect2/HBoxContainer/Confirm" to="." method="_on_confirm_pressed"]

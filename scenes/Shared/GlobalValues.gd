@@ -36,7 +36,14 @@ var hazmat_picked_up: bool = false
 
 # Censorship
 signal censorship_changed
-var censorship_enabled: bool = false
+var censorship_enabled: bool = true
+
+func _ready():
+	# If this is the first time running (no settings file exists)
+	if not FileAccess.file_exists("user://settings.save"):
+		# Set default censorship to true and save settings
+		censorship_enabled = true
+		SaveManager.save_settings()
 
 func get_censorship_enabled() -> bool:
 	return censorship_enabled

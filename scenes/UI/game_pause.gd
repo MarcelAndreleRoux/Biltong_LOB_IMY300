@@ -56,12 +56,18 @@ func _on_cancel_pressed():
 	confirm_quit.visible = false
 
 func _on_confirm_pressed():
+	# Save to current slot before exiting
+	# This will use either the forced slot or current_active_save_slot
+	if SaveManager.current_active_save_slot != -1:
+		await SaveManager.update_current_save()
+		print("Saved game before exit to slot: ", 
+			SaveManager.force_slot if SaveManager.force_slot != -1 
+			else SaveManager.current_active_save_slot)
+	
 	confirm_quit.visible = false
 	options_menu.visible = false
 	control.visible = false
-	# Unpause before changing scene
 	get_tree().paused = false
-	# Stop game music
 	if has_node("/root/GameMusicController"):
 		GameMusicController.stop_music()
 	get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")
@@ -114,5 +120,6 @@ func _on_button_select_finished():
 		resume = false
 
 func _exit_options():
+	SaveManager.save_settings()
 	control.visible = true
 	options_menu.visible = false

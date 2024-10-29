@@ -83,14 +83,18 @@ const WARNING_MESSAGES = {
 }
 
 func _ready():
-	# Keep your existing ready code but remove raycast setup
+	SaveManager.end_scene_transition()
+	
+	if SaveManager.current_active_save_slot != -1:
+		print("Continuing with active save slot: ", SaveManager.current_active_save_slot)
+	# Keep existing ready code
 	MenuAudioController.stop_music()
 	GameMusicController.play_music()
 	shadow_texture = preload("res://assets/sprites/objects/throwables/shadow/Shadow.png")
 	_main = get_tree().current_scene
 	original_inv_position = inventory.position
 	
-	# Connect signals
+	# Connect existing signals
 	SharedSignals.new_marker.connect(_on_new_marker)
 	SharedSignals.projectile_gone.connect(_remove_marker)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
@@ -103,20 +107,66 @@ func _ready():
 	SharedSignals.shake_hedgehog.connect(_shake_shake)
 	trajectory_collision_state.connect(_on_trajectory_collision)
 	
+	call_deferred("_setup_player_position")
+	
+	# Setup autosave
+	call_deferred("_setup_autosave")
+	
+	# Rest of existing ready code...
 	connect_button_signals()
 	
 	if player_raycast:
-		# Add exceptions for the straight raycast
 		if turtle:
 			player_raycast.add_exception(turtle)
 		if hedgehog:
 			player_raycast.add_exception(hedgehog)
-		# Add any vines to exceptions
 		for vine in get_tree().get_nodes_in_group("vines"):
 			player_raycast.add_exception(vine)
 	
 	if hedgehog:
 		enemy_raycast.add_exception(hedgehog)
+
+func _setup_player_position():
+	# Wait for two frames to ensure scene is fully loaded
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	if player and GlobalValues.player_position != Vector2.ZERO:
+		print("Setting player position to: ", GlobalValues.player_position)
+		# Use global_position for consistent positioning
+		player.global_position = GlobalValues.player_position
+		# Ensure the position update is processed
+		await get_tree().process_frame
+		
+		# Verify position was set correctly
+		print("Player position after setting: ", player.global_position)
+
+func _setup_autosave():
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	_update_global_values()
+	
+	# Only create a new save if:
+	# 1. This is level 0
+	# 2. We don't have an active save slot
+	# 3. We don't have any saves at all
+	if SaveManager.should_autosave() and SaveManager.current_active_save_slot == -1 and not SaveManager.has_any_saves():
+		print("First time loading level 0 - creating new save")
+		var save_slot = SaveManager.initialize_new_game()
+		if save_slot != -1:
+			if await SaveManager.save_game(save_slot):
+				print("Created initial save in slot ", save_slot)
+	else:
+		print("Using save slot: ", SaveManager.current_active_save_slot)
+
+func _update_global_values():
+	# Update all relevant GlobalValues before saving
+	if player:
+		GlobalValues.player_position = player.global_position
+	
+	# Update other global values as needed
+	# This ensures we're saving the most current state
 
 func _on_trajectory_collision(is_colliding: bool):
 	trajectory_has_collision = is_colliding
@@ -495,6 +545,14 @@ func _remove_marker():
 func _on_transition_body_entered(body):
 	if body.is_in_group("player"):
 		GlobalValues.transition_scene = true
+		
+		# Begin transition and save current state
+		SaveManager.begin_scene_transition()
+		
+		# Update the save in the current slot
+		if SaveManager.current_active_save_slot != -1:
+			await SaveManager.update_current_save()
+			print("Updated save slot ", SaveManager.current_active_save_slot, " before transition")
 
 func _on_death_finsish():
 	death.death_lose()

@@ -11,29 +11,49 @@ extends Control
 @onready var load_saves = $MarginContainer/TextureRect2/VBoxContainer/LoadSaves
 @onready var continue_button = $MarginContainer/TextureRect2/VBoxContainer/Continue
 @onready var play_button = $MarginContainer/TextureRect2/VBoxContainer/Play
+@onready var new_game_confirm = $MarginContainer/TextureRect2/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm
+@onready var new_game_cancel = $MarginContainer/TextureRect2/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameCancel
+@onready var confirm_new_game = $MarginContainer/TextureRect2/ConfirmNewGame
 
 var exit: bool = false
 var options: bool = false
 var play: bool = false
 var confirm_exit: bool = false
+var load_save_pressed: bool = false
+var new_game_pressed: bool = false
+var continue_pressed:bool = false
 
 func _ready():
 	get_tree().paused = false
 	confirm_quit.visible = false
+	confirm_new_game.visible = false
 	animation_player.play("fade_in_white")
 	GameMusicController.stop_music()
 	MenuAudioController.play_music()
 	AudioController.button_select.connect(_on_select_finished)
 	options_menu.exit_options_menu.connect(on_exit_options_menu)
+	
+	update_button_visibility()
+
+func update_button_visibility():
+	var has_saves = SaveManager.has_any_saves()
+	
+	play_button.visible = not has_saves
+	new_game.visible = has_saves
+	load_saves.visible = has_saves
+	continue_button.visible = has_saves
 
 func _on_play_pressed():
-	LevelManager.current_level = 0
-	shake_camera.apply_shake_super_small()
-	AudioController.play_sfx("button_select")
-	exit = false
-	options = false
-	play = true
-	GlobalValues.playing_game = true
+	# Reset game state
+	_reset_game_state()
+	
+	# Initialize new save
+	var save_slot = SaveManager.initialize_new_save()
+	if save_slot != -1:
+		GlobalValues.playing_game = true
+		MenuAudioController.stop_music()
+		GameMusicController.play_music()
+		get_tree().change_scene_to_file("res://scenes/world/levels_new/level_0.tscn")
 
 func _on_option_pressed():
 	shake_camera.apply_shake_super_small()
@@ -84,6 +104,30 @@ func _on_select_finished():
 		MenuAudioController.stop_music()
 		GameMusicController.play_music()
 		get_tree().change_scene_to_file("res://scenes/world/levels_new/level_0.tscn")
+	elif load_save_pressed:
+		get_tree().change_scene_to_file("res://scenes/UI/loadsave/load_save.tscn")
+		load_save_pressed = false
+	elif continue_pressed:
+		var most_recent_slot = SaveManager.get_most_recent_save()
+		if most_recent_slot != -1:
+			var save_data = SaveManager.load_game(most_recent_slot)
+			
+			# Find oldest slot to override
+			var new_slot = SaveManager.get_oldest_save_slot()
+			SaveManager.current_active_save_slot = new_slot
+			
+			# Apply save data and create new save
+			_apply_save_data(save_data)
+			SaveManager.save_game(new_slot)
+			
+			# Start the game
+			GlobalValues.playing_game = true
+			MenuAudioController.stop_music()
+			GameMusicController.play_music()
+			var level_path = GlobalValues.LEVEL_PATHS[LevelManager.current_level]
+			get_tree().change_scene_to_file(level_path)
+		
+		continue_pressed = false
 	else:
 		margin_container.visible = true
 		lob.visible = true
@@ -107,12 +151,87 @@ func _on_cancel_mouse_entered():
 func _on_confirm_mouse_entered():
 	AudioController.play_sfx("button_hover")
 
+# Saved buttons pressed
 
 func _on_continue_pressed():
-	pass # Replace with function body.
+	var target_slot = SaveManager.continue_game()
+	if target_slot != -1:
+		var save_data = SaveManager.load_game(target_slot)
+		
+		# Apply save data
+		_apply_save_data(save_data)
+		
+		# Start the game
+		GlobalValues.playing_game = true
+		MenuAudioController.stop_music()
+		GameMusicController.play_music()
+		var level_path = GlobalValues.LEVEL_PATHS[LevelManager.current_level]
+		get_tree().change_scene_to_file(level_path)
+
+func _apply_save_data(save_data: Dictionary):
+	GlobalValues.player_position = save_data.player_position
+	LevelManager.current_level = save_data.level
+	GlobalValues.can_throw = save_data.can_throw
+	GlobalValues.can_swap_food = save_data.can_swap_food
+	GlobalValues.can_swap_fire = save_data.can_swap_fire
+	GlobalValues.can_swap_water = save_data.can_swap_water
+	GlobalValues.has_pickeup_box_once = save_data.has_pickeup_box_once
+	GlobalValues.has_pickeup_c_box_once = save_data.has_pickeup_c_box_once
+	GlobalValues.has_pickeup_fire_once = save_data.has_pickeup_fire_once
+	GlobalValues.has_pickeup_food_once = save_data.has_pickeup_food_once
+	GlobalValues.has_pickup_water_once = save_data.has_pickup_water_once
+	GlobalValues.box_pickup_once = save_data.box_pickup_once
+	GlobalValues.food_already_picked = save_data.food_already_picked
+	GlobalValues.hazmat_picked_up = save_data.hazmat_picked_up
+
+# In menu.gd, update the new game handling:
 
 func _on_new_game_pressed():
-	pass # Replace with function body.
+	# Show confirmation popup
+	confirm_new_game.visible = true
+
+func _reset_game_state():
+	LevelManager.current_level = 0
+	GlobalValues.can_throw = false
+	GlobalValues.can_swap_food = false
+	GlobalValues.can_swap_fire = false
+	GlobalValues.can_swap_water = false
+	GlobalValues.has_pickeup_box_once = false
+	GlobalValues.has_pickeup_c_box_once = false
+	GlobalValues.has_pickeup_fire_once = false
+	GlobalValues.has_pickeup_food_once = false
+	GlobalValues.has_pickup_water_once = false
+	GlobalValues.box_pickup_once = false
+	GlobalValues.food_already_picked = false
+	GlobalValues.hazmat_picked_up = false
+	GlobalValues.player_position = Vector2.ZERO
 
 func _on_load_saves_pressed():
-	pass # Replace with function body.
+	load_save_pressed = true
+	AudioController.play_sfx("button_select")
+
+func _on_continue_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_new_game_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_new_game_confirm_pressed():
+	# Delete all saves
+	SaveManager.delete_all_saves()
+	
+	confirm_new_game.visible = false
+	
+	# Reset game state
+	_reset_game_state()
+	
+	# Initialize new save
+	var save_slot = SaveManager.initialize_new_save()
+	if save_slot != -1:
+		GlobalValues.playing_game = true
+		MenuAudioController.stop_music()
+		GameMusicController.play_music()
+		get_tree().change_scene_to_file("res://scenes/world/levels_new/level_0.tscn")
+
+func _on_new_game_cancel_pressed():
+	confirm_new_game.visible = false

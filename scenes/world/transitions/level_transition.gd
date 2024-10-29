@@ -9,6 +9,12 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):
+		# Auto-save before transitioning
+		var empty_slot = SaveManager.find_empty_slot()
+		if empty_slot >= 0:
+			SaveManager.save_game(empty_slot)
+		
+		# Then proceed with level transition
 		canvas_layer.visible = true
 		animation_player.play("fade_out_black")
 
