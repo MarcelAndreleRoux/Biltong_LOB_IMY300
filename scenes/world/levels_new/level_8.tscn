@@ -118,7 +118,7 @@ door_link_id = "2"
 [node name="Food" type="Node" parent="." groups=["food"]]
 
 [node name="LevelTransition" parent="." instance=ExtResource("14_4gpb7")]
-position = Vector2(240, 24)
+position = Vector2(288, 24)
 
 [node name="VinesBig" type="Node2D" parent="."]
 y_sort_enabled = true

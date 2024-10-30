@@ -116,7 +116,7 @@ required_connections = 2
 position = Vector2(240, 24)
 
 [node name="Conductor_Box" parent="." instance=ExtResource("15_x2dlk")]
-position = Vector2(240, 128)
+position = Vector2(200, 72)
 
 [node name="OpenBoard" parent="." instance=ExtResource("16_1svln")]
 position = Vector2(104, 128)
