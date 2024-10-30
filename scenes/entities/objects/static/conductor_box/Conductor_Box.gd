@@ -20,6 +20,7 @@ var turning_off: bool = false
 var current_frame: int = 0
 
 var connected_mboard = null
+var last_emitted_state: bool = false 
 
 func _ready():
 	near.visible = false
@@ -111,6 +112,17 @@ func _on_move_area_body_exited(body: Node2D):
 		SharedSignals.box_exited_area.emit(self)
 		SharedSignals.player_exit.emit()
 
+func _process(_delta):
+	if connected_mboard != null:
+		# Only emit if state has changed
+		if last_emitted_state != charged_state:
+			last_emitted_state = charged_state
+			SharedSignals.connected_to_mboard.emit(charged_state, connected_mboard.get_instance_id())
+	
+	# Clear last state if no m_board is connected
+	if connected_mboard == null and last_emitted_state != false:
+		last_emitted_state = false
+
 func _some_waiting_timer():
 	var grow_timer = Timer.new()
 	grow_timer.name = "show_timer"
@@ -177,9 +189,10 @@ func _on_charge_timer_timeout():
 	charge_timer.queue_free()
 	charge_timer = null
 	
-	# Stop electricity to connected m_board if it exists
+	# Emit state change immediately
 	if connected_mboard != null:
-		connected_mboard.stop_electricity(true)  # Tell m_board conductor lost charge
+		SharedSignals.connected_to_mboard.emit(false, connected_mboard.get_instance_id())
+		connected_mboard.stop_electricity(true)
 
 func _bounce_box(bounce_vector: Vector2):
 	global_position += bounce_vector
@@ -213,15 +226,15 @@ func _play_zap(object):
 func _on_conduction_area_body_entered(body):
 	if body.is_in_group("lizard"):
 		if body.get_electrical_state():
-			# Let the lizard handle its own zap
 			charged_state = true
 			animatedSprite.play("turn_on")
 			SharedSignals.lizard_connection_made.emit(self)
 			_check_and_zap_electrical()
 	elif body.is_in_group("m_board"):
-		# Only store the reference if we don't already have one
 		if connected_mboard == null:
 			connected_mboard = body
+			# Emit initial state when connecting
+			SharedSignals.connected_to_mboard.emit(charged_state, body.get_instance_id())
 			if charged_state:
 				_play_zap_to_mboard(body)
 				body.receive_electricity(true)
@@ -231,5 +244,7 @@ func _on_conduction_area_body_exited(body):
 		if body.get_electrical_state():
 			animatedSprite.play("turn_off")
 	elif body.is_in_group("m_board") and body == connected_mboard:
+		# Emit false state when disconnecting
+		SharedSignals.connected_to_mboard.emit(false, body.get_instance_id())
 		body.stop_electricity(true)
-		connected_mboard = null  # Clear the reference when m_board exits
+		connected_mboard = null

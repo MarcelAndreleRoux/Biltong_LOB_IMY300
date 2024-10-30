@@ -95,9 +95,12 @@ signal item_removed
 
 # Food
 signal eaten_ground_food
+signal play_pickup_notification
 
 # Fire Mango
 signal fire_mango_land
+
+signal connected_to_mboard
 
 # Water
 signal water_land

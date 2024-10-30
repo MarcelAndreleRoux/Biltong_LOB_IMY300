@@ -50,12 +50,11 @@ func _ready():
 	SharedSignals.lizard_connection_made.connect(_play_zap_conductor)
 	SharedSignals.lizard_in_water_puddle.connect(_turn_lizard_off)
 	SharedSignals.lizard_in_camp_fire.connect(_turn_lizard_on)
-	# Seed the random number generator for randomness in animations
 	randomize()
 	
 	_update_electrical_field_sound()
 	
-	# Collect patrol points
+	# Set up patrol points
 	if target_1:
 		patrol_points.append(target_1.global_position)
 	if target_2:
@@ -67,9 +66,7 @@ func _ready():
 	if target_5:
 		patrol_points.append(target_5.global_position)
 	
-	# Start processing if there are patrol points
 	if patrol_points.size() > 0:
-		# Set the initial target position for the navigation agent
 		navigation_agent_2d.target_position = patrol_points[patrol_index]
 		set_physics_process(true)
 	else:
@@ -218,36 +215,23 @@ func _update_animation_parameters():
 	animation_tree["parameters/run_on/blend_position"] = direction
 
 func _on_electric_area_body_entered(body):
-	print("DEBUG: Lizard - Body entered electric area:", body.name)
-	
 	if body.is_in_group("player") and is_on:
 		SharedSignals.player_killed.emit("pop")
 		_player_zap(body)
 	
 	if is_on:
 		if body.is_in_group("conductor"):
-			if not body in nearby_objects:
-				print("DEBUG: Lizard - Adding conductor to nearby objects")
-				nearby_objects.append(body)
-				_play_zap(body)
-				body.receive_electricity()
-		elif body.is_in_group("m_board"):
-			if not body in nearby_objects and body.connector_name != "none":
-				print("DEBUG: Lizard - Adding m_board to nearby objects")
-				nearby_objects.append(body)
-				_play_zap(body)
-				body.receive_electricity(false)
+			_play_zap(body)
+			body.receive_electricity()
+		
+		if body.is_in_group("m_board"):
+			_play_zap(body)
+			body.receive_electricity(false)
 
 func _on_electric_area_body_exited(body):
-	print("DEBUG: Lizard - Body exited electric area:", body.name)
-	
-	# Only handle exits for relevant bodies
-	if body.is_in_group("m_board") or body.is_in_group("conductor"):
-		if body in nearby_objects:
-			print("DEBUG: Lizard - Removing from nearby objects")
-			nearby_objects.erase(body)
-			if body.is_in_group("m_board"):
-				body.stop_electricity(false)
+	if body.is_in_group("m_board"):
+		if body.connector_name != "none":
+			body.stop_electricity(false)
 
 func get_electrical_state() -> bool:
 	return is_on
@@ -319,7 +303,6 @@ func _on_throw_check_area_body_entered(body):
 			_change_state()
 	
 	if body.is_in_group("throwables"):
-		print("found me as a throwable: ", body)
 		
 		if body.is_in_group("fire"):
 			was_water = false
@@ -337,21 +320,23 @@ func _change_state():
 	else:
 		is_on = true
 	
-	print("DEBUG: Lizard - State change - Previous:", previous_state, " New:", is_on)
-	
 	if previous_state != is_on:
 		SharedSignals.lizard_state_change.emit(is_on)
 		_update_electrical_field_sound()
 		
-		# Handle existing connections
-		if is_on:
-			print("DEBUG: Lizard - Reactivating connections for", nearby_objects.size(), "objects")
-			for obj in nearby_objects:
-				obj.receive_electricity()
-		else:
-			print("DEBUG: Lizard - Deactivating connections for", nearby_objects.size(), "objects")
-			for obj in nearby_objects:
-				obj.stop_electricity(true)
+		# Find all bodies in electric area and update their states
+		var bodies = $ElectricArea.get_overlapping_bodies()
+		for body in bodies:
+			if body.is_in_group("m_board") and body.connector_name != "none":
+				if is_on:
+					body.receive_electricity(false)
+				else:
+					body.stop_electricity(false)
+			elif body.is_in_group("conductor"):
+				if is_on:
+					body.receive_electricity()
+				else:
+					body.stop_electricity()
 
 func _on_player_kill_area_entered(area):
 	if area.is_in_group("death_area"):

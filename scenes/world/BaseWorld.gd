@@ -75,13 +75,12 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 const HELPFUL_MESSAGES = {
-	"level1": "Cannot enter test cambers without a hazmat suit",
-	"level2": "You have spotted a lizard, throw it with water"
+	"pickup_food": "Looks like the turtle likes these mushrooms maybe I should wait to pick one up",
+	"turtle_scared": "Oh wow... Looks like this big creature is scared of me",
 }
 
 const WARNING_MESSAGES = {
-	"hazmat": "Cannot enter cambers without a hazmat suit",
-	"new_lizard": "You have spotted a lizard, throw it with water"
+	"hazmat": "I don't feel like going into the chambers unprotected",
 }
 
 func _ready():
@@ -110,6 +109,7 @@ func _ready():
 	SharedSignals.is_scared_signal.connect(_on_is_scared_signal)
 	SharedSignals.shake_hedgehog.connect(_shake_shake)
 	trajectory_collision_state.connect(_on_trajectory_collision)
+	SharedSignals.play_pickup_notification.connect(_display_player_pickup_popup)
 	
 	call_deferred("_setup_player_position")
 	
@@ -192,6 +192,11 @@ func connect_button_signals():
 	for button in get_tree().get_nodes_in_group("buttons"):
 		if not button.hazmat_warning.is_connected(show_hazmat_warning):
 			button.hazmat_warning.connect(show_hazmat_warning)
+
+func _display_player_pickup_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.pickup_food)
+	if not success:
+		pass
 
 func show_hazmat_warning():
 	var success = popup_manager.create_popup(WARNING_MESSAGES.hazmat)
