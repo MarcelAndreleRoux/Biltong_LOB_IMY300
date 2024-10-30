@@ -47,6 +47,7 @@ func _ready():
 	animated_sprite_2d.visible = false
 	
 	SharedSignals.lizard_connection.connect(_play_zap)
+	SharedSignals.lizard_connection_made.connect(_play_zap_conductor)
 	SharedSignals.lizard_in_water_puddle.connect(_turn_lizard_off)
 	SharedSignals.lizard_in_camp_fire.connect(_turn_lizard_on)
 	# Seed the random number generator for randomness in animations
@@ -225,13 +226,13 @@ func _on_electric_area_body_entered(body):
 		if body.is_in_group("conductor"):
 			if not body in nearby_objects:
 				nearby_objects.append(body)
-				_play_zap(body)  # Lizard creates its own zap
+				_play_zap(body)  # Create lizard's zap
 				body.receive_electricity()
 		elif body.is_in_group("m_board"):
 			if not body in nearby_objects:
 				nearby_objects.append(body)
-				_play_zap(body)  # Lizard creates its own zap
-				body.receive_electricity()
+				_play_zap(body)  # Create lizard's zap
+				body.receive_electricity(false)  # Pass false to indicate it's from lizard
 
 func _on_electric_area_body_exited(body):
 	if body in nearby_objects:
@@ -246,15 +247,23 @@ func _player_zap(object):
 		var player_position = object.global_position
 		var lizard_position = self.global_position
 		var direction = (player_position - lizard_position).normalized()
-
 		var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
-
 		var offset_amount = 30
 
 		electrical_zap.global_position = lizard_position + (direction * offset_amount)
-
 		get_tree().current_scene.add_child(electrical_zap)
+		electrical_zap.output_charge(direction)
 
+func _play_zap_conductor(object):
+	if is_on:
+		var conductor_position = object.global_position
+		var lizard_position = self.global_position
+		var direction = (lizard_position - conductor_position).normalized()
+		var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
+		
+		var offset_amount = -10
+		electrical_zap.global_position = lizard_position + (direction * offset_amount)
+		get_tree().current_scene.add_child(electrical_zap)
 		electrical_zap.output_charge(direction)
 
 func _play_zap(object):
@@ -263,19 +272,11 @@ func _play_zap(object):
 		var lizard_position = self.global_position
 		var direction = (lizard_position - conductor_position).normalized()
 		
-		# Instantiate the zap scene independently
 		var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
 		
-		# Define the offset amount (10px)
 		var offset_amount = -10
-		
-		# Offset the spawn position by 10px in the direction vector
 		electrical_zap.global_position = lizard_position + (direction * offset_amount)
-		
-		# Add the zap to the current scene first, before calling output_charge
 		get_tree().current_scene.add_child(electrical_zap)
-		
-		# Now that it's added to the scene, call the charge
 		electrical_zap.output_charge(direction)
 
 func _turn_lizard_off():

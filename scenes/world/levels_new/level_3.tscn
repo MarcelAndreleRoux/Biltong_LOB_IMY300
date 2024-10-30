@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="17_w6fej"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="18_bopma"]
 
-[node name="BaseLevel" type="Node2D"]
+[node name="BaseLevel2" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_1twbb")
 

@@ -1,30 +1,30 @@
-[gd_scene load_steps=10 format=3 uid="uid://12o22qh53ey4"]
+[gd_scene load_steps=10 format=3 uid="uid://b5yil2rqfomik"]
 
-[ext_resource type="Script" path="res://scenes/Shared/electricity.gd" id="1_waxd4"]
-[ext_resource type="Texture2D" uid="uid://dvb8x7axgpvgj" path="res://assets/sprites/objects/electricity/zap/lightning.png" id="2_ob8al"]
-[ext_resource type="AudioStream" uid="uid://dxdbsmoc04pti" path="res://assets/soundeffects/505649-SBsfi2-Simple_Zap_007.wav" id="3_6wb42"]
+[ext_resource type="Script" path="res://scenes/Shared/ConductorBoxElectricity.gd" id="1_375sm"]
+[ext_resource type="Texture2D" uid="uid://dvb8x7axgpvgj" path="res://assets/sprites/objects/electricity/zap/lightning.png" id="2_skakg"]
+[ext_resource type="AudioStream" uid="uid://dxdbsmoc04pti" path="res://assets/soundeffects/505649-SBsfi2-Simple_Zap_007.wav" id="3_qod8n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5qpx7"]
-atlas = ExtResource("2_ob8al")
+atlas = ExtResource("2_skakg")
 region = Rect2(0, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_87kd7"]
-atlas = ExtResource("2_ob8al")
+atlas = ExtResource("2_skakg")
 region = Rect2(16, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7xh16"]
-atlas = ExtResource("2_ob8al")
+atlas = ExtResource("2_skakg")
 region = Rect2(32, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8063p"]
-atlas = ExtResource("2_ob8al")
+atlas = ExtResource("2_skakg")
 region = Rect2(48, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d7d8t"]
-atlas = ExtResource("2_ob8al")
+atlas = ExtResource("2_skakg")
 region = Rect2(64, 0, 16, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_0rpwy"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_vpwe1"]
 animations = [{
 "frames": [],
 "loop": true,
@@ -52,19 +52,17 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="Electricity" type="Node2D"]
+[node name="ConductorBoxElectricity" type="Node2D"]
 z_index = 2
-script = ExtResource("1_waxd4")
+script = ExtResource("1_375sm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_0rpwy")
+sprite_frames = SubResource("SpriteFrames_vpwe1")
 animation = &"zap"
-frame = 4
-frame_progress = 1.0
 offset = Vector2(0, -16)
 
 [node name="zap" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_6wb42")
+stream = ExtResource("3_qod8n")
 volume_db = -5.0
 max_distance = 70.0
 bus = &"Sfx"
