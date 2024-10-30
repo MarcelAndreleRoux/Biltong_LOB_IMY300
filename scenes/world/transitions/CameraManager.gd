@@ -49,33 +49,24 @@ func set_current_marker(marker: Node2D) -> void:
 	camera_marker_changed.emit(marker)
 
 func get_next_marker(player_pos: Vector2, direction: Vector2) -> Node2D:
-	if !is_instance_valid(current_camera_marker):
-		return null
+	var transition_areas = get_tree().get_nodes_in_group("transition_areas")
 	
-	var markers = get_tree().get_nodes_in_group("camera_markers")
-	var best_marker = null
-	var best_score = INF
+	# Find the closest transition area
+	var closest_area: Area2D = null
+	var closest_distance: float = INF
 	
-	var current_pos = current_camera_marker.global_position
+	for area in transition_areas:
+		if area is Area2D:
+			var distance = player_pos.distance_to(area.global_position)
+			if distance < closest_distance:
+				closest_distance = distance
+				closest_area = area
 	
-	for marker in markers:
-		if !is_instance_valid(marker) or marker == current_camera_marker:
-			continue
-		
-		var to_marker = marker.global_position - current_pos
-		var dot = direction.normalized().dot(to_marker.normalized())
-		
-		# Consider markers in the general direction of movement
-		if dot > 0.5:
-			var distance_score = to_marker.length()
-			var direction_score = (1.0 - dot) * 1000  # Weight for directional alignment
-			var total_score = distance_score + direction_score
-			
-			if total_score < best_score:
-				best_score = total_score
-				best_marker = marker
+	# If we found a transition area, determine which marker to use
+	if closest_area and closest_area.has_method("get_target_marker"):
+		return closest_area.get_target_marker()
 	
-	return best_marker
+	return null
 
 # Screen shake management
 func toggle_screen_shake(enabled: bool) -> void:

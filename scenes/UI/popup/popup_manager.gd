@@ -71,7 +71,6 @@ func _animate_out(popup: Control):
 	tween.chain().tween_callback(func():
 		is_animating = false
 		current_popup = null
-		popup.queue_free()
 		_check_pending_popup()
 	)
 

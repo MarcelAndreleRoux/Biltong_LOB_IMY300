@@ -135,6 +135,12 @@ func transition_to_marker(marker: Node2D) -> void:
 		return
 		
 	print("Transitioning to marker: ", marker.name)
+	
+	if is_transitioning:
+		# Buffer the next transition
+		pending_marker = marker
+		return
+		
 	is_transitioning = true
 	
 	if tween and tween.is_valid():
@@ -147,7 +153,6 @@ func transition_to_marker(marker: Node2D) -> void:
 	
 	# Connect to tween completion
 	tween.finished.connect(_on_tween_completed.bind(marker))
-	CameraManager.set_current_marker(marker)
 
 func _on_tween_completed(marker: Node2D) -> void:
 	is_transitioning = false
