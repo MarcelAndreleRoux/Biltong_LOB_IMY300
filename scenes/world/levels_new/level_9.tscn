@@ -138,11 +138,12 @@ position = Vector2(216, 48)
 connector_name = "two"
 door_link_id = "1"
 
-[node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2", "target_3") instance=ExtResource("17_ju3cx")]
+[node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2", "target_3", "target_4") instance=ExtResource("17_ju3cx")]
 position = Vector2(232, 104)
 target_1 = NodePath("../LizardWander")
 target_2 = NodePath("../LizardWander2")
 target_3 = NodePath("../LizardWander3")
+target_4 = NodePath("../LizardWander4")
 
 [node name="LizardWander" parent="." instance=ExtResource("18_qqi05")]
 position = Vector2(312, 160)
@@ -151,7 +152,10 @@ position = Vector2(312, 160)
 position = Vector2(200, 80)
 
 [node name="LizardWander3" parent="." instance=ExtResource("18_qqi05")]
-position = Vector2(64, 80)
+position = Vector2(96, 80)
+
+[node name="LizardWander4" parent="." instance=ExtResource("18_qqi05")]
+position = Vector2(200, 80)
 
 [node name="VinesBig" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -189,7 +193,6 @@ plant_type = "small"
 
 [node name="Vines20" parent="VinesSmall" instance=ExtResource("19_km4nh")]
 position = Vector2(416, 160)
-plant_type = "small"
 
 [node name="Vines31" parent="VinesSmall" instance=ExtResource("19_km4nh")]
 position = Vector2(384, 128)
@@ -201,4 +204,46 @@ plant_type = "small"
 
 [node name="Vines34" parent="VinesSmall" instance=ExtResource("19_km4nh")]
 position = Vector2(408, 136)
+
+[node name="Vines5" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(288, 80)
+
+[node name="Vines7" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(328, 96)
+
+[node name="Vines8" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(312, 72)
+
+[node name="Vines19" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(280, 56)
+
+[node name="Vines21" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(320, 72)
+plant_type = "small"
+
+[node name="Vines22" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(304, 48)
+
+[node name="Vines23" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(280, 72)
+plant_type = "small"
+
+[node name="Vines24" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(280, 96)
+plant_type = "small"
+
+[node name="Vines25" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(304, 80)
+plant_type = "small"
+
+[node name="Vines33" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(272, 48)
+plant_type = "small"
+
+[node name="Vines35" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(272, 72)
+plant_type = "small"
+
+[node name="Vines36" parent="VinesSmall" instance=ExtResource("19_km4nh")]
+position = Vector2(296, 56)
 plant_type = "small"
