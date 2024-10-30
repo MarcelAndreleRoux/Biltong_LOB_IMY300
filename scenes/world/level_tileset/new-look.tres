@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=28 format=3 uid="uid://e1rr68u31ypo"]
+[gd_resource type="TileSet" load_steps=28 format=3 uid="uid://t322bb5420cb"]
 
 [ext_resource type="Texture2D" uid="uid://dhjrs6u1jrxlc" path="res://assets/sprites/objects/static/wire/Wires-Tileset.png" id="1_ipqq0"]
 [ext_resource type="Texture2D" uid="uid://dly03p5pcevkh" path="res://assets/sprites/world/new_env/Floor.png" id="1_m5x7q"]
@@ -664,15 +664,19 @@ texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -4.875, 9.25, -4.875, 9.25, 2.5, 8.125, 9.25, -7.75, 9, -9.25, 2.25)
 1:0/0 = 0
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.75, -5, 16.5, -5.125, 16.5, 2.25, 16, 8.75, -15.5, 9.125, -16.125, 1.75)
 2:0/0 = 0
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(5.25, -1.875, 5, 16.125, -5.125, 16.375, -4.875, -2.25)
 3:0/0 = 0
 3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(5.125, -13, 5, 16.125, -5.125, 16.375, -5, -13.25)
 4:0/0 = 0
 4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:0/0/physics_layer_0/angular_velocity = 0.0
@@ -790,6 +794,7 @@ texture_region_size = Vector2i(64, 64)
 4:0/0 = 0
 4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:0/0/physics_layer_0/angular_velocity = 0.0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(14.75, 1, 15.125, 6.375, 3.125, 9.25, -8, 4.625, -9.875, -2.25, -5.375, -8, 4.375, -9.875)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kdvrj"]
 texture = ExtResource("10_a8qy3")

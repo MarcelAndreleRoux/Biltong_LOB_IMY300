@@ -86,6 +86,11 @@ const LEVEL_PATHS = [
 	"res://scenes/world/levels_new/level_5.tscn",
 	"res://scenes/world/levels_new/level_6.tscn",
 	"res://scenes/world/levels_new/level_7.tscn",
+	"res://scenes/world/levels_new/level_8.tscn",
+	"res://scenes/world/levels_new/level_9.tscn",
+	"res://scenes/world/levels_new/level_10.tscn",
+	"res://scenes/world/levels_new/level_11.tscn",
+	"res://scenes/world/levels_new/level_12.tscn",
 ]
 
 func change_scene_to_next_level():
