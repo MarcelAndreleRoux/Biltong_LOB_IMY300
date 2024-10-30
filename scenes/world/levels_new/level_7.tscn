@@ -30,7 +30,7 @@ offset_left = 234.0
 offset_top = 184.0
 offset_right = 258.0
 offset_bottom = 264.0
-text = "6"
+text = "7"
 
 [node name="ShakeCamera" parent="." instance=ExtResource("3_4rl1b")]
 
