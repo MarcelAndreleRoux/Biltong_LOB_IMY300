@@ -119,15 +119,6 @@ position = Vector2(368, 88)
 position = Vector2(80, 128)
 door_link_id = "2"
 
-[node name="Vines" parent="." instance=ExtResource("17_7pls4")]
-position = Vector2(296, 144)
-
-[node name="Vines2" parent="." instance=ExtResource("17_7pls4")]
-position = Vector2(296, 160)
-
-[node name="Vines3" parent="." instance=ExtResource("17_7pls4")]
-position = Vector2(296, 176)
-
 [node name="FireBush" parent="." instance=ExtResource("18_4u7aj")]
 position = Vector2(240, 136)
 
@@ -137,6 +128,15 @@ door_link_id = "2"
 
 [node name="VinesBig" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="Vines5" parent="VinesBig" instance=ExtResource("17_7pls4")]
+position = Vector2(296, 144)
+
+[node name="Vines7" parent="VinesBig" instance=ExtResource("17_7pls4")]
+position = Vector2(296, 160)
+
+[node name="Vines8" parent="VinesBig" instance=ExtResource("17_7pls4")]
+position = Vector2(296, 176)
 
 [node name="Vines" parent="VinesBig" instance=ExtResource("17_7pls4")]
 position = Vector2(328, 144)
