@@ -90,7 +90,7 @@ position = Vector2(656, 136)
 position = Vector2(656, -128)
 
 [node name="Player" parent="." instance=ExtResource("5_007gb")]
-position = Vector2(352, 80)
+position = Vector2(240, 254)
 
 [node name="PlayerRaycast" type="RayCast2D" parent="Player"]
 
