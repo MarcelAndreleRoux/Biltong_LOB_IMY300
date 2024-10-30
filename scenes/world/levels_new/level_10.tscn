@@ -27,11 +27,11 @@ y_sort_enabled = true
 script = ExtResource("1_7m3mb")
 
 [node name="ChamberNumber" parent="." instance=ExtResource("2_lb88e")]
-offset_left = 234.0
+offset_left = 228.0
 offset_top = 184.0
-offset_right = 258.0
+offset_right = 256.0
 offset_bottom = 264.0
-text = "9"
+text = "10"
 
 [node name="ShakeCamera" parent="." instance=ExtResource("3_3w6ny")]
 
