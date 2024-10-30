@@ -27,6 +27,7 @@ func _process(delta):
 		animated_sprite_2d.play("pickup")
 		water_stream_sound.stop()
 	if player_in_area and Input.is_action_just_pressed("pickup") and not already_picked:
+		SharedSignals.water_trowable.emit()
 		already_picked = true
 		GlobalValues.can_swap_water = true
 		SharedSignals.item_pickup.emit()

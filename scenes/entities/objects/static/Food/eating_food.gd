@@ -39,6 +39,7 @@ func _wait_before_grow_timer():
 
 func _process(delta):
 	if player_in_area and Input.is_action_just_pressed("pickup") and not eating and not GlobalValues.food_already_picked:
+		SharedSignals.trowable.emit()
 		action_button_press = true
 		GlobalValues.food_already_picked = true
 		SharedSignals.item_pickup.emit()
@@ -49,6 +50,7 @@ func _process(delta):
 		AudioController.play_sfx("food_pickup")
 	
 	if can_still_pickup and Input.is_action_just_pressed("pickup") and not GlobalValues.food_already_picked:
+			SharedSignals.trowable.emit()
 			action_button_press = true
 			GlobalValues.food_already_picked = true
 			SharedSignals.item_pickup.emit()

@@ -25,6 +25,7 @@ func _ready():
 
 func _process(delta):
 	if player_in_area and Input.is_action_just_pressed("pickup") and not already_picked:
+		SharedSignals.fire_trowable.emit()
 		already_picked = true
 		GlobalValues.can_swap_fire = true  # Set global flag to track item
 		SharedSignals.item_pickup.emit()

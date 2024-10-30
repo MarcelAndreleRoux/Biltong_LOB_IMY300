@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://ul6leuv5kkdh"]
+
+[ext_resource type="Script" path="res://scenes/world/end/credits.gd" id="1_sigef"]
+[ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="1_xm7n7"]
+[ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="2_1545e"]
+[ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="3_2toy7"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sigef")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 500.0
+offset_bottom = 289.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 101.0
+offset_right = 90.0
+offset_bottom = 124.0
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 147.0
+offset_right = 48.0
+offset_bottom = 170.0
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 81.0
+offset_right = 123.0
+offset_bottom = 136.0
+theme_override_fonts/font = ExtResource("1_xm7n7")
+theme_override_font_sizes/font_size = 25
+text = "Marcel le Roux
+Stefan Tolken"
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 63.0
+offset_right = 127.0
+offset_bottom = 121.0
+theme_override_fonts/font = ExtResource("2_1545e")
+theme_override_font_sizes/font_size = 25
+text = "Game Makers:"
+
+[node name="Lob" type="Label" parent="."]
+custom_minimum_size = Vector2(170, 0)
+offset_left = 150.0
+offset_top = -10.0
+offset_right = 320.0
+offset_bottom = 73.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("3_2toy7")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+text = "LOB"
+horizontal_alignment = 1
+
+[node name="Exit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.5
+offset_top = 77.0
+offset_right = 72.5
+offset_bottom = 113.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_2toy7")
+theme_override_font_sizes/font_size = 25
+text = "main menu"
+
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

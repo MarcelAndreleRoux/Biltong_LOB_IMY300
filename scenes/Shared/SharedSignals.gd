@@ -122,3 +122,6 @@ signal drop_current_box
 
 # popups
 signal move_mouse_around
+signal trowable
+signal fire_trowable
+signal water_trowable

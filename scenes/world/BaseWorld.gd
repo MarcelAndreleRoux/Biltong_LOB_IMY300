@@ -79,8 +79,8 @@ const HELPFUL_MESSAGES = {
 	"turtle_scared": "Oh wow... Looks like this big creature is scared of me",
 	"mouse_move": "This box looks light enough to drag around. I should be able to move it around with my mouse",
 	"throwable": "I remember them throwing these as turtle food... let me store it in my inventory for later",
-	"fire_throwable": "These caused a huge fire in the facility once when they came in contact with the overgrowth.. I wonder if they still work",
-	"water_throwable": "Didn't these make the overgrowth grow back, never understood why they did this",
+	"fire_throwable": "These caused a huge fire in the facility once.. I wonder if they still work",
+	"water_throwable": "Didn't these make the vines grow back, never understood why they made this",
 }
 
 const WARNING_MESSAGES = {
@@ -115,6 +115,10 @@ func _ready():
 	trajectory_collision_state.connect(_on_trajectory_collision)
 	SharedSignals.play_pickup_notification.connect(_display_player_pickup_popup)
 	SharedSignals.move_mouse_around.connect(_mouse_move_popup)
+	
+	SharedSignals.trowable.connect(_on_throwable_popup)
+	SharedSignals.fire_trowable.connect(_on_fire_throwable_popup)
+	SharedSignals.water_trowable.connect(_on_water_throwable_popup)
 	
 	call_deferred("_setup_player_position")
 	
@@ -197,6 +201,21 @@ func connect_button_signals():
 	for button in get_tree().get_nodes_in_group("buttons"):
 		if not button.hazmat_warning.is_connected(show_hazmat_warning):
 			button.hazmat_warning.connect(show_hazmat_warning)
+
+func _on_throwable_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.throwable)
+	if not success:
+		pass
+
+func _on_fire_throwable_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.fire_throwable)
+	if not success:
+		pass
+
+func _on_water_throwable_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.water_throwable)
+	if not success:
+		pass
 
 func _mouse_move_popup():
 	var success = popup_manager.create_popup(HELPFUL_MESSAGES.mouse_move)
