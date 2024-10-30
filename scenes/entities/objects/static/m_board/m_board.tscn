@@ -117,11 +117,10 @@ animation = &"default_off"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5hybq")
-disabled = true
 
 [node name="ConnectionArea" type="Area2D" parent="."]
 collision_layer = 16384
-collision_mask = 65535
+collision_mask = 4294967295
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConnectionArea"]
 position = Vector2(0, 15)

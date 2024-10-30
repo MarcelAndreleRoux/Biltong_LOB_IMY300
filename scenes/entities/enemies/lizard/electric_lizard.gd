@@ -218,6 +218,8 @@ func _update_animation_parameters():
 	animation_tree["parameters/run_on/blend_position"] = direction
 
 func _on_electric_area_body_entered(body):
+	print("DEBUG: Lizard - Body entered electric area:", body.name)
+	
 	if body.is_in_group("player") and is_on:
 		SharedSignals.player_killed.emit("pop")
 		_player_zap(body)
@@ -225,19 +227,27 @@ func _on_electric_area_body_entered(body):
 	if is_on:
 		if body.is_in_group("conductor"):
 			if not body in nearby_objects:
+				print("DEBUG: Lizard - Adding conductor to nearby objects")
 				nearby_objects.append(body)
-				_play_zap(body)  # Create lizard's zap
+				_play_zap(body)
 				body.receive_electricity()
 		elif body.is_in_group("m_board"):
-			if not body in nearby_objects:
+			if not body in nearby_objects and body.connector_name != "none":
+				print("DEBUG: Lizard - Adding m_board to nearby objects")
 				nearby_objects.append(body)
-				_play_zap(body)  # Create lizard's zap
-				body.receive_electricity(false)  # Pass false to indicate it's from lizard
+				_play_zap(body)
+				body.receive_electricity(false)
 
 func _on_electric_area_body_exited(body):
-	if body in nearby_objects:
-		nearby_objects.erase(body)
-		body.stop_electricity()
+	print("DEBUG: Lizard - Body exited electric area:", body.name)
+	
+	# Only handle exits for relevant bodies
+	if body.is_in_group("m_board") or body.is_in_group("conductor"):
+		if body in nearby_objects:
+			print("DEBUG: Lizard - Removing from nearby objects")
+			nearby_objects.erase(body)
+			if body.is_in_group("m_board"):
+				body.stop_electricity(false)
 
 func get_electrical_state() -> bool:
 	return is_on
@@ -327,17 +337,21 @@ func _change_state():
 	else:
 		is_on = true
 	
+	print("DEBUG: Lizard - State change - Previous:", previous_state, " New:", is_on)
+	
 	if previous_state != is_on:
 		SharedSignals.lizard_state_change.emit(is_on)
 		_update_electrical_field_sound()
 		
 		# Handle existing connections
 		if is_on:
+			print("DEBUG: Lizard - Reactivating connections for", nearby_objects.size(), "objects")
 			for obj in nearby_objects:
 				obj.receive_electricity()
 		else:
+			print("DEBUG: Lizard - Deactivating connections for", nearby_objects.size(), "objects")
 			for obj in nearby_objects:
-				obj.stop_electricity()
+				obj.stop_electricity(true)
 
 func _on_player_kill_area_entered(area):
 	if area.is_in_group("death_area"):

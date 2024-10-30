@@ -19,7 +19,7 @@ var charge_timer: Timer
 var turning_off: bool = false
 var current_frame: int = 0
 
-var nearby_electrical_objects = []
+var connected_mboard = null
 
 func _ready():
 	near.visible = false
@@ -124,17 +124,16 @@ func _show_timeout():
 	action_button_press.visible = false
 
 func _check_and_zap_electrical():
-	# Zap all nearby electrical objects when we're charged
-	for obj in nearby_electrical_objects:
-		if obj.is_in_group("m_board"):
-			_play_zap_to_mboard(obj)
-			obj.receive_electricity(true)
+	# Only zap if we have a connected m_board
+	if connected_mboard != null:
+		_play_zap_to_mboard(connected_mboard)
+		connected_mboard.receive_electricity(true)
 
 func _play_zap_to_mboard(object):
 	if charged_state:
 		var mboard_position = object.global_position
 		var box_position = self.global_position
-		var direction = (mboard_position - box_position).normalized()
+		var direction = (box_position - mboard_position).normalized()
 		
 		var electrical_zap = preload("res://scenes/Shared/conductor_box_electricity.tscn").instantiate()
 		
@@ -168,18 +167,19 @@ func stop_electricity():
 	add_child(charge_timer)
 	charge_timer.start()
 	
-	# Stop electricity to all nearby electrical objects
-	for obj in nearby_electrical_objects:
-		obj.stop_electricity()
+	# Stop electricity to connected m_board if it exists
+	if connected_mboard != null:
+		connected_mboard.stop_electricity(true)
 
 func _on_charge_timer_timeout():
 	charged_state = false
 	animatedSprite.play("idle_off")
 	charge_timer.queue_free()
 	charge_timer = null
-	# Ensure all electrical objects are stopped when charge runs out
-	for obj in nearby_electrical_objects:
-		obj.stop_electricity()
+	
+	# Stop electricity to connected m_board if it exists
+	if connected_mboard != null:
+		connected_mboard.stop_electricity(true)  # Tell m_board conductor lost charge
 
 func _bounce_box(bounce_vector: Vector2):
 	global_position += bounce_vector
@@ -218,18 +218,18 @@ func _on_conduction_area_body_entered(body):
 			animatedSprite.play("turn_on")
 			SharedSignals.lizard_connection_made.emit(self)
 			_check_and_zap_electrical()
-		else:
-			charged_state = false
 	elif body.is_in_group("m_board"):
-		nearby_electrical_objects.append(body)
-		if charged_state:
-			_play_zap_to_mboard(body)  # This should trigger conductor's zap
-			body.receive_electricity(true)
+		# Only store the reference if we don't already have one
+		if connected_mboard == null:
+			connected_mboard = body
+			if charged_state:
+				_play_zap_to_mboard(body)
+				body.receive_electricity(true)
 
 func _on_conduction_area_body_exited(body):
 	if body.is_in_group("lizard"):
 		if body.get_electrical_state():
 			animatedSprite.play("turn_off")
-	elif body.is_in_group("m_board"):
-		nearby_electrical_objects.erase(body)
-		body.stop_electricity()
+	elif body.is_in_group("m_board") and body == connected_mboard:
+		body.stop_electricity(true)
+		connected_mboard = null  # Clear the reference when m_board exits
