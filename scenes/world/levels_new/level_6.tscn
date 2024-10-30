@@ -99,12 +99,10 @@ door_link_id = "1"
 
 [node name="MBoard2" parent="." instance=ExtResource("12_yrlve")]
 position = Vector2(264, 48)
-connector_name = "none"
 door_link_id = "1"
 
 [node name="MBoard3" parent="." instance=ExtResource("12_yrlve")]
 position = Vector2(376, 128)
-connector_name = "none"
 door_link_id = "2"
 
 [node name="Door" parent="." instance=ExtResource("13_othi5")]

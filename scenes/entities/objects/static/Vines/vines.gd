@@ -95,7 +95,7 @@ func _on_burn():
 func _update_collision_shape_size():
 	if was_grown:
 		var new_shape = RectangleShape2D.new()
-		new_shape.extents = Vector2(8, 20)
+		new_shape.extents = Vector2(8, 10)
 		collision_shape_2d.shape = new_shape
 		# Don't disable here, let _on_grow handle the timing
 	else:

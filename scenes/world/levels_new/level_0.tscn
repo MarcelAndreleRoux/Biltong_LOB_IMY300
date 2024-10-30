@@ -186,12 +186,10 @@ door_link_id = "b"
 
 [node name="MBoard" parent="." instance=ExtResource("16_urrt4")]
 position = Vector2(-184, 16)
-connector_name = "none"
 door_link_id = "a"
 
 [node name="MBoard2" parent="." instance=ExtResource("16_urrt4")]
 position = Vector2(-104, 16)
-connector_name = "none"
 door_link_id = "b"
 
 [node name="Keycaps" parent="." instance=ExtResource("17_1rwav")]

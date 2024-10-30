@@ -1,11 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://bf1ph5sca0ows"]
+[gd_scene load_steps=22 format=3 uid="uid://6pql0mbbr4ri"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_7m3mb"]
-[ext_resource type="PackedScene" uid="uid://bh78atl44xeca" path="res://scenes/UI/chamber_number.tscn" id="2_lb88e"]
+[ext_resource type="PackedScene" path="res://scenes/UI/chamber_number.tscn" id="2_lb88e"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="3_3w6ny"]
 [ext_resource type="TileSet" uid="uid://t322bb5420cb" path="res://scenes/world/level_tileset/new-look.tres" id="4_iqg8a"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="5_pqegb"]
-[ext_resource type="PackedScene" uid="uid://bab22tyvvhbvh" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="6_0hvui"]
+[ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="6_0hvui"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="7_7xxig"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="8_nb5qs"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="9_6mlco"]
@@ -252,7 +252,8 @@ position = Vector2(184, 144)
 DESPAWN_TIME = 999.0
 
 [node name="Campfire" parent="." instance=ExtResource("21_y38ww")]
-position = Vector2(296, 144)
+z_index = 0
+position = Vector2(296, 143)
 
 [node name="MBoard5" parent="." instance=ExtResource("12_vwvrx")]
 position = Vector2(120, 112)

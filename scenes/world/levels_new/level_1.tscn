@@ -94,7 +94,6 @@ position = Vector2(245, 258)
 
 [node name="MBoard" parent="." instance=ExtResource("16_r36x4")]
 position = Vector2(216, 48)
-connector_name = "none"
 door_link_id = "2"
 
 [node name="Door" parent="." instance=ExtResource("17_hqp7e")]

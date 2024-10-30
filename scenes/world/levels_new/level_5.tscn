@@ -92,7 +92,6 @@ position = Vector2(448, 256)
 
 [node name="MBoard" parent="." instance=ExtResource("12_ivmvt")]
 position = Vector2(216, 48)
-connector_name = "none"
 door_link_id = "1"
 
 [node name="Door" parent="." instance=ExtResource("13_d77wu")]
@@ -125,7 +124,6 @@ position = Vector2(240, 136)
 
 [node name="MBoard2" parent="." instance=ExtResource("12_ivmvt")]
 position = Vector2(104, 128)
-connector_name = "none"
 door_link_id = "2"
 
 [node name="VinesBig" type="Node2D" parent="."]
