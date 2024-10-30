@@ -26,7 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bkrm2mrsge218" path="res://scenes/entities/objects/static/waterpod/water_puddle.tscn" id="23_0p5ng"]
 [ext_resource type="PackedScene" uid="uid://rbjoqjymswsp" path="res://scenes/entities/objects/static/hazmat wall/hazmat_wall.tscn" id="23_gcuh5"]
 [ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="26_eq12h"]
-[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="27_ujibw"]
+[ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="27_iqhv1"]
 
 [node name="BaseLevel" type="Node2D"]
 y_sort_enabled = true
@@ -101,11 +101,11 @@ connector_name = "one"
 door_link_id = "123"
 
 [node name="MBoard3" parent="." instance=ExtResource("8_he8ve")]
-position = Vector2(319, 105)
+position = Vector2(310, 101)
 door_link_id = "123"
 
 [node name="Door" parent="." instance=ExtResource("8_5doce")]
-position = Vector2(304, 96)
+position = Vector2(303, 53)
 door_link_id = "123"
 
 [node name="Food" type="Node" parent="." groups=["food"]]
@@ -156,8 +156,12 @@ collision_layer = 0
 position = Vector2(74, 107)
 collision_layer = 0
 
+[node name="Campfire" parent="." instance=ExtResource("22_1o8cx")]
+z_index = 0
+position = Vector2(214, 148)
+
 [node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2", "target_3") instance=ExtResource("5_oi3oa")]
-position = Vector2(334, 146)
+position = Vector2(331, 143)
 collision_mask = 3208252
 target_1 = NodePath("../LizardMarker")
 target_2 = NodePath("../LizardMarker2")
@@ -172,7 +176,7 @@ position = Vector2(97, 22)
 position = Vector2(152, 22)
 
 [node name="MBoard2" parent="." instance=ExtResource("8_he8ve")]
-position = Vector2(366, 97)
+position = Vector2(352, 101)
 connector_name = "two"
 door_link_id = "12345"
 
@@ -180,14 +184,22 @@ door_link_id = "12345"
 position = Vector2(433, 133)
 door_link_id = "12345"
 
-[node name="Campfire" parent="." instance=ExtResource("22_1o8cx")]
-z_index = 0
-position = Vector2(214, 148)
-
 [node name="WaterPuddle" parent="." instance=ExtResource("23_0p5ng")]
 position = Vector2(201, 80)
 
 [node name="PopupCanvasLayer" parent="." instance=ExtResource("26_eq12h")]
 
-[node name="Hedgehog" parent="." instance=ExtResource("27_ujibw")]
-position = Vector2(418, 43)
+[node name="Vines" parent="." instance=ExtResource("27_iqhv1")]
+position = Vector2(445, 39)
+
+[node name="Vines2" parent="." instance=ExtResource("27_iqhv1")]
+position = Vector2(427, 38)
+
+[node name="Vines3" parent="." instance=ExtResource("27_iqhv1")]
+position = Vector2(408, 40)
+
+[node name="Vines4" parent="." instance=ExtResource("27_iqhv1")]
+position = Vector2(443, 59)
+
+[node name="Vines5" parent="." instance=ExtResource("27_iqhv1")]
+position = Vector2(420, 56)

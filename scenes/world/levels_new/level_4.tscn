@@ -1,11 +1,11 @@
 [gd_scene load_steps=20 format=3 uid="uid://nx8lmgsxjii8"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_1twbb"]
-[ext_resource type="PackedScene" uid="uid://bh78atl44xeca" path="res://scenes/UI/chamber_number.tscn" id="2_7l865"]
+[ext_resource type="PackedScene" path="res://scenes/UI/chamber_number.tscn" id="2_7l865"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="3_vbpot"]
 [ext_resource type="TileSet" uid="uid://t322bb5420cb" path="res://scenes/world/level_tileset/new-look.tres" id="4_61pbk"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="5_xao72"]
-[ext_resource type="PackedScene" uid="uid://bab22tyvvhbvh" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="6_iqb30"]
+[ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="6_iqb30"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="7_vm3mf"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="8_kpdds"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="9_5y6qv"]
@@ -95,6 +95,7 @@ position = Vector2(448, 256)
 
 [node name="MBoard" parent="." instance=ExtResource("12_fvwqw")]
 position = Vector2(264, 48)
+connector_name = "none"
 door_link_id = "2"
 
 [node name="Door" parent="." instance=ExtResource("13_uugvx")]
@@ -188,6 +189,7 @@ button_mode = "Toggle"
 
 [node name="MBoard2" parent="." instance=ExtResource("12_fvwqw")]
 position = Vector2(376, 128)
+connector_name = "none"
 door_link_id = "b"
 
 [node name="Box" parent="." instance=ExtResource("18_bopma")]
