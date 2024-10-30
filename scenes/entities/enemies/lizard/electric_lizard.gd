@@ -11,6 +11,7 @@ extends CharacterBody2D
 @export var enable_lick_eye_animation: bool = true
 @export var is_on: bool = true
 @export var speed = 50
+@export var STOP_AT_PATROLE_POINT: float = 3.0
 
 @onready var navigation_agent_2d = $LizardNav
 @onready var animation_tree = $AnimationTree
@@ -84,17 +85,15 @@ func _physics_process(delta):
 		State.PATROL:
 			patrol_behavior()
 		State.PATROL_WAIT:
-			# Waiting at patrol point; timer will handle transition
 			pass
 		State.LICK_EYE:
-			# Lick eye behavior; timer will handle transition
 			pass
 	
 	# Update movement
 	if state == State.PATROL:
 		move_and_slide()
 	else:
-		velocity = Vector2.ZERO  # Ensure the lizard stops moving when not patrolling
+		velocity = Vector2.ZERO
 	
 	# Update direction for animations
 	if velocity.length() > 0:
@@ -104,9 +103,7 @@ func _physics_process(delta):
 	_update_animation_parameters()
 
 func patrol_behavior():
-	# Continue moving towards the patrol point
 	if navigation_agent_2d.is_navigation_finished():
-		# Reached patrol point, start wait timer
 		state = State.PATROL_WAIT
 		start_patrol_wait_timer()
 	else:
@@ -116,11 +113,10 @@ func patrol_behavior():
 		velocity = direction * speed
 
 func start_patrol_wait_timer():
-	# Start a timer to wait for 2 seconds before deciding the next action
 	_update_animation_parameters()
 	
 	patrol_wait_timer = Timer.new()
-	patrol_wait_timer.wait_time = 2.0  # 2 seconds wait
+	patrol_wait_timer.wait_time = STOP_AT_PATROLE_POINT
 	patrol_wait_timer.one_shot = true
 	patrol_wait_timer.timeout.connect(_on_patrol_wait_timeout)
 	add_child(patrol_wait_timer)

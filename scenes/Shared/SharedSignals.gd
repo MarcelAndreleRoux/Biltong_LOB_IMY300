@@ -119,3 +119,6 @@ signal is_dragging_box
 signal box_entered_area
 signal box_exited_area
 signal drop_current_box
+
+# popups
+signal move_mouse_around

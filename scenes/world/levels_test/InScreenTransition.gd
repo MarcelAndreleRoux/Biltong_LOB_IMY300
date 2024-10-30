@@ -1,8 +1,10 @@
 extends Area2D
 
-signal player_entered(direction: Vector2, current_marker: Node2D)
+signal player_entered(direction: Vector2)
 
 @export_enum("horizontal", "vertical") var move_direction: String = "horizontal"
+@export var root_marker: Node2D
+@export var destination_marker: Node2D
 
 var player_body: CharacterBody2D = null
 var last_position: Vector2 = Vector2.ZERO
@@ -11,12 +13,17 @@ const BUFFER_SIZE = 5
 var is_transitioning: bool = false
 var transition_direction: Vector2 = Vector2.ZERO
 
-const MOVEMENT_THRESHOLD: float = 0.5  # Reduced from 1.0
-const DIRECTION_THRESHOLD: float = 0.1  # Keep this for diagonal movement detection
+const MOVEMENT_THRESHOLD: float = 0.5
+const DIRECTION_THRESHOLD: float = 0.1
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	add_to_group("transition_areas")
+	
+	# Validate that both markers are set
+	if !root_marker or !destination_marker:
+		push_warning("InScreenTransition: Both root_marker and destination_marker must be set!")
 
 func _physics_process(_delta: float) -> void:
 	if !is_instance_valid(player_body) or is_transitioning:
@@ -26,7 +33,7 @@ func _physics_process(_delta: float) -> void:
 	if is_instance_valid(player_body):
 		direction = player_body.position - last_position
 		
-	if direction.length() > 0.1:  # Keep small movements for smoothness
+	if direction.length() > 0.1:
 		movement_buffer.push_back(direction)
 		if movement_buffer.size() > BUFFER_SIZE:
 			movement_buffer.pop_front()
@@ -36,11 +43,9 @@ func _physics_process(_delta: float) -> void:
 			avg_direction += dir
 		avg_direction /= movement_buffer.size()
 		
-		# Check movement with lower threshold
 		if avg_direction.length() > MOVEMENT_THRESHOLD:
 			var normalized_dir = avg_direction.normalized()
 			
-			# Check if movement aligns with allowed direction
 			if move_direction == "horizontal":
 				if abs(normalized_dir.x) > DIRECTION_THRESHOLD:
 					transition_direction = Vector2(sign(normalized_dir.x), 0).normalized()
@@ -55,11 +60,24 @@ func _physics_process(_delta: float) -> void:
 
 func handle_transition() -> void:
 	is_transitioning = true
-	var closest_marker = get_closest_marker()
-	if closest_marker:
-		player_entered.emit(transition_direction, closest_marker)
+	
+	# Get the target marker based on current camera position
+	var camera = get_viewport().get_camera_2d()
+	var target = get_target_marker(camera.global_position)
+	
+	if target:
+		camera.transition_to_marker(target)
+	
 	await get_tree().create_timer(1.0).timeout
 	is_transitioning = false
+
+func get_target_marker(current_pos: Vector2) -> Node2D:
+	# Get the marker that's furthest from the current position
+	var dist_to_root = current_pos.distance_to(root_marker.global_position)
+	var dist_to_dest = current_pos.distance_to(destination_marker.global_position)
+	
+	# If we're closer to root, go to destination, and vice versa
+	return destination_marker if dist_to_root < dist_to_dest else root_marker
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and !is_transitioning:
@@ -72,43 +90,8 @@ func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("Player exited transition area")
 		if body == player_body:
-			await get_tree().create_timer(0.5).timeout  # Wait before clearing
+			await get_tree().create_timer(0.5).timeout
 			movement_buffer.clear()
 			player_body = null
 			last_position = Vector2.ZERO
 			is_transitioning = false
-
-func get_closest_marker() -> Node2D:
-	if !is_instance_valid(player_body):
-		return null
-		
-	var markers = get_tree().get_nodes_in_group("camera_markers")
-	var closest_marker = null
-	var closest_distance = INF
-	
-	# Get the current camera position from CameraManager
-	var current_pos = CameraManager.current_camera_marker.global_position if CameraManager.current_camera_marker else Vector2.ZERO
-	
-	for marker in markers:
-		if !is_instance_valid(marker):
-			continue
-		
-		var to_marker = marker.global_position - current_pos
-		
-		# Only consider markers in the correct direction
-		if move_direction == "horizontal":
-			# For horizontal transitions, marker should be primarily to the left or right
-			if abs(to_marker.x) > abs(to_marker.y):
-				var distance = marker.global_position.distance_to(player_body.global_position)
-				if distance < closest_distance:
-					closest_distance = distance
-					closest_marker = marker
-		else: # vertical
-			# For vertical transitions, marker should be primarily above or below
-			if abs(to_marker.y) > abs(to_marker.x):
-				var distance = marker.global_position.distance_to(player_body.global_position)
-				if distance < closest_distance:
-					closest_distance = distance
-					closest_marker = marker
-	
-	return closest_marker

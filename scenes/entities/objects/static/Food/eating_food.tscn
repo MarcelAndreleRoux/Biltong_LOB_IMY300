@@ -239,7 +239,7 @@ script = ExtResource("1_5n20k")
 z_index = 1
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_eu32p")
-animation = &"grow"
+animation = &"pickup"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)

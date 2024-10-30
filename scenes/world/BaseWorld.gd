@@ -77,10 +77,14 @@ var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 const HELPFUL_MESSAGES = {
 	"pickup_food": "Looks like the turtle likes these mushrooms maybe I should wait to pick one up",
 	"turtle_scared": "Oh wow... Looks like this big creature is scared of me",
+	"mouse_move": "This box looks light enough to drag around. I should be able to move it around with my mouse",
+	"throwable": "I remember them throwing these as turtle food... let me store it in my inventory for later",
+	"fire_throwable": "These caused a huge fire in the facility once when they came in contact with the overgrowth.. I wonder if they still work",
+	"water_throwable": "Didn't these make the overgrowth grow back, never understood why they did this",
 }
 
 const WARNING_MESSAGES = {
-	"hazmat": "I don't feel like going into the chambers unprotected",
+	"hazmat": "I don't feel like going into the chambers unprotected, let me get a hazmat suite",
 }
 
 func _ready():
@@ -110,6 +114,7 @@ func _ready():
 	SharedSignals.shake_hedgehog.connect(_shake_shake)
 	trajectory_collision_state.connect(_on_trajectory_collision)
 	SharedSignals.play_pickup_notification.connect(_display_player_pickup_popup)
+	SharedSignals.move_mouse_around.connect(_mouse_move_popup)
 	
 	call_deferred("_setup_player_position")
 	
@@ -192,6 +197,11 @@ func connect_button_signals():
 	for button in get_tree().get_nodes_in_group("buttons"):
 		if not button.hazmat_warning.is_connected(show_hazmat_warning):
 			button.hazmat_warning.connect(show_hazmat_warning)
+
+func _mouse_move_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.mouse_move)
+	if not success:
+		pass
 
 func _display_player_pickup_popup():
 	var success = popup_manager.create_popup(HELPFUL_MESSAGES.pickup_food)
