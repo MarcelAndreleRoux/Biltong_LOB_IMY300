@@ -36,10 +36,15 @@ func _process(_delta):
 	if was_grown and not do_once:
 		if animated_sprite_2d.frame == 4:
 			do_once = true
+			was_grown = true
+			was_burned = false
 			animated_sprite_2d.play("large_plant_idle")
-	elif grow_from_no_burn and not do_once_grow:
+	
+	if grow_from_no_burn and not do_once_grow:
 		if animated_sprite_2d.frame == 2:
 			do_once_grow = true
+			was_grown = true
+			was_burned = false
 			animated_sprite_2d.play("large_plant_idle")
 
 func _on_area_2d_area_entered(area):
