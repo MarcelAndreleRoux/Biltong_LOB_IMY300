@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://gocvqvrsvfso"]
+[gd_scene load_steps=16 format=3 uid="uid://gocvqvrsvfso"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/button/button.gd" id="1_hwqma"]
 [ext_resource type="Shader" path="res://scenes/entities/objects/static/button/button.gdshader" id="1_k6nhy"]
 [ext_resource type="Texture2D" uid="uid://cy0waipdsut21" path="res://assets/sprites/objects/static/pressure_plate/Presure-Plate.png" id="2_2oktm"]
 [ext_resource type="AudioStream" uid="uid://v0lsvvnheulk" path="res://assets/soundeffects/Button.wav" id="3_tuskx"]
+[ext_resource type="AudioStream" uid="uid://blvpc6axcpvwx" path="res://assets/soundeffects/Error.mp3" id="5_kwoqh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_locke"]
 shader = ExtResource("1_k6nhy")
@@ -24,6 +25,10 @@ region = Rect2(32, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_iik3u"]
 atlas = ExtResource("2_2oktm")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3o7e"]
+atlas = ExtResource("2_2oktm")
+region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x55i4"]
 animations = [{
@@ -48,6 +53,14 @@ animations = [{
 "loop": false,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l3o7e")
+}],
+"loop": false,
+"name": &"stay_on",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7arkk"]
@@ -69,7 +82,7 @@ script = ExtResource("1_hwqma")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x55i4")
-animation = &"idle"
+animation = &"stay_on"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -84,8 +97,8 @@ shape = SubResource("CapsuleShape2D_howdr")
 
 [node name="click" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_tuskx")
-volume_db = -15.0
-max_distance = 400.0
+volume_db = -25.0
+max_distance = 70.0
 bus = &"Sfx"
 
 [node name="DetectBox" type="Area2D" parent="."]
@@ -94,6 +107,13 @@ bus = &"Sfx"
 visible = false
 shape = SubResource("CapsuleShape2D_g13ac")
 
+[node name="error" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_kwoqh")
+volume_db = -20.0
+max_distance = 70.0
+bus = &"Sfx"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="ClickArea" to="." method="_on_click_area_body_entered"]
 [connection signal="body_exited" from="ClickArea" to="." method="_on_click_area_body_exited"]
 [connection signal="area_entered" from="DetectBox" to="." method="_on_detect_box_area_entered"]

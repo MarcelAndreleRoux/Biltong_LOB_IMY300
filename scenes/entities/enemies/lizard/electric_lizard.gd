@@ -79,7 +79,7 @@ func _update_electrical_field_sound():
 		if not electrical_field.playing:
 			electrical_field.play()
 	else:
-		electrical_field.stop()
+		electrical_field.max_distance = 40.0
 
 func _physics_process(delta):
 	match state:
@@ -221,10 +221,17 @@ func _on_electric_area_body_entered(body):
 		SharedSignals.player_killed.emit("pop")
 		_player_zap(body)
 	
-	if (body.is_in_group("conductor") or body.is_in_group("m_board")) and is_on:
-		if not body in nearby_objects:
-			nearby_objects.append(body)
-			body.receive_electricity()
+	if is_on:
+		if body.is_in_group("conductor"):
+			if not body in nearby_objects:
+				nearby_objects.append(body)
+				_play_zap(body)  # Lizard creates its own zap
+				body.receive_electricity()
+		elif body.is_in_group("m_board"):
+			if not body in nearby_objects:
+				nearby_objects.append(body)
+				_play_zap(body)  # Lizard creates its own zap
+				body.receive_electricity()
 
 func _on_electric_area_body_exited(body):
 	if body in nearby_objects:

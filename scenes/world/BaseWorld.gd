@@ -130,7 +130,6 @@ func _ready():
 	if hedgehog:
 		enemy_raycast.add_exception(hedgehog)
 
-
 func _setup_player_position():
 	# Wait for frames to ensure scene is fully loaded
 	await get_tree().process_frame

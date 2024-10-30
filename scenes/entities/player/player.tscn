@@ -43,14 +43,14 @@ shader_parameter/hard_max_distance = 215.0
 shader_parameter/is_colliding = false
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4vyh8"]
-radius = 3.5
-height = 9.0
+radius = 3.0
+height = 8.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fmtvb"]
 size = Vector2(18, 24.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8y64"]
-size = Vector2(5, 4)
+size = Vector2(5, 5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a8jf0"]
 radius = 20.0
@@ -2154,7 +2154,7 @@ offset = Vector2(0, -2)
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -2.5)
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_4vyh8")
 
 [node name="PickupArea" type="Area2D" parent="."]
@@ -2176,7 +2176,7 @@ bus = &"Sfx"
 
 [node name="error" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_yo23e")
-volume_db = -17.333
+volume_db = -25.0
 bus = &"Sfx"
 
 [node name="throw" type="AudioStreamPlayer2D" parent="."]
@@ -2198,11 +2198,9 @@ pitch_scale = 0.45
 bus = &"Sfx"
 
 [node name="BoxMoveArea" type="Area2D" parent="."]
-position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoxMoveArea"]
-visible = false
-position = Vector2(-0.5, 3)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_g8y64")
 
 [node name="SpeedArea" type="Area2D" parent="."]

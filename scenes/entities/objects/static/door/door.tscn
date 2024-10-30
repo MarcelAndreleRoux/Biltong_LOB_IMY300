@@ -593,12 +593,12 @@ parameters/conditions/is_opening = false
 
 [node name="door_close" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_lt57a")
-max_distance = 400.0
+max_distance = 200.0
 bus = &"Sfx"
 
 [node name="door_open" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_lt57a")
-max_distance = 400.0
+max_distance = 200.0
 bus = &"Sfx"
 
 [node name="leaves_fall" type="AnimatedSprite2D" parent="."]

@@ -1,10 +1,12 @@
-[gd_scene load_steps=23 format=3 uid="uid://cvepijo572tly"]
+[gd_scene load_steps=25 format=3 uid="uid://cvepijo572tly"]
 
 [ext_resource type="Texture2D" uid="uid://gdkolyyffiss" path="res://assets/sprites/objects/static/Campfire/Campfire.png" id="1_h6wai"]
 [ext_resource type="Script" path="res://scenes/entities/objects/static/campfire/campfire.gd" id="1_vebbf"]
 [ext_resource type="AudioStream" uid="uid://ctg5sutwujra2" path="res://assets/soundeffects/Everything_fire/fire-looping-101soundboards.mp3" id="3_7roxb"]
 [ext_resource type="Texture2D" uid="uid://c0shk2s0cfxmw" path="res://assets/sprites/objects/static/Campfire/campfire_out.png" id="3_bpoi8"]
 [ext_resource type="Texture2D" uid="uid://bkeislxu48jxx" path="res://assets/sprites/objects/static/Campfire/campfire_on.png" id="4_jkfbi"]
+[ext_resource type="AudioStream" uid="uid://cgl8mjl38ndg2" path="res://assets/soundeffects/fireball-whoosh-1-179125.mp3" id="6_f4kru"]
+[ext_resource type="AudioStream" uid="uid://yxy713ge2ow0" path="res://assets/soundeffects/389193-Party-Pack-Match-Extinguish-Blowing-02-11.wav" id="7_3glv3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bbp3a"]
 atlas = ExtResource("1_h6wai")
@@ -152,14 +154,22 @@ collision_layer = 0
 collision_mask = 459672
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationArea"]
-visible = false
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_grgrj")
 
 [node name="FirePlace" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_7roxb")
-volume_db = 5.0
-max_distance = 50.0
+volume_db = -10.0
+max_distance = 70.0
 bus = &"Sfx"
+
+[node name="turn_on" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_f4kru")
+max_distance = 70.0
+
+[node name="turn_off" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_3glv3")
+volume_db = -5.0
+max_distance = 70.0
 
 [connection signal="body_entered" from="ActivationArea" to="." method="_on_activation_area_body_entered"]

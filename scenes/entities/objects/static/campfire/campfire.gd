@@ -3,7 +3,7 @@ extends StaticBody2D
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var fire_place = $FirePlace
 
-var on_state: bool = false
+var on_state: bool = true
 
 func _ready():
 	# Start with the default animation

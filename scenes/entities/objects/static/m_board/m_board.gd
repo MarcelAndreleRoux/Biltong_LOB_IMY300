@@ -35,6 +35,8 @@ func _ready():
 	SharedSignals.check_link.connect(_check_link)
 	SharedSignals.check_link.emit(self, door_link_id)
 	SharedSignals.lizard_connection_made.connect(_on_connection_check)
+	# Add this new signal connection for default boards
+	SharedSignals.doorState.connect(_on_door_state_change)
 
 func _full_link(button_id: String, door_id: String):
 	if button_id == door_link_id:
@@ -46,13 +48,7 @@ func _check_link(button: StaticBody2D, button_id: String):
 		SharedSignals.full_link.emit(button_id, door_link_id)
 
 func _on_button_change(state: bool, button_id: String):
-	if animation_name == "default" and found_link and door_link_id == door_link_found and button_id == door_link_id:
-		if state:
-			animated_sprite_2d.play("default_on")
-			connected_sound.play()
-		else:
-			animated_sprite_2d.play("default_off")
-			disconnect_sound.play()
+	pass
 
 func _on_connection_check(state: bool):
 	if has_conductor_box and state:
@@ -94,11 +90,27 @@ func _on_connection_check(state: bool):
 					SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 				disconnect_sound.play()
 
-# In m_board.gd, update the receive_electricity function:
-func receive_electricity():
+func _on_door_state_change(door_id: String, state: bool, _button_instance_id: int):
+	if connector_name == "none" and door_id == door_link_id:
+		if state:
+			animated_sprite_2d.play("default_on")
+			connected_sound.play()
+		else:
+			animated_sprite_2d.play("default_off")
+			disconnect_sound.play()
+
+func receive_electricity(from_conductor: bool = false):
+	# Only handle electricity for non-default boards
+	if connector_name == "none":
+		return
+		
 	if not is_conductor_charged:
 		is_conductor_charged = true
-		SharedSignals.lizard_connection.emit(self)
+		if from_conductor:
+			SharedSignals.conductor_connection.emit(self)
+		else:
+			SharedSignals.lizard_connection.emit(self)
+			
 		if animation_name == "one_connector":
 			animated_sprite_2d.play("one_connector_on")
 			if found_link and door_link_id == door_link_found:
@@ -116,6 +128,9 @@ func receive_electricity():
 				connected_sound.play()
 
 func stop_electricity():
+	if connector_name == "none":
+		return
+		
 	is_conductor_charged = false
 	if animation_name == "one_connector":
 		animated_sprite_2d.play("one_connector_off")
@@ -137,6 +152,10 @@ func stop_electricity():
 			disconnect_sound.play()
 
 func _on_connection_area_body_entered(body):
+	# Only accept conductor boxes for non-default boards
+	if connector_name == "none":
+		return
+		
 	if body.is_in_group("conductor"):
 		has_conductor_box = true
 		# Check if conductor is already charged
@@ -148,6 +167,9 @@ func _on_connection_area_body_entered(body):
 			receive_electricity()
 
 func _on_connection_area_body_exited(body):
+	if connector_name == "none":
+		return
+	
 	if body.is_in_group("conductor"):
 		has_conductor_box = false
 		is_conductor_charged = false

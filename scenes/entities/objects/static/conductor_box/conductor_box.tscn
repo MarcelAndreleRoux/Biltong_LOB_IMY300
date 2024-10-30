@@ -1,7 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://cpwmwdbljcnru"]
+[gd_scene load_steps=29 format=3 uid="uid://cpwmwdbljcnru"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/conductor_box/Conductor_Box.gd" id="1_isf1l"]
-[ext_resource type="Texture2D" path="res://assets/sprites/objects/static/box/Electric-Box.png" id="2_mtwwc"]
+[ext_resource type="Texture2D" uid="uid://nk2jnrvs04w8" path="res://assets/sprites/objects/static/box/near.png" id="2_5c5mu"]
+[ext_resource type="Texture2D" uid="uid://bh8ramekqt73f" path="res://assets/sprites/objects/static/box/Electric-Box.png" id="2_mtwwc"]
 [ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="4_cvrx5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kchka"]
@@ -95,24 +96,24 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_l4v40")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_6ea8x")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_cdlbn")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_abmm7")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_7jnnu")
 }],
 "loop": false,
 "name": &"turn_off",
-"speed": 10.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -194,10 +195,13 @@ linear_damp = 50.0
 angular_damp = 50.0
 script = ExtResource("1_isf1l")
 
+[node name="near" type="Sprite2D" parent="."]
+texture = ExtResource("2_5c5mu")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-5.96046e-08, 1.19209e-07)
 sprite_frames = SubResource("SpriteFrames_xqjmm")
-animation = &"turn_on"
+animation = &"turn_off"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
