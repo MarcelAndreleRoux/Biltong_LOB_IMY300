@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://yckim52oxtyq"]
+[gd_scene load_steps=26 format=3 uid="uid://yckim52oxtyq"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_xmd4a"]
 [ext_resource type="PackedScene" uid="uid://bh78atl44xeca" path="res://scenes/UI/chamber_number.tscn" id="2_201ux"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="19_sb55d"]
 [ext_resource type="PackedScene" uid="uid://bjkn46gokxkev" path="res://scenes/entities/objects/static/pod/animal_pod.tscn" id="22_7p5x7"]
 [ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="22_28ecg"]
+[ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/fire_bush.tscn" id="23_wl56m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ufpel"]
 size = Vector2(1, 85)
@@ -72,7 +73,7 @@ position = Vector2(-5.5, 12.5)
 shape = SubResource("RectangleShape2D_ufpel")
 
 [node name="InScreenTransition2" type="Area2D" parent="." groups=["transition_areas"]]
-position = Vector2(656, 20)
+position = Vector2(543, 160)
 script = ExtResource("5_fbqtp")
 move_direction = "vertical"
 
@@ -90,7 +91,7 @@ position = Vector2(656, 136)
 position = Vector2(656, -128)
 
 [node name="Player" parent="." instance=ExtResource("5_007gb")]
-position = Vector2(352, 96)
+position = Vector2(240, 254)
 
 [node name="PlayerRaycast" type="RayCast2D" parent="Player"]
 
@@ -573,6 +574,132 @@ plant_type = "small"
 position = Vector2(392, -16)
 plant_type = "small"
 
+[node name="Vines98" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 152)
+
+[node name="Vines99" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(632, 144)
+
+[node name="Vines100" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(624, 152)
+plant_type = "small"
+
+[node name="Vines101" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(616, 120)
+
+[node name="Vines102" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 96)
+
+[node name="Vines103" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(632, 88)
+
+[node name="Vines104" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 112)
+plant_type = "small"
+
+[node name="Vines105" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 136)
+plant_type = "small"
+
+[node name="Vines106" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(632, 120)
+plant_type = "small"
+
+[node name="Vines107" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(624, 96)
+plant_type = "small"
+
+[node name="Vines108" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 88)
+
+[node name="Vines109" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(624, 88)
+plant_type = "small"
+
+[node name="Vines110" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 80)
+
+[node name="Vines111" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(632, 72)
+
+[node name="Vines112" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(624, 80)
+plant_type = "small"
+
+[node name="Vines113" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(616, 48)
+
+[node name="Vines114" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 24)
+
+[node name="Vines115" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(632, 16)
+
+[node name="Vines116" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 40)
+plant_type = "small"
+
+[node name="Vines117" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 64)
+plant_type = "small"
+
+[node name="Vines118" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(632, 48)
+plant_type = "small"
+
+[node name="Vines119" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(624, 24)
+plant_type = "small"
+
+[node name="Vines120" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(608, 16)
+
+[node name="Vines121" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(624, 16)
+plant_type = "small"
+
+[node name="Vines122" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(552, 96)
+
+[node name="Vines123" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(576, 88)
+
+[node name="Vines124" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(568, 96)
+plant_type = "small"
+
+[node name="Vines125" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(560, 64)
+
+[node name="Vines126" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(552, 40)
+
+[node name="Vines127" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(576, 32)
+
+[node name="Vines128" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(552, 56)
+plant_type = "small"
+
+[node name="Vines129" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(552, 80)
+plant_type = "small"
+
+[node name="Vines130" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(576, 64)
+plant_type = "small"
+
+[node name="Vines131" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(568, 40)
+plant_type = "small"
+
+[node name="Vines132" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(552, 32)
+
+[node name="Vines133" parent="VinesBig2" instance=ExtResource("19_sb55d")]
+position = Vector2(568, 32)
+plant_type = "small"
+
 [node name="VinesSmall2" type="Node2D" parent="."]
 y_sort_enabled = true
 position = Vector2(64, -104)
@@ -653,6 +780,9 @@ offset_right = 816.0
 offset_bottom = 112.0
 theme_override_font_sizes/font_size = 24
 text = "CAFETERIA"
+
+[node name="FireBush" parent="." instance=ExtResource("23_wl56m")]
+position = Vector2(472, 88)
 
 [connection signal="body_entered" from="InScreenTransition" to="InScreenTransition" method="_on_body_entered"]
 [connection signal="body_exited" from="InScreenTransition" to="InScreenTransition" method="_on_body_exited"]
