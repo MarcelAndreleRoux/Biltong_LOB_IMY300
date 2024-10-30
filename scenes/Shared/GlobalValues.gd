@@ -92,11 +92,12 @@ const LEVEL_PATHS = [
 	"res://scenes/world/levels_new/level_11.tscn",
 	"res://scenes/world/levels_new/level_12.tscn",
 	"res://scenes/world/levels_new/level_13.tscn",
+	"res://scenes/world/end/credits.tscn",
 ]
 
 func change_scene_to_next_level():
 	if LevelManager.current_level == LEVEL_PATHS.size() - 1:  # If we are at the last level (level 10)
-		game_done.emit()
+		pass
 	else:
 		LevelManager.current_level += 1  # Increment the level counter
 
