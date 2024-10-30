@@ -152,9 +152,11 @@ position = Vector2(245, 258)
 [node name="HazmatWall" parent="." instance=ExtResource("11_gbl1w")]
 position = Vector2(40, 96)
 
-[node name="InScreenTransition" type="Area2D" parent="." groups=["transition_areas"]]
+[node name="InScreenTransition" type="Area2D" parent="." node_paths=PackedStringArray("root_marker", "destination_marker") groups=["transition_areas"]]
 position = Vector2(112, 128)
 script = ExtResource("12_r4a4w")
+root_marker = NodePath("../CameraMarker")
+destination_marker = NodePath("../CameraMarker2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InScreenTransition"]
 position = Vector2(-4, 12.5)
