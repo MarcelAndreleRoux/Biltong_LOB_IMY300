@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cx46k33kq1f2t" path="res://scenes/entities/objects/static/Drag/Drag.png" id="19_bym6y"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="20_qk2o4"]
 
-[node name="BaseLevel" type="Node2D"]
+[node name="BaseLevel2" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_7s4j5")
 

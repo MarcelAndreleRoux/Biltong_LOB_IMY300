@@ -48,6 +48,11 @@ func _follow_player(position: Vector2, direction: Vector2, target_box_id: int):
 func _on_drop_box():
 	if is_being_dragged:
 		is_being_dragged = false
+	
+	if player_in_area:
+		near.visible = true
+	else:
+		near.visible = false
 
 func _is_dragging(state: bool, target_box_id: int):
 	if target_box_id != box_id:
@@ -56,7 +61,7 @@ func _is_dragging(state: bool, target_box_id: int):
 	if state and player_in_area:
 		is_being_dragged = state
 		if turning_off:
-			near.visible = true
+			near.visible = false
 		else:
 			animatedSprite.play("idle_off")
 	else:
@@ -64,12 +69,15 @@ func _is_dragging(state: bool, target_box_id: int):
 		if turning_off:
 			near.visible = true
 		elif player_in_area:
+			near.visible = true
 			animatedSprite.play("near_off")
 		else:
+			near.visible = true
 			animatedSprite.play("idle_off")
 
 func _on_move_area_body_entered(body: Node2D):
 	if body.is_in_group("player"):
+		near.visible = true
 		player_in_area = true
 		distance_to_player = global_position.distance_to(body.global_position)
 		SharedSignals.box_entered_area.emit(self)
@@ -94,6 +102,7 @@ func _on_move_area_body_entered(body: Node2D):
 func _on_move_area_body_exited(body: Node2D):
 	if body.is_in_group("player"):
 		player_in_area = false
+		near.visible = false
 		if turning_off:
 			near.visible = false
 		else:
@@ -119,15 +128,16 @@ func _check_and_zap_electrical():
 	for obj in nearby_electrical_objects:
 		if obj.is_in_group("m_board"):
 			_play_zap_to_mboard(obj)
-			obj.receive_electricity(true)  # Pass true to indicate conductor source
+			obj.receive_electricity(true)
 
 func _play_zap_to_mboard(object):
 	if charged_state:
 		var mboard_position = object.global_position
 		var box_position = self.global_position
-		var direction = (box_position - mboard_position).normalized()
+		var direction = (mboard_position - box_position).normalized()
 		
-		var electrical_zap = preload("res://scenes/Shared/electricity.tscn").instantiate()
+		var electrical_zap = preload("res://scenes/Shared/conductor_box_electricity.tscn").instantiate()
+		
 		var offset_amount = -10
 		electrical_zap.global_position = box_position + (direction * offset_amount)
 		get_tree().current_scene.add_child(electrical_zap)
@@ -145,7 +155,7 @@ func receive_electricity():
 		charged_state = true
 		animatedSprite.play("turn_on")
 	
-	SharedSignals.lizard_connection_made.emit(true)
+	SharedSignals.lizard_connection_made.emit(self)
 	_check_and_zap_electrical()
 
 func stop_electricity():
@@ -165,7 +175,6 @@ func stop_electricity():
 func _on_charge_timer_timeout():
 	charged_state = false
 	animatedSprite.play("idle_off")
-	SharedSignals.lizard_connection_made.emit(false)
 	charge_timer.queue_free()
 	charge_timer = null
 	# Ensure all electrical objects are stopped when charge runs out
@@ -204,17 +213,17 @@ func _play_zap(object):
 func _on_conduction_area_body_entered(body):
 	if body.is_in_group("lizard"):
 		if body.get_electrical_state():
+			# Let the lizard handle its own zap
 			charged_state = true
 			animatedSprite.play("turn_on")
-			SharedSignals.lizard_connection_made.emit(true)
+			SharedSignals.lizard_connection_made.emit(self)
 			_check_and_zap_electrical()
 		else:
 			charged_state = false
-			SharedSignals.lizard_connection_made.emit(false)
 	elif body.is_in_group("m_board"):
 		nearby_electrical_objects.append(body)
 		if charged_state:
-			_play_zap_to_mboard(body)
+			_play_zap_to_mboard(body)  # This should trigger conductor's zap
 			body.receive_electricity(true)
 
 func _on_conduction_area_body_exited(body):

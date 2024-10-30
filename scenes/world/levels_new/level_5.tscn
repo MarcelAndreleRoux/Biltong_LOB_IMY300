@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://djwrb4bfed3up" path="res://scenes/entities/objects/throwables/fire/fire_bush.tscn" id="18_4u7aj"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="18_fg2gy"]
 
-[node name="BaseLevel" type="Node2D"]
+[node name="BaseLevel2" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_rww7f")
 

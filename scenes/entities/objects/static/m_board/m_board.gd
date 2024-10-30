@@ -106,10 +106,12 @@ func receive_electricity(from_conductor: bool = false):
 		
 	if not is_conductor_charged:
 		is_conductor_charged = true
+		
+		# Only emit signals if the electricity is coming from the appropriate source
 		if from_conductor:
-			SharedSignals.conductor_connection.emit(self)
+			SharedSignals.conductor_connection.emit(self)  # Only conductor box should listen
 		else:
-			SharedSignals.lizard_connection.emit(self)
+			SharedSignals.lizard_connection.emit(self)  # Only lizard should listen
 			
 		if animation_name == "one_connector":
 			animated_sprite_2d.play("one_connector_on")
@@ -160,11 +162,11 @@ func _on_connection_area_body_entered(body):
 		has_conductor_box = true
 		# Check if conductor is already charged
 		if body.charged_state:
-			receive_electricity()
+			receive_electricity(true)
 	
 	elif body.is_in_group("electrical"):
 		if body.get_electrical_state():
-			receive_electricity()
+			receive_electricity(false)
 
 func _on_connection_area_body_exited(body):
 	if connector_name == "none":
@@ -173,9 +175,26 @@ func _on_connection_area_body_exited(body):
 	if body.is_in_group("conductor"):
 		has_conductor_box = false
 		is_conductor_charged = false
-		if animation_name != "default":
+		
+		# Reset animations based on connector type
+		if animation_name == "one_connector":
+			animated_sprite_2d.play("one_connector_off")
 			if found_link and door_link_id == door_link_found:
 				SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
+			disconnect_sound.play()
+		elif animation_name == "two_connector":
+			connected_bodies -= 1
+			if connected_bodies <= 0:
+				connected_bodies = 0
+				animated_sprite_2d.play("two_connector_off")
+				if found_link and door_link_id == door_link_found:
+					SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
+				disconnect_sound.play()
+			elif connected_bodies == 1:
+				animated_sprite_2d.play("two_connector_semi")
+				if found_link and door_link_id == door_link_found:
+					SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
+				disconnect_sound.play()
 	
 	if body.is_in_group("electrical"):
 		is_conductor_charged = false
