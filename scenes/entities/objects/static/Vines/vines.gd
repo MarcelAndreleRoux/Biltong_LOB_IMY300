@@ -3,6 +3,8 @@ extends StaticBody2D
 @export_enum("big", "small") var plant_type: String = "big"
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var grow = $grow
+@onready var burn = $burn
 
 var was_burned: bool = false
 var was_grown: bool = false
@@ -52,7 +54,7 @@ func _on_grow():
 	if not already_grown:
 		already_burned = false
 		already_grown = true
-		AudioController.play_sfx("grow")
+		grow.play()
 		was_grown = true
 		
 		# First update the collision shape
@@ -74,7 +76,7 @@ func _on_burn():
 	if not already_burned:
 		already_burned = true
 		already_grown = false
-		AudioController.play_sfx("burn")
+		burn.play()
 		was_burned = true
 		
 		# Disable collision immediately when burned

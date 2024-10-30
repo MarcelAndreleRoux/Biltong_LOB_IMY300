@@ -225,6 +225,7 @@ visible = false
 shape = SubResource("RectangleShape2D_bpty4")
 
 [node name="MoveArea" type="Area2D" parent="." groups=["speed_area"]]
+collision_mask = 4294967295
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveArea"]
 shape = SubResource("RectangleShape2D_y2tsi")

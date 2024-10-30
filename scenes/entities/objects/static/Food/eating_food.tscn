@@ -233,11 +233,11 @@ animations = [{
 }]
 
 [node name="EatingFood" type="StaticBody2D" groups=["pickable"]]
-z_index = 1
-y_sort_enabled = true
 script = ExtResource("1_5n20k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_eu32p")
 animation = &"grow"
 

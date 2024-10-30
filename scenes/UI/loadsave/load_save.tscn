@@ -5,8 +5,8 @@
 [ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="2_moqmy"]
 [ext_resource type="Texture2D" uid="uid://caoky8a344oc5" path="res://assets/sprites/UI/save banner/save_background2.png" id="4_2jbf0"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="5_kicxd"]
-[ext_resource type="Texture2D" uid="uid://cmnaummadqvmx" path="res://assets/sprites/UI/save banner/NoSave.png" id="5_srthd"]
-[ext_resource type="Texture2D" uid="uid://byh7wn3yigu52" path="res://assets/sprites/UI/save banner/save_background_no_save.png" id="6_empos"]
+[ext_resource type="Texture2D" path="res://assets/sprites/UI/save banner/NoSave.png" id="5_srthd"]
+[ext_resource type="Texture2D" path="res://assets/sprites/UI/save banner/save_background_no_save.png" id="6_empos"]
 [ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="8_0l40j"]
 [ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="9_t4huy"]
 
@@ -220,6 +220,7 @@ offset_bottom = 14.0
 
 [node name="NoSaveBackground" type="TextureRect" parent="SaveBackground"]
 visible = false
+layout_mode = 0
 offset_right = 144.0
 offset_bottom = 48.0
 texture = ExtResource("6_empos")
@@ -243,6 +244,7 @@ texture = ExtResource("4_2jbf0")
 stretch_mode = 2
 
 [node name="ChamberLabel" type="Label" parent="SaveBackground2"]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 1.0
 offset_right = 104.0
@@ -251,6 +253,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Chamber 2"
 
 [node name="TimeLabel" type="Label" parent="SaveBackground2"]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 14.0
 offset_right = 113.0
@@ -259,6 +262,7 @@ theme_override_colors/font_color = Color(0.317647, 0.317647, 0.317647, 1)
 text = "Saved: 12:00"
 
 [node name="SavePicture" type="TextureRect" parent="SaveBackground2"]
+layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 60.0
@@ -277,6 +281,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LoadSaveButton" type="TextureButton" parent="SaveBackground2"]
+layout_mode = 0
 offset_left = 95.0
 offset_top = 28.0
 offset_right = 140.0
@@ -291,6 +296,7 @@ offset_bottom = 15.0
 text = "Load Save"
 
 [node name="DeleteButton" type="TextureButton" parent="SaveBackground2"]
+layout_mode = 0
 offset_left = 129.0
 offset_top = 4.0
 offset_right = 140.0
@@ -298,6 +304,7 @@ offset_bottom = 14.0
 
 [node name="NoSaveBackground" type="TextureRect" parent="SaveBackground2"]
 visible = false
+layout_mode = 0
 offset_right = 144.0
 offset_bottom = 48.0
 texture = ExtResource("6_empos")
@@ -321,6 +328,7 @@ texture = ExtResource("4_2jbf0")
 stretch_mode = 2
 
 [node name="CamberLabel" type="Label" parent="SaveBackground3"]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 1.0
 offset_right = 104.0
@@ -329,6 +337,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Chamber 3"
 
 [node name="TimeLabel" type="Label" parent="SaveBackground3"]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 14.0
 offset_right = 113.0
@@ -337,6 +346,7 @@ theme_override_colors/font_color = Color(0.317647, 0.317647, 0.317647, 1)
 text = "Saved: 12:00"
 
 [node name="SavePicture" type="TextureRect" parent="SaveBackground3"]
+layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 60.0
@@ -355,6 +365,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LoadSaveButton" type="TextureButton" parent="SaveBackground3"]
+layout_mode = 0
 offset_left = 95.0
 offset_top = 28.0
 offset_right = 140.0
@@ -369,6 +380,7 @@ offset_bottom = 15.0
 text = "Load Save"
 
 [node name="DeleteButton" type="TextureButton" parent="SaveBackground3"]
+layout_mode = 0
 offset_left = 129.0
 offset_top = 4.0
 offset_right = 140.0
@@ -410,6 +422,7 @@ text = "Back"
 
 [node name="ConfirmDelete" type="Panel" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 482.0

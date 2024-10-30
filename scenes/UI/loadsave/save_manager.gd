@@ -85,16 +85,10 @@ func continue_game() -> int:
 		if dir:
 			dir.copy(source_screenshot, target_screenshot)
 	
-	print("Created new instance in slot ", target_slot, " from source slot ", source_slot)
 	return target_slot
 
 func _log_save_state(context: String):
-	print("=== Save State [%s] ===" % context)
-	print("Current active slot: ", current_active_save_slot)
-	print("Force slot: ", force_slot)
-	print("Last loaded slot: ", last_loaded_slot)
-	print("Is transitioning: ", is_transitioning)
-	print("====================")
+	pass
 
 func load_specific_save(slot: int) -> bool:
 	var save_data = load_game(slot)
@@ -107,27 +101,21 @@ func load_specific_save(slot: int) -> bool:
 	current_active_save_slot = slot
 	last_loaded_slot = slot
 	
-	print("Loading existing save slot: ", slot)
 	return true
 
 func update_current_save() -> bool:
-	_log_save_state("Before Update")
 	
 	# Always use current_active_save_slot during transitions
 	if current_active_save_slot != -1:
-		print("Updating current save slot: ", current_active_save_slot)
 		return await save_game(current_active_save_slot)
 	
-	print("No active save slot to update")
 	return false
 
 func set_active_save_slot(slot: int) -> void:
 	current_active_save_slot = slot
-	print("Set active save slot to: ", slot)
 
 func clear_active_save_slot() -> void:
 	current_active_save_slot = -1
-	print("Cleared active save slot")
 
 func get_oldest_save_slot() -> int:
 	var oldest_slot = 0
@@ -167,7 +155,6 @@ func load_game(slot: int) -> Dictionary:
 	var file = FileAccess.open(save_path, FileAccess.READ)
 	if file:
 		var save_data = file.get_var()
-		print("Loaded save data: ", save_data)
 		return save_data
 	return {}
 
@@ -233,22 +220,17 @@ func save_settings() -> bool:
 	var file = FileAccess.open(SETTINGS_FILE, FileAccess.WRITE)
 	if file:
 		file.store_var(settings_data)
-		print("Settings saved successfully")  # Debug print
 		return true
-	print("Failed to save settings")  # Debug print
 	return false
 
 func load_settings() -> Dictionary:
 	if not FileAccess.file_exists(SETTINGS_FILE):
-		print("No settings file found")  # Debug print
 		return {}
 	
 	var file = FileAccess.open(SETTINGS_FILE, FileAccess.READ)
 	if file:
 		var settings = file.get_var()
-		print("Settings loaded successfully: ", settings)  # Debug print
 		return settings
-	print("Failed to load settings")  # Debug print
 	return {}
 
 # Take a screenshot of the current game state
@@ -259,7 +241,6 @@ func take_screenshot(slot: int) -> bool:
 	
 	var viewport = get_tree().get_root().get_viewport()
 	if not viewport:
-		print("Failed to get viewport for screenshot")
 		return false
 	
 	var image = viewport.get_texture().get_image()
@@ -292,7 +273,6 @@ func take_screenshot(slot: int) -> bool:
 	
 	var error = image.save_png(screenshot_path)
 	if error != OK:
-		print("Failed to save screenshot: ", error)
 		return false
 	
 	return true
@@ -327,32 +307,23 @@ func _perform_save(slot: int) -> bool:
 		"inventory_visible": GlobalValues.can_throw
 	}
 	
-	print("Saving game data to slot ", slot, ": ", save_data)
-	
 	# Save the data
 	var save_path = SAVE_DIR + str(slot) + SAVE_FILE_EXTENSION
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 	if file:
 		file.store_var(save_data)
-		print("Save successful to slot: ", slot)
 		return true
-	print("Save failed")
 	return false
 
 func save_game(slot: int) -> bool:
 	_log_save_state("Before Save")
 	
 	if force_slot != -1:
-		print("Using forced save slot: ", force_slot)
 		slot = force_slot
 	elif current_active_save_slot != -1:
-		print("Using active save slot: ", current_active_save_slot)
 		slot = current_active_save_slot
 	
-	print("Final save slot: ", slot)
-	
 	if slot < 0 or slot >= MAX_SAVES:
-		print("Invalid save slot: ", slot)
 		return false
 	
 	var save_success = await _perform_save(slot)
@@ -366,7 +337,6 @@ func begin_scene_transition():
 	# Store the current data before transition
 	if current_active_save_slot != -1:
 		previous_save_data = load_game(current_active_save_slot)
-		print("Stored previous save data for slot: ", current_active_save_slot)
 
 func end_scene_transition():
 	_log_save_state("End Transition")
@@ -410,7 +380,6 @@ func has_save(slot: int) -> bool:
 func load_screenshot_texture(slot: int) -> ImageTexture:
 	var screenshot_path = SCREENSHOT_DIR + str(slot) + SCREENSHOT_EXTENSION
 	if not FileAccess.file_exists(screenshot_path):
-		print("No screenshot found at: ", screenshot_path)
 		return null
 		
 	var image = Image.new()
@@ -420,7 +389,6 @@ func load_screenshot_texture(slot: int) -> ImageTexture:
 		var texture = ImageTexture.create_from_image(image)
 		return texture
 	else:
-		print("Failed to load screenshot image with error: ", error)
 		return null
 
 func create_new_save_from_most_recent() -> bool:

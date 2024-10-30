@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://cpwmwdbljcnru"]
 
 [ext_resource type="Script" path="res://scenes/entities/objects/static/conductor_box/Conductor_Box.gd" id="1_isf1l"]
-[ext_resource type="Texture2D" uid="uid://bh8ramekqt73f" path="res://assets/sprites/objects/static/box/Electric-Box.png" id="2_mtwwc"]
+[ext_resource type="Texture2D" path="res://assets/sprites/objects/static/box/Electric-Box.png" id="2_mtwwc"]
 [ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="4_cvrx5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kchka"]
@@ -204,7 +204,7 @@ visible = false
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_ivthk")
 
-[node name="ButtonArea" type="Area2D" parent="." groups=["box_pickup_area"]]
+[node name="ButtonArea" type="Area2D" parent="." groups=["box_collider", "box_pickup_area"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea"]
 visible = false
@@ -212,6 +212,7 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_trk4s")
 
 [node name="MoveArea" type="Area2D" parent="." groups=["speed_area"]]
+collision_mask = 4294967295
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveArea"]
 shape = SubResource("RectangleShape2D_2cc4n")
