@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://nx8lmgsxjii8"]
+[gd_scene load_steps=20 format=3 uid="uid://nx8lmgsxjii8"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_1twbb"]
 [ext_resource type="PackedScene" uid="uid://bh78atl44xeca" path="res://scenes/UI/chamber_number.tscn" id="2_7l865"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://gocvqvrsvfso" path="res://scenes/entities/objects/static/button/button.tscn" id="15_ro65m"]
 [ext_resource type="PackedScene" uid="uid://vlik5vxjmqh4" path="res://scenes/entities/enemies/turtle/turtle.tscn" id="16_cw3qw"]
 [ext_resource type="PackedScene" uid="uid://brwqtg218v1k3" path="res://scenes/entities/objects/static/Food/eating_food.tscn" id="17_w6fej"]
+[ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="18_4dggg"]
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="18_bopma"]
 
 [node name="BaseLevel2" type="Node2D"]
@@ -115,14 +116,62 @@ target_1 = NodePath("../Marker2D")
 target_2 = NodePath("../Marker2D2")
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(168, 112)
+position = Vector2(264, 168)
 
 [node name="EatingFood" parent="Marker2D" instance=ExtResource("17_w6fej")]
+position = Vector2(24, 5)
 
 [node name="Marker2D2" type="Marker2D" parent="."]
-position = Vector2(288, 176)
+position = Vector2(216, 88)
 
 [node name="EatingFood" parent="Marker2D2" instance=ExtResource("17_w6fej")]
+position = Vector2(-56, 0)
+
+[node name="EatingFood2" parent="Marker2D2" instance=ExtResource("17_w6fej")]
+position = Vector2(-56, 0)
+
+[node name="EatingFood3" parent="Marker2D2" instance=ExtResource("17_w6fej")]
+position = Vector2(-40, 8)
+
+[node name="EatingFood4" parent="Marker2D2" instance=ExtResource("17_w6fej")]
+position = Vector2(-32, -8)
+
+[node name="EatingFood5" parent="Marker2D2" instance=ExtResource("17_w6fej")]
+position = Vector2(-40, 0)
+
+[node name="EatingFood6" parent="Marker2D2" instance=ExtResource("17_w6fej")]
+position = Vector2(-24, 8)
+
+[node name="EatingFood7" parent="Marker2D2" instance=ExtResource("17_w6fej")]
+position = Vector2(-16, -8)
+
+[node name="EatingFood8" parent="Marker2D2" instance=ExtResource("17_w6fej")]
+position = Vector2(-16, -16)
+
+[node name="Vines" parent="Marker2D2" instance=ExtResource("18_4dggg")]
+position = Vector2(-64, -32)
+
+[node name="Vines2" parent="Marker2D2" instance=ExtResource("18_4dggg")]
+position = Vector2(-64, -16)
+
+[node name="Vines3" parent="Marker2D2" instance=ExtResource("18_4dggg")]
+position = Vector2(-48, -32)
+
+[node name="Vines4" parent="Marker2D2" instance=ExtResource("18_4dggg")]
+position = Vector2(-56, 8)
+plant_type = "small"
+
+[node name="Vines5" parent="Marker2D2" instance=ExtResource("18_4dggg")]
+position = Vector2(-64, -8)
+plant_type = "small"
+
+[node name="Vines6" parent="Marker2D2" instance=ExtResource("18_4dggg")]
+position = Vector2(-32, -32)
+plant_type = "small"
+
+[node name="Vines7" parent="Marker2D2" instance=ExtResource("18_4dggg")]
+position = Vector2(-48, -16)
+plant_type = "small"
 
 [node name="Door2" parent="." instance=ExtResource("13_uugvx")]
 position = Vector2(400, 128)
