@@ -36,20 +36,9 @@ func _wait_before_grow_timer():
 	add_child(timer)
 	timer.start()
 
-func _despawn_timer():
-	var timer = Timer.new()
-	timer.wait_time = 5.0
-	timer.one_shot = true
-	timer.timeout.connect(_despawn_timeout)
-	add_child(timer)
-	timer.start()
-
-func _despawn_timeout():
-	action_button_press = false
-
 func _process(delta):
 	if player_in_area and Input.is_action_just_pressed("pickup") and not eating and not GlobalValues.food_already_picked:
-		_despawn_timer()
+		action_button_press = false
 		GlobalValues.food_already_picked = true
 		SharedSignals.item_pickup.emit()
 		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
@@ -63,6 +52,9 @@ func _play_grow_animation():
 	animated_sprite_2d.play("grow")
 
 func _on_action_area_body_entered(body):
+	if body.is_in_group("player") and eating:
+		SharedSignals.play_pickup_notification.emit()
+	
 	if body.is_in_group("player") and not eating and not GlobalValues.food_already_picked:
 		player_in_area = true
 		animated_sprite_2d.play("pickup")

@@ -274,7 +274,7 @@ func update_box_collider_position():
 	if currentVelocity.x != 0 and currentVelocity.y != 0:
 		# Moving diagonally
 		if currentVelocity.x > 0:  # Right diagonal
-			offset.x = 5
+			offset.x = 4
 			if currentVelocity.y > 0:  # Right + Down
 				offset.y = 2
 			else:  # Right + Up
@@ -291,18 +291,18 @@ func update_box_collider_position():
 		
 	# Single direction movement
 	elif currentVelocity.x > 0:  # Moving right only
-		offset.x = 5
+		offset.x = 2
 		offset.y = 1
-		scale_modifier = Vector2(3, 1)
+		scale_modifier = Vector2(2, 1)
 	elif currentVelocity.x < 0:  # Moving left only
-		offset.x = -5
+		offset.x = -2
 		offset.y = 1
-		scale_modifier = Vector2(3, 1)
+		scale_modifier = Vector2(2, 1)
 	elif currentVelocity.y > 0:  # Moving down only
-		offset.y = 5
+		offset.y = 2
 		scale_modifier = Vector2(1, 3)
 	elif currentVelocity.y < 0:  # Moving up only
-		offset.y = -4.5
+		offset.y = -3.5
 		scale_modifier = Vector2(1, 3)
 	
 	# Update position and scale

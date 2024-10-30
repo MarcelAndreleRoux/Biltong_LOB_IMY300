@@ -95,12 +95,12 @@ func _on_burn():
 func _update_collision_shape_size():
 	if was_grown:
 		var new_shape = RectangleShape2D.new()
-		new_shape.extents = Vector2(8, 20)
+		new_shape.extents = Vector2(7, 8)
 		collision_shape_2d.shape = new_shape
 		# Don't disable here, let _on_grow handle the timing
 	else:
 		var default_shape = RectangleShape2D.new()
-		default_shape.extents = Vector2(8, 8)
+		default_shape.extents = Vector2(7, 8)
 		collision_shape_2d.shape = default_shape
 
 func _on_animated_sprite_2d_animation_finished():

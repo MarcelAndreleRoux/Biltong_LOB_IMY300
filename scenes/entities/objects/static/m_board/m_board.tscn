@@ -103,7 +103,7 @@ animations = [{
 size = Vector2(12, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u30mt"]
-size = Vector2(52, 30)
+size = Vector2(42, 36)
 
 [node name="MBoard" type="StaticBody2D" groups=["m_board"]]
 z_index = 2
@@ -123,7 +123,7 @@ collision_layer = 16384
 collision_mask = 4294967295
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConnectionArea"]
-position = Vector2(0, 15)
+position = Vector2(0, 18)
 shape = SubResource("RectangleShape2D_u30mt")
 
 [node name="Connect" type="AudioStreamPlayer2D" parent="."]
