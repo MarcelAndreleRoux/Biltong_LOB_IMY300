@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dw2e4mb408fdj"]
+[gd_scene load_steps=28 format=3 uid="uid://dw2e4mb408fdj"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_f083f"]
 [ext_resource type="TileSet" uid="uid://b5t6g5rjkfsn5" path="res://scenes/world/level_tileset/tileset-1.tres" id="2_6ptgj"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bkrm2mrsge218" path="res://scenes/entities/objects/static/waterpod/water_puddle.tscn" id="23_0p5ng"]
 [ext_resource type="PackedScene" uid="uid://rbjoqjymswsp" path="res://scenes/entities/objects/static/hazmat wall/hazmat_wall.tscn" id="23_gcuh5"]
 [ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="26_eq12h"]
+[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="27_ujibw"]
 
 [node name="BaseLevel" type="Node2D"]
 y_sort_enabled = true
@@ -73,7 +74,7 @@ width = 2.0
 default_color = Color(1, 1, 1, 0.447059)
 
 [node name="Conductor_Box" parent="." instance=ExtResource("5_vgcg0")]
-position = Vector2(285, 162)
+position = Vector2(181, 142)
 collision_layer = 36
 
 [node name="Escape" type="CanvasLayer" parent="."]
@@ -127,7 +128,7 @@ door_link_id = "a"
 button_mode = "Toggle"
 
 [node name="Box" parent="." instance=ExtResource("10_k5i6k")]
-position = Vector2(296, 56)
+position = Vector2(123, 142)
 
 [node name="GamePause" parent="." instance=ExtResource("11_ikpa7")]
 visible = false
@@ -176,11 +177,6 @@ position = Vector2(366, 97)
 connector_name = "two"
 door_link_id = "12345"
 
-[node name="Door4" parent="." instance=ExtResource("8_5doce")]
-position = Vector2(415, 55)
-door_link_id = "12345"
-required_connections = 2
-
 [node name="Button2" parent="." instance=ExtResource("9_8krhe")]
 position = Vector2(433, 133)
 door_link_id = "12345"
@@ -193,3 +189,6 @@ position = Vector2(214, 148)
 position = Vector2(201, 80)
 
 [node name="PopupCanvasLayer" parent="." instance=ExtResource("26_eq12h")]
+
+[node name="Hedgehog" parent="." instance=ExtResource("27_ujibw")]
+position = Vector2(418, 43)

@@ -2,8 +2,6 @@ extends CharacterBody2D
 
 class_name player_class
 
-signal update_health(health: int, position: Vector2)
-signal update_inventory(item: String)
 signal drag_box(position: Vector2, direction: Vector2)
 
 # Nodes
@@ -126,7 +124,6 @@ func _ready():
 	SharedSignals.can_throw_projectile.connect(_on_can_throw)
 	SharedSignals.item_pickup.connect(_on_item_pickup)
 	SharedSignals.player_killed.connect(_on_player_killed)
-	SharedSignals.push_player_forward.connect(start_dash)
 	
 	SharedSignals.box_entered_area.connect(_on_box_entered_area)
 	SharedSignals.box_exited_area.connect(_on_box_exited_area)
@@ -200,10 +197,7 @@ func acquire_hazmat():
 		skin_changed.emit("hazmat")
 
 func _physics_process(delta):
-	if is_dashing:
-		_perform_dash(delta)
-	else:
-		_handle_movement_input()
+	_handle_movement_input()
 
 	update_box_collider_position()
 
@@ -274,18 +268,46 @@ func reset_throw_state():
 
 func update_box_collider_position():
 	var offset = Vector2.ZERO
-
-	if currentVelocity.x > 0:  # Moving right
+	var scale_modifier = Vector2(1, 1)  # Default scale
+	
+	# Check for diagonal movement first
+	if currentVelocity.x != 0 and currentVelocity.y != 0:
+		# Moving diagonally
+		if currentVelocity.x > 0:  # Right diagonal
+			offset.x = 5
+			if currentVelocity.y > 0:  # Right + Down
+				offset.y = 2
+			else:  # Right + Up
+				offset.y = -4
+		else:  # Left diagonal
+			offset.x = -5
+			if currentVelocity.y > 0:  # Left + Down
+				offset.y = 2
+			else:  # Left + Up
+				offset.y = -4
+				
+		# For diagonal movement, extend both directions
+		scale_modifier = Vector2(2, 3)
+		
+	# Single direction movement
+	elif currentVelocity.x > 0:  # Moving right only
 		offset.x = 5
-	elif currentVelocity.x < 0:  # Moving left
+		offset.y = 1
+		scale_modifier = Vector2(3, 1)
+	elif currentVelocity.x < 0:  # Moving left only
 		offset.x = -5
-
-	if currentVelocity.y > 0:  # Moving down
-		offset.y = 4
-	elif currentVelocity.y < 0:  # Moving up
-		offset.y = -4
-
+		offset.y = 1
+		scale_modifier = Vector2(3, 1)
+	elif currentVelocity.y > 0:  # Moving down only
+		offset.y = 5
+		scale_modifier = Vector2(1, 3)
+	elif currentVelocity.y < 0:  # Moving up only
+		offset.y = -4.5
+		scale_modifier = Vector2(1, 3)
+	
+	# Update position and scale
 	box_move_area_collider.position = offset
+	box_move_area_collider.scale = scale_modifier
 
 func _on_throw_action():
 	if not is_on_cooldown:
@@ -320,19 +342,6 @@ func _handle_movement_input():
 			_play_nude_movement_animation()
 		PlayerSkin.HAZMAT:
 			_play_movement_animation()
-
-func start_dash():
-	is_dashing = true
-	dash_timer = dash_time
-	currentVelocity = Vector2(0, 1) * dash_speed
-
-func _perform_dash(delta):
-	if dash_timer > 0:
-		dash_timer -= delta
-		currentVelocity = Vector2(0, 1) * dash_speed
-	else:
-		is_dashing = false
-		currentVelocity = Vector2.ZERO
 
 func _on_player_killed(type: String):
 	# Disable player input and actions

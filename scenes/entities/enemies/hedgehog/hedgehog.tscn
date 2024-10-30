@@ -935,6 +935,8 @@ volume_db = 10.0
 max_distance = 400.0
 bus = &"Sfx"
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

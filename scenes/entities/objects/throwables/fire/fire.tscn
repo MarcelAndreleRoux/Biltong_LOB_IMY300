@@ -175,7 +175,8 @@ shape = SubResource("CircleShape2D_kl6y7")
 
 [node name="fire_land" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_qp6b4")
-max_distance = 200.0
+volume_db = -7.0
+max_distance = 150.0
 bus = &"Sfx"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

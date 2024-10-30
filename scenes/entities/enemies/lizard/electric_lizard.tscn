@@ -1200,22 +1200,26 @@ parameters/run_on/blend_position = Vector2(0.0115385, 0.0124481)
 stream = ExtResource("13_5ds80")
 volume_db = -20.0
 pitch_scale = 0.8
+max_distance = 200.0
 bus = &"Sfx"
 
 [node name="wet_walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_rf7ao")
 volume_db = -5.0
+max_distance = 200.0
 bus = &"Sfx"
 
 [node name="lick" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("17_4juwg")
 volume_db = -8.0
+max_distance = 200.0
 bus = &"Sfx"
 
 [node name="electrical_field" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("17_yjiql")
 volume_db = 10.0
-max_distance = 70.0
+max_distance = 80.0
+bus = &"Sfx"
 
 [node name="ElectricArea" type="Area2D" parent="."]
 collision_layer = 1024

@@ -170,8 +170,8 @@ shape = SubResource("CircleShape2D_ly7p5")
 
 [node name="water_land" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_x740x")
-volume_db = -5.0
-max_distance = 200.0
+volume_db = -12.0
+max_distance = 150.0
 bus = &"Sfx"
 
 [connection signal="area_entered" from="EffectArea" to="." method="_on_effect_area_area_entered"]
