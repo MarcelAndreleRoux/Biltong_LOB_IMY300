@@ -44,6 +44,7 @@ func _is_dragging(state: bool, target_box_id: int):
 			GlobalValues.box_pickup_once = true
 			check_mark.visible = true
 			done.play("check")
+			SharedSignals.move_mouse_around.emit()
 		else:
 			done.stop()
 			check_mark.visible = false
@@ -63,18 +64,6 @@ func _follow_player(position: Vector2, direction: Vector2, target_box_id: int):
 		global_position = global_position.lerp(target_position, 0.1)
 		rotation = 0
 
-func _some_waiting_timer():
-	var grow_timer = Timer.new()
-	grow_timer.name = "show_timer"
-	grow_timer.wait_time = 5.0
-	grow_timer.one_shot = true
-	grow_timer.timeout.connect(_show_timeout)
-	add_child(grow_timer)
-	grow_timer.start()
-
-func _show_timeout():
-	action_button_press.visible = false
-
 func _on_move_area_body_entered(body: Node2D):
 	# Ensure the body is the player
 	if body.is_in_group("player"):  # Check if the body belongs to the 'player' group
@@ -88,8 +77,6 @@ func _on_move_area_body_entered(body: Node2D):
 				GlobalValues.has_pickeup_box_once = true
 				action_button_press.play("default")
 				action_button_press.visible = true
-				
-				_some_waiting_timer()
 			else:
 				action_button_press.visible = false
 		

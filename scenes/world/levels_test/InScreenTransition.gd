@@ -13,7 +13,7 @@ const BUFFER_SIZE = 5
 var is_transitioning: bool = false
 var transition_direction: Vector2 = Vector2.ZERO
 
-const MOVEMENT_THRESHOLD: float = 0.5
+const MOVEMENT_THRESHOLD: float = 0.01
 const DIRECTION_THRESHOLD: float = 0.1
 
 func _ready() -> void:
@@ -81,14 +81,12 @@ func get_target_marker(current_pos: Vector2) -> Node2D:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and !is_transitioning:
-		print("Player entered transition area - Direction: ", move_direction)
 		player_body = body
 		last_position = body.position
 		movement_buffer.clear()
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("Player exited transition area")
 		if body == player_body:
 			await get_tree().create_timer(0.5).timeout
 			movement_buffer.clear()

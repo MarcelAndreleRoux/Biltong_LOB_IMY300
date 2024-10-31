@@ -76,11 +76,36 @@ var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 const HELPFUL_MESSAGES = {
 	"pickup_food": "Looks like the turtle likes these mushrooms maybe I should wait to pick one up",
-	"turtle_scared": "Oh wow... Looks like this big creature is scared of me",
 	"mouse_move": "This box looks light enough to drag around. I should be able to move it around with my mouse",
 	"throwable": "I remember them throwing these as turtle food... let me store it in my inventory for later",
 	"fire_throwable": "These caused a huge fire in the facility once.. I wonder if they still work",
 	"water_throwable": "Didn't these make the vines grow back, never understood why they made this",
+	
+	# animals
+	"turtle_scared": "Oh wow... Looks like this big creature is scared of me",
+	"lizard_meating": "How did these not die out yet.. They were always too cute for me to handle... And deadly",
+	"hedgehog_meating": "Seems like he had enough of the tourcher... in some ways they did the same to me...",
+	"hedgehog_meating_2": "They always liked takeing me out for experiments and tourcher us nonstop",
+	"hedgehog_meating_3": "Why did they do it so much... in and out of those pods... let me just get out...",
+	
+	"metal_box": "Looks like the metal box was moved here a lot...",
+}
+
+const LEVEL_HELP = {
+	"help_level10": "Aww... looks like the lizard got cold going into the water, maybe if I remove the puddle",
+	"help_level10_fire": "Hmmm... Looks like I still need something else to get him to warm up",
+}
+
+const BODY_DIALOG = {
+	"richard": "Richard... Seems about right, he never was a smart one",
+	"larry": "Larry... really... never though he would die like this... That what you get for stealing my cookie",
+	"dave": "Da.. Dave... W... What happend to you... You were always so good to me",
+}
+
+const LAST_LEVEL_DIALOG = {
+	"Breeding": "Isn't this the chamber where they do all their experiments on the animals...",
+	"broken_pod": "Seems like one of the procupines got out here... Wonder where he went...",
+	"lots_dead": "Oh... Oh my... what happened here...",
 }
 
 const WARNING_MESSAGES = {

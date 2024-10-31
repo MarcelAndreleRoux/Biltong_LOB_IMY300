@@ -4,6 +4,21 @@
 [ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="1_nymqo"]
 [ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="2_xq3ql"]
 
+[sub_resource type="Animation" id="Animation_jvb6d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_qlyyl"]
 resource_name = "fade_in"
 length = 4.0
@@ -32,21 +47,6 @@ tracks/1/keys = {
 "args": [],
 "method": &"change_scene"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_jvb6d"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_satdf"]
@@ -97,7 +97,7 @@ offset_bottom = 198.0
 theme_override_colors/font_color = Color(0.956863, 0.956863, 0.952941, 1)
 theme_override_fonts/font = ExtResource("2_xq3ql")
 theme_override_font_sizes/font_size = 30
-text = "THIS GAME CONTAINS GRAFICAL CONTENT AND NUDITY"
+text = "THIS GAME CONTAINS GRAPHICAL CONTENT AND NUDITY"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -108,6 +108,7 @@ libraries = {
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 offset_left = -36.0

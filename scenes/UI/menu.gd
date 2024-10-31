@@ -6,14 +6,14 @@ extends Control
 @onready var margin_container = $MarginContainer
 @onready var lob = $Lob
 @onready var shake_camera = $ShakeCamera
-@onready var confirm_quit = $MarginContainer/TextureRect2/ConfirmQuit
-@onready var new_game = $MarginContainer/TextureRect2/VBoxContainer/NewGame
-@onready var load_saves = $MarginContainer/TextureRect2/VBoxContainer/LoadSaves
-@onready var continue_button = $MarginContainer/TextureRect2/VBoxContainer/Continue
-@onready var play_button = $MarginContainer/TextureRect2/VBoxContainer/Play
-@onready var new_game_confirm = $MarginContainer/TextureRect2/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm
-@onready var new_game_cancel = $MarginContainer/TextureRect2/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameCancel
-@onready var confirm_new_game = $MarginContainer/TextureRect2/ConfirmNewGame
+@onready var confirm_quit = $MarginContainer/ConfirmQuit
+@onready var new_game = $MarginContainer/VBoxContainer/NewGame
+@onready var load_saves = $MarginContainer/VBoxContainer/LoadSaves
+@onready var continue_button = $MarginContainer/VBoxContainer/Continue
+@onready var play_button = $MarginContainer/VBoxContainer/Play
+@onready var new_game_confirm = $MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm
+@onready var new_game_cancel = $MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameCancel
+@onready var confirm_new_game = $MarginContainer/ConfirmNewGame
 
 var exit: bool = false
 var options: bool = false

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=30 format=3 uid="uid://t322bb5420cb"]
+[gd_resource type="TileSet" load_steps=34 format=3 uid="uid://t322bb5420cb"]
 
 [ext_resource type="Texture2D" uid="uid://dhjrs6u1jrxlc" path="res://assets/sprites/objects/static/wire/Wires-Tileset.png" id="1_ipqq0"]
 [ext_resource type="Texture2D" uid="uid://dly03p5pcevkh" path="res://assets/sprites/world/new_env/Floor.png" id="1_m5x7q"]
@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://cf7sjwdjfxlvn" path="res://assets/sprites/objects/static/Table_stuff/Book.png" id="4_g8qhn"]
 [ext_resource type="Texture2D" uid="uid://dvdxeerrtoi6f" path="res://assets/sprites/objects/static/Table_stuff/Paper.png" id="5_qdr2m"]
 [ext_resource type="Texture2D" uid="uid://b2lia1jipqhyt" path="res://assets/sprites/objects/static/Rubble/Rubble.png" id="6_ckv1d"]
+[ext_resource type="Texture2D" uid="uid://dnunfmm00orcm" path="res://assets/sprites/objects/static/Body/long_dead.png" id="7_s11t7"]
 [ext_resource type="Texture2D" uid="uid://5svd10ubwxnr" path="res://assets/sprites/objects/static/Bench/Bench.png" id="7_t0uoy"]
+[ext_resource type="Texture2D" uid="uid://bbeokyk4nw54v" path="res://assets/sprites/objects/static/Body/Dead_body_3.png" id="8_ht6st"]
 [ext_resource type="Texture2D" uid="uid://dxqmjffwjynsx" path="res://assets/sprites/objects/static/Body/Bodies.png" id="9_0550s"]
 [ext_resource type="Texture2D" uid="uid://dht6wvwxoftr1" path="res://assets/sprites/objects/static/Stains/Stain.png" id="10_a8qy3"]
 
@@ -235,6 +237,20 @@ texture_region_size = Vector2i(48, 48)
 2:2/0 = 0
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jwnev"]
+texture = ExtResource("7_s11t7")
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ciyyd"]
+texture = ExtResource("8_ht6st")
+0:0/size_in_atlas = Vector2i(4, 4)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_owwtr"]
 texture = ExtResource("3_qshcb")
@@ -888,3 +904,5 @@ sources/10 = SubResource("TileSetAtlasSource_vkbrt")
 sources/11 = SubResource("TileSetAtlasSource_qcbxv")
 sources/12 = SubResource("TileSetAtlasSource_kkpte")
 sources/13 = SubResource("TileSetAtlasSource_yb77i")
+sources/14 = SubResource("TileSetAtlasSource_jwnev")
+sources/15 = SubResource("TileSetAtlasSource_ciyyd")
