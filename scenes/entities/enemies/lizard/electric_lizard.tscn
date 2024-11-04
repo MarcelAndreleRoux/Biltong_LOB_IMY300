@@ -1151,7 +1151,7 @@ height = 54.0
 radius = 7.0
 height = 32.0
 
-[node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
+[node name="ElectricLizard" type="CharacterBody2D" groups=["activation", "electrical", "lizard"]]
 z_index = 1
 y_sort_enabled = true
 collision_layer = 16
