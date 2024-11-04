@@ -17,6 +17,19 @@ var spotted_food: bool = false
 var food_visible: bool = false
 var playing_game: bool = false
 
+# popups animals
+var was_trutle_scared: bool = false
+var was_lizard_seen: bool = false
+var was_hedgehog_seen: bool = false
+
+# popup throwable
+var was_trowable_checked: bool = false
+
+# popup characters
+var was_on_yan: bool = false
+var was_on_dave: bool = false
+var was_on_diffie: bool = false
+
 # Pickups (e.g. box, firebush, waterbush)
 var has_pickeup_box_once: bool = false
 var has_pickeup_c_box_once: bool = false

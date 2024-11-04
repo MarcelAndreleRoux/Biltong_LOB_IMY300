@@ -314,6 +314,8 @@ func _on_hungry_timeout():
 
 func _on_scared_area_body_entered(body):
 	if body.is_in_group("player"):
+		if not GlobalValues.was_trutle_scared:
+			SharedSignals.turtle_scared_popup.emit()
 		player_in_scared_area = true
 		
 		# Cancel any existing timers

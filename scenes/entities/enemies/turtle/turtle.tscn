@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://vlik5vxjmqh4"]
+[gd_scene load_steps=72 format=3 uid="uid://vlik5vxjmqh4"]
 
 [ext_resource type="Script" path="res://scenes/entities/enemies/turtle/turtle.gd" id="1_1fxvc"]
 [ext_resource type="Texture2D" uid="uid://pmrgbxp12km" path="res://assets/sprites/enemies/turtel/eat/Turtle-Eat-Left.png" id="2_a700b"]
@@ -1056,13 +1056,17 @@ transitions = ["walk", "hungry", SubResource("AnimationNodeStateMachineTransitio
 graph_offset = Vector2(58.5906, -66.7787)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e6vdn"]
-radius = 28.0
-height = 80.0
+radius = 24.0
+height = 74.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4dtej"]
+radius = 18.0
+height = 62.0
 
 [node name="Turtle" type="CharacterBody2D" groups=["activation", "enemy"]]
 z_index = 1
 y_sort_enabled = true
-collision_layer = 16
+collision_layer = 17
 collision_mask = 31
 script = ExtResource("1_1fxvc")
 
@@ -1120,9 +1124,16 @@ bus = &"Sfx"
 rotation = 1.5708
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ScaredArea"]
-visible = false
-position = Vector2(-8, 2.86102e-05)
+position = Vector2(-2, 7.23998e-06)
 shape = SubResource("CapsuleShape2D_e6vdn")
+
+[node name="CloseArea" type="Area2D" parent="." groups=["close_area"]]
+collision_layer = 268435456
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CloseArea"]
+position = Vector2(0, -2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4dtej")
 
 [connection signal="velocity_computed" from="TurtleNav" to="." method="_on_turtle_nav_velocity_computed"]
 [connection signal="body_entered" from="ScaredArea" to="." method="_on_scared_area_body_entered"]

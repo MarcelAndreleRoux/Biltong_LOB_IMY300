@@ -97,8 +97,8 @@ const LEVEL_HELP = {
 }
 
 const BODY_DIALOG = {
-	"richard": "Richard... Seems about right, he never was a smart one",
-	"larry": "Larry... really... never though he would die like this... That what you get for stealing my cookie",
+	"diffie": "Diffie... Seems about right, he never was a smart one",
+	"yan": "Yan... really... never though he would die like this... Always something cooler",
 	"dave": "Da.. Dave... W... What happend to you... You were always so good to me",
 }
 
@@ -140,6 +140,7 @@ func _ready():
 	trajectory_collision_state.connect(_on_trajectory_collision)
 	SharedSignals.play_pickup_notification.connect(_display_player_pickup_popup)
 	SharedSignals.move_mouse_around.connect(_mouse_move_popup)
+	SharedSignals.turtle_scared_popup.connect(_turtle_popup)
 	
 	SharedSignals.trowable.connect(_on_throwable_popup)
 	SharedSignals.fire_trowable.connect(_on_fire_throwable_popup)
@@ -163,6 +164,49 @@ func _ready():
 	
 	if hedgehog:
 		enemy_raycast.add_exception(hedgehog)
+
+# ------------------------------------------- POPUP ------------------------------------------------
+
+func _turtle_popup():
+	if not GlobalValues.was_trutle_scared:
+		var success = popup_manager.create_popup(HELPFUL_MESSAGES.turtle_scared)
+		GlobalValues.was_trutle_scared = true
+		if not success:
+			pass
+
+func _on_throwable_popup():
+	if not GlobalValues.was_trowable_checked:
+		GlobalValues.was_trowable_checked = true
+		var success = popup_manager.create_popup(HELPFUL_MESSAGES.throwable)
+		if not success:
+			pass
+
+func _on_fire_throwable_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.fire_throwable)
+	if not success:
+		pass
+
+func _on_water_throwable_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.water_throwable)
+	if not success:
+		pass
+
+func _mouse_move_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.mouse_move)
+	if not success:
+		pass
+
+func _display_player_pickup_popup():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.pickup_food)
+	if not success:
+		pass
+
+func show_hazmat_warning():
+	var success = popup_manager.create_popup(WARNING_MESSAGES.hazmat)
+	if not success:
+		pass
+
+# --------------------------------------------------------------------------------------------------
 
 func _setup_player_position():
 	# Wait for frames to ensure scene is fully loaded
@@ -226,36 +270,6 @@ func connect_button_signals():
 	for button in get_tree().get_nodes_in_group("buttons"):
 		if not button.hazmat_warning.is_connected(show_hazmat_warning):
 			button.hazmat_warning.connect(show_hazmat_warning)
-
-func _on_throwable_popup():
-	var success = popup_manager.create_popup(HELPFUL_MESSAGES.throwable)
-	if not success:
-		pass
-
-func _on_fire_throwable_popup():
-	var success = popup_manager.create_popup(HELPFUL_MESSAGES.fire_throwable)
-	if not success:
-		pass
-
-func _on_water_throwable_popup():
-	var success = popup_manager.create_popup(HELPFUL_MESSAGES.water_throwable)
-	if not success:
-		pass
-
-func _mouse_move_popup():
-	var success = popup_manager.create_popup(HELPFUL_MESSAGES.mouse_move)
-	if not success:
-		pass
-
-func _display_player_pickup_popup():
-	var success = popup_manager.create_popup(HELPFUL_MESSAGES.pickup_food)
-	if not success:
-		pass
-
-func show_hazmat_warning():
-	var success = popup_manager.create_popup(WARNING_MESSAGES.hazmat)
-	if not success:
-		pass
 
 func _spawn_blocking_collision_shape():
 	if blocking_body == null:

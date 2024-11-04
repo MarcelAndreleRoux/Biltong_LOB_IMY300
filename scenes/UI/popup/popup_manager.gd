@@ -70,6 +70,8 @@ func _animate_out(popup: Control):
 	# Clean up after animation
 	tween.chain().tween_callback(func():
 		is_animating = false
+		if popup and is_instance_valid(popup):
+			popup.queue_free()  # Free the popup instance
 		current_popup = null
 		_check_pending_popup()
 	)

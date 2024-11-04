@@ -150,6 +150,7 @@ theme = ExtResource("1_oawy5")
 script = ExtResource("1_vyayb")
 
 [node name="ShakeCamera" parent="." instance=ExtResource("3_tc8qs")]
+position = Vector2(240, 135)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -179,9 +180,9 @@ horizontal_alignment = 1
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
 offset_left = 45.0
-offset_top = 82.0
+offset_top = 83.0
 offset_right = 179.0
-offset_bottom = 249.0
+offset_bottom = 250.0
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = -10
 

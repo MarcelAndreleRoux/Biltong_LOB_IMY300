@@ -194,7 +194,7 @@ animations = [{
 size = Vector2(8, 9)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2owp"]
-radius = 18.0
+radius = 25.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ci0o"]
 atlas = ExtResource("4_sgc0r")
@@ -246,6 +246,7 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_7nm16")
 
 [node name="ActionArea" type="Area2D" parent="."]
+collision_mask = 268435457
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionArea"]
 shape = SubResource("CircleShape2D_b2owp")
@@ -257,5 +258,6 @@ sprite_frames = SubResource("SpriteFrames_ivn03")
 frame_progress = 0.0358416
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="ActionArea" to="." method="_on_action_area_area_entered"]
 [connection signal="body_entered" from="ActionArea" to="." method="_on_action_area_body_entered"]
 [connection signal="body_exited" from="ActionArea" to="." method="_on_action_area_body_exited"]
