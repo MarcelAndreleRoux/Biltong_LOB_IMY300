@@ -105,6 +105,7 @@ const LEVEL_PATHS = [
 	"res://scenes/world/levels_new/level_11.tscn",
 	"res://scenes/world/levels_new/level_12.tscn",
 	"res://scenes/world/levels_new/level_13.tscn",
+	"res://scenes/world/levels_new/level_14.tscn",
 	"res://scenes/world/end/credits.tscn",
 ]
 
