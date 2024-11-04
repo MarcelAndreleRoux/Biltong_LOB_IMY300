@@ -15,7 +15,12 @@ extends Control
 @onready var volume_slider_2 = $AudioSettings/VBoxContainer/volume_slider2
 @onready var censor_check_box = $Other/HBoxContainer3/CensorCheckBox
 
+@onready var display_label = $DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect/DisplayLabel
+
 @onready var description = $Descrpition/Description
+
+var display_mode = ["Windowed", "Fullscreen"]
+var current_mode_index = 0
 
 # Common 16:9 resolutions
 const RESOLUTIONS = [
@@ -95,6 +100,16 @@ func _ready():
 	var settings = SaveManager.load_settings()
 	if not settings.is_empty():
 		apply_saved_settings(settings)
+	
+	var current_window_mode = DisplayServer.window_get_mode()
+	if current_window_mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		current_mode_index = 1
+	else:
+		current_mode_index = 0
+	
+	# Update the display label with initial mode
+	if display_label:
+		display_label.text = display_mode[current_mode_index]
 
 func apply_saved_settings(settings: Dictionary):
 	if settings.has("screen_shake"):
@@ -331,3 +346,26 @@ func _on_shake_check_box_toggled(button_pressed: bool):
 func _on_censor_check_box_toggled(toggled_on: bool):
 	GlobalValues.set_censorship_enabled(toggled_on)
 	SaveManager.save_settings()
+
+func _on_go_left_pressed():
+	# Move index left (with wraparound)
+	current_mode_index = (current_mode_index - 1) if current_mode_index > 0 else display_mode.size() - 1
+	_update_window_mode()
+
+func _on_go_right_pressed():
+	# Move index right (with wraparound)
+	current_mode_index = (current_mode_index + 1) % display_mode.size()
+	_update_window_mode()
+
+func _update_window_mode():
+	# Update the display label
+	if display_label:
+		display_label.text = display_mode[current_mode_index]
+	
+	# Actually change the window mode
+	var new_mode = DisplayServer.WINDOW_MODE_WINDOWED
+	if display_mode[current_mode_index] == "Fullscreen":
+		new_mode = DisplayServer.WINDOW_MODE_FULLSCREEN
+	
+	DisplayServer.window_set_mode(new_mode)
+	SaveManager.save_settings()  # Save the new setting

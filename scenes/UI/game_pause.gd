@@ -13,6 +13,7 @@ var options: bool = false
 @onready var control = $Control
 
 var can_exit: bool = false
+var is_paused: bool = false
 
 func _ready():
 	self.hide()
@@ -21,6 +22,20 @@ func _ready():
 	control.visible = true
 	# Connect the signal here in _ready
 	options_menu.exit_options_menu.connect(_exit_options)
+
+func _process(_delta):
+	if Input.is_action_just_pressed("exit") and is_paused:
+		# Only handle exit if we're already paused
+		if options_menu.visible:
+			# If in options menu, return to main pause menu
+			shake_camera.apply_shake_smaller()
+			button_select.play()
+			_exit_options()
+		elif control.visible:
+			# If in main pause menu, resume the game
+			shake_camera.apply_shake_smaller()
+			button_select.play()
+			resume = true
 
 func _change_exit_again():
 	can_exit = true
@@ -46,31 +61,12 @@ func _on_exit_pressed():
 	exit = true
 	
 func game_pause():
-	print("pause game")
 	button_select.play()
 	self.show()
 	control.visible = true
 	get_tree().paused = true
-
-func _on_cancel_pressed():
-	confirm_quit.visible = false
-
-func _on_confirm_pressed():
-	# Save to current slot before exiting
-	# This will use either the forced slot or current_active_save_slot
-	if SaveManager.current_active_save_slot != -1:
-		await SaveManager.update_current_save()
-		print("Saved game before exit to slot: ", 
-			SaveManager.force_slot if SaveManager.force_slot != -1 
-			else SaveManager.current_active_save_slot)
-	
-	confirm_quit.visible = false
-	options_menu.visible = false
-	control.visible = false
-	get_tree().paused = false
-	if has_node("/root/GameMusicController"):
-		GameMusicController.stop_music()
-	get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")
+	await get_tree().create_timer(0.2).timeout
+	is_paused = true
 
 func _on_resume_mouse_entered():
 	AudioController.play_sfx("button_hover")
@@ -84,12 +80,6 @@ func _on_options_mouse_entered():
 func _on_exit_mouse_entered():
 	AudioController.play_sfx("button_hover")
 
-func _on_confirm_mouse_entered():
-	AudioController.play_sfx("button_hover")
-
-func _on_cancel_mouse_entered():
-	AudioController.play_sfx("button_hover")
-
 func _on_button_select_finished():
 	if exit:
 		confirm_quit.visible = true
@@ -99,6 +89,7 @@ func _on_button_select_finished():
 		control.visible = false
 		options_menu.visible = false
 		confirm_quit.visible = false
+		is_paused = false  # Reset pause state
 		# Unpause before reloading
 		get_tree().paused = false
 		# Optional: Add a small delay to ensure everything is unpaused
@@ -117,9 +108,36 @@ func _on_button_select_finished():
 		confirm_quit.visible = false
 		get_tree().paused = false
 		self.hide()
+		is_paused = false  # Reset pause state
 		resume = false
 
 func _exit_options():
 	SaveManager.save_settings()
 	control.visible = true
 	options_menu.visible = false
+
+func _on_cancelbutton_pressed():
+	confirm_quit.visible = false
+
+func _on_cancelbutton_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_confirm_exit_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_confirm_exit_pressed():
+	# Save to current slot before exiting
+	# This will use either the forced slot or current_active_save_slot
+	if SaveManager.current_active_save_slot != -1:
+		await SaveManager.update_current_save()
+		print("Saved game before exit to slot: ", 
+			SaveManager.force_slot if SaveManager.force_slot != -1 
+			else SaveManager.current_active_save_slot)
+	
+	confirm_quit.visible = false
+	options_menu.visible = false
+	control.visible = false
+	get_tree().paused = false
+	if has_node("/root/GameMusicController"):
+		GameMusicController.stop_music()
+	get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")

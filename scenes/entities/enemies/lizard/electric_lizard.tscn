@@ -1151,11 +1151,11 @@ height = 54.0
 radius = 7.0
 height = 32.0
 
-[node name="ElectricLizard" type="CharacterBody2D" groups=["electrical", "lizard"]]
+[node name="ElectricLizard" type="CharacterBody2D" groups=["activation", "electrical", "lizard"]]
 z_index = 1
 y_sort_enabled = true
 collision_layer = 16
-collision_mask = 62524
+collision_mask = 62495
 script = ExtResource("1_i4f4n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

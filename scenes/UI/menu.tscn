@@ -1,16 +1,14 @@
-[gd_scene load_steps=22 format=3 uid="uid://cma31337mqy13"]
+[gd_scene load_steps=25 format=3 uid="uid://cma31337mqy13"]
 
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_oawy5"]
 [ext_resource type="Script" path="res://scenes/UI/menu.gd" id="1_vyayb"]
 [ext_resource type="Texture2D" uid="uid://h3lrngtkh1sb" path="res://assets/sprites/UI/Title/cover-1.jpg" id="3_gb30e"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="3_tc8qs"]
-[ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_xnclv"]
+[ext_resource type="Texture2D" uid="uid://bq3l1yx7ew4d6" path="res://assets/sprites/UI/background/ui_background.png" id="5_dicbv"]
 [ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="6_7dy26"]
 [ext_resource type="PackedScene" uid="uid://pjr0tdqacf2g" path="res://scenes/UI/options_menu.tscn" id="6_x258p"]
 [ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="7_cl3he"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxs1i"]
-bg_color = Color(0.156863, 0.156863, 0.156863, 0.772549)
+[ext_resource type="Texture2D" uid="uid://4ajsriq7s0e7" path="res://assets/sprites/UI/background/background_large.png" id="8_r1a75"]
 
 [sub_resource type="Theme" id="Theme_jwwq8"]
 Label/colors/font_color = Color(1, 1, 1, 1)
@@ -19,109 +17,49 @@ Label/colors/font_shadow_color = Color(0, 0, 0, 0)
 Label/font_sizes/font_size = 19
 Label/fonts/font = ExtResource("6_7dy26")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fktxs"]
-content_margin_left = 5.0
-content_margin_right = 4.0
-bg_color = Color(0.223529, 0.290196, 0.313726, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.0823529, 0.113725, 0.156863, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wskol"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rebcp"]
-content_margin_left = 5.0
-content_margin_right = 4.0
-bg_color = Color(0.223529, 0.290196, 0.313726, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.870588, 0.619608, 0.254902, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o4uiq"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yha6l"]
-content_margin_left = 5.0
-content_margin_right = 4.0
-bg_color = Color(0.223529, 0.290196, 0.313726, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.870588, 0.619608, 0.254902, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bywmp"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dk63o"]
-content_margin_left = 5.0
-content_margin_right = 4.0
-bg_color = Color(0.223529, 0.290196, 0.313726, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.870588, 0.619608, 0.254902, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_equ8g"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ytsn"]
-content_margin_left = 5.0
-content_margin_right = 4.0
-bg_color = Color(0, 0.505882, 0.92549, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0.372549, 0.694118, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-anti_aliasing = false
+[sub_resource type="Theme" id="Theme_7jkql"]
+Button/colors/font_color = Color(0.760784, 0, 0.0117647, 1)
+Button/colors/font_hover_color = Color(0.921569, 0.4, 0.380392, 1)
+Button/font_sizes/font_size = 35
+Button/fonts/font = ExtResource("6_7dy26")
+Button/styles/focus = SubResource("StyleBoxFlat_wskol")
+Button/styles/hover = SubResource("StyleBoxFlat_o4uiq")
+Button/styles/normal = SubResource("StyleBoxFlat_bywmp")
+Button/styles/pressed = SubResource("StyleBoxFlat_equ8g")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_032jj"]
-content_margin_left = 5.0
-content_margin_right = 4.0
-bg_color = Color(0, 0.376471, 0.87451, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0.505882, 0.92549, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vlwm"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dtwvn"]
-content_margin_left = 5.0
-content_margin_right = 4.0
-bg_color = Color(0, 0.376471, 0.87451, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0.505882, 0.92549, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-anti_aliasing = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0ksd"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7bg84"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hv165"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_6nee7"]
+Button/colors/font_color = Color(0.164706, 0.294118, 0.745098, 1)
+Button/colors/font_hover_color = Color(0.203922, 0.537255, 0.811765, 1)
+Button/font_sizes/font_size = 30
+Button/fonts/font = ExtResource("6_7dy26")
+Button/styles/focus = SubResource("StyleBoxFlat_6vlwm")
+Button/styles/hover = SubResource("StyleBoxFlat_g0ksd")
+Button/styles/normal = SubResource("StyleBoxFlat_7bg84")
+Button/styles/pressed = SubResource("StyleBoxFlat_hv165")
 
 [sub_resource type="Animation" id="Animation_yvalh"]
 length = 0.001
@@ -224,13 +162,13 @@ expand_mode = 1
 layout_mode = 0
 offset_right = 481.0
 offset_bottom = 270.0
-color = Color(0, 0, 0, 0.423529)
+color = Color(0, 0, 0, 0.639216)
 
 [node name="Lob" type="Label" parent="."]
 custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 offset_left = 1.0
-offset_right = 171.0
+offset_right = 231.0
 offset_bottom = 83.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -240,183 +178,223 @@ horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_left = 38.0
-offset_top = 94.0
-offset_right = 196.0
-offset_bottom = 231.0
+offset_left = 45.0
+offset_top = 82.0
+offset_right = 179.0
+offset_bottom = 249.0
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = -10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 7
+theme_override_constants/separation = -3
 
-[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="PlaybuttonTexture" type="TextureRect" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+texture = ExtResource("5_dicbv")
+stretch_mode = 2
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer/PlaybuttonTexture"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 5.0
+offset_right = 124.0
+offset_bottom = 27.0
 text = "Play"
 
-[node name="Continue" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="ContinueTexture" type="TextureRect" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+texture = ExtResource("5_dicbv")
+stretch_mode = 2
+
+[node name="Continue" type="Button" parent="MarginContainer/VBoxContainer/ContinueTexture"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 5.0
+offset_right = 124.0
+offset_bottom = 27.0
 text = "Continue
 "
 
-[node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="NewGameTexture" type="TextureRect" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+texture = ExtResource("5_dicbv")
+stretch_mode = 2
+
+[node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer/NewGameTexture"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 5.0
+offset_right = 124.0
+offset_bottom = 27.0
 text = "New Game"
 
-[node name="LoadSaves" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="LoadSaveTexture" type="TextureRect" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+texture = ExtResource("5_dicbv")
+stretch_mode = 2
+
+[node name="LoadSaves" type="Button" parent="MarginContainer/VBoxContainer/LoadSaveTexture"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 5.0
+offset_right = 124.0
+offset_bottom = 27.0
 text = "Load Save
 "
 
-[node name="Option" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="OptionsTexture" type="TextureRect" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "OPTIONS"
+texture = ExtResource("5_dicbv")
+stretch_mode = 2
 
-[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Option" type="Button" parent="MarginContainer/VBoxContainer/OptionsTexture"]
 layout_mode = 2
-text = "Exit"
+offset_left = -4.0
+offset_top = 5.0
+offset_right = 124.0
+offset_bottom = 27.0
+text = "Options"
 
-[node name="ConfirmQuit" type="Panel" parent="MarginContainer"]
+[node name="ExitTexture" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_dicbv")
+stretch_mode = 2
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer/ExitTexture"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 5.0
+offset_right = 124.0
+offset_bottom = 27.0
+text = "Quit"
+
+[node name="ConfirmQuit" type="Panel" parent="."]
 visible = false
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="MarginContainer/ConfirmQuit"]
-layout_mode = 0
-offset_left = 110.0
-offset_top = -13.0
-offset_right = 289.0
-offset_bottom = 80.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_dxs1i")
-
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/ConfirmQuit"]
+[node name="TextureRect2" type="TextureRect" parent="ConfirmQuit"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -133.5
-offset_right = 245.0
-offset_bottom = 63.5
+offset_left = -128.0
+offset_top = -48.0
+offset_right = 128.0
+offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_xnclv")
+texture = ExtResource("8_r1a75")
+stretch_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/ConfirmQuit/TextureRect2"]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 40.0
-offset_right = 204.0
-offset_bottom = 123.0
+[node name="Label" type="Label" parent="ConfirmQuit/TextureRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.5
+offset_top = -26.0
+offset_right = 90.5
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_jwwq8")
-text = "Are You Sure You
-Want To Quit?"
+theme_override_fonts/font = ExtResource("7_cl3he")
+text = "Are You Sure You Want To"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ConfirmQuit/TextureRect2"]
-layout_direction = 1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -65.5
-offset_top = 9.5
-offset_right = 65.5
-offset_bottom = 32.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 14
+[node name="ConfirmCancel" type="TextureButton" parent="ConfirmQuit/TextureRect2"]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 4.0
+offset_right = 253.0
+offset_bottom = 19.0
+metadata/_edit_lock_ = true
 
-[node name="Cancel" type="Button" parent="MarginContainer/ConfirmQuit/TextureRect2/HBoxContainer"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_fktxs")
-theme_override_styles/hover = SubResource("StyleBoxFlat_rebcp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_yha6l")
-theme_override_styles/focus = SubResource("StyleBoxFlat_dk63o")
-text = "Cancel
-"
+[node name="ConfirmQuit" type="Button" parent="ConfirmQuit/TextureRect2"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 42.0
+offset_right = 155.0
+offset_bottom = 82.0
+theme = SubResource("Theme_7jkql")
+text = "QUIT"
 
-[node name="Confirm" type="Button" parent="MarginContainer/ConfirmQuit/TextureRect2/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.894118, 0.894118, 0.894118, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_2ytsn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_032jj")
-theme_override_styles/focus = SubResource("StyleBoxFlat_dtwvn")
-text = "COnfirm"
-
-[node name="ConfirmNewGame" type="Panel" parent="MarginContainer"]
+[node name="ConfirmNewGame" type="Panel" parent="."]
 visible = false
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="MarginContainer/ConfirmNewGame"]
-layout_mode = 0
-offset_left = 59.0
-offset_top = -14.0
-offset_right = 341.0
-offset_bottom = 79.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_dxs1i")
-
-[node name="TextureRect2" type="TextureRect" parent="MarginContainer/ConfirmNewGame"]
+[node name="TextureRect2" type="TextureRect" parent="ConfirmNewGame"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = -134.5
-offset_right = 315.0
-offset_bottom = 62.5
+offset_left = -128.0
+offset_top = -48.0
+offset_right = 128.0
+offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_xnclv")
+texture = ExtResource("8_r1a75")
+stretch_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/ConfirmNewGame/TextureRect2"]
+[node name="Label" type="Label" parent="ConfirmNewGame/TextureRect2"]
 layout_mode = 0
-offset_left = 68.0
-offset_top = 41.0
-offset_right = 322.0
-offset_bottom = 124.0
+offset_top = 11.0
+offset_right = 254.0
+offset_bottom = 54.0
 theme = SubResource("Theme_jwwq8")
 theme_override_fonts/font = ExtResource("7_cl3he")
-text = "Are You Sure you want to Start a new game this will delete all you previous saves"
+text = "Are you sure you want to start a new game. 
+Doing so will delete all you previous saves"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ConfirmNewGame/TextureRect2"]
+[node name="TextureButton" type="TextureButton" parent="ConfirmNewGame/TextureRect2"]
+layout_mode = 2
+offset_left = 239.0
+offset_top = 5.0
+offset_right = 250.0
+offset_bottom = 18.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmNewGame/TextureRect2"]
 layout_direction = 1
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 134.0
-offset_top = 11.5
-offset_right = -124.0
-offset_bottom = 35.5
+offset_left = 102.0
+offset_top = 12.0
+offset_right = -94.0
+offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14
 
-[node name="NewGameCancel" type="Button" parent="MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer"]
+[node name="NewGameConfirm" type="Button" parent="ConfirmNewGame/TextureRect2/HBoxContainer"]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_fktxs")
-theme_override_styles/hover = SubResource("StyleBoxFlat_rebcp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_yha6l")
-theme_override_styles/focus = SubResource("StyleBoxFlat_dk63o")
-text = "Cancel
-"
-
-[node name="NewGameConfirm" type="Button" parent="MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.894118, 0.894118, 0.894118, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_2ytsn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_032jj")
-theme_override_styles/focus = SubResource("StyleBoxFlat_dtwvn")
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = SubResource("Theme_6nee7")
 text = "COnfirm"
 
 [node name="Options_Menu" parent="." instance=ExtResource("6_x258p")]
@@ -436,23 +414,23 @@ libraries = {
 "": SubResource("AnimationLibrary_mj4cb")
 }
 
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Continue" to="." method="_on_continue_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/LoadSaves" to="." method="_on_levels_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/LoadSaves" to="." method="_on_load_saves_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Option" to="." method="_on_option_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Option" to="." method="_on_option_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/ConfirmQuit/TextureRect2/HBoxContainer/Cancel" to="." method="_on_cancel_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/ConfirmQuit/TextureRect2/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/ConfirmQuit/TextureRect2/HBoxContainer/Confirm" to="." method="_on_confirm_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/ConfirmQuit/TextureRect2/HBoxContainer/Confirm" to="." method="_on_confirm_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameCancel" to="." method="_on_cancel_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameCancel" to="." method="_on_new_game_cancel_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm" to="." method="_on_confirm_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm" to="." method="_on_new_game_confirm_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/PlaybuttonTexture/Play" to="." method="_on_play_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PlaybuttonTexture/Play" to="." method="_on_play_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/ContinueTexture/Continue" to="." method="_on_continue_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ContinueTexture/Continue" to="." method="_on_continue_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/NewGameTexture/NewGame" to="." method="_on_new_game_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/NewGameTexture/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/LoadSaveTexture/LoadSaves" to="." method="_on_levels_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/LoadSaveTexture/LoadSaves" to="." method="_on_load_saves_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/OptionsTexture/Option" to="." method="_on_option_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/OptionsTexture/Option" to="." method="_on_option_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/ExitTexture/Exit" to="." method="_on_exit_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ExitTexture/Exit" to="." method="_on_exit_pressed"]
+[connection signal="mouse_entered" from="ConfirmQuit/TextureRect2/ConfirmCancel" to="." method="_on_confirm_cancle_mouse_entered"]
+[connection signal="pressed" from="ConfirmQuit/TextureRect2/ConfirmCancel" to="." method="_on_confirm_cancle_pressed"]
+[connection signal="mouse_entered" from="ConfirmQuit/TextureRect2/ConfirmQuit" to="." method="_on_confirm_quit_mouse_entered"]
+[connection signal="pressed" from="ConfirmQuit/TextureRect2/ConfirmQuit" to="." method="_on_confirm_quit_pressed"]
+[connection signal="mouse_entered" from="ConfirmNewGame/TextureRect2/TextureButton" to="." method="_on_texture_button_mouse_entered"]
+[connection signal="pressed" from="ConfirmNewGame/TextureRect2/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="mouse_entered" from="ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm" to="." method="_on_confirm_mouse_entered"]
+[connection signal="pressed" from="ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm" to="." method="_on_new_game_confirm_pressed"]

@@ -309,7 +309,7 @@ func _physics_process(_delta):
 	if player_raycast:
 		_update_player_raycast()
 	
-	if Input.is_action_just_pressed("exit"):
+	if Input.is_action_just_pressed("exit") and not game_pause.is_paused:
 		game_pause.game_pause()
 	
 	GlobalValues.update_player_position(player.global_position)

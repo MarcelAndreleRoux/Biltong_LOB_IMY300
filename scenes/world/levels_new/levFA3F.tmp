@@ -63,6 +63,7 @@ layer_4/tile_data = PackedInt32Array(2818053, 589827, 0, 3145733, 1441795, 0, 34
 [node name="InScreenTransition" type="Area2D" parent="." node_paths=PackedStringArray("root_marker", "destination_marker") groups=["transition_areas"]]
 position = Vector2(328, 416)
 script = ExtResource("5_gfcuy")
+move_direction = null
 root_marker = NodePath("../CameraMarker")
 destination_marker = NodePath("../CameraMarker2")
 

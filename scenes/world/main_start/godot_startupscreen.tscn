@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/world/main_start/Camera2D.gd" id="2_82l0x"]
 [ext_resource type="Texture2D" uid="uid://cmvij47ylbdr7" path="res://assets/sprites/UI/Title/splash/Godot_other1-sheet.png" id="3_pgktt"]
 [ext_resource type="FontFile" uid="uid://b4koppylwngvs" path="res://assets/sprites/UI/Font/PressStart2P-Regular.ttf" id="4_06yyd"]
-[ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="5_dlcvl"]
+[ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="5_5qf73"]
 [ext_resource type="AudioStream" uid="uid://cbrodfxtffv5d" path="res://assets/soundeffects/GodotLoadScreenFinal_FlickeringLightSound.wav" id="7_abf6n"]
 
 [sub_resource type="Environment" id="Environment_g8wac"]
@@ -244,9 +244,9 @@ theme = SubResource("Theme_gqdpt")
 [node name="By" type="Label" parent="Control"]
 layout_mode = 0
 offset_left = 228.0
-offset_top = 189.0
+offset_top = 183.0
 offset_right = 274.0
-offset_bottom = 212.0
+offset_bottom = 206.0
 theme_override_font_sizes/font_size = 16
 text = "By"
 
@@ -258,12 +258,13 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -168.5
-offset_top = -72.0
+offset_top = -74.0
 offset_right = 176.5
-offset_bottom = -14.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
-theme = ExtResource("5_dlcvl")
+theme_override_colors/font_color = Color(0.870588, 0.619608, 0.254902, 1)
+theme_override_fonts/font = ExtResource("5_5qf73")
 theme_override_font_sizes/font_size = 36
 text = "MARCEL and STEFAN"
 horizontal_alignment = 1
@@ -314,9 +315,9 @@ color = Color(0, 0, 0, 1)
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_left = -25.0
-offset_top = -24.0
-offset_right = 514.0
-offset_bottom = 298.0
+offset_left = -26.0
+offset_top = -23.0
+offset_right = 513.0
+offset_bottom = 299.0
 
 [connection signal="timeout" from="ChangeScene" to="." method="_on_change_scene_timeout"]

@@ -32,7 +32,7 @@ y_sort_enabled = true
 script = ExtResource("1_denns")
 
 [node name="ShakeCamera" parent="." instance=ExtResource("2_6cudl")]
-position = Vector2(244, 136)
+position = Vector2(701, 123)
 
 [node name="CameraMarker" type="Marker2D" parent="." groups=["camera_markers"]]
 position = Vector2(244, 136)
@@ -53,18 +53,22 @@ layer_1/tile_data = PackedInt32Array(0, 131079, 0, 65536, 720903, 0, 1, 655367, 
 layer_2/name = "Wires"
 layer_2/tile_data = PackedInt32Array(786447, 1048578, 0, 851983, 917506, 0, 851982, 983042, 0, 851981, 983042, 0, 851980, 983042, 0, 851979, 983042, 0, 851978, 983042, 0, 851977, 983042, 0, 851976, 983042, 0, 851975, 983042, 0, 851974, 983042, 0, 851973, 393218, 0, 851970, 524290, 0, 851969, 786434, 0, 786433, 1048578, 0, 720897, 1048578, 0, 655361, 1048578, 0, 589825, 1048578, 0, 524289, 1048578, 0, 458753, 1048578, 0, 393217, 1048578, 0)
 
-[node name="InScreenTransition" type="Area2D" parent="." groups=["transition_areas"]]
-position = Vector2(480, 60)
+[node name="InScreenTransition" type="Area2D" parent="." node_paths=PackedStringArray("root_marker", "destination_marker") groups=["transition_areas"]]
+position = Vector2(474, 59)
 script = ExtResource("19_35d76")
+root_marker = NodePath("../CameraMarker2")
+destination_marker = NodePath("../CameraMarker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InScreenTransition"]
-position = Vector2(-5.5, 12.5)
+position = Vector2(-0.5, 12.5)
 shape = SubResource("RectangleShape2D_kp37h")
 
-[node name="InScreenTransition2" type="Area2D" parent="." groups=["transition_areas"]]
+[node name="InScreenTransition2" type="Area2D" parent="." node_paths=PackedStringArray("root_marker", "destination_marker") groups=["transition_areas"]]
 position = Vector2(682, 252)
 script = ExtResource("19_35d76")
 move_direction = "vertical"
+root_marker = NodePath("../CameraMarker2")
+destination_marker = NodePath("../CameraMarker3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InScreenTransition2"]
 position = Vector2(-1, -1.5)
@@ -76,7 +80,7 @@ shape = SubResource("RectangleShape2D_tjdhb")
 position = Vector2(245, 258)
 
 [node name="Player" parent="." instance=ExtResource("4_888jh")]
-position = Vector2(387, 69)
+position = Vector2(648, 111)
 
 [node name="RayCast2D" type="RayCast2D" parent="Player"]
 
@@ -99,7 +103,7 @@ default_color = Color(1, 1, 1, 0.447059)
 [node name="Hedgehog" parent="." instance=ExtResource("6_cp82i")]
 position = Vector2(446, 202)
 
-[node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
+[node name="RayCast2D2" type="RayCast2D" parent="Hedgehog"]
 
 [node name="ElectricLizard" parent="Hedgehog" node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("9_dhr7m")]
 position = Vector2(-332, -18)

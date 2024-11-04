@@ -1,8 +1,32 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cuucoj82fet30"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://cuucoj82fet30"]
 
 [ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="1_3egw8"]
+[ext_resource type="Texture2D" uid="uid://dc4wus2wjkbwe" path="res://assets/sprites/UI/background/check2.png" id="1_rq2dl"]
+[ext_resource type="Texture2D" uid="uid://dp5rxs24t0pvl" path="res://assets/sprites/UI/background/check1.png" id="2_hjxjv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bx3r"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3yu71"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m3vm2"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gj5rn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e6wpf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [resource]
+CheckButton/icons/checked = ExtResource("2_hjxjv")
+CheckButton/icons/unchecked = ExtResource("1_rq2dl")
+CheckButton/styles/focus = SubResource("StyleBoxFlat_0bx3r")
+CheckButton/styles/hover = SubResource("StyleBoxFlat_3yu71")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxFlat_m3vm2")
+CheckButton/styles/normal = SubResource("StyleBoxFlat_gj5rn")
+CheckButton/styles/pressed = SubResource("StyleBoxFlat_e6wpf")
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/colors/font_outline_color = Color(1, 1, 1, 0)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)

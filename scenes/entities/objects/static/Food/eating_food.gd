@@ -40,7 +40,8 @@ func _wait_before_grow_timer():
 func _process(delta):
 	if player_in_area and Input.is_action_just_pressed("pickup") and not eating and not GlobalValues.food_already_picked:
 		SharedSignals.trowable.emit()
-		action_button_press = true
+		action_button_press = false
+		player_in_area = false
 		GlobalValues.food_already_picked = true
 		SharedSignals.item_pickup.emit()
 		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
@@ -50,26 +51,29 @@ func _process(delta):
 		AudioController.play_sfx("food_pickup")
 	
 	if can_still_pickup and Input.is_action_just_pressed("pickup") and not GlobalValues.food_already_picked:
-			SharedSignals.trowable.emit()
-			action_button_press = true
-			GlobalValues.food_already_picked = true
-			SharedSignals.item_pickup.emit()
-			GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
-			SharedSignals.show_aim.emit()
-			GlobalValues.can_swap_food = true
-			animated_sprite_2d.play("idle")
-			AudioController.play_sfx("food_pickup")
+		SharedSignals.trowable.emit()
+		action_button_press = false
+		player_in_area = false
+		GlobalValues.food_already_picked = true
+		SharedSignals.item_pickup.emit()
+		GlobalValues.set_inventory_select(GlobalValues.INVENTORY_SELECT.FOOD)
+		SharedSignals.show_aim.emit()
+		GlobalValues.can_swap_food = true
+		animated_sprite_2d.play("idle")
+		AudioController.play_sfx("food_pickup")
 
 func _play_grow_animation():
 	playing_grow = true
 	animated_sprite_2d.play("grow")
 
 func _on_action_area_body_entered(body):
-	if body.is_in_group("player") and eating:
+	if body.is_in_group("player") and eating and not GlobalValues.food_already_picked:
+		player_in_area = true
 		SharedSignals.play_pickup_notification.emit()
 	
 	if body.is_in_group("player") and not eating and not GlobalValues.food_already_picked:
 		player_in_area = true
+		can_still_pickup = true
 		animated_sprite_2d.play("pickup")
 		if not GlobalValues.has_pickeup_food_once:
 			GlobalValues.has_pickeup_food_once = true
@@ -91,24 +95,17 @@ func _on_animated_sprite_2d_animation_finished():
 	if playing_grow:
 		eating = false
 		playing_grow = false
+		can_still_pickup = true
+		print("entered here")
 		
-		if player_in_area:
-			eating = false
-			playing_grow = false
-			animated_sprite_2d.play("idle")
-		else:
-			eating = false
-			playing_grow = false
-			can_still_pickup = true
-			animated_sprite_2d.play("pickup")
-		
+		# If player is in area when grow animation finishes, show pickup animation
 		if player_in_area and not GlobalValues.food_already_picked:
 			animated_sprite_2d.play("pickup")
-			if not GlobalValues.has_pickeup_food_once:
-				GlobalValues.has_pickeup_food_once = true
-				action_button_press.play("default")
-				action_button_press.visible = true
-	
-	if play_backwards:
+			print("Playling pickup after grow")
+		else:
+			# If no player is in area, show idle animation
+			animated_sprite_2d.play("idle")
+			print("Playling idle after grow")
+	elif play_backwards:
 		_some_waiting_timer()
 		play_backwards = false

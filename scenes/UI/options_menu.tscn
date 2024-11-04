@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://pjr0tdqacf2g"]
+[gd_scene load_steps=10 format=3 uid="uid://pjr0tdqacf2g"]
 
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="1_grbyv"]
 [ext_resource type="Script" path="res://scenes/UI/options_menu.gd" id="2_akspg"]
+[ext_resource type="Texture2D" uid="uid://bq3l1yx7ew4d6" path="res://assets/sprites/UI/background/ui_background.png" id="3_6chsn"]
 [ext_resource type="Script" path="res://scenes/UI/music_volume_slider.gd" id="3_iifh5"]
 [ext_resource type="Theme" uid="uid://cuucoj82fet30" path="res://scenes/UI/theme/options_menu.tres" id="3_jk5jw"]
 [ext_resource type="FontFile" uid="uid://do43cmlq41sqf" path="res://assets/sprites/UI/Font/ThaleahFat.ttf" id="4_sulik"]
 [ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="6_edrlq"]
+[ext_resource type="Texture2D" uid="uid://bf2r1jaucpm7q" path="res://assets/sprites/UI/background/side scroll.png" id="6_x03ke"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ftji"]
 bg_color = Color(0.129412, 0.129412, 0.129412, 0.831373)
@@ -42,15 +44,31 @@ theme_override_font_sizes/font_size = 40
 text = "Options"
 autowrap_mode = 2
 
-[node name="Back" type="Button" parent="."]
+[node name="BackbuttonTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -41.0
+offset_right = 64.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_6chsn")
+stretch_mode = 2
+
+[node name="Back" type="Button" parent="BackbuttonTexture"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 116.0
-offset_top = 244.0
-offset_right = -114.0
-offset_bottom = -9.0
+offset_left = -63.0
+offset_top = 6.0
+offset_right = 59.0
+offset_bottom = -5.0
 size_flags_horizontal = 4
 text = "Back"
 
@@ -132,15 +150,9 @@ text = "Display Settings
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DisplaySettings"]
 layout_mode = 2
+theme_override_constants/separation = -2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DisplaySettings/VBoxContainer"]
-layout_mode = 2
-
-[node name="ResLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer" groups=["has_description"]]
-layout_mode = 2
-text = "Resolution:"
-
-[node name="ResolutionOption" type="OptionButton" parent="DisplaySettings/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="DisplaySettings/VBoxContainer"]
@@ -148,13 +160,40 @@ layout_mode = 2
 
 [node name="WindowLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer2" groups=["has_description"]]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Window Mode:"
 
-[node name="WindowMode" type="OptionButton" parent="DisplaySettings/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="DisplaySettings/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_x03ke")
+stretch_mode = 2
+
+[node name="DisplayLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = -4.0
+offset_right = 66.0
+offset_bottom = 16.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoLeft" type="TextureButton" parent="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect"]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 17.0
+
+[node name="GoRight" type="TextureButton" parent="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect"]
+layout_mode = 0
+offset_left = 65.0
+offset_right = 81.0
+offset_bottom = 17.0
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="DisplaySettings/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 
 [node name="VLabel" type="Label" parent="DisplaySettings/VBoxContainer/HBoxContainer3" groups=["has_description"]]
 layout_mode = 2
@@ -163,6 +202,7 @@ text = "VSync:
 
 [node name="VsyncToggle" type="CheckButton" parent="DisplaySettings/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
+button_pressed = true
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="DisplaySettings/VBoxContainer"]
 layout_mode = 2
@@ -181,9 +221,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 152.0
-offset_right = -412.0
-offset_bottom = -104.0
+offset_right = -337.0
+offset_bottom = -29.0
 theme = ExtResource("3_jk5jw")
+theme_override_constants/separation = -5
 
 [node name="GameplayLabel" type="Label" parent="Other" groups=["has_description"]]
 layout_mode = 2
@@ -198,7 +239,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Censored Content"
 
-[node name="CensorCheckBox" type="CheckBox" parent="Other/HBoxContainer3"]
+[node name="CensorCheckBox" type="CheckButton" parent="Other/HBoxContainer3"]
 layout_mode = 2
 button_pressed = true
 
@@ -209,7 +250,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Screen Shake"
 
-[node name="ShakeCheckBox" type="CheckBox" parent="Other/HBoxContainer"]
+[node name="ShakeCheckBox" type="CheckButton" parent="Other/HBoxContainer"]
 layout_mode = 2
 button_pressed = true
 
@@ -218,10 +259,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 250.0
-offset_top = 161.0
-offset_right = -35.0
-offset_bottom = -33.0
+offset_left = 252.0
+offset_top = 153.0
+offset_right = -33.0
+offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_jk5jw")
@@ -242,8 +283,8 @@ stream = ExtResource("6_edrlq")
 bus = &"Sfx"
 
 [connection signal="mouse_entered" from="Options_Label" to="." method="_on_options_label_mouse_entered"]
-[connection signal="mouse_entered" from="Back" to="." method="_on_back_mouse_entered"]
-[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="mouse_entered" from="BackbuttonTexture/Back" to="." method="_on_back_mouse_entered"]
+[connection signal="pressed" from="BackbuttonTexture/Back" to="." method="_on_back_pressed"]
 [connection signal="mouse_entered" from="AudioSettings/AudioLabel" to="." method="_on_audio_label_mouse_entered"]
 [connection signal="mouse_entered" from="AudioSettings/VBoxContainer/MasterVolume" to="." method="_on_master_volume_mouse_entered"]
 [connection signal="changed" from="AudioSettings/VBoxContainer/volume_slider3" to="." method="_on_volume_slider_3_changed"]
@@ -253,10 +294,9 @@ bus = &"Sfx"
 [connection signal="mouse_entered" from="AudioSettings/VBoxContainer/SFXVolume" to="." method="_on_sfx_volume_mouse_entered"]
 [connection signal="value_changed" from="AudioSettings/VBoxContainer/volume_slider2" to="." method="_on_volume_slider_2_value_changed"]
 [connection signal="mouse_entered" from="DisplaySettings/DisplayLabel" to="." method="_on_display_label_mouse_entered"]
-[connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer/ResLabel" to="." method="_on_res_label_mouse_entered"]
-[connection signal="item_selected" from="DisplaySettings/VBoxContainer/HBoxContainer/ResolutionOption" to="." method="_on_resolution_option_item_selected"]
 [connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer2/WindowLabel" to="." method="_on_window_label_mouse_entered"]
-[connection signal="item_selected" from="DisplaySettings/VBoxContainer/HBoxContainer2/WindowMode" to="." method="_on_window_mode_item_selected"]
+[connection signal="pressed" from="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect/GoLeft" to="." method="_on_go_left_pressed"]
+[connection signal="pressed" from="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect/GoRight" to="." method="_on_go_right_pressed"]
 [connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer3/VLabel" to="." method="_on_v_label_mouse_entered"]
 [connection signal="toggled" from="DisplaySettings/VBoxContainer/HBoxContainer3/VsyncToggle" to="." method="_on_vsync_toggle_toggled"]
 [connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer4/FpsLabel" to="." method="_on_fps_label_mouse_entered"]

@@ -6,14 +6,28 @@ extends Control
 @onready var margin_container = $MarginContainer
 @onready var lob = $Lob
 @onready var shake_camera = $ShakeCamera
-@onready var confirm_quit = $MarginContainer/ConfirmQuit
-@onready var new_game = $MarginContainer/VBoxContainer/NewGame
-@onready var load_saves = $MarginContainer/VBoxContainer/LoadSaves
-@onready var continue_button = $MarginContainer/VBoxContainer/Continue
-@onready var play_button = $MarginContainer/VBoxContainer/Play
-@onready var new_game_confirm = $MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm
-@onready var new_game_cancel = $MarginContainer/ConfirmNewGame/TextureRect2/HBoxContainer/NewGameCancel
-@onready var confirm_new_game = $MarginContainer/ConfirmNewGame
+@onready var confirm_quit = $ConfirmQuit
+@onready var confirm_new_game = $ConfirmNewGame
+
+# New texture references
+@onready var play_texture = $MarginContainer/VBoxContainer/PlaybuttonTexture
+@onready var continue_texture = $MarginContainer/VBoxContainer/ContinueTexture
+@onready var new_game_texture = $MarginContainer/VBoxContainer/NewGameTexture
+@onready var load_saves_texture = $MarginContainer/VBoxContainer/LoadSaveTexture
+@onready var options_texture = $MarginContainer/VBoxContainer/OptionsTexture
+@onready var exit_texture = $MarginContainer/VBoxContainer/ExitTexture
+
+# Buttons within textures
+@onready var play_button = $MarginContainer/VBoxContainer/PlaybuttonTexture/Play
+@onready var continue_button = $MarginContainer/VBoxContainer/ContinueTexture/Continue
+@onready var new_game_button = $MarginContainer/VBoxContainer/NewGameTexture/NewGame
+@onready var load_saves_button = $MarginContainer/VBoxContainer/LoadSaveTexture/LoadSaves
+@onready var option_button = $MarginContainer/VBoxContainer/OptionsTexture/Option
+@onready var exit_button = $MarginContainer/VBoxContainer/ExitTexture/Exit
+
+# Confirmation dialog buttons
+@onready var new_game_confirm = $ConfirmNewGame/TextureRect2/HBoxContainer/NewGameConfirm
+@onready var new_game_cancel = $ConfirmNewGame/TextureRect2/TextureButton
 
 var exit: bool = false
 var options: bool = false
@@ -38,10 +52,10 @@ func _ready():
 func update_button_visibility():
 	var has_saves = SaveManager.has_any_saves()
 	
-	play_button.visible = not has_saves
-	new_game.visible = has_saves
-	load_saves.visible = has_saves
-	continue_button.visible = has_saves
+	play_texture.visible = not has_saves
+	new_game_texture.visible = has_saves
+	load_saves_texture.visible = has_saves
+	continue_texture.visible = has_saves
 
 func _on_play_pressed():
 	# Reset game state
@@ -70,19 +84,6 @@ func on_exit_options_menu():
 func _on_cancel_pressed():
 	AudioController.play_sfx("button_select")
 	confirm_quit.visible = false
-
-func _on_confirm_pressed():
-	AudioController.play_sfx("button_select")
-	# Stop any running animations
-	animation_player.stop()
-	# Optional: Play a fade out animation before quitting
-	if animation_player.has_animation("fade_out"):
-		animation_player.play("fade_out")
-		# Wait for animation to finish before quitting
-		await animation_player.animation_finished
-	# Cleanup before quitting
-	MenuAudioController.stop_music()
-	get_tree().quit()
 
 func _on_exit_pressed():
 	AudioController.play_sfx("button_select")
@@ -217,6 +218,7 @@ func _on_new_game_mouse_entered():
 
 func _on_new_game_confirm_pressed():
 	# Delete all saves
+	AudioController.play_sfx("button_select")
 	SaveManager.delete_all_saves()
 	
 	confirm_new_game.visible = false
@@ -232,5 +234,32 @@ func _on_new_game_confirm_pressed():
 		GameMusicController.play_music()
 		get_tree().change_scene_to_file("res://scenes/world/levels_new/level_0.tscn")
 
-func _on_new_game_cancel_pressed():
+func _on_texture_button_pressed():
 	confirm_new_game.visible = false
+	AudioController.play_sfx("button_select")
+
+func _on_confirm_cancle_pressed():
+	confirm_quit.visible = false
+	AudioController.play_sfx("button_select")
+
+func _on_confirm_quit_pressed():
+	AudioController.play_sfx("button_select")
+	# Stop any running animations
+	animation_player.stop()
+	# Optional: Play a fade out animation before quitting
+	if animation_player.has_animation("fade_out"):
+		animation_player.play("fade_out")
+		# Wait for animation to finish before quitting
+		await animation_player.animation_finished
+	# Cleanup before quitting
+	MenuAudioController.stop_music()
+	get_tree().quit()
+
+func _on_texture_button_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_confirm_cancle_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_confirm_quit_mouse_entered():
+	AudioController.play_sfx("button_hover")

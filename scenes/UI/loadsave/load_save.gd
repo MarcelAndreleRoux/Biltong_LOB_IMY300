@@ -22,14 +22,6 @@ func _ready():
 	# Add to your existing _ready() code
 	confirm_delete.visible = false
 	
-	# Connect confirmation buttons
-	confirm_delete_yes.pressed.connect(_on_confirm_delete_pressed)
-	confirm_delete_no.pressed.connect(_on_cancel_delete_pressed)
-	
-	# Add hover sound effects
-	confirm_delete_yes.mouse_entered.connect(_on_button_hover)
-	confirm_delete_no.mouse_entered.connect(_on_button_hover)
-	
 	# Show all save backgrounds by default
 	for background in save_backgrounds:
 		if background != null:
@@ -51,11 +43,6 @@ func _ready():
 			delete_buttons[i].visible = false  # Hide delete buttons initially
 	
 	update_save_slots()
-
-func _on_cancel_delete_pressed():
-	AudioController.play_sfx("button_select")
-	confirm_delete.visible = false
-	pending_delete_slot = -1
 
 func _on_button_hover():
 	AudioController.play_sfx("button_hover")
@@ -211,3 +198,15 @@ func _on_confirm_delete_pressed():
 			get_tree().change_scene_to_file("res://scenes/UI/menu.tscn")
 	
 	pending_delete_slot = -1
+
+func _on_cancel_pressed():
+	AudioController.play_sfx("button_select")
+	confirm_delete.visible = false
+	pending_delete_slot = -1
+
+
+func _on_cancel_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_confirm_delete_mouse_entered():
+	AudioController.play_sfx("button_hover")
