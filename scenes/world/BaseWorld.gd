@@ -82,29 +82,32 @@ const HELPFUL_MESSAGES = {
 	"water_throwable": "Didn't these make the vines grow back, never understood why they made this",
 	
 	# animals
-	"turtle_scared": "Oh wow... Looks like this big creature is scared of me",
-	"lizard_meating": "How did these not die out yet.. They were always too cute for me to handle... And deadly",
+	"turtle_scared": "Oh wow... Looks like this big creature is scared of me...",
+	"lizard_meating": "These lizards killed a lot of my friends... need to watchout for their radius...",
+	
 	"hedgehog_meating": "Seems like he had enough of the tourcher... in some ways they did the same to me...",
-	"hedgehog_meating_2": "They always liked takeing me out for experiments and tourcher us nonstop",
+	"hedgehog_meating_2": "They always liked takeing me out for experiments and tourchered on me so... so... much...",
 	"hedgehog_meating_3": "Why did they do it so much... in and out of those pods... let me just get out...",
 	
-	"metal_box": "Looks like the metal box was moved here a lot...",
+	"metal_box": "Looks like the metal box was moved here a lot... Wonder why...",
+	"metal_box_conduct": "I remember these boxes conducted electricity and held the charge for a few seconds...",
+	"IfeelFree": "Finally I can feel the fresh air on my skin again... After so long I finally escaped this place..."
 }
 
 const LEVEL_HELP = {
-	"help_level10": "Aww... looks like the lizard got cold going into the water, maybe if I remove the puddle",
-	"help_level10_fire": "Hmmm... Looks like I still need something else to get him to warm up",
+	"help_level10": "Looks like the lizard's kill area got smaller when wet and loses all of its electical charge...",
+	"help_level10_fire": "I should try warming him back up, let try throwing him with fire...",
 }
 
 const BODY_DIALOG = {
-	"diffie": "Diffie... Seems about right, he never was a smart one",
-	"yan": "Yan... really... never though he would die like this... Always something cooler",
+	"diffie": "Ahh... Diffie... Well at least you can't be strict if you are dead",
+	"yan": "Y.. Yan... Noooooo... Why did he die like this and so close to the end...",
 	"dave": "Da.. Dave... W... What happend to you... You were always so good to me",
 }
 
 const LAST_LEVEL_DIALOG = {
 	"Breeding": "Isn't this the chamber where they do all their experiments on the animals...",
-	"broken_pod": "Seems like one of the procupines got out here... Wonder where he went...",
+	"broken_pod": "Seems like one of the hedgehogs got out here... Wonder where he went...",
 	"lots_dead": "Oh... Oh my... what happened here...",
 }
 
@@ -137,10 +140,21 @@ func _ready():
 	SharedSignals.start_player_screen_shake.connect(_start_player_screen_shake)
 	SharedSignals.is_scared_signal.connect(_on_is_scared_signal)
 	SharedSignals.shake_hedgehog.connect(_shake_shake)
+	SharedSignals.dont_show_inventory.connect(_on_dont_show_inventory)
 	trajectory_collision_state.connect(_on_trajectory_collision)
 	SharedSignals.play_pickup_notification.connect(_display_player_pickup_popup)
 	SharedSignals.move_mouse_around.connect(_mouse_move_popup)
 	SharedSignals.turtle_scared_popup.connect(_turtle_popup)
+	SharedSignals.player_name_popup.connect(_player_name_popup)
+	SharedSignals.metal_box_move.connect(_on_metal_popup)
+	SharedSignals.metal_box_conduct.connect(_on_metal_box_conduct_pickup)
+	SharedSignals.IfeelFree.connect(_on_IfeelFree)
+	SharedSignals.lizard_telling.connect(_on_lizard_telling)
+	SharedSignals.lizard_new.connect(_on_lizard_new)
+	SharedSignals.breeding_room.connect(_on_breeding_room)
+	SharedSignals.lots_dead.connect(_on_lots_dead)
+	SharedSignals.what_happend.connect(_on_what_happend)
+	SharedSignals.final_dialog.connect(_on_final_dialog)
 	
 	SharedSignals.trowable.connect(_on_throwable_popup)
 	SharedSignals.fire_trowable.connect(_on_fire_throwable_popup)
@@ -166,6 +180,119 @@ func _ready():
 		enemy_raycast.add_exception(hedgehog)
 
 # ------------------------------------------- POPUP ------------------------------------------------
+
+var already_checked_final: bool = false
+
+func _on_final_dialog():
+	if not already_checked_final:
+		var success = popup_manager.create_popup(HELPFUL_MESSAGES.hedgehog_meating)
+		if not success:
+			return
+		
+		already_checked_final = true
+		await get_tree().create_timer(8.0).timeout
+		on_final_dialog_two()
+
+func on_final_dialog_two():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.hedgehog_meating_2)
+	if not success:
+		return
+		
+	await get_tree().create_timer(8.0).timeout
+	on_final_dialog_three()
+
+func on_final_dialog_three():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.hedgehog_meating_3)
+	if not success:
+		return
+
+var already_checked_what: bool = false
+
+func _on_what_happend():
+	if not already_checked_what:
+		var success = popup_manager.create_popup(LAST_LEVEL_DIALOG.broken_pod)
+		already_checked_what = true
+		if not success:
+			pass
+
+var already_checked_lots: bool = false
+
+func _on_lots_dead():
+	if not already_checked_lots:
+		var success = popup_manager.create_popup(LAST_LEVEL_DIALOG.lots_dead)
+		already_checked_lots = true
+		if not success:
+			pass
+
+var already_checked_breed: bool = false
+
+func _on_breeding_room():
+	if not already_checked_breed:
+		var success = popup_manager.create_popup(LAST_LEVEL_DIALOG.Breeding)
+		already_checked_breed = true
+		if not success:
+			pass
+
+var already_checked_l: bool = false
+
+func _on_lizard_new():
+	if not already_checked_l:
+		var success = popup_manager.create_popup(HELPFUL_MESSAGES.lizard_meating)
+		already_checked_l = true
+		if not success:
+			pass
+
+var already_checked: bool = false
+	
+func _on_lizard_telling():
+	if not already_checked:
+		var success = popup_manager.create_popup(LEVEL_HELP.help_level10)
+		already_checked = true
+		await get_tree().create_timer(8.0).timeout
+		_next_help_level10_fire()
+		if not success:
+			pass
+
+func _next_help_level10_fire():
+	var success = popup_manager.create_popup(LEVEL_HELP.help_level10_fire)
+	if not success:
+		pass
+
+func _on_metal_box_conduct_pickup():
+	if not GlobalValues.was_metal_box_picked_up:
+		var success = popup_manager.create_popup(HELPFUL_MESSAGES.metal_box_conduct)
+		GlobalValues.was_metal_box_picked_up = true
+		if not success:
+			pass
+
+func _on_metal_popup():
+	if not GlobalValues.was_metal_box_area:
+		var success = popup_manager.create_popup(HELPFUL_MESSAGES.metal_box)
+		GlobalValues.was_metal_box_area = true
+		if not success:
+			pass
+
+var already_done_popup: bool = false
+
+func _player_name_popup(player_name):
+	if player_name == "yan":
+		if not already_done_popup:
+			var success = popup_manager.create_popup(BODY_DIALOG.yan)
+			already_done_popup = true
+			if not success:
+				pass
+	elif player_name == "dave":
+		if not already_done_popup:
+			var success = popup_manager.create_popup(BODY_DIALOG.dave)
+			already_done_popup = true
+			if not success:
+				pass
+	elif player_name == "diffie":
+		if not already_done_popup:
+			var success = popup_manager.create_popup(BODY_DIALOG.diffie)
+			already_done_popup = true
+			if not success:
+				pass
 
 func _turtle_popup():
 	if not GlobalValues.was_trutle_scared:
@@ -206,7 +333,15 @@ func show_hazmat_warning():
 	if not success:
 		pass
 
+func _on_IfeelFree():
+	var success = popup_manager.create_popup(HELPFUL_MESSAGES.IfeelFree)
+	if not success:
+		pass
+
 # --------------------------------------------------------------------------------------------------
+
+func _on_dont_show_inventory():
+	inventory_canvas.visible = false
 
 func _setup_player_position():
 	# Wait for frames to ensure scene is fully loaded
@@ -302,10 +437,11 @@ func _remove_blocking_collision_shape():
 		blocking_body = null
 
 func _start_player_screen_shake(state: bool):
-	if state:
-		shake_camera.start_endless_shake_semi_small()
-	else:
-		shake_camera.stop_endless_shake()
+	if shake_camera:
+		if state:
+			shake_camera.start_endless_shake_semi_small()
+		else:
+			shake_camera.stop_endless_shake()
 
 func _on_game_finished():
 	win_state.win()

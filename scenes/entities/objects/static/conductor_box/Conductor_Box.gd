@@ -59,6 +59,11 @@ func _is_dragging(state: bool, target_box_id: int):
 	if target_box_id != box_id:
 		return
 	
+	action_button_press.visible = false
+	
+	if not GlobalValues.was_metal_box_picked_up:
+		SharedSignals.metal_box_conduct.emit()
+	
 	if state and player_in_area:
 		is_being_dragged = state
 		if turning_off:
@@ -88,6 +93,7 @@ func _on_move_area_body_entered(body: Node2D):
 				GlobalValues.has_pickeup_c_box_once = true
 				action_button_press.play("default")
 				action_button_press.visible = true
+				SharedSignals.metal_box_move.emit()
 				_some_waiting_timer()
 			else:
 				action_button_press.visible = false

@@ -14,6 +14,7 @@ signal request_spawn_projectile
 signal player_killed
 signal death_finished
 signal push_player_forward
+signal detact_hazmat_now
 
 # Projectile Signals
 signal projectile_gone
@@ -116,6 +117,10 @@ signal drag_box
 signal wall_detected
 signal is_dragging_box
 
+signal player_name_popup
+signal metal_box_move
+signal metal_box_conduct
+
 signal box_entered_area
 signal box_exited_area
 signal drop_current_box
@@ -126,3 +131,13 @@ signal trowable
 signal fire_trowable
 signal water_trowable
 signal turtle_scared_popup
+
+signal lizard_telling
+signal lizard_new
+signal breeding_room
+signal lots_dead
+signal what_happend
+signal final_dialog
+
+signal IfeelFree
+signal dont_show_inventory

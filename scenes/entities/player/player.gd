@@ -127,6 +127,7 @@ func _ready():
 	
 	SharedSignals.box_entered_area.connect(_on_box_entered_area)
 	SharedSignals.box_exited_area.connect(_on_box_exited_area)
+	SharedSignals.detact_hazmat_now.connect(detact_hazmat)
 
 func _on_box_entered_area(box: Node2D):
 	if not boxes_in_range.has(box):
@@ -194,7 +195,13 @@ func acquire_hazmat():
 		GlobalValues.hazmat_picked_up = true
 		current_skin = PlayerSkin.HAZMAT
 		_update_active_animation_tree()
-		skin_changed.emit("hazmat")
+
+func detact_hazmat():
+	if has_hazmat:
+		has_hazmat = false
+		GlobalValues.hazmat_picked_up = false
+		current_skin = PlayerSkin.CENSORED_NUDE if GlobalValues.get_censorship_enabled() else PlayerSkin.NUDE
+		_update_active_animation_tree()
 
 func _physics_process(delta):
 	_handle_movement_input()

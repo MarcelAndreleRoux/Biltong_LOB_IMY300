@@ -78,7 +78,8 @@ func _on_action_area_body_entered(body):
 		player_in_area = true
 		
 		if eating and not GlobalValues.food_already_picked:
-			SharedSignals.play_pickup_notification.emit()
+			if not GlobalValues.was_trowable_checked:
+				SharedSignals.play_pickup_notification.emit()
 		elif not eating and not GlobalValues.food_already_picked:
 			can_still_pickup = true
 			animated_sprite_2d.play("pickup")

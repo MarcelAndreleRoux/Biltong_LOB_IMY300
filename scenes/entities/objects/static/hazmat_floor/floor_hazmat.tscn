@@ -1,0 +1,106 @@
+[gd_scene load_steps=16 format=3 uid="uid://bdda8lteucqhk"]
+
+[ext_resource type="Script" path="res://scenes/entities/objects/static/hazmat_floor/floor_hazmat.gd" id="1_hn384"]
+[ext_resource type="Texture2D" uid="uid://dksiekt2m72pn" path="res://assets/sprites/objects/static/hazmat pickup/floor_hazmat2.png" id="2_nydjs"]
+[ext_resource type="Texture2D" uid="uid://mwb1g87382bt" path="res://assets/sprites/objects/static/hazmat pickup/floor_hazmat1.png" id="2_q6svy"]
+[ext_resource type="AudioStream" uid="uid://brx6laeo7mukv" path="res://assets/soundeffects/Everything_player/clothes-drop-2-40202.mp3" id="3_jqm0q"]
+[ext_resource type="Texture2D" uid="uid://vvyqnvg7ove0" path="res://assets/sprites/UI/Keycaps/Keycaps-E-sheet.png" id="4_5uvan"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7niu"]
+atlas = ExtResource("2_nydjs")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0s8u"]
+atlas = ExtResource("2_q6svy")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_glcsk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7niu")
+}],
+"loop": true,
+"name": &"added",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0s8u")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5i4vm"]
+size = Vector2(40, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ci0o"]
+atlas = ExtResource("4_5uvan")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d33al"]
+atlas = ExtResource("4_5uvan")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jehqo"]
+atlas = ExtResource("4_5uvan")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjtr6"]
+atlas = ExtResource("4_5uvan")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ldys"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ci0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d33al")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jehqo")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_gjtr6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4vqg6"]
+size = Vector2(61, 43)
+
+[node name="FloorHazmat" type="StaticBody2D"]
+script = ExtResource("1_hn384")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_glcsk")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_5i4vm")
+disabled = true
+
+[node name="pickup_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jqm0q")
+volume_db = 10.0
+bus = &"Sfx"
+
+[node name="ActionButtonPress" type="AnimatedSprite2D" parent="."]
+position = Vector2(21, -15)
+sprite_frames = SubResource("SpriteFrames_8ldys")
+
+[node name="PickupArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(-0.5, 1.5)
+shape = SubResource("RectangleShape2D_4vqg6")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="body_exited" from="PickupArea" to="." method="_on_pickup_area_body_exited"]

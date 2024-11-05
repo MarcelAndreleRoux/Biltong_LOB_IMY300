@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dw205vwfju7w2"]
+[gd_scene load_steps=7 format=3 uid="uid://dw205vwfju7w2"]
 
 [ext_resource type="Script" path="res://scenes/UI/death.gd" id="1_3le3y"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="2_dmx07"]
 [ext_resource type="Theme" uid="uid://c2lumoijk82ik" path="res://assets/themes/menu.tres" id="3_s2fbq"]
-[ext_resource type="Texture2D" uid="uid://c64txwxraypwi" path="res://assets/sprites/UI/Containers/menu.png" id="4_qb3yk"]
+[ext_resource type="Texture2D" uid="uid://bq3l1yx7ew4d6" path="res://assets/sprites/UI/background/ui_background.png" id="4_ifrbh"]
 [ext_resource type="AudioStream" uid="uid://d2vq2ttxwpc1b" path="res://assets/soundeffects/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3" id="5_g8oc2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ouqsq"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 0.670588)
 
 [node name="Death" type="CanvasLayer"]
 process_mode = 3
@@ -16,6 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ouqsq")
 
 [node name="ShakeCamera" parent="." instance=ExtResource("2_dmx07")]
 
@@ -26,44 +30,49 @@ offset_right = 480.0
 offset_bottom = 272.0
 theme = ExtResource("3_s2fbq")
 
-[node name="TextureRect2" type="TextureRect" parent="Control"]
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -74.5
-offset_top = -65.5
-offset_right = 74.5
-offset_bottom = 65.5
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_qb3yk")
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/TextureRect2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -39.5
-offset_top = -19.0
-offset_right = 39.5
-offset_bottom = 19.0
+offset_left = -59.0
+offset_top = -9.0
+offset_right = 69.0
+offset_bottom = 59.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/TextureRect2/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="Restart" type="Button" parent="Control/TextureRect2/MarginContainer/VBoxContainer"]
+[node name="RestartbuttonTexture" type="TextureRect" parent="Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+texture = ExtResource("4_ifrbh")
+stretch_mode = 2
+
+[node name="Restart" type="Button" parent="Control/MarginContainer/VBoxContainer/RestartbuttonTexture"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 6.0
+offset_right = 124.0
+offset_bottom = 26.0
 text = "restart"
 
-[node name="Exit" type="Button" parent="Control/TextureRect2/MarginContainer/VBoxContainer"]
+[node name="ExitbuttonTexture" type="TextureRect" parent="Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+texture = ExtResource("4_ifrbh")
+stretch_mode = 2
+
+[node name="Exit" type="Button" parent="Control/MarginContainer/VBoxContainer/ExitbuttonTexture"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 6.0
+offset_right = 124.0
+offset_bottom = 26.0
 text = "exit"
 
 [node name="Label" type="Label" parent="Control"]
@@ -71,17 +80,40 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -90.0
-offset_right = 90.0
-offset_bottom = 83.0
+offset_left = -105.0
+offset_top = 19.0
+offset_right = 105.0
+offset_bottom = 102.0
 grow_horizontal = 2
-text = "Dead"
+theme_override_colors/font_color = Color(0.776471, 0.247059, 0.243137, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 60
+text = "You Died"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Control/Label"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.0
+offset_top = 35.0
+offset_right = 116.0
+offset_bottom = 118.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 40
+text = "Try Again"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ButtonSelect" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_g8oc2")
 
-[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_mouse_entered"]
-[connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
-[connection signal="mouse_entered" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_mouse_entered"]
-[connection signal="pressed" from="Control/TextureRect2/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/RestartbuttonTexture/Restart" to="." method="_on_restart_mouse_entered"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/RestartbuttonTexture/Restart" to="." method="_on_restart_pressed"]
+[connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/ExitbuttonTexture/Exit" to="." method="_on_exit_mouse_entered"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ExitbuttonTexture/Exit" to="." method="_on_exit_pressed"]
 [connection signal="finished" from="ButtonSelect" to="." method="_on_button_select_finished"]

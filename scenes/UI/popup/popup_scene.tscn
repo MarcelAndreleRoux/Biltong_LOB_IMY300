@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://blho0rehqk2eu"]
+[gd_scene load_steps=6 format=3 uid="uid://blho0rehqk2eu"]
 
 [ext_resource type="Script" path="res://scenes/UI/popup/popup_scene.gd" id="1_kl14d"]
 [ext_resource type="FontFile" uid="uid://c5ighfsjremqg" path="res://assets/sprites/UI/Font/thin_pixel-7.ttf" id="1_njmxu"]
 [ext_resource type="Texture2D" uid="uid://cipo307gix6qj" path="res://assets/sprites/UI/popup/Toast (1).png" id="2_qf00d"]
+[ext_resource type="AudioStream" uid="uid://blbj72vvq2xys" path="res://assets/soundeffects/Eveything_ui/achievement_sound.mp3" id="4_g5ox5"]
 
 [sub_resource type="Theme" id="Theme_hv5y5"]
 Label/colors/font_color = Color(1, 1, 1, 1)
@@ -42,5 +43,10 @@ offset_left = 105.0
 offset_top = 2.0
 offset_right = 110.0
 offset_bottom = 7.0
+
+[node name="popup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_g5ox5")
+volume_db = -10.0
+pitch_scale = 0.8
 
 [connection signal="pressed" from="TextureRect/TextureButton" to="." method="_on_texture_button_pressed"]

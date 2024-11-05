@@ -5,12 +5,15 @@ signal popup_closed(popup_instance)
 
 @onready var label = $TextureRect/Label
 @onready var texture_button = $TextureRect/TextureButton
+@onready var popup = $popup
 
 var time_alive = 0
-const POPUP_LIFETIME = 5.0
+const POPUP_LIFETIME = 7.0
 
 func _ready():
 	texture_button.pressed.connect(_close_popup)
+	
+	popup.play()
 	
 	var cooldown_timer = Timer.new()
 	cooldown_timer.wait_time = POPUP_LIFETIME

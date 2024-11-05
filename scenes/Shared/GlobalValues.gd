@@ -16,6 +16,7 @@ var can_swap_water: bool = false
 var spotted_food: bool = false
 var food_visible: bool = false
 var playing_game: bool = false
+var hazmat_floor_added: bool = false
 
 # popups animals
 var was_trutle_scared: bool = false
@@ -25,10 +26,9 @@ var was_hedgehog_seen: bool = false
 # popup throwable
 var was_trowable_checked: bool = false
 
-# popup characters
-var was_on_yan: bool = false
-var was_on_dave: bool = false
-var was_on_diffie: bool = false
+# popup box
+var was_metal_box_picked_up: bool = false
+var was_metal_box_area: bool = false
 
 # Pickups (e.g. box, firebush, waterbush)
 var has_pickeup_box_once: bool = false

@@ -1,12 +1,12 @@
-[gd_scene load_steps=29 format=3 uid="uid://csut8g175gosg"]
+[gd_scene load_steps=30 format=3 uid="uid://csut8g175gosg"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_2u7yh"]
-[ext_resource type="PackedScene" uid="uid://bh78atl44xeca" path="res://scenes/UI/chamber_number.tscn" id="2_mrbh8"]
+[ext_resource type="PackedScene" path="res://scenes/UI/chamber_number.tscn" id="2_mrbh8"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="3_1tq7w"]
 [ext_resource type="TileSet" uid="uid://t322bb5420cb" path="res://scenes/world/level_tileset/new-look.tres" id="4_yi43i"]
 [ext_resource type="Script" path="res://scenes/world/levels_test/InScreenTransition.gd" id="5_gfcuy"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="6_ks1hh"]
-[ext_resource type="PackedScene" uid="uid://bab22tyvvhbvh" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="7_8vt8j"]
+[ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="7_8vt8j"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="8_ma870"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="9_73txv"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="10_wkiur"]
@@ -32,6 +32,9 @@ size = Vector2(1, 85)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0etkq"]
 size = Vector2(114, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2ib7"]
+size = Vector2(98, 20)
 
 [node name="BaseLevel4" type="Node2D"]
 y_sort_enabled = true
@@ -125,6 +128,12 @@ visible = false
 position = Vector2(448, 256)
 
 [node name="Food" type="Node" parent="." groups=["food"]]
+
+[node name="FinalDialog" type="Area2D" parent="."]
+position = Vector2(640, 634)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinalDialog"]
+shape = SubResource("RectangleShape2D_n2ib7")
 
 [node name="LevelTransition" parent="." instance=ExtResource("13_1n78b")]
 position = Vector2(640, 423)
@@ -692,3 +701,4 @@ door_link_id = "b1"
 [connection signal="body_exited" from="InScreenTransition" to="InScreenTransition" method="_on_body_exited"]
 [connection signal="body_entered" from="InScreenTransition2" to="InScreenTransition2" method="_on_body_entered"]
 [connection signal="body_exited" from="InScreenTransition2" to="InScreenTransition2" method="_on_body_exited"]
+[connection signal="body_entered" from="FinalDialog" to="." method="_on_final_dialog_body_entered"]

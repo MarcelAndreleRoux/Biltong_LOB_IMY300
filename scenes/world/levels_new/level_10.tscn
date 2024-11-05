@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bf1ph5sca0ows"]
+[gd_scene load_steps=23 format=3 uid="uid://bf1ph5sca0ows"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_7m3mb"]
 [ext_resource type="PackedScene" path="res://scenes/UI/chamber_number.tscn" id="2_lb88e"]
@@ -21,6 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="20_563fw"]
 [ext_resource type="PackedScene" uid="uid://bkrm2mrsge218" path="res://scenes/entities/objects/static/waterpod/water_puddle.tscn" id="20_doc3v"]
 [ext_resource type="PackedScene" uid="uid://cvepijo572tly" path="res://scenes/entities/objects/static/campfire/campfire.tscn" id="21_y38ww"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3aq7"]
+size = Vector2(67, 20)
 
 [node name="BaseLevel" type="Node2D"]
 y_sort_enabled = true
@@ -262,3 +265,11 @@ door_link_id = "2"
 [node name="MBoard6" parent="." instance=ExtResource("12_vwvrx")]
 position = Vector2(360, 112)
 door_link_id = "4"
+
+[node name="Level10" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level10"]
+position = Vector2(240, 233)
+shape = SubResource("RectangleShape2D_i3aq7")
+
+[connection signal="body_entered" from="Level10" to="." method="_on_level_10_body_entered"]
