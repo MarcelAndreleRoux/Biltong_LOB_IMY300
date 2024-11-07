@@ -93,7 +93,6 @@ func _on_move_area_body_entered(body: Node2D):
 				GlobalValues.has_pickeup_c_box_once = true
 				action_button_press.play("default")
 				action_button_press.visible = true
-				SharedSignals.metal_box_move.emit()
 				_some_waiting_timer()
 			else:
 				action_button_press.visible = false

@@ -117,6 +117,7 @@ func _exit_options():
 	options_menu.visible = false
 
 func _on_cancelbutton_pressed():
+	AudioController.play_sfx("button_select")
 	confirm_quit.visible = false
 
 func _on_cancelbutton_mouse_entered():

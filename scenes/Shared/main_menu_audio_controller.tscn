@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://btevp77vj1a2o"]
+[gd_scene load_steps=4 format=3 uid="uid://btevp77vj1a2o"]
 
 [ext_resource type="Script" path="res://scenes/Shared/main_menu_audio_controller.gd" id="1_ad78n"]
 [ext_resource type="AudioStream" uid="uid://dn7w4rrpsf6t7" path="res://assets/music/MenuMusic.mp3" id="2_jn1yj"]
+[ext_resource type="AudioStream" uid="uid://dknj0r4cbaoih" path="res://assets/music/Game.mp3" id="3_cj5jl"]
 
 [node name="MenuAudioController" type="Node"]
 script = ExtResource("1_ad78n")
 
 [node name="Track1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_jn1yj")
+bus = &"Music"
+
+[node name="Track2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_cj5jl")
 bus = &"Music"

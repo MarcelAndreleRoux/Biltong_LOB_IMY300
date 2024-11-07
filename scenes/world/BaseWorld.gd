@@ -97,6 +97,7 @@ const HELPFUL_MESSAGES = {
 const LEVEL_HELP = {
 	"help_level10": "Looks like the lizard's kill area got smaller when wet and loses all of its electical charge...",
 	"help_level10_fire": "I should try warming him back up, let try throwing him with fire...",
+	"button_blue": "Seems like blue buttons act like a toggle swtich... Interesting...",
 }
 
 const BODY_DIALOG = {

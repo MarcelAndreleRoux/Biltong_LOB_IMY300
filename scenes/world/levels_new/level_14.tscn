@@ -122,9 +122,9 @@ position = Vector2(56, -48)
 metadata/_edit_lock_ = true
 
 [node name="Credit Text" parent="Credits" instance=ExtResource("2_8qnkd")]
-offset_left = -15.0
+offset_left = -1.0
 offset_top = 7.0
-offset_right = 123.0
+offset_right = 137.0
 offset_bottom = 55.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 text = "Game Design"
@@ -132,9 +132,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Name Text" parent="Credits" instance=ExtResource("2_8qnkd")]
 z_index = 1
-offset_left = -15.0
+offset_left = -2.0
 offset_top = 45.0
-offset_right = 123.0
+offset_right = 136.0
 offset_bottom = 95.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 theme_override_font_sizes/font_size = 30
@@ -145,9 +145,9 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Credit Text1" parent="Credits" instance=ExtResource("2_8qnkd")]
-offset_left = 268.0
+offset_left = 218.0
 offset_top = -69.0
-offset_right = 404.0
+offset_right = 354.0
 offset_bottom = 11.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 text = "Programming"
@@ -167,10 +167,10 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Credit Text2" parent="Credits" instance=ExtResource("2_8qnkd")]
-offset_left = -35.0
-offset_top = -153.0
-offset_right = 156.0
-offset_bottom = -73.0
+offset_left = -7.0
+offset_top = -144.0
+offset_right = 184.0
+offset_bottom = -64.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 text = "Art & Animation"
 metadata/_edit_use_anchors_ = true
@@ -190,9 +190,9 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Credit Text3" parent="Credits" instance=ExtResource("2_8qnkd")]
-offset_left = 256.0
+offset_left = 203.0
 offset_top = -230.0
-offset_right = 404.0
+offset_right = 351.0
 offset_bottom = -150.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 text = "Level Design"
@@ -213,10 +213,10 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Credit Text4" parent="Credits" instance=ExtResource("2_8qnkd")]
-offset_left = -19.0
-offset_top = -303.0
-offset_right = 143.0
-offset_bottom = -223.0
+offset_left = -16.0
+offset_top = -309.0
+offset_right = 146.0
+offset_bottom = -229.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 text = "Sound Effects"
 metadata/_edit_use_anchors_ = true
@@ -236,10 +236,10 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Credit Text5" parent="Credits" instance=ExtResource("2_8qnkd")]
-offset_left = 295.0
-offset_top = -387.0
-offset_right = 355.0
-offset_bottom = -307.0
+offset_left = 289.0
+offset_top = -401.0
+offset_right = 349.0
+offset_bottom = -321.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 text = "Music"
 metadata/_edit_use_anchors_ = true
@@ -268,16 +268,22 @@ text = "Thanks for playing our game!"
 metadata/_edit_use_anchors_ = true
 
 [node name="Credit Text7" parent="Credits" instance=ExtResource("2_8qnkd")]
-offset_left = 108.0
+offset_left = 105.0
 offset_top = -759.0
-offset_right = 278.0
+offset_right = 275.0
 offset_bottom = -679.0
+size_flags_vertical = 1
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 text = "Special Thanks"
 metadata/_edit_use_anchors_ = true
 
 [node name="Special People" parent="Credits/Credit Text7" instance=ExtResource("2_8qnkd")]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00588235
+anchor_top = 0.05
+anchor_right = -0.00588235
+anchor_bottom = 0.05
 offset_left = 12.0
 offset_top = 128.0
 offset_right = 150.0
@@ -290,20 +296,28 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Special People3" parent="Credits/Credit Text7" instance=ExtResource("2_8qnkd")]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -1.0125
+anchor_bottom = -1.0125
 offset_left = 11.0
 offset_top = 156.0
 offset_right = 149.0
 offset_bottom = 188.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 theme_override_font_sizes/font_size = 30
-text = "Karla"
+text = "Anthea le Roux"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Special People2" parent="Credits/Credit Text7" instance=ExtResource("2_8qnkd")]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00588235
+anchor_top = 0.3625
+anchor_right = -0.00588235
+anchor_bottom = 0.3625
 offset_left = 11.0
 offset_top = 75.0
 offset_right = 149.0
@@ -316,29 +330,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Special People4" parent="Credits/Credit Text7" instance=ExtResource("2_8qnkd")]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 104.0
-offset_right = 150.0
-offset_bottom = 136.0
-theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
-theme_override_font_sizes/font_size = 30
-text = "Jadon de Wet
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
 [node name="Special People5" parent="Credits/Credit Text7" instance=ExtResource("2_8qnkd")]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00588235
+anchor_right = -0.00588235
 offset_left = 11.0
 offset_top = 47.0
 offset_right = 149.0
 offset_bottom = 79.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 theme_override_font_sizes/font_size = 30
-text = "Chrisver"
+text = "Chrisver Roots"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -425,11 +428,9 @@ position = Vector2(51, -328)
 
 [node name="Vines23" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
 position = Vector2(47, -343)
-plant_type = "small"
 
 [node name="Vines24" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
 position = Vector2(65, -325)
-plant_type = "small"
 
 [node name="Vines25" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
 position = Vector2(66, -307)
@@ -438,9 +439,159 @@ position = Vector2(66, -307)
 position = Vector2(79, -316)
 plant_type = "small"
 
+[node name="Vines35" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(79, -333)
+plant_type = "small"
+
+[node name="Vines36" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(72, -344)
+
+[node name="Vines37" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(62, -356)
+
+[node name="Vines38" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(79, -301)
+plant_type = "small"
+
+[node name="Vines39" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(93, -310)
+plant_type = "small"
+
+[node name="Vines40" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(92, -325)
+plant_type = "small"
+
+[node name="Vines41" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(107, -316)
+plant_type = "small"
+
+[node name="Vines42" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(121, -308)
+plant_type = "small"
+
+[node name="Vines43" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(106, -301)
+plant_type = "small"
+
+[node name="Vines44" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(107, -331)
+
+[node name="Vines45" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(94, -341)
+plant_type = "small"
+
+[node name="Vines46" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(122, -324)
+
+[node name="Vines47" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(135, -315)
+plant_type = "small"
+
+[node name="Vines48" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(77, -360)
+plant_type = "small"
+
+[node name="Vines49" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(84, -349)
+plant_type = "small"
+
+[node name="Vines50" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(92, -364)
+plant_type = "small"
+
+[node name="Vines51" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(100, -352)
+plant_type = "small"
+
+[node name="Vines52" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(107, -366)
+plant_type = "small"
+
+[node name="Vines53" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(115, -350)
+plant_type = "small"
+
+[node name="Vines55" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(122, -362)
+plant_type = "small"
+
+[node name="Vines56" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(130, -352)
+plant_type = "small"
+
+[node name="Vines57" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(116, -337)
+
+[node name="Vines58" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(131, -337)
+plant_type = "small"
+
+[node name="Vines59" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(143, -346)
+plant_type = "small"
+
+[node name="Vines60" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(158, -346)
+plant_type = "small"
+
+[node name="Vines61" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(139, -329)
+plant_type = "small"
+
+[node name="Vines62" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(153, -333)
+plant_type = "small"
+
+[node name="Vines63" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(174, -347)
+plant_type = "small"
+
+[node name="Vines64" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(140, -361)
+plant_type = "small"
+
+[node name="Vines65" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(-1, -398)
+plant_type = "small"
+
+[node name="Vines66" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(17, -387)
+plant_type = "small"
+
+[node name="Vines67" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(43, -375)
+plant_type = "small"
+
+[node name="Vines68" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(-2, -280)
+plant_type = "small"
+
+[node name="Vines69" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(31, -288)
+plant_type = "small"
+
+[node name="Vines70" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(149, -314)
+plant_type = "small"
+
+[node name="Vines71" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(144, -298)
+plant_type = "small"
+
+[node name="Vines72" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(162, -305)
+plant_type = "small"
+
+[node name="Vines73" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(176, -302)
+plant_type = "small"
+
+[node name="Vines54" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
+position = Vector2(61, -373)
+plant_type = "small"
+
 [node name="Vines27" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
 position = Vector2(60, -340)
-plant_type = "small"
 
 [node name="Vines28" parent="Vines/Vines" instance=ExtResource("13_wt4l6")]
 position = Vector2(37, -365)
@@ -665,243 +816,301 @@ plant_type = "small"
 [node name="Vines26" parent="." instance=ExtResource("13_wt4l6")]
 position = Vector2(395, -178)
 
+[node name="Vines62" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(375, 67)
+plant_type = "small"
+
+[node name="Vines63" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(387, 36)
+plant_type = "small"
+
+[node name="Vines64" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(385, 81)
+plant_type = "small"
+
+[node name="Vines65" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(399, 80)
+plant_type = "small"
+
+[node name="Vines66" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(417, 82)
+plant_type = "small"
+
+[node name="Vines67" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(432, 78)
+plant_type = "small"
+
+[node name="Vines68" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(450, 80)
+plant_type = "small"
+
+[node name="Vines69" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(457, 64)
+plant_type = "small"
+
+[node name="Vines70" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(456, 52)
+plant_type = "small"
+
+[node name="Vines71" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(458, 34)
+plant_type = "small"
+
+[node name="Vines72" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(458, 18)
+plant_type = "small"
+
+[node name="Vines73" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(471, 43)
+plant_type = "small"
+
+[node name="Vines74" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(469, 64)
+plant_type = "small"
+
+[node name="Vines75" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(465, 84)
+plant_type = "small"
+
+[node name="Vines76" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(446, 91)
+plant_type = "small"
+
+[node name="Vines77" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(456, 3)
+plant_type = "small"
+
+[node name="Vines78" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(427, 95)
+plant_type = "small"
+
+[node name="Vines79" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(403, 95)
+plant_type = "small"
+
+[node name="Vines80" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(362, 62)
+plant_type = "small"
+
+[node name="Vines81" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(387, 17)
+plant_type = "small"
+
+[node name="Vines82" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(416, -8)
+plant_type = "small"
+
+[node name="Vines83" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(470, 4)
+plant_type = "small"
+
+[node name="Vines84" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(465, -12)
+plant_type = "small"
+
+[node name="Vines85" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(389, 67)
+
+[node name="Vines86" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(373, 52)
+plant_type = "small"
+
+[node name="Vines87" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(415, 38)
+plant_type = "small"
+
+[node name="Vines88" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(430, 31)
+
+[node name="Vines89" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(401, 40)
+
+[node name="Vines90" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(402, 54)
+plant_type = "small"
+
+[node name="Vines91" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(403, 67)
+
+[node name="Vines92" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(417, 56)
+
+[node name="Vines93" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(417, 68)
+
+[node name="Vines94" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(431, 64)
+plant_type = "small"
+
+[node name="Vines95" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(444, 39)
+plant_type = "small"
+
+[node name="Vines96" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(444, 25)
+
+[node name="Vines97" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(430, 16)
+
+[node name="Vines98" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(403, 14)
+plant_type = "small"
+
+[node name="Vines99" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(416, 23)
+plant_type = "small"
+
+[node name="Vines100" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(400, 28)
+plant_type = "small"
+
+[node name="Vines101" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(430, 1)
+plant_type = "small"
+
+[node name="Vines102" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(416, 8)
+plant_type = "small"
+
+[node name="Vines103" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(444, -4)
+plant_type = "small"
+
+[node name="Vines104" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(428, 46)
+
+[node name="Vines105" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(444, 10)
+
+[node name="Vines106" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(442, 49)
+plant_type = "small"
+
+[node name="Vines107" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(443, 67)
+
+[node name="Vines108" parent="." instance=ExtResource("13_wt4l6")]
+position = Vector2(388, 51)
+plant_type = "small"
+
+[node name="Vines2" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-289, -121)
+plant_type = "small"
+
+[node name="Vines2" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-91, -358)
+plant_type = "small"
+
+[node name="Vines3" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-76, -342)
+plant_type = "small"
+
+[node name="Vines4" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-76, -358)
+
+[node name="Vines5" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-91, -374)
+plant_type = "small"
+
+[node name="Vines6" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-78, -373)
+
+[node name="Vines7" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-64, -369)
+
+[node name="Vines8" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-63, -353)
+plant_type = "small"
+
+[node name="Vines10" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-48, -353)
+plant_type = "small"
+
+[node name="Vines13" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-49, -369)
+
+[node name="Vines14" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-57, -384)
+plant_type = "small"
+
+[node name="Vines15" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-71, -385)
+
+[node name="Vines16" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-86, -389)
+
+[node name="Vines19" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-77, -400)
+plant_type = "small"
+
+[node name="Vines21" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-65, -396)
+plant_type = "small"
+
+[node name="Vines22" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-37, -363)
+plant_type = "small"
+
+[node name="Vines23" parent="Vines108/Vines2" instance=ExtResource("13_wt4l6")]
+position = Vector2(-41, -378)
+plant_type = "small"
+
+[node name="Vines3" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-274, -105)
+plant_type = "small"
+
+[node name="Vines4" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-274, -121)
+
+[node name="Vines5" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-289, -137)
+plant_type = "small"
+
+[node name="Vines6" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-276, -136)
+
+[node name="Vines7" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-262, -132)
+
+[node name="Vines8" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-261, -116)
+plant_type = "small"
+
+[node name="Vines10" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-246, -116)
+plant_type = "small"
+
+[node name="Vines13" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-247, -132)
+
+[node name="Vines14" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-255, -147)
+plant_type = "small"
+
+[node name="Vines15" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-269, -148)
+
+[node name="Vines16" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-284, -152)
+
+[node name="Vines19" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-275, -163)
+plant_type = "small"
+
+[node name="Vines21" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-263, -159)
+plant_type = "small"
+
+[node name="Vines22" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-235, -126)
+plant_type = "small"
+
+[node name="Vines23" parent="Vines108" instance=ExtResource("13_wt4l6")]
+position = Vector2(-239, -141)
+plant_type = "small"
+
 [node name="Vines27" parent="." instance=ExtResource("13_wt4l6")]
 position = Vector2(441, -197)
-plant_type = "small"
-
-[node name="Vines" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-69, 221)
-plant_type = "small"
-
-[node name="Vines2" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-57, 190)
-plant_type = "small"
-
-[node name="Vines27" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-59, 235)
-plant_type = "small"
-
-[node name="Vines28" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-45, 234)
-plant_type = "small"
-
-[node name="Vines29" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-27, 236)
-plant_type = "small"
-
-[node name="Vines30" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-12, 232)
-plant_type = "small"
-
-[node name="Vines31" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(6, 234)
-plant_type = "small"
-
-[node name="Vines32" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(13, 218)
-plant_type = "small"
-
-[node name="Vines33" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(12, 206)
-plant_type = "small"
-
-[node name="Vines34" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(14, 188)
-plant_type = "small"
-
-[node name="Vines35" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(14, 172)
-plant_type = "small"
-
-[node name="Vines36" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(27, 197)
-plant_type = "small"
-
-[node name="Vines37" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(25, 218)
-plant_type = "small"
-
-[node name="Vines38" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(21, 238)
-plant_type = "small"
-
-[node name="Vines39" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(2, 245)
-plant_type = "small"
-
-[node name="Vines40" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(12, 157)
-plant_type = "small"
-
-[node name="Vines41" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-17, 249)
-plant_type = "small"
-
-[node name="Vines42" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-41, 249)
-plant_type = "small"
-
-[node name="Vines43" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-82, 216)
-plant_type = "small"
-
-[node name="Vines44" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-57, 171)
-plant_type = "small"
-
-[node name="Vines45" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-28, 146)
-plant_type = "small"
-
-[node name="Vines46" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(26, 158)
-plant_type = "small"
-
-[node name="Vines47" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(21, 142)
-plant_type = "small"
-
-[node name="Vines3" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-55, 221)
-
-[node name="Vines4" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-71, 206)
-plant_type = "small"
-
-[node name="Vines5" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-29, 192)
-plant_type = "small"
-
-[node name="Vines6" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-14, 185)
-
-[node name="Vines7" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-43, 194)
-
-[node name="Vines8" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-42, 208)
-plant_type = "small"
-
-[node name="Vines9" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-41, 221)
-
-[node name="Vines10" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-27, 210)
-
-[node name="Vines11" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-27, 222)
-
-[node name="Vines12" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-13, 218)
-plant_type = "small"
-
-[node name="Vines13" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(0, 193)
-plant_type = "small"
-
-[node name="Vines14" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(0, 179)
-
-[node name="Vines15" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-14, 170)
-
-[node name="Vines16" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-41, 168)
-plant_type = "small"
-
-[node name="Vines17" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-28, 177)
-plant_type = "small"
-
-[node name="Vines18" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-44, 182)
-plant_type = "small"
-
-[node name="Vines19" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-14, 155)
-plant_type = "small"
-
-[node name="Vines20" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-28, 162)
-plant_type = "small"
-
-[node name="Vines21" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(0, 150)
-plant_type = "small"
-
-[node name="Vines22" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-16, 200)
-
-[node name="Vines23" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(0, 164)
-
-[node name="Vines24" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-2, 203)
-plant_type = "small"
-
-[node name="Vines25" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-1, 221)
-
-[node name="Vines26" parent="Vines27" instance=ExtResource("13_wt4l6")]
-position = Vector2(-56, 205)
-plant_type = "small"
-
-[node name="Vines2" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-291, -84)
-plant_type = "small"
-
-[node name="Vines3" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-276, -68)
-plant_type = "small"
-
-[node name="Vines4" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-276, -84)
-
-[node name="Vines5" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-291, -100)
-plant_type = "small"
-
-[node name="Vines6" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-278, -99)
-
-[node name="Vines7" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-264, -95)
-
-[node name="Vines8" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-263, -79)
-plant_type = "small"
-
-[node name="Vines10" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-248, -79)
-plant_type = "small"
-
-[node name="Vines13" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-249, -95)
-
-[node name="Vines14" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-257, -110)
-plant_type = "small"
-
-[node name="Vines15" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-271, -111)
-
-[node name="Vines16" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-286, -115)
-
-[node name="Vines19" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-277, -126)
-plant_type = "small"
-
-[node name="Vines21" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-265, -122)
-plant_type = "small"
-
-[node name="Vines22" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-237, -89)
-plant_type = "small"
-
-[node name="Vines23" parent="Vines27/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-241, -104)
 plant_type = "small"
 
 [node name="Vines28" parent="." instance=ExtResource("13_wt4l6")]
@@ -1826,6 +2035,6 @@ position = Vector2(400, -97)
 plant_type = "small"
 
 [node name="FloorHazmat" parent="." instance=ExtResource("15_rtpun")]
-position = Vector2(300, 150)
+position = Vector2(274, 160)
 
 [connection signal="body_entered" from="Yan" to="." method="_on_yan_body_entered"]

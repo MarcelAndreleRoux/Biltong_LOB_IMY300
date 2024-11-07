@@ -38,3 +38,7 @@ func _on_whathappend_body_entered(body):
 func _on_final_dialog_body_entered(body):
 	if body.is_in_group("player"):
 		SharedSignals.final_dialog.emit()
+
+func _on_area_2d_body_entered(body):
+	if body.is_in_group("player"):
+		SharedSignals.metal_box_move.emit()

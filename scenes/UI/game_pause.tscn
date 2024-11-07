@@ -153,13 +153,6 @@ layout_mode = 0
 offset_right = 481.0
 offset_bottom = 270.0
 
-[node name="cancelbutton" type="TextureButton" parent="Control/ConfirmQuit"]
-layout_mode = 0
-offset_left = 350.0
-offset_top = 91.0
-offset_right = 365.0
-offset_bottom = 107.0
-
 [node name="TextureRect2" type="TextureRect" parent="Control/ConfirmQuit"]
 layout_mode = 1
 anchors_preset = 8
@@ -175,6 +168,13 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_ycsqw")
 stretch_mode = 3
+
+[node name="cancelbutton" type="TextureButton" parent="Control/ConfirmQuit/TextureRect2"]
+layout_mode = 0
+offset_left = 277.5
+offset_top = 67.0
+offset_right = 292.5
+offset_bottom = 83.0
 
 [node name="Label" type="Label" parent="Control/ConfirmQuit/TextureRect2"]
 layout_mode = 1
@@ -236,8 +236,8 @@ bus = &"Sfx"
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/OptionsbuttonTexture/Options" to="." method="_on_options_pressed"]
 [connection signal="mouse_entered" from="Control/MarginContainer/VBoxContainer/ExitbuttonTexture/Exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ExitbuttonTexture/Exit" to="." method="_on_exit_pressed"]
-[connection signal="mouse_entered" from="Control/ConfirmQuit/cancelbutton" to="." method="_on_cancelbutton_mouse_entered"]
-[connection signal="pressed" from="Control/ConfirmQuit/cancelbutton" to="." method="_on_cancelbutton_pressed"]
+[connection signal="mouse_entered" from="Control/ConfirmQuit/TextureRect2/cancelbutton" to="." method="_on_cancelbutton_mouse_entered"]
+[connection signal="pressed" from="Control/ConfirmQuit/TextureRect2/cancelbutton" to="." method="_on_cancelbutton_pressed"]
 [connection signal="mouse_entered" from="Control/ConfirmQuit/TextureRect2/HBoxContainer/ConfirmExit" to="." method="_on_confirm_exit_mouse_entered"]
 [connection signal="pressed" from="Control/ConfirmQuit/TextureRect2/HBoxContainer/ConfirmExit" to="." method="_on_confirm_exit_pressed"]
 [connection signal="finished" from="ButtonSelect" to="." method="_on_button_select_finished"]

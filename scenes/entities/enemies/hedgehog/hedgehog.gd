@@ -10,7 +10,7 @@ enum HedgehogState {
 }
 
 @export var dart_scene: PackedScene
-@export var fire_rate: float = 0.5  # Time between each shot when shooting
+@export var fire_rate: float = 0.6  # Time between each shot when shooting
 @export var cone_angle_offset: float = 10.0  # Angle offset for side darts
 @export var angry_duration: float = 0.6  # Duration to stay angry before shooting
 @export var angry_up_duration: float = 0.6

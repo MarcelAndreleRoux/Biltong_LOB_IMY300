@@ -205,6 +205,19 @@ func _reset_game_state():
 	GlobalValues.food_already_picked = false
 	GlobalValues.hazmat_picked_up = false
 	GlobalValues.player_position = Vector2.ZERO
+	
+	# Reset popup-related values
+	GlobalValues.was_trutle_scared = false
+	GlobalValues.was_lizard_seen = false
+	GlobalValues.was_hedgehog_seen = false
+	GlobalValues.was_trowable_checked = false
+	GlobalValues.was_metal_box_picked_up = false
+	GlobalValues.was_metal_box_area = false
+	GlobalValues.spotted_food = false
+	GlobalValues.food_visible = false
+	
+	# Reset other state values
+	GlobalValues.hazmat_floor_added = false
 
 func _on_load_saves_pressed():
 	load_save_pressed = true

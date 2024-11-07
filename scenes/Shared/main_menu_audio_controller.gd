@@ -1,6 +1,8 @@
 extends Node
 
 @onready var track_1 = $Track1
+@onready var track_2 = $Track2
+
 @export var fade_in_out_time: float = 2.0
 
 var available_tracks: Array[AudioStreamPlayer] = []
@@ -14,7 +16,7 @@ var original_volumes: Dictionary = {}
 
 func _ready():
 	# Initialize available tracks
-	available_tracks = [track_1]
+	available_tracks = [track_1, track_2]
 	
 	# Store original volumes
 	for track in available_tracks:
