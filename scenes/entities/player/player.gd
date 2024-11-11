@@ -116,6 +116,10 @@ func _ready():
 	can_throw_proj = GlobalValues.can_throw
 	can_aim_throw = GlobalValues.can_throw
 	
+	if GlobalValues.can_swap_food:
+		# Restore food pickup state
+		_on_item_pickup()
+	
 	base_world.throw_action.connect(_on_throw_action)
 	
 	SharedSignals.player_move.connect(_change_speed)

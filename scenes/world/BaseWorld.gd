@@ -75,11 +75,11 @@ var food_visible: bool = false
 var previous_inventory: int = GlobalValues.INVENTORY_SELECT.NONE
 
 const HELPFUL_MESSAGES = {
-	"pickup_food": "Looks like the turtle likes these mushrooms maybe I should wait to pick one up",
-	"mouse_move": "This box looks light enough to drag around. I should be able to move it around with my mouse",
-	"throwable": "I remember them throwing these as turtle food... let me store it in my inventory for later",
-	"fire_throwable": "These caused a huge fire in the facility once.. I wonder if they still work",
-	"water_throwable": "Didn't these make the vines grow back, never understood why they made this",
+	"pickup_food": "Looks like the turtle likes these mushrooms maybe I should wait to pick one up...",
+	"mouse_move": "This box looks light enough to drag around. I should be able to move it around with my mouse...",
+	"throwable": "I remember them throwing these as turtle food... let me try getting the turtle to the red button with it...",
+	"fire_throwable": "These caused a huge fire in the facility once.. I wonder if they still work...",
+	"water_throwable": "Didn't these make the vines grow back, never understood why they made this...",
 	
 	# animals
 	"turtle_scared": "Oh wow... Looks like this big creature is scared of me...",
@@ -91,7 +91,8 @@ const HELPFUL_MESSAGES = {
 	
 	"metal_box": "Looks like the metal box was moved here a lot... Wonder why...",
 	"metal_box_conduct": "I remember these boxes conducted electricity and held the charge for a few seconds...",
-	"IfeelFree": "Finally I can feel the fresh air on my skin again... After so long I finally escaped this place..."
+	"IfeelFree": "Finally I can feel the fresh air on my skin again... After so long I finally escaped this place...",
+	"level_11_help": "I feel like I need to try and sneak past the lizard... Maybe I can make the charge field smaller..."
 }
 
 const LEVEL_HELP = {
@@ -101,7 +102,7 @@ const LEVEL_HELP = {
 }
 
 const BODY_DIALOG = {
-	"diffie": "Ahh... Diffie... Well at least you can't be strict if you are dead",
+	"diffie": "Ahh... Diffie... Well I remember him always knowing everything... Can spot a fake from a mile away...",
 	"yan": "Y.. Yan... Noooooo... Why did he die like this and so close to the end...",
 	"dave": "Da.. Dave... W... What happend to you... You were always so good to me",
 }
@@ -113,7 +114,7 @@ const LAST_LEVEL_DIALOG = {
 }
 
 const WARNING_MESSAGES = {
-	"hazmat": "I don't feel like going into the chambers unprotected, let me get a hazmat suite",
+	"hazmat": "I don't feel like going into the chambers unprotected, let me get a hazmat suite...",
 }
 
 func _ready():
@@ -156,7 +157,7 @@ func _ready():
 	SharedSignals.lots_dead.connect(_on_lots_dead)
 	SharedSignals.what_happend.connect(_on_what_happend)
 	SharedSignals.final_dialog.connect(_on_final_dialog)
-	
+	SharedSignals.more_detail_11.connect(_on_more_detail_11)
 	SharedSignals.trowable.connect(_on_throwable_popup)
 	SharedSignals.fire_trowable.connect(_on_fire_throwable_popup)
 	SharedSignals.water_trowable.connect(_on_water_throwable_popup)
@@ -181,6 +182,15 @@ func _ready():
 		enemy_raycast.add_exception(hedgehog)
 
 # ------------------------------------------- POPUP ------------------------------------------------
+
+var already_check_help_11: bool = false
+
+func _on_more_detail_11():
+	if not already_check_help_11:
+		var success = popup_manager.create_popup(HELPFUL_MESSAGES.level_11_help)
+		already_check_help_11 = true
+		if not success:
+			return
 
 var already_checked_final: bool = false
 
@@ -544,6 +554,7 @@ func _handle_aiming_and_throwing():
 
 func _on_item_pickup():
 	GlobalValues.can_throw = true
+	GlobalValues.can_swap_food = true
 	inventory_canvas.visible = true
 
 func _throw_item():

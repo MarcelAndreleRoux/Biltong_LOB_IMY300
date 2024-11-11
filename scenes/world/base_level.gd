@@ -42,3 +42,7 @@ func _on_final_dialog_body_entered(body):
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("player"):
 		SharedSignals.metal_box_move.emit()
+
+func _on_more_detail_area_2d_body_entered(body):
+	if body.is_in_group("player") and GlobalValues.has_pickup_water_once:
+		SharedSignals.more_detail_11.emit()

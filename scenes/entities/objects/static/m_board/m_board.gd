@@ -112,6 +112,10 @@ func _update_board_visuals():
 			SharedSignals.doorState.emit(door_link_id, false, get_instance_id())
 		disconnect_sound.play()
 
+# Add this to m_board.gd
+func is_default_board() -> bool:
+	return connector_name == "none"
+
 func stop_electricity(from_conductor: bool = false):
 	if connector_name == "none":
 		return

@@ -142,8 +142,7 @@ func _apply_save_data(save_data: Dictionary):
 	GlobalValues.hazmat_picked_up = save_data.hazmat_picked_up
 	
 	# Restore inventory state
-	if save_data.has("inventory_select"):
-		GlobalValues.set_inventory_select(save_data.inventory_select)
+	GlobalValues.inventory_select = save_data.get("inventory_select", GlobalValues.INVENTORY_SELECT.NONE)
 
 func _on_delete_pressed(slot: int):
 	# Store the slot number and show confirmation dialog

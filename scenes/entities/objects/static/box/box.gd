@@ -5,6 +5,7 @@ extends RigidBody2D
 @onready var action_button_press = $ActionButtonPress
 @onready var check_mark = $CheckMark
 @onready var done = $Done
+@onready var mouse_move = $MouseMove
 
 var is_being_dragged: bool = false
 var distance_to_player: float = 0.0
@@ -14,11 +15,14 @@ var box_id: int
 var remove_box: bool = false
 var player_in_area: bool = false
 var shown_once: bool = false
+var mouse_move_bool: bool = false
 
 func _ready():
 	box_id = get_instance_id()  # Get unique identifier for this box
 	check_mark.visible = false 
 	action_button_press.visible = false
+	if mouse_move:
+		mouse_move.visible = false
 	animatedSprite.play("idle")  # or "idle_off" for conductor
 	SharedSignals.drag_box.connect(_follow_player)
 	SharedSignals.is_dragging_box.connect(_is_dragging)
@@ -40,19 +44,30 @@ func _is_dragging(state: bool, target_box_id: int):
 	if state and player_in_area:
 		is_being_dragged = true
 		action_button_press.visible = false
+		if mouse_move:
+			mouse_move.visible = false
 		
 		if not GlobalValues.box_pickup_once:
 			GlobalValues.box_pickup_once = true
 			check_mark.visible = true
 			done.play("check")
 			SharedSignals.move_mouse_around.emit()
+			
+			if mouse_move:
+				mouse_move.visible = true
+				mouse_move.play("default")
+				wait_timer()
 		else:
 			done.stop()
+			if mouse_move:
+				mouse_move.visible = false
 			check_mark.visible = false
 		
 		animatedSprite.play("idle")
 	else:
 		is_being_dragged = false
+		if mouse_move:
+			mouse_move.visible = false
 		animatedSprite.play("near_box")
 
 func _follow_player(position: Vector2, direction: Vector2, target_box_id: int):
@@ -64,6 +79,17 @@ func _follow_player(position: Vector2, direction: Vector2, target_box_id: int):
 		var target_position = position + direction * box_distance_from_player
 		global_position = global_position.lerp(target_position, 0.1)
 		rotation = 0
+
+func wait_timer():
+	var cooldown_timer = Timer.new()
+	cooldown_timer.wait_time = 14.0
+	cooldown_timer.one_shot = true
+	cooldown_timer.timeout.connect(_end_cooldown)
+	add_child(cooldown_timer)
+	cooldown_timer.start()
+
+func _end_cooldown():
+	mouse_move.visible = false
 
 func _on_move_area_body_entered(body: Node2D):
 	if body.is_in_group("player"):

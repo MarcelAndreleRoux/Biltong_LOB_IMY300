@@ -138,6 +138,6 @@ signal breeding_room
 signal lots_dead
 signal what_happend
 signal final_dialog
-
+signal more_detail_11
 signal IfeelFree
 signal dont_show_inventory

@@ -1,11 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://bh0ej7uk1ekwb"]
+[gd_scene load_steps=24 format=3 uid="uid://bh0ej7uk1ekwb"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_oh1aq"]
-[ext_resource type="PackedScene" uid="uid://bh78atl44xeca" path="res://scenes/UI/chamber_number.tscn" id="2_kcapr"]
+[ext_resource type="PackedScene" path="res://scenes/UI/chamber_number.tscn" id="2_kcapr"]
 [ext_resource type="PackedScene" uid="uid://ciboe7sdibtc3" path="res://scenes/world/main_start/shake_camera.tscn" id="3_yay8d"]
 [ext_resource type="TileSet" uid="uid://t322bb5420cb" path="res://scenes/world/level_tileset/new-look.tres" id="4_a46xj"]
 [ext_resource type="PackedScene" uid="uid://wdw24tbqrqxv" path="res://scenes/entities/player/player.tscn" id="5_ftmsr"]
-[ext_resource type="PackedScene" uid="uid://bab22tyvvhbvh" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="6_8c5t6"]
+[ext_resource type="PackedScene" path="res://scenes/UI/popup/popup_canvas_layer.tscn" id="6_8c5t6"]
 [ext_resource type="PackedScene" uid="uid://bnobf44t3wkei" path="res://scenes/UI/game_pause.tscn" id="7_qewd5"]
 [ext_resource type="PackedScene" uid="uid://dw205vwfju7w2" path="res://scenes/UI/death.tscn" id="8_hmxuv"]
 [ext_resource type="PackedScene" uid="uid://dqpuwao3jd1mk" path="res://scenes/UI/win.tscn" id="9_37x64"]
@@ -22,6 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://c80uy3ni7bgl4" path="res://scenes/entities/enemies/lizard/electric_lizard.tscn" id="20_e3af4"]
 [ext_resource type="PackedScene" uid="uid://dx84ik10rs64a" path="res://scenes/entities/enemies/lizard/lizard_wander.tscn" id="21_5k0bo"]
 [ext_resource type="PackedScene" uid="uid://ds2p76qsyb33l" path="res://scenes/entities/objects/throwables/water/water_bush.tscn" id="22_vayx7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ct6x"]
+size = Vector2(41.5, 87)
 
 [node name="BaseLevel" type="Node2D"]
 y_sort_enabled = true
@@ -174,13 +177,102 @@ position = Vector2(296, 144)
 position = Vector2(328, 144)
 
 [node name="Vines13" parent="VinesBig" instance=ExtResource("19_8mdig")]
-position = Vector2(352, 152)
+position = Vector2(360, 144)
+
+[node name="Vines31" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(280, 129)
+
+[node name="Vines33" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(281, 112)
+plant_type = "small"
+
+[node name="Vines38" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(40, 64)
+
+[node name="Vines39" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(56, 64)
+plant_type = "small"
+
+[node name="Vines40" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(72, 64)
+
+[node name="Vines41" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(88, 64)
+plant_type = "small"
+
+[node name="Vines42" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(40, 81)
+plant_type = "small"
+
+[node name="Vines43" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(48, 74)
+
+[node name="Vines44" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(63, 82)
+
+[node name="Vines45" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(78, 76)
+plant_type = "small"
+
+[node name="Vines46" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(74, 93)
+plant_type = "small"
+
+[node name="Vines47" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(50, 93)
+
+[node name="Vines48" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(92, 86)
+plant_type = "small"
+
+[node name="Vines49" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(63, 103)
+plant_type = "small"
+
+[node name="Vines50" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(38, 101)
+
+[node name="Vines51" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(95, 70)
+
+[node name="Vines55" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(174, 65)
+plant_type = "small"
+
+[node name="Vines56" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(190, 65)
+
+[node name="Vines57" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(206, 65)
+plant_type = "small"
+
+[node name="Vines58" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(181, 74)
+plant_type = "small"
+
+[node name="Vines59" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(199, 75)
+plant_type = "small"
+
+[node name="Vines52" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(87, 101)
+
+[node name="Vines53" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(104, 97)
+plant_type = "small"
+
+[node name="Vines54" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(108, 75)
+plant_type = "small"
 
 [node name="Vines14" parent="VinesBig" instance=ExtResource("19_8mdig")]
 position = Vector2(344, 144)
 
 [node name="Vines15" parent="VinesBig" instance=ExtResource("19_8mdig")]
-position = Vector2(368, 144)
+position = Vector2(376, 155)
+
+[node name="Vines17" parent="VinesBig" instance=ExtResource("19_8mdig")]
+position = Vector2(376, 137)
 
 [node name="Vines16" parent="VinesBig" instance=ExtResource("19_8mdig")]
 position = Vector2(352, 128)
@@ -221,10 +313,6 @@ y_sort_enabled = true
 position = Vector2(312, 144)
 plant_type = "small"
 
-[node name="Vines12" parent="VinesSmall" instance=ExtResource("19_8mdig")]
-position = Vector2(288, 144)
-plant_type = "small"
-
 [node name="Vines22" parent="VinesSmall" instance=ExtResource("19_8mdig")]
 position = Vector2(344, 120)
 plant_type = "small"
@@ -242,7 +330,7 @@ position = Vector2(352, 88)
 plant_type = "small"
 
 [node name="ElectricLizard" parent="." node_paths=PackedStringArray("target_1", "target_2") instance=ExtResource("20_e3af4")]
-position = Vector2(288, 168)
+position = Vector2(287, 169)
 target_1 = NodePath("../LizardWander")
 target_2 = NodePath("../LizardWander2")
 
@@ -254,3 +342,14 @@ position = Vector2(360, 168)
 
 [node name="WaterBush" parent="." instance=ExtResource("22_vayx7")]
 position = Vector2(208, 184)
+
+[node name="MoreDetailArea2D" type="Area2D" parent="."]
+position = Vector2(217, 226)
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MoreDetailArea2D"]
+position = Vector2(51, -63.5)
+shape = SubResource("RectangleShape2D_1ct6x")
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="MoreDetailArea2D" to="." method="_on_more_detail_area_2d_body_entered"]

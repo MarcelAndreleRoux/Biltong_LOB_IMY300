@@ -236,13 +236,15 @@ func _on_conduction_area_body_entered(body):
 			SharedSignals.lizard_connection_made.emit(self)
 			_check_and_zap_electrical()
 	elif body.is_in_group("m_board"):
-		if connected_mboard == null:
-			connected_mboard = body
-			# Emit initial state when connecting
-			SharedSignals.connected_to_mboard.emit(charged_state, body.get_instance_id())
-			if charged_state:
-				_play_zap_to_mboard(body)
-				body.receive_electricity(true)
+		# Only connect if it's not a default board
+		if not body.is_default_board():
+			if connected_mboard == null:
+				connected_mboard = body
+				# Emit initial state when connecting
+				SharedSignals.connected_to_mboard.emit(charged_state, body.get_instance_id())
+				if charged_state:
+					_play_zap_to_mboard(body)
+					body.receive_electricity(true)
 
 func _on_conduction_area_body_exited(body):
 	if body.is_in_group("lizard"):

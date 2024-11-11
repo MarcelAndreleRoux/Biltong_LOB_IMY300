@@ -183,6 +183,9 @@ func _apply_save_data(save_data: Dictionary):
 	GlobalValues.box_pickup_once = save_data.box_pickup_once
 	GlobalValues.food_already_picked = save_data.food_already_picked
 	GlobalValues.hazmat_picked_up = save_data.hazmat_picked_up
+	
+	# Add this line to restore inventory state
+	GlobalValues.inventory_select = save_data.get("inventory_select", GlobalValues.INVENTORY_SELECT.NONE)
 
 # In menu.gd, update the new game handling:
 
