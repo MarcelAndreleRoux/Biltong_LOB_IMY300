@@ -2,6 +2,7 @@ class_name OptionsMenu
 extends Control
 
 @onready var button_select_options = $ButtonSelectOptions
+@onready var click_options = $ClickOptions
 
 @onready var display_options = $DisplaySettings/VBoxContainer
 @onready var resolution_option = $DisplaySettings/VBoxContainer/HBoxContainer/ResolutionOption
@@ -254,6 +255,7 @@ func _on_window_mode_item_selected(index):
 	SaveManager.save_settings()
 
 func _on_vsync_toggle_toggled(button_pressed):
+	click_options.play()
 	if button_pressed:
 		# Enable VSync
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
@@ -339,21 +341,22 @@ func _on_back_mouse_entered():
 	_on_hover("back")
 
 func _on_shake_check_box_toggled(button_pressed: bool):
-	print("toggle shake:", button_pressed)
+	click_options.play()
 	CameraManager.toggle_screen_shake(button_pressed)
 	SaveManager.save_settings()
 
 func _on_censor_check_box_toggled(toggled_on: bool):
+	click_options.play()
 	GlobalValues.set_censorship_enabled(toggled_on)
 	SaveManager.save_settings()
 
 func _on_go_left_pressed():
-	# Move index left (with wraparound)
+	click_options.play()
 	current_mode_index = (current_mode_index - 1) if current_mode_index > 0 else display_mode.size() - 1
 	_update_window_mode()
 
 func _on_go_right_pressed():
-	# Move index right (with wraparound)
+	click_options.play()
 	current_mode_index = (current_mode_index + 1) % display_mode.size()
 	_update_window_mode()
 
@@ -369,3 +372,18 @@ func _update_window_mode():
 	
 	DisplayServer.window_set_mode(new_mode)
 	SaveManager.save_settings()  # Save the new setting
+
+func _on_vsync_toggle_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_censor_check_box_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_shake_check_box_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_go_left_mouse_entered():
+	AudioController.play_sfx("button_hover")
+
+func _on_go_right_mouse_entered():
+	AudioController.play_sfx("button_hover")

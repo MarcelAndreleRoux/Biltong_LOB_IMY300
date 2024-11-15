@@ -275,12 +275,16 @@ text = "Description"
 
 [node name="Description" type="Label" parent="Descrpition"]
 layout_mode = 2
+theme_override_constants/line_spacing = 4
 theme_override_font_sizes/font_size = 10
 autowrap_mode = 3
 
 [node name="ButtonSelectOptions" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_edrlq")
 bus = &"Sfx"
+
+[node name="ClickOptions" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_edrlq")
 
 [connection signal="mouse_entered" from="Options_Label" to="." method="_on_options_label_mouse_entered"]
 [connection signal="mouse_entered" from="BackbuttonTexture/Back" to="." method="_on_back_mouse_entered"]
@@ -295,14 +299,19 @@ bus = &"Sfx"
 [connection signal="value_changed" from="AudioSettings/VBoxContainer/volume_slider2" to="." method="_on_volume_slider_2_value_changed"]
 [connection signal="mouse_entered" from="DisplaySettings/DisplayLabel" to="." method="_on_display_label_mouse_entered"]
 [connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer2/WindowLabel" to="." method="_on_window_label_mouse_entered"]
+[connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect/GoLeft" to="." method="_on_go_left_mouse_entered"]
 [connection signal="pressed" from="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect/GoLeft" to="." method="_on_go_left_pressed"]
+[connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect/GoRight" to="." method="_on_go_right_mouse_entered"]
 [connection signal="pressed" from="DisplaySettings/VBoxContainer/HBoxContainer2/TextureRect/GoRight" to="." method="_on_go_right_pressed"]
 [connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer3/VLabel" to="." method="_on_v_label_mouse_entered"]
+[connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer3/VsyncToggle" to="." method="_on_vsync_toggle_mouse_entered"]
 [connection signal="toggled" from="DisplaySettings/VBoxContainer/HBoxContainer3/VsyncToggle" to="." method="_on_vsync_toggle_toggled"]
 [connection signal="mouse_entered" from="DisplaySettings/VBoxContainer/HBoxContainer4/FpsLabel" to="." method="_on_fps_label_mouse_entered"]
 [connection signal="mouse_entered" from="Other/GameplayLabel" to="." method="_on_gameplay_label_mouse_entered"]
 [connection signal="mouse_entered" from="Other/HBoxContainer3/CensorshipLabel" to="." method="_on_censorship_label_mouse_entered"]
+[connection signal="mouse_entered" from="Other/HBoxContainer3/CensorCheckBox" to="." method="_on_censor_check_box_mouse_entered"]
 [connection signal="toggled" from="Other/HBoxContainer3/CensorCheckBox" to="." method="_on_censor_check_box_toggled"]
 [connection signal="mouse_entered" from="Other/HBoxContainer/ShakeLabel" to="." method="_on_shake_label_mouse_entered"]
+[connection signal="mouse_entered" from="Other/HBoxContainer/ShakeCheckBox" to="." method="_on_shake_check_box_mouse_entered"]
 [connection signal="toggled" from="Other/HBoxContainer/ShakeCheckBox" to="." method="_on_shake_check_box_toggled"]
 [connection signal="finished" from="ButtonSelectOptions" to="." method="_on_button_select_options_finished"]

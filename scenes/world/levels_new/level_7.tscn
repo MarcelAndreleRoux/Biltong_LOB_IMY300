@@ -110,6 +110,10 @@ position = Vector2(360, 128)
 connector_name = "one"
 door_link_id = "2"
 
+[node name="MBoard5" parent="." instance=ExtResource("12_d1550")]
+position = Vector2(408, 128)
+door_link_id = "2"
+
 [node name="Door" parent="." instance=ExtResource("13_aety4")]
 position = Vector2(240, 48)
 door_link_id = "1"

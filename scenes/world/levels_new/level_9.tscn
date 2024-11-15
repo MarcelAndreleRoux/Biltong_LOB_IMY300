@@ -123,9 +123,6 @@ position = Vector2(352, 128)
 door_link_id = "2"
 required_connections = 2
 
-[node name="Conductor_Box" parent="." instance=ExtResource("18_74knk")]
-position = Vector2(168, 176)
-
 [node name="MBoard2" parent="." instance=ExtResource("12_01rqn")]
 position = Vector2(376, 128)
 connector_name = "one"
@@ -256,5 +253,8 @@ position = Vector2(52, 78)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Diffie"]
 shape = SubResource("CircleShape2D_teowq")
+
+[node name="Conductor_Box" parent="." instance=ExtResource("18_74knk")]
+position = Vector2(175, 165)
 
 [connection signal="body_entered" from="Diffie" to="." method="_on_diffie_body_entered"]
