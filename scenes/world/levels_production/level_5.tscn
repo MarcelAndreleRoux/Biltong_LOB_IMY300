@@ -63,7 +63,7 @@ default_color = Color(1, 1, 1, 0.447059)
 [node name="Hedgehog" parent="." instance=ExtResource("7_d2hhb")]
 position = Vector2(446, 202)
 
-[node name="RayCast2D" type="RayCast2D" parent="Hedgehog"]
+[node name="RayCast2D2" type="RayCast2D" parent="Hedgehog"]
 
 [node name="Escape" type="CanvasLayer" parent="."]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cvxb8exwuhrx"]
+[gd_scene load_steps=27 format=3 uid="uid://cvxb8exwuhrx"]
 
 [ext_resource type="Script" path="res://scenes/world/base_level.gd" id="1_xmd4a"]
 [ext_resource type="PackedScene" path="res://scenes/UI/chamber_number.tscn" id="2_201ux"]
@@ -21,13 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://85307446xv20" path="res://scenes/entities/objects/static/door/broken_door.tscn" id="19_fh4n8"]
 [ext_resource type="PackedScene" uid="uid://bsv2rliqboptl" path="res://scenes/entities/objects/static/Vines/vines.tscn" id="19_sb55d"]
 [ext_resource type="PackedScene" uid="uid://bjkn46gokxkev" path="res://scenes/entities/objects/static/pod/animal_pod.tscn" id="22_7p5x7"]
-[ext_resource type="PackedScene" uid="uid://bh6flmufkyjat" path="res://scenes/entities/enemies/hedgehog/hedgehog.tscn" id="22_28ecg"]
+[ext_resource type="PackedScene" uid="uid://3ybd1h5hqi4" path="res://scenes/entities/objects/static/box/box.tscn" id="22_4151g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ufpel"]
 size = Vector2(1, 85)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0etkq"]
-size = Vector2(114, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sr81l"]
 size = Vector2(20, 44)
@@ -75,21 +72,12 @@ layer_4/tile_data = PackedInt32Array(720905, 589827, 0, 720906, 589827, 0, 72090
 [node name="InScreenTransition" type="Area2D" parent="." node_paths=PackedStringArray("root_marker", "destination_marker") groups=["transition_areas"]]
 position = Vector2(421, 64)
 script = ExtResource("5_fbqtp")
-root_marker = NodePath("../CameraMarker")
-destination_marker = NodePath("../CameraMarker2")
+root_marker = NodePath("../CameraMarker2")
+destination_marker = NodePath("../CameraMarker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InScreenTransition"]
-position = Vector2(-5.5, 12.5)
+position = Vector2(-6, 26)
 shape = SubResource("RectangleShape2D_ufpel")
-
-[node name="InScreenTransition2" type="Area2D" parent="." groups=["transition_areas"]]
-position = Vector2(888, -24)
-script = ExtResource("5_fbqtp")
-move_direction = "vertical"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InScreenTransition2"]
-position = Vector2(-1, -1.5)
-shape = SubResource("RectangleShape2D_0etkq")
 
 [node name="CameraMarker" type="Marker2D" parent="." groups=["camera_markers"]]
 position = Vector2(176, 136)
@@ -97,11 +85,8 @@ position = Vector2(176, 136)
 [node name="CameraMarker2" type="Marker2D" parent="." groups=["camera_markers"]]
 position = Vector2(656, 136)
 
-[node name="CameraMarker3" type="Marker2D" parent="." groups=["camera_markers"]]
-position = Vector2(656, -128)
-
 [node name="Player" parent="." instance=ExtResource("5_007gb")]
-position = Vector2(241, 249)
+position = Vector2(242, 247)
 
 [node name="PlayerRaycast" type="RayCast2D" parent="Player"]
 
@@ -186,9 +171,6 @@ required_connections = 2
 
 [node name="Conductor_Box" parent="." instance=ExtResource("16_780ei")]
 position = Vector2(376, 176)
-
-[node name="Conductor_Box3" parent="." instance=ExtResource("16_780ei")]
-position = Vector2(187, 94)
 
 [node name="MBoard2" parent="." instance=ExtResource("12_q8353")]
 position = Vector2(376, 128)
@@ -433,24 +415,6 @@ door_link_id = "1"
 position = Vector2(56, 128)
 door_link_id = "3"
 
-[node name="Conductor_Box2" parent="." instance=ExtResource("16_780ei")]
-position = Vector2(824, -112)
-
-[node name="BrokenDoor2" parent="." instance=ExtResource("19_fh4n8")]
-position = Vector2(800, -224)
-
-[node name="MBoard4" parent="." instance=ExtResource("12_q8353")]
-position = Vector2(632, -224)
-connector_name = "one"
-door_link_id = "a1"
-
-[node name="Door4" parent="." instance=ExtResource("13_nop0a")]
-position = Vector2(656, -224)
-door_link_id = "a1"
-
-[node name="OpenBoard2" parent="." instance=ExtResource("18_0xcel")]
-position = Vector2(776, -224)
-
 [node name="VinesBig2" type="Node2D" parent="."]
 y_sort_enabled = true
 position = Vector2(64, -104)
@@ -501,20 +465,6 @@ plant_type = "small"
 position = Vector2(592, 104)
 plant_type = "small"
 
-[node name="Vines38" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(592, 0)
-
-[node name="Vines40" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(616, -8)
-
-[node name="Vines44" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(584, -8)
-plant_type = "small"
-
-[node name="Vines46" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(608, 0)
-plant_type = "small"
-
 [node name="Vines47" parent="VinesBig2" instance=ExtResource("19_sb55d")]
 position = Vector2(560, 136)
 
@@ -538,145 +488,6 @@ plant_type = "small"
 
 [node name="Vines55" parent="VinesBig2" instance=ExtResource("19_sb55d")]
 position = Vector2(584, 104)
-plant_type = "small"
-
-[node name="Vines59" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(688, -48)
-
-[node name="Vines60" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(712, -56)
-
-[node name="Vines61" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(680, -56)
-plant_type = "small"
-
-[node name="Vines62" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(704, -48)
-plant_type = "small"
-
-[node name="Vines63" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(664, -56)
-
-[node name="Vines64" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(656, -80)
-
-[node name="Vines65" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(656, -64)
-plant_type = "small"
-
-[node name="Vines66" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(688, -64)
-plant_type = "small"
-
-[node name="Vines67" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(680, -56)
-plant_type = "small"
-
-[node name="Vines68" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(648, -64)
-plant_type = "small"
-
-[node name="Vines69" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(672, -80)
-plant_type = "small"
-
-[node name="Vines70" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(648, -72)
-plant_type = "small"
-
-[node name="Vines71" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(440, -16)
-
-[node name="Vines72" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(464, -24)
-
-[node name="Vines73" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(432, -24)
-plant_type = "small"
-
-[node name="Vines74" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(456, -16)
-plant_type = "small"
-
-[node name="Vines75" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(448, -48)
-
-[node name="Vines76" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(416, -40)
-
-[node name="Vines77" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(400, -48)
-
-[node name="Vines78" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(440, -72)
-
-[node name="Vines79" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(416, -56)
-
-[node name="Vines80" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(464, -80)
-
-[node name="Vines81" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(440, -56)
-plant_type = "small"
-
-[node name="Vines82" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(440, -32)
-plant_type = "small"
-
-[node name="Vines83" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(464, -48)
-plant_type = "small"
-
-[node name="Vines84" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(432, -80)
-plant_type = "small"
-
-[node name="Vines85" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(432, -56)
-plant_type = "small"
-
-[node name="Vines86" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(456, -72)
-plant_type = "small"
-
-[node name="Vines87" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(440, -80)
-
-[node name="Vines88" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(408, -72)
-
-[node name="Vines89" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(392, -80)
-
-[node name="Vines90" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(408, -88)
-
-[node name="Vines91" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(432, -88)
-plant_type = "small"
-
-[node name="Vines92" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(432, -64)
-plant_type = "small"
-
-[node name="Vines93" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(456, -80)
-plant_type = "small"
-
-[node name="Vines94" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(424, -88)
-plant_type = "small"
-
-[node name="Vines95" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(400, -24)
-
-[node name="Vines96" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(416, -24)
-plant_type = "small"
-
-[node name="Vines97" parent="VinesBig2" instance=ExtResource("19_sb55d")]
-position = Vector2(392, -16)
 plant_type = "small"
 
 [node name="Vines98" parent="VinesBig2" instance=ExtResource("19_sb55d")]
@@ -732,9 +543,6 @@ plant_type = "small"
 position = Vector2(616, 144)
 plant_type = "small"
 
-[node name="Hedgehog" parent="." instance=ExtResource("22_28ecg")]
-position = Vector2(656, -152)
-
 [node name="animal_pod" parent="." instance=ExtResource("22_7p5x7")]
 position = Vector2(736, 80)
 pod_mode = "Broken"
@@ -785,23 +593,16 @@ offset_bottom = 112.0
 theme_override_font_sizes/font_size = 24
 text = "CAFETERIA"
 
-[node name="ChamberNumber4" parent="." instance=ExtResource("2_201ux")]
-offset_left = 640.0
-offset_top = -208.0
-offset_right = 832.0
-offset_bottom = -128.0
-theme_override_font_sizes/font_size = 24
-text = "LOBBY"
-
 [node name="MBoard5" parent="." instance=ExtResource("12_q8353")]
 position = Vector2(120, 50)
 connector_name = "one"
 door_link_id = "3"
 
+[node name="Box" parent="." instance=ExtResource("22_4151g")]
+position = Vector2(171, 92)
+
 [connection signal="body_entered" from="InScreenTransition" to="InScreenTransition" method="_on_body_entered"]
 [connection signal="body_exited" from="InScreenTransition" to="InScreenTransition" method="_on_body_exited"]
-[connection signal="body_entered" from="InScreenTransition2" to="InScreenTransition2" method="_on_body_entered"]
-[connection signal="body_exited" from="InScreenTransition2" to="InScreenTransition2" method="_on_body_exited"]
 [connection signal="body_entered" from="BreedingRoom" to="." method="_on_breeding_room_body_entered"]
 [connection signal="body_entered" from="LotsDead" to="." method="_on_lots_dead_body_entered"]
 [connection signal="body_entered" from="Whathappend" to="." method="_on_whathappend_body_entered"]

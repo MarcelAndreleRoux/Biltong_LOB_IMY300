@@ -295,6 +295,24 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="Special People" parent="Credits/Credit Text7/Special People" instance=ExtResource("2_8qnkd")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0855925
+anchor_top = -3.075
+anchor_right = -0.0855925
+anchor_bottom = -3.075
+offset_left = 12.0
+offset_top = 128.0
+offset_right = 150.0
+offset_bottom = 160.0
+theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
+theme_override_font_sizes/font_size = 30
+text = "Karla Strydom"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="Special People3" parent="Credits/Credit Text7" instance=ExtResource("2_8qnkd")]
 layout_mode = 1
 anchors_preset = -1
@@ -341,7 +359,7 @@ offset_right = 149.0
 offset_bottom = 79.0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 0.513726)
 theme_override_font_sizes/font_size = 30
-text = "Chrisver Roots"
+text = "Chrisvert Roots"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -1548,7 +1566,7 @@ position = Vector2(-371, -126)
 plant_type = "small"
 
 [node name="Vines20" parent="Vines53/Vines26/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-383, -131)
+position = Vector2(-386, -131)
 plant_type = "small"
 
 [node name="Vines21" parent="Vines53/Vines26/Vines26" instance=ExtResource("13_wt4l6")]
@@ -1803,7 +1821,7 @@ position = Vector2(-51, -123)
 position = Vector2(-66, -127)
 
 [node name="Vines17" parent="Vines53/Vines26/Vines26/Vines26" instance=ExtResource("13_wt4l6")]
-position = Vector2(-73, -127)
+position = Vector2(-71, -127)
 
 [node name="Vines18" parent="Vines53/Vines26/Vines26/Vines26" instance=ExtResource("13_wt4l6")]
 position = Vector2(-63, -104)
